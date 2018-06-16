@@ -1,0 +1,168 @@
+language: cpp
+dist: trusty
+
+branches:
+  only:
+  - master
+
+env:
+  global:
+    - secure: "TwI3eYhcyqUUephcIdyRQu8pLHgI6Q84qUBz3Ml66wdzBQwN1ti+w8iS2Lc6tl7E9M7YEtHvuTQASVJsN+9j40LGvmtAb2TcZahMgEvogtcUVpM3T1oHXPiy54iqE8HtLIGiRLRPD+bSqTy2EIVtuowyjKiwXhIhDi7fBB+APa1Qzkv6vpKIg+7W7ndbrC8RmkBQn007PTAk8JRq0ThhRqeT1aiQCwRx+PMsEDYlvXexnUeGWGLtZc2LOoN7IJSoc0LS6DQlJXPCQQDt0lozXEmShIxrrEuIPZ4qTxJ2d79tChClQ6e1/YOiIihBdYO9BLMjkqAN44jBHogUZNHKr9ANM8tdrKm23K9N30GqZ908nq5gknpWeyBEB4B53+xUhXQq45yWgQ8wqShB85i5n5hkHA3zj3aP/kGCNPNp0GUZcQx9oQWhK3qxBStqsfW1QK/fEXlOEB1Ee4wD0IowgVXuLoY2dBz1wmFOwWCGUX5c9A5qwDRrtiYf4atWxdT6dBB1SxllbEIJyWk49JH/hHX/mnCwM73qDVydmWezOjcpN7PR+LLsJ4XkVY8NrIWEMXNOxg5KNYdSRXaG/hAxZFwxtc4gBaYrQqzubu0AxpFkKa6kkbM19ky76AiMjJEkIkvpbF2kz4gsO8VdGmv4/YusEobBlv2NdEuW0YubftQ="
+
+before_script:
+  - mkdir build && cd build
+  - |
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      mkdir -p external/cmake
+      pushd external/cmake
+      wget https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.sh
+      chmod +x cmake-*-Linux-x86_64.sh
+      ./cmake-*-Linux-x86_64.sh --exclude-subdir --skip-license
+      export PATH="${PWD}/bin:$PATH"
+      popd
+    else
+      if ! brew ls --version cmake &>/dev/null; then brew update; brew install cmake; fi
+    fi
+
+matrix:
+  include:
+  #
+  # G++ 5
+  #
+  - os: linux
+    env:
+      - TASK="G++ 5"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - sourceline: ppa:kzemek/boost
+        packages:
+          - gcc-5
+          - g++-5
+          - libboost1.58-dev
+          - libboost-test1.58-dev
+    script:
+      - |
+        cmake .. \
+        -DCMAKE_CXX_COMPILER=g++-5 \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DENABLE_TESTS=ON
+      - cmake --build .
+
+  #
+  # Clang 3.8
+  #
+  - os: linux
+    env:
+      - TASK="Clang 3.8"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - llvm-toolchain-trusty-4.0
+          - sourceline: ppa:kzemek/boost
+        packages:
+          - clang-3.8
+          - gcc-5
+          - g++-5
+          - libboost1.58-dev
+          - libboost-test1.58-dev
+    script:
+      - |
+        cmake .. \
+        -DCMAKE_C_COMPILER=clang-3.8 \
+        -DCMAKE_CXX_COMPILER=clang++-3.8 \
+        -DENABLE_COVERAGE=ON \
+        -DENABLE_TESTS=ON
+      - cmake --build .
+
+  #
+  # Codecov
+  #
+  - os: linux
+    env:
+      - TASK="Codecov"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - sourceline: ppa:kzemek/boost
+        packages:
+          - gcc-5
+          - g++-5
+          - libboost1.58-dev
+          - libboost-test1.58-dev
+    script:
+      - |
+        cmake .. \
+        -DCMAKE_CXX_COMPILER=g++-5 \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DENABLE_COVERAGE=ON \
+        -DENABLE_TESTS=ON
+      - cmake --build .
+      - bash <(curl -s https://codecov.io/bash)
+
+  #
+  # Coverity Scan
+  #
+  - os: linux
+    env:
+      - TASK="Coverity Scan"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - sourceline: ppa:kzemek/boost
+        packages:
+          - gcc-5
+          - g++-5
+          - libboost1.58-dev
+          - libboost-test1.58-dev
+      coverity_scan:
+        project:
+          name: "timcogames/sway.module_core"
+          description: "Описание"
+        notification_email: victor-timoshin@hotmail.com
+        build_command_prepend: cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_TESTS=ON ..
+        build_command: cmake --build .
+        branch_pattern: master
+    script:
+      - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-certificates.crt
+
+  #
+  # Coveralls
+  #
+  - os: linux
+    env:
+      - TASK="Coveralls"
+    addons:
+      apt:
+        sources:
+          - ubuntu-toolchain-r-test
+          - sourceline: ppa:kzemek/boost
+        packages:
+          - gcc-5
+          - g++-5
+          - libboost1.58-dev
+          - libboost-test1.58-dev
+    script:
+      - pip install --upgrade --user git+git://github.com/eddyxu/cpp-coveralls.git
+      - |
+        cmake .. \
+        -DCMAKE_CXX_COMPILER=g++-5 \
+        -DCMAKE_BUILD_TYPE=Debug \
+        -DENABLE_COVERAGE=ON \
+        -DENABLE_TESTS=ON
+      - cmake --build .
+      - cd ..
+      - |
+        coveralls --build-root build --gcov-options '\-lp' \
+          -e build/external \
+          -e build/include \
+          -e build/CMakeFiles/3.8.0 \
+          -e build/CMakeFiles/feature_tests.c \
+          -e build/CMakeFiles/feature_tests.cxx
+
+notifications:
+  email: false
