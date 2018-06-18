@@ -4,7 +4,7 @@
 using namespace sway;
 
 class ThingyContext : public core::foundation::Context {
-  public:
+public:
 	ThingyContext() = default;
 	virtual ~ThingyContext() = default;
 };
@@ -12,7 +12,7 @@ class ThingyContext : public core::foundation::Context {
 class ThingyObject : public core::foundation::Object {
 	DECLARE_OBJECT(ThingyObject, core::foundation::Object)
 
-  public:
+public:
 	ThingyObject(core::foundation::Context * context) : core::foundation::Object(context) {
 		// Empty
 	}

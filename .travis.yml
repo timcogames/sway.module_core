@@ -12,7 +12,7 @@ env:
 
 before_script:
   - mkdir build && cd build
-  - . ./scripts/travis/install-cmake.sh
+  - . ./../scripts/travis/install-cmake.sh
   
 matrix:
   include:
