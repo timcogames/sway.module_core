@@ -27,17 +27,14 @@ mkdir build && cd ./build
 cmake -DCMAKE_BUILD_TYPE=Release ../
 ```
 
+Опция сборки | Описание | По умолчанию
+:---|:---|:---:
+`BUILD_SHARED_LIBS` | Build shared library | `OFF`
+`ENABLE_COVERAGE` | Enable coverage builds | `OFF`
+`ENABLE_TESTS` | Enable test builds | `OFF`
+
 Запускаем сборку
 
 ```console
 cmake --build .
 ```
-
-#### Флаги сборки
-
-Опция | Описание | По умолчанию
-:---|:---|:---:
-`BUILD_SHARED_LIBS` | Build shared library | `OFF`
-`ENABLE_COVERAGE` | Enable coverage builds | `OFF`
-`ENABLE_EXAMPLES` | Enable example builds | `OFF`
-`ENABLE_TESTS` | Enable test builds | `OFF`

@@ -7,23 +7,13 @@ branches:
 
 env:
   global:
+    # scan.coverity token
     - secure: "TwI3eYhcyqUUephcIdyRQu8pLHgI6Q84qUBz3Ml66wdzBQwN1ti+w8iS2Lc6tl7E9M7YEtHvuTQASVJsN+9j40LGvmtAb2TcZahMgEvogtcUVpM3T1oHXPiy54iqE8HtLIGiRLRPD+bSqTy2EIVtuowyjKiwXhIhDi7fBB+APa1Qzkv6vpKIg+7W7ndbrC8RmkBQn007PTAk8JRq0ThhRqeT1aiQCwRx+PMsEDYlvXexnUeGWGLtZc2LOoN7IJSoc0LS6DQlJXPCQQDt0lozXEmShIxrrEuIPZ4qTxJ2d79tChClQ6e1/YOiIihBdYO9BLMjkqAN44jBHogUZNHKr9ANM8tdrKm23K9N30GqZ908nq5gknpWeyBEB4B53+xUhXQq45yWgQ8wqShB85i5n5hkHA3zj3aP/kGCNPNp0GUZcQx9oQWhK3qxBStqsfW1QK/fEXlOEB1Ee4wD0IowgVXuLoY2dBz1wmFOwWCGUX5c9A5qwDRrtiYf4atWxdT6dBB1SxllbEIJyWk49JH/hHX/mnCwM73qDVydmWezOjcpN7PR+LLsJ4XkVY8NrIWEMXNOxg5KNYdSRXaG/hAxZFwxtc4gBaYrQqzubu0AxpFkKa6kkbM19ky76AiMjJEkIkvpbF2kz4gsO8VdGmv4/YusEobBlv2NdEuW0YubftQ="
 
 before_script:
   - mkdir build && cd build
-  - |
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      mkdir -p external/cmake
-      pushd external/cmake
-      wget https://cmake.org/files/v3.10/cmake-3.10.2-Linux-x86_64.sh
-      chmod +x cmake-*-Linux-x86_64.sh
-      ./cmake-*-Linux-x86_64.sh --exclude-subdir --skip-license
-      export PATH="${PWD}/bin:$PATH"
-      popd
-    else
-      if ! brew ls --version cmake &>/dev/null; then brew update; brew install cmake; fi
-    fi
-
+  - . ./scripts/travis/install-cmake.sh
+  
 matrix:
   include:
   #

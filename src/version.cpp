@@ -3,36 +3,44 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
-Version::Version()
-	: _major(0)
-	, _minor(0) {
-	// Empty
+Version::Version() {
+	_major = _minor = _patch = DONT_CARE;
+	_extra = "\0";
 }
 
-Version::Version(u8_t major, u8_t minor)
+Version::Version(s32_t major, s32_t minor, s32_t patch, lpcstr_t extra)
 	: _major(major)
-	, _minor(minor) {
+	, _minor(minor)
+	, _patch(patch)
+	, _extra(extra) {
 	// Empty
 }
 
 Version::Version(const Version & version)
 	: _major(version.getMajor())
-	, _minor(version.getMinor()) {
+	, _minor(version.getMinor())
+	, _patch(version.getPatch())
+	, _extra(version.getExtra()) {
 	// Empty
 }
 
 Version::Version(Version && version)
 	: _major(std::move(version.getMajor()))
-	, _minor(std::move(version.getMinor())) {
+	, _minor(std::move(version.getMinor()))
+	, _patch(std::move(version.getPatch()))
+	, _extra(std::move(version.getExtra())) {
 	// Empty
 }
 
-u8_t Version::getMajor() const {
-	return _major;
-}
+s32_t Version::compare(const Version & version) const {
+	if (_major < version.getMajor()) return -1;
+	if (_major > version.getMajor()) return 1;
+	if (_minor < version.getMinor()) return -1;
+	if (_minor > version.getMinor()) return 1;
+	if (_patch < version.getPatch()) return -1;
+	if (_patch > version.getPatch()) return 1;
 
-u8_t Version::getMinor() const {
-	return _minor;
+	return 0;
 }
 
 NAMESPACE_END(core)

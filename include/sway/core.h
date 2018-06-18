@@ -7,6 +7,7 @@
 #include <sway/core/foundation/context.h>
 #include <sway/core/memory/safedeletemacros.h>
 #include <sway/core/version.h>
+#include <sway/core/exception.h>
 #include <sway/namespacemacros.h>
 #include <sway/defines.h>
 #include <sway/types.h>

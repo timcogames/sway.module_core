@@ -7,6 +7,8 @@ NAMESPACE_BEGIN(core)
 Version & Version::operator=(const Version & version) {
 	_major = version.getMajor();
 	_minor = version.getMinor();
+	_patch = version.getPatch();
+	_extra = version.getExtra();
 
 	return *this;
 }
@@ -14,24 +16,26 @@ Version & Version::operator=(const Version & version) {
 Version & Version::operator=(Version && version) {
 	_major = std::move(version.getMajor());
 	_minor = std::move(version.getMinor());
+	_patch = std::move(version.getPatch());
+	_extra = std::move(version.getExtra());
 
 	return *this;
 }
 
 bool Version::operator<(const Version & version) const {
-	return _major < version.getMajor() || (_major == version.getMajor() && _minor < version.getMinor());
+	return compare(version) < 0;
 }
 
 bool Version::operator>(const Version & version) const {
-	return _major > version.getMajor() || (_major == version.getMajor() && _minor > version.getMinor());
+	return compare(version) > 0;
 }
 
 bool Version::operator==(const Version & version) const {
-	return _major == version.getMajor() && _minor == version.getMinor();
+	return compare(version) == 0;
 }
 
 bool Version::operator!=(const Version & version) const {
-	return _major != version.getMajor() || _minor != version.getMinor();
+	return compare(version) != 0;
 }
 
 bool Version::operator>=(const Version & version) const {
