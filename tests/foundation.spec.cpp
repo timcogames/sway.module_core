@@ -20,23 +20,27 @@ public:
 	~ThingyObject() = default;
 };
 
-BOOST_AUTO_TEST_SUITE(test_suite)
-
-BOOST_AUTO_TEST_CASE(test_case) {
-	ThingyContext * context = new ThingyContext();
-	ThingyObject * object = new ThingyObject(context);
-
-	context->registerObject(object);
-	BOOST_CHECK_EQUAL(context->getObjectCount(), 1);
-
-	const std::string objectClassName = "ThingyObject";
-	BOOST_CHECK_EQUAL(context->getObject(objectClassName)->getClassName(), objectClassName);
-
-	context->unregisterObject(objectClassName);
-	BOOST_CHECK_EQUAL(context->getObjectCount(), 0);
-
-	SAFE_DELETE(object);
-	SAFE_DELETE(context);
+bool correctMessage(const ArgumentNullException & exception) {
+    BOOST_CHECK_EQUAL(exception.what(), std::string("Null argument"));
+    return true;
 }
 
-BOOST_AUTO_TEST_SUITE_END()
+BOOST_FIXTURE_TEST_SUITE(ThingyContext_TestSuite, ThingyContext);
+
+BOOST_AUTO_TEST_CASE(ThingyContext_TestCase) {
+	ThingyObject * object = new ThingyObject(this);
+
+	BOOST_CHECK_EXCEPTION(registerObject(nullptr), ArgumentNullException, correctMessage);
+	BOOST_CHECK_NO_THROW(registerObject(object));
+	BOOST_CHECK_EQUAL(getObjectCount(), 1);
+
+	const std::string objectClassName = "ThingyObject";
+	BOOST_CHECK_EQUAL(getObject(objectClassName)->getClassName(), objectClassName);
+
+	unregisterObject(objectClassName);
+	BOOST_CHECK_EQUAL(getObjectCount(), 0);
+
+	SAFE_DELETE(object);
+}
+
+BOOST_AUTO_TEST_SUITE_END();

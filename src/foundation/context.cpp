@@ -1,4 +1,6 @@
 #include <sway/core/foundation/context.h>
+#include <sway/exceptions.h>
+#include <exception> // std::exception
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -14,7 +16,7 @@ Context::~Context() {
 
 void Context::registerObject(Object * object) {
 	if (!object)
-		return;
+		throw ArgumentNullException();
 
 	_objects.insert(std::make_pair(object->getClassName(), object));
 }

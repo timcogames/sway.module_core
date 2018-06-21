@@ -63,13 +63,13 @@ public:
 	}
 };
 
-class NullArgumentException : public Exception {
+class ArgumentNullException : public Exception {
 public:
 	/*!
 	 * \brief
 	 *    Конструктор класса по умолчанию.
 	 */
-	NullArgumentException() : Exception("Null argument") {
+	ArgumentNullException() : Exception("Null argument") {
 		// Empty
 	}
 
@@ -80,7 +80,7 @@ public:
 	 * \param[in] argName
 	 *    Имя аргумента.
 	 */
-	NullArgumentException(const std::string & argName) : Exception("Null argument: " + argName) {
+	ArgumentNullException(const std::string & argName) : Exception("Null argument: " + argName) {
 		// Empty
 	}
 };
