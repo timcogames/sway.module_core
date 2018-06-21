@@ -26,7 +26,6 @@ public:
 	 */
 	ObjectMetadata(lpcstr_t className, const ObjectMetadata * superclass)
 		: _superclass(superclass), _className(className) {
-
 		// Empty
 	}
 

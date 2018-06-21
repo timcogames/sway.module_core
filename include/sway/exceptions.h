@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_EXCEPTION_H
-#define SWAY_CORE_EXCEPTION_H
+#ifndef SWAY_EXCEPTIONS_H
+#define SWAY_EXCEPTIONS_H
 
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
@@ -8,7 +8,6 @@
 #include <exception> // std::exception
 
 NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
 
 class Exception : public std::exception {
 public:
@@ -86,7 +85,6 @@ public:
 	}
 };
 
-NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_EXCEPTION_H
+#endif // SWAY_EXCEPTIONS_H

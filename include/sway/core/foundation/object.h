@@ -28,7 +28,6 @@ public:
 	 */
 	Object(Context * context)
 		 : _context(context) {
-
 		// Empty
 	}
 
