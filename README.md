@@ -1,4 +1,4 @@
-# sway.module_core [![Discord](https://discordapp.com/api/guilds/402238411639095297/widget.png)](https://discord.gg/vCMcgwQ)
+# sway.module_core
 
 [![Build Status](https://travis-ci.com/timcogames/sway.module_core.svg?branch=master)](https://travis-ci.com/timcogames/sway.module_core)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/15977/badge.svg)](https://scan.coverity.com/projects/15977)
