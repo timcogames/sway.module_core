@@ -1,19 +1,14 @@
 # sway.module_core
 
-[![Build Status](https://travis-ci.com/timcogames/sway.module_core.svg?branch=master)](https://travis-ci.com/timcogames/sway.module_core)
-[![Coverity Scan Build Status](https://scan.coverity.com/projects/15977/badge.svg)](https://scan.coverity.com/projects/15977)
-[![codecov](https://codecov.io/gh/timcogames/sway.module_core/branch/master/graph/badge.svg)](https://codecov.io/gh/timcogames/sway.module_core)
-[![BCH compliance](https://bettercodehub.com/edge/badge/timcogames/sway.module_core?branch=master)](https://bettercodehub.com/)
-[![Coverage Status](https://coveralls.io/repos/github/timcogames/sway.module_core/badge.svg?branch=master)](https://coveralls.io/github/timcogames/sway.module_core?branch=master)
-[![Documentation](https://codedocs.xyz/timcogames/sway.module_core.svg)](https://codedocs.xyz/timcogames/sway.module_core/)
+[![Build Status][travis-svg]][travis-url] [![Coverity Scan Build Status][coverity-svg]][coverity-url] [![codecov][codecov-svg]][codecov-url] [![Coverage Status][coverage-svg]][coverage-url] [![BCH compliance][bettercodehub-svg]][bettercodehub-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
 
-### Клонирование проекта
+## Клонирование проекта
 
 ```console
 git clone https://github.com/timcogames/sway.module_core.git
 ```
 
-### Сборка проекта
+## Сборка проекта
 
 Создаем директорию build и переходим в неё
 
@@ -38,3 +33,22 @@ cmake -DCMAKE_BUILD_TYPE=Release ../
 ```console
 cmake --build .
 ```
+
+## Contributing
+
+См. [CONTRIBUTING](./github/CONTRIBUTING.md)
+
+[travis-svg]: https://travis-ci.com/timcogames/sway.module_core.svg?branch=master
+[travis-url]: https://travis-ci.com/timcogames/sway.module_core
+[coverity-svg]: https://scan.coverity.com/projects/15977/badge.svg
+[coverity-url]: https://scan.coverity.com/projects/15977
+[coverage-svg]: https://coveralls.io/repos/github/timcogames/sway.module_core/badge.svg?branch=master
+[coverage-url]: https://coveralls.io/github/timcogames/sway.module_core?branch=master
+[bettercodehub-svg]: https://bettercodehub.com/edge/badge/timcogames/sway.module_core?branch=master
+[bettercodehub-url]: https://bettercodehub.com/
+[codecov-svg]: https://codecov.io/gh/timcogames/sway.module_core/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/timcogames/sway.module_core
+[codedocs-svg]: https://codedocs.xyz/timcogames/sway.module_core.svg
+[codedocs-url]: https://codedocs.xyz/timcogames/sway.module_core/
+[license-svg]: https://img.shields.io/github/license/mashape/apistatus.svg
+[license-url]: LICENSE

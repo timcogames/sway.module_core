@@ -12,10 +12,10 @@ NAMESPACE_BEGIN(intrusive)
  *    Перечисление приоритетов.
  */
 enum Priorities {
-	kPriority_VeryLow  = 0, /*!< Очень низкий приоритет. */
-	kPriority_Low      = 1, /*!< Низкий приоритет. */
-	kPriority_Normal   = 2, /*!< Средний приоритет. */
-	kPriority_High     = 3, /*!< Высокий приоритет. */
+	kPriority_VeryLow = 0, /*!< Очень низкий приоритет. */
+	kPriority_Low = 1, /*!< Низкий приоритет. */
+	kPriority_Normal = 2, /*!< Средний приоритет. */
+	kPriority_High = 3, /*!< Высокий приоритет. */
 	kPriority_VeryHigh = 4  /*!< Очень высокий приоритет. */
 };
 
