@@ -8,9 +8,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(detail)
 
 template <typename TYPE>
-struct RawType {
-	using type = TYPE;
-};
+using unwrap_t = typename std::decay<TYPE>::type;
 
 NAMESPACE_END(detail)
 NAMESPACE_END(core)
