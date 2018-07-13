@@ -3,13 +3,13 @@
 
 using namespace sway;
 
-BOOST_AUTO_TEST_SUITE(VersionTestSuite)
+BOOST_AUTO_TEST_SUITE(Version_TestSuite)
 
 /*!
  * \brief
  *    Убеждаемся, что конструктор по умолчанию приводит все компоненты к нулю.
  */
-BOOST_AUTO_TEST_CASE(VersionTestCase_DefaultConstructor) {
+BOOST_AUTO_TEST_CASE(Version_TestCase_DefaultConstructor) {
 	const core::Version version;
 
 	BOOST_CHECK_EQUAL(version.getMajor(), DONT_CARE);
@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE(VersionTestCase_DefaultConstructor) {
  *    Убеждаемся, что конструктор устанавливает все значения компонентов в те, 
  *    которые были заданы.
  */
-BOOST_AUTO_TEST_CASE(VersionTestCase_ComponentConstructor) {
+BOOST_AUTO_TEST_CASE(Version_TestCase_ComponentConstructor) {
 	const s32_t major = 1, minor = 2, patch = 3;
 	const core::Version version(major, minor, patch, "tmp");
 
@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(VersionTestCase_ComponentConstructor) {
  * \brief
  *    Убеждаемся, что установка всех компонентов версии проходит правильно.
  */
-BOOST_AUTO_TEST_CASE(VersionTestCase_Setters) {
+BOOST_AUTO_TEST_CASE(Version_TestCase_Setters) {
 	const s32_t major = 1, minor = 2, patch = 3;
 	core::Version version;
 
@@ -58,7 +58,7 @@ BOOST_AUTO_TEST_CASE(VersionTestCase_Setters) {
  * \brief
  *    Тест для оператора равенства
  */
-BOOST_AUTO_TEST_CASE(VersionTestCase_EqualityOperator) {
+BOOST_AUTO_TEST_CASE(Version_TestCase_EqualityOperator) {
 	const core::Version version(1, 2, 3);
 
 	BOOST_CHECK(version == core::Version(1, 2, 3));
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE(VersionTestCase_EqualityOperator) {
  * \brief
  *    Тест для оператора неравенства.
  */
-BOOST_AUTO_TEST_CASE(VersionTestCase_NonEqualityOperator) {
+BOOST_AUTO_TEST_CASE(Version_TestCase_NonEqualityOperator) {
 	const core::Version version(1, 2, 3);
 
 	BOOST_CHECK(version != core::Version(1));
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE(VersionTestCase_NonEqualityOperator) {
  * \brief
  *    Убеждаемся, что сравнение номеров версий происходит правильно
  */
-BOOST_AUTO_TEST_CASE(VersionTestCase_ComparisonOperation) {
+BOOST_AUTO_TEST_CASE(Version_TestCase_ComparisonOperation) {
 	const core::Version version(5, 2, 3);
 
 	BOOST_CHECK(version >= core::Version(4));
