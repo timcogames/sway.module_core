@@ -34,6 +34,32 @@ enum class Type_t : u8_t {
 	kDouble
 };
 
+#pragma region "Развертывание шаблонных конверторов"
+
+NAMESPACE_BEGIN(core)
+NAMESPACE_BEGIN(detail)
+
+#include <sway/core/detail/typeutils.h>
+#include <sway/core/detail/typeutilmacros.h>
+
+DECLARE_TYPE_CONVERTORS(Type_t::kChar, s8_t)
+DECLARE_TYPE_CONVERTORS(Type_t::kShort, s16_t)
+DECLARE_TYPE_CONVERTORS(Type_t::kInt, s32_t)
+DECLARE_TYPE_CONVERTORS(Type_t::kLong, s64_t)
+DECLARE_TYPE_CONVERTORS(Type_t::kUChar, u8_t)
+DECLARE_TYPE_CONVERTORS(Type_t::kUShort, u16_t)
+DECLARE_TYPE_CONVERTORS(Type_t::kUInt, u32_t)
+DECLARE_TYPE_CONVERTORS(Type_t::kULong, u64_t)
+DECLARE_TYPE_CONVERTORS(Type_t::kFloat, f32_t)
+DECLARE_TYPE_CONVERTORS(Type_t::kDouble, f64_t)
+
+#undef DECLARE_TYPE_CONVERTORS
+
+NAMESPACE_END(detail)
+NAMESPACE_END(core)
+
+#pragma endregion
+
 NAMESPACE_END(sway)
 
 #endif // SWAY_TYPES_H
