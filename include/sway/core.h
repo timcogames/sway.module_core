@@ -12,6 +12,7 @@
 #include <sway/core/version.h>
 #include <sway/exceptions.h>
 #include <sway/namespacemacros.h>
+#include <sway/visibilitymacros.h>
 #include <sway/defines.h>
 #include <sway/types.h>
 
