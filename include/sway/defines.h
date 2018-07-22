@@ -3,4 +3,6 @@
 
 #define DONT_CARE (-1)
 
+#define ENUM_BITMASK(x) (1 << x)
+
 #endif // SWAY_DEFINES_H
