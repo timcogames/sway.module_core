@@ -2,6 +2,7 @@
 #define SWAY_CORE_H
 
 #include <sway/core/detail/rawtype.h>
+#include <sway/core/detail/enumutils.h>
 #include <sway/core/foundation/objectmetadata.h>
 #include <sway/core/foundation/object.h>
 #include <sway/core/foundation/declareobjectmacros.h>

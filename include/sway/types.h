@@ -20,7 +20,7 @@ typedef unsigned long u64_t;
 typedef s8_t * lpstr_t;
 typedef const s8_t * lpcstr_t;
 
-enum class Type_t : u8_t {
+enum class Type_t : s32_t {
 	kNone, /*!< Неопределенный тип */
 	kChar, /*!< Тип 8bit целого числа со знаком */
 	kShort, /*!< Тип 16bit целого числа со знаком */
