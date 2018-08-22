@@ -18,15 +18,32 @@ public:
 	/*!
 	 * \brief
 	 *    Конструктор класса.
+	 * 
+	 * \param[in] ptr
+	 *     Указатель на функции.
 	 */
 	TFunction(ProcAddress_t ptr);
 
+	/*!
+	 * \brief
+	 *    Выполняет вызов функции.
+	 * 
+	 * \param[in] args
+	 *     Аргументы функции.
+	 */
 	inline ReturnType operator()(Arguments... args);
 
+	/*!
+	 * \brief
+	 *    Выполняет вызов функции.
+	 * 
+	 * \param[in] args
+	 *     Аргументы функции.
+	 */
 	inline ReturnType call(Arguments... args);
 
 private:
-	ProcAddress_t _address;
+	ProcAddress_t _address; /*!< Указатель на функции. */
 };
 
 NAMESPACE_END(binding)

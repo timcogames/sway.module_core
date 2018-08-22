@@ -11,12 +11,12 @@
 #	define EXTERN_C_END
 #endif
 
-#define EXPORT_ATTRIBUTE __attribute__((visibility("default")))
+#define PUBLIC_ATTRIBUTE __attribute__((visibility("default")))
 #define HIDDEN_ATTRIBUTE __attribute__((visibility("hidden")))
 
 #ifdef BUILD_DLLAPI_LIBMODULE
 #	undef  DLLAPI_EXPORT
-#	define DLLAPI_EXPORT EXPORT_ATTRIBUTE
+#	define DLLAPI_EXPORT PUBLIC_ATTRIBUTE
 #else
 #	undef  DLLAPI_EXPORT
 #	define DLLAPI_EXPORT
