@@ -15,17 +15,16 @@ public:
 	/*!
 	 * \brief
 	 *    Конструктор класса.
-	 *
 	 *    Выполняет инициализацию нового экземпляра класса.
 	 *
 	 * \param[in] className
 	 *    Имя класса.
 	 * 
-	 * \param[in] superclass
+	 * \param[in] superClass
 	 *    Указатель на объект метаданных базового класса.
 	 */
-	ObjectMetadata(lpcstr_t className, const ObjectMetadata * superclass)
-		: _superclass(superclass), _className(className) {
+	ObjectMetadata(lpcstr_t className, const ObjectMetadata * superClass)
+		: _superClass(superClass), _className(className) {
 		// Empty
 	}
 
@@ -33,8 +32,8 @@ public:
 	 * \brief
 	 *    Получает метаданные базового класса.
 	 */
-	const ObjectMetadata * getSuperclass() const {
-		return _superclass;
+	const ObjectMetadata * getSuperClass() const {
+		return _superClass;
 	}
 
 	/*!
@@ -46,7 +45,7 @@ public:
 	}
 
 private:
-	const ObjectMetadata * _superclass; /*!< Метаданные базового класса. */
+	const ObjectMetadata * _superClass; /*!< Метаданные базового класса. */
 	std::string _className; /*!< Имя класса. */
 };
 

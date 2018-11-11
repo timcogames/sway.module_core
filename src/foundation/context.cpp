@@ -6,10 +6,6 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-Context::Context() {
-	// Empty
-}
-
 Context::~Context() {
 	_objects.clear();
 }

@@ -17,21 +17,42 @@ class TFunction<ReturnType (Arguments...)> {
 public:
 	/*!
 	 * \brief
+	 *    Конструктор класса по умолчанию.
+	 * 
+	 * \sa
+	 *    TFunction(std::nullptr_t)
+	 *    TFunction(ProcAddress_t ptr)
+	 */
+	TFunction();
+
+	/*!
+	 * \brief
+	 *    Конструктор класса.
+	 * 
+	 * \sa
+	 *    TFunction()
+	 *    TFunction(ProcAddress_t ptr)
+	 */
+	TFunction(std::nullptr_t);
+
+	/*!
+	 * \brief
 	 *    Конструктор класса.
 	 * 
 	 * \param[in] ptr
-	 *     Указатель на функции.
+	 *     Указатель на вызываемую функцию.
+	 * 
+	 * \sa
+	 *    TFunction()
+	 *    TFunction(std::nullptr_t)
 	 */
 	TFunction(ProcAddress_t ptr);
 
 	/*!
 	 * \brief
-	 *    Выполняет вызов функции.
-	 * 
-	 * \param[in] args
-	 *     Аргументы функции.
+	 *    Определяет, сохранен ли объект вызываемой функции.
 	 */
-	inline ReturnType operator()(Arguments... args);
+	operator bool() const;
 
 	/*!
 	 * \brief
@@ -40,10 +61,19 @@ public:
 	 * \param[in] args
 	 *     Аргументы функции.
 	 */
-	inline ReturnType call(Arguments... args);
+	ReturnType operator()(Arguments... args);
 
-private:
-	ProcAddress_t _address; /*!< Указатель на функции. */
+	/*!
+	 * \brief
+	 *    Выполняет вызов функции.
+	 * 
+	 * \param[in] args
+	 *     Аргументы функции.
+	 */
+	ReturnType call(Arguments... args);
+
+protected:
+	ProcAddress_t _funcPtr; /*!< Указатель на функции. */
 };
 
 NAMESPACE_END(binding)

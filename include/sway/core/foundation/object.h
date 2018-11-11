@@ -20,7 +20,6 @@ public:
 	/*!
 	 * \brief
 	 *    Конструктор класса.
-	 *
 	 *    Выполняет инициализацию нового экземпляра класса.
 	 *
 	 * \param[in] context
@@ -34,8 +33,6 @@ public:
 	/*!
 	 * \brief
 	 *    Деструктор класса.
-	 *
-	 *    Освобождает захваченные ресурсы.
 	 */
 	virtual ~Object() {
 		// Empty
@@ -51,7 +48,7 @@ public:
 	 * \brief
 	 *    Получает метаданные базового класса.
 	 */
-	virtual const ObjectMetadata * getSuperclass() const = 0;
+	virtual const ObjectMetadata * getSuperClass() const = 0;
 
 	/*!
 	 * \brief

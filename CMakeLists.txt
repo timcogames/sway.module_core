@@ -5,12 +5,12 @@ cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
 set(META_PROJECT_NAME module_core)
 set(META_LIB_NAME lib${META_PROJECT_NAME})
 set(META_VERSION_MAJOR 0)
-set(META_VERSION_MINOR 3)
-set(META_VERSION_PATCH 27)
+set(META_VERSION_MINOR 5)
+set(META_VERSION_PATCH 32)
 set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
 
 # Опции сборки
-option(BUILD_SHARED "Build shared library" OFF)
+option(MODULE_CORE_BUILD_SHARED "Build shared library" OFF)
 option(ENABLE_COVERAGE "Enable coverage builds" OFF)
 option(ENABLE_TESTS "Enable test builds" OFF)
 
@@ -45,7 +45,7 @@ include_directories(${MODULE_CORE_DIR}/include)
 file(GLOB_RECURSE MODULE_CORE_HEADERS ${MODULE_CORE_DIR}/include/*.*)
 file(GLOB_RECURSE MODULE_CORE_SOURCE ${MODULE_CORE_DIR}/src/*.*)
 
-if(BUILD_SHARED)
+if(MODULE_CORE_BUILD_SHARED)
 	# Добавляем в проект цель для сборки статической библиотеки
 	add_library(${META_LIB_NAME} SHARED ${MODULE_CORE_SOURCE})
 	set_target_properties(${META_LIB_NAME} PROPERTIES OUTPUT_NAME ${META_PROJECT_NAME})
