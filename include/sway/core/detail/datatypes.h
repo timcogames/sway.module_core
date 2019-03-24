@@ -8,7 +8,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(detail)
 
-enum class DataType_t : s32_t {
+enum class DataType_t : u32_t {
 	kChar, /*!< Тип 8bit целого числа со знаком */
 	kShort, /*!< Тип 16bit целого числа со знаком */
 	kInt, /*!< Тип 32bit целого числа со знаком */

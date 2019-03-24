@@ -19,7 +19,7 @@ public:
 
 	/*!
 	 * \brief
-	 *    Деструктор класса.
+	 *    Виртуальный деструктор класса.
 	 */
 	virtual ~FileSource() = default;
 

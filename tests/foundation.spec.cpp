@@ -16,13 +16,13 @@ public:
 	ThingyObject(core::foundation::Context * context) : core::foundation::Object(context) {
 		// Empty
 	}
-	
+
 	~ThingyObject() = default;
 };
 
-bool correctMessage(const ArgumentNullException & exception) {
-    BOOST_CHECK_EQUAL(exception.what(), std::string("Null argument"));
-    return true;
+bool correctMessage(const core::runtime::exceptions::ArgumentNullException & exception) {
+	BOOST_CHECK_EQUAL(exception.what(), std::string("Value cannot be null. Parameter name: object"));
+	return true;
 }
 
 BOOST_FIXTURE_TEST_SUITE(ThingyContext_TestSuite, ThingyContext);
@@ -30,7 +30,7 @@ BOOST_FIXTURE_TEST_SUITE(ThingyContext_TestSuite, ThingyContext);
 BOOST_AUTO_TEST_CASE(ThingyContext_TestCase) {
 	ThingyObject * object = new ThingyObject(this);
 
-	BOOST_CHECK_EXCEPTION(registerObject(nullptr), ArgumentNullException, correctMessage);
+	BOOST_CHECK_EXCEPTION(registerObject(nullptr), core::runtime::exceptions::ArgumentNullException, correctMessage);
 	BOOST_CHECK_NO_THROW(registerObject(object));
 	BOOST_CHECK_EQUAL(getObjectCount(), 1);
 

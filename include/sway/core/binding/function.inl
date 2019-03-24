@@ -12,7 +12,7 @@ TFunction<ReturnType (Arguments...)>::TFunction()
 }
 
 template <typename ReturnType, typename... Arguments>
-TFunction<ReturnType (Arguments...)>::TFunction(std::nullptr_t) : TFunction() {
+TFunction<ReturnType (Arguments...)>::TFunction(decltype (nullptr)) : TFunction() {
 	// Empty
 }
 
@@ -25,6 +25,16 @@ TFunction<ReturnType (Arguments...)>::TFunction(ProcAddress_t ptr)
 template <typename ReturnType, typename... Arguments>
 TFunction<ReturnType (Arguments...)>::operator bool() const {
 	return _funcPtr != nullptr;
+}
+
+template <typename ReturnType, typename... Arguments>
+bool TFunction<ReturnType (Arguments...)>::operator== (decltype (nullptr)) const {
+	return (_funcPtr == nullptr);
+}
+
+template <typename ReturnType, typename... Arguments>
+bool TFunction<ReturnType (Arguments...)>::operator!= (decltype (nullptr)) const {
+	return (_funcPtr != nullptr);
 }
 
 template <typename ReturnType, typename... Arguments>

@@ -45,6 +45,18 @@ include_directories(${MODULE_CORE_DIR}/include)
 file(GLOB_RECURSE MODULE_CORE_HEADERS ${MODULE_CORE_DIR}/include/*.*)
 file(GLOB_RECURSE MODULE_CORE_SOURCE ${MODULE_CORE_DIR}/src/*.*)
 
+set(Boost_USE_STATIC_LIBS ON)
+set(BOOST_COMPONENTS system filesystem thread)
+find_package(Boost 1.58 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
+if(NOT Boost_FOUND)
+	message(FATAL_ERROR "Fatal error: Boost (version >= 1.58) required.")
+else()
+	message(STATUS "Boost includes: ${Boost_INCLUDE_DIRS}")
+	message(STATUS "Boost libs: ${Boost_LIBRARIES}")
+
+	include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
 if(MODULE_CORE_BUILD_SHARED)
 	# Добавляем в проект цель для сборки статической библиотеки
 	add_library(${META_LIB_NAME} SHARED ${MODULE_CORE_SOURCE})
@@ -58,6 +70,8 @@ else()
 	set_target_properties(${META_LIB_NAME} PROPERTIES PREFIX "")
 	set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".a.${META_VERSION}")
 endif()
+
+target_link_libraries(${META_LIB_NAME} Boost::system Boost::filesystem Boost::thread)
 
 # Добавляем построение тестов
 if(ENABLE_TESTS)

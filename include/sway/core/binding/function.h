@@ -20,7 +20,7 @@ public:
 	 *    Конструктор класса по умолчанию.
 	 * 
 	 * \sa
-	 *    TFunction(std::nullptr_t)
+	 *    TFunction(decltype (nullptr))
 	 *    TFunction(ProcAddress_t ptr)
 	 */
 	TFunction();
@@ -33,7 +33,7 @@ public:
 	 *    TFunction()
 	 *    TFunction(ProcAddress_t ptr)
 	 */
-	TFunction(std::nullptr_t);
+	TFunction(decltype (nullptr));
 
 	/*!
 	 * \brief
@@ -44,7 +44,7 @@ public:
 	 * 
 	 * \sa
 	 *    TFunction()
-	 *    TFunction(std::nullptr_t)
+	 *    TFunction(decltype (nullptr))
 	 */
 	TFunction(ProcAddress_t ptr);
 
@@ -54,6 +54,10 @@ public:
 	 */
 	operator bool() const;
 
+	bool operator== (decltype (nullptr)) const;
+
+	bool operator!= (decltype (nullptr)) const;
+
 	/*!
 	 * \brief
 	 *    Выполняет вызов функции.
@@ -61,7 +65,7 @@ public:
 	 * \param[in] args
 	 *     Аргументы функции.
 	 */
-	ReturnType operator()(Arguments... args);
+	ReturnType operator() (Arguments... args);
 
 	/*!
 	 * \brief

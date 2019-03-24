@@ -10,7 +10,7 @@ BOOST_AUTO_TEST_SUITE(Function_TestSuite)
 BOOST_AUTO_TEST_CASE(Function_TestCase) {
 	TestFunc_t func;
 	BOOST_CHECK_EQUAL(func, false);
-	func = (core::binding::ProcAddress_t)[](){
+	func = (core::binding::ProcAddress_t)[]() {
 		// Empty
 	};
 	BOOST_CHECK_EQUAL(func, true);

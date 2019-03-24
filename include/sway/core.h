@@ -1,6 +1,10 @@
 #ifndef SWAY_CORE_H
 #define SWAY_CORE_H
 
+#include <sway/core/runtime/exception.h>
+#include <sway/core/runtime/exceptions/argumentnullexception.h>
+#include <sway/core/runtime/exceptions/librarynotfoundexception.h>
+#include <sway/core/runtime/exceptions/symbolnotfoundexception.h>
 #include <sway/core/detail/rawtype.h>
 #include <sway/core/detail/datatypes.h>
 #include <sway/core/detail/enumutils.h>
@@ -14,7 +18,6 @@
 #include <sway/core/intrusive/priorities.h>
 #include <sway/core/memory/safedeletemacros.h>
 #include <sway/core/version.h>
-#include <sway/exceptions.h>
 #include <sway/namespacemacros.h>
 #include <sway/visibilitymacros.h>
 #include <sway/defines.h>
