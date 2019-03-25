@@ -18,6 +18,8 @@
 #include <sway/core/intrusive/priorities.h>
 #include <sway/core/memory/safedeletemacros.h>
 #include <sway/core/version.h>
+#include <sway/core/plugininfo.h>
+#include <sway/core/plugin.h>
 #include <sway/namespacemacros.h>
 #include <sway/visibilitymacros.h>
 #include <sway/defines.h>
