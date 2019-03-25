@@ -27,29 +27,29 @@ bool Plugin::isLoaded() const {
 }
 
 PluginInfo Plugin::getInfo() const {
-	std::string pluginGetInfoStr = std::string("pluginGetInfo");
-	binding::TFunction<PluginInfo ()> pluginGetInfoFunc;
+	std::string functionName = std::string("pluginGetInfo");
+	PluginGetInfoFunc_t pluginGetInfoFunc;
 
-	pluginGetInfoFunc = (core::binding::ProcAddress_t) dlsym(_handle, pluginGetInfoStr.c_str());
+	pluginGetInfoFunc = (core::binding::ProcAddress_t) dlsym(_handle, functionName.c_str());
 	if (pluginGetInfoFunc == nullptr) {
 		dlclose(_handle);
-		throw runtime::exceptions::SymbolNotFoundException(pluginGetInfoStr, dlerror());
+		throw runtime::exceptions::SymbolNotFoundException(functionName, dlerror());
 	}
-	
+
 	return pluginGetInfoFunc();
 }
 
-void Plugin::initialize(struct PluginFuncSet * functions) {
-	std::string pluginInitStr = std::string("pluginInitialize");
-	binding::TFunction<void (struct PluginFuncSet *)> pluginInitFunc;
+void Plugin::initialize(PluginFunctionSet * functions) {
+	std::string functionName = std::string("pluginInitialize");
+	PluginInitializeFunc_t pluginInitializeFunc;
 
-	pluginInitFunc = (core::binding::ProcAddress_t) dlsym(_handle, pluginInitStr.c_str());
-	if (pluginInitFunc == nullptr) {
+	pluginInitializeFunc = (core::binding::ProcAddress_t) dlsym(_handle, functionName.c_str());
+	if (pluginInitializeFunc == nullptr) {
 		dlclose(_handle);
-		throw runtime::exceptions::SymbolNotFoundException(pluginInitStr, dlerror());
+		throw runtime::exceptions::SymbolNotFoundException(functionName, dlerror());
 	}
 
-	pluginInitFunc(functions);
+	pluginInitializeFunc(functions);
 }
 
 NAMESPACE_END(core)

@@ -13,8 +13,11 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
+struct PluginFunctionSet { };
+
 typedef void * DlibHandle_t;
-typedef boost::function<binding::ProcAddress_t (const std::string &)> PluginSymbolError_t;
+typedef binding::TFunction<PluginInfo ()> PluginGetInfoFunc_t;
+typedef binding::TFunction<void (PluginFunctionSet *)> PluginInitializeFunc_t;
 
 class Plugin {
 public:
@@ -41,7 +44,7 @@ public:
 	 */
 	PluginInfo getInfo() const;
 
-	void initialize(struct PluginFuncSet * functions);
+	void initialize(PluginFunctionSet * functions);
 
 private:
 	DlibHandle_t _handle;

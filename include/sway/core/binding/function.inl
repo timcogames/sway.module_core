@@ -7,7 +7,7 @@ NAMESPACE_BEGIN(binding)
 
 template <typename ReturnType, typename... Arguments>
 TFunction<ReturnType (Arguments...)>::TFunction()
-	: _funcPtr(nullptr) {
+	: _invoker(nullptr) {
 	// Empty
 }
 
@@ -18,23 +18,28 @@ TFunction<ReturnType (Arguments...)>::TFunction(decltype (nullptr)) : TFunction(
 
 template <typename ReturnType, typename... Arguments>
 TFunction<ReturnType (Arguments...)>::TFunction(ProcAddress_t ptr)
-	: _funcPtr(ptr) {
+	: _invoker(ptr) {
 	// Empty
 }
 
 template <typename ReturnType, typename... Arguments>
 TFunction<ReturnType (Arguments...)>::operator bool() const {
-	return _funcPtr != nullptr;
+	return _invoker != nullptr;
 }
 
 template <typename ReturnType, typename... Arguments>
 bool TFunction<ReturnType (Arguments...)>::operator== (decltype (nullptr)) const {
-	return (_funcPtr == nullptr);
+	return (_invoker == nullptr);
 }
 
 template <typename ReturnType, typename... Arguments>
 bool TFunction<ReturnType (Arguments...)>::operator!= (decltype (nullptr)) const {
-	return (_funcPtr != nullptr);
+	return (_invoker != nullptr);
+}
+
+template <typename ReturnType, typename... Arguments>
+bool TFunction<ReturnType (Arguments...)>::operator!= (const TFunction<ReturnType(Arguments...)> & function) const {
+	return _invoker != function._invoker;
 }
 
 template <typename ReturnType, typename... Arguments>
@@ -44,7 +49,7 @@ ReturnType TFunction<ReturnType (Arguments...)>::operator()(Arguments... args) {
 
 template <typename ReturnType, typename... Arguments>
 ReturnType TFunction<ReturnType (Arguments...)>::call(Arguments... args) {
-	return (*reinterpret_cast<ReturnType (*)(Arguments...)>(_funcPtr))(std::forward<Arguments>(args)...);
+	return (*reinterpret_cast<ReturnType (*)(Arguments...)>(_invoker))(std::forward<Arguments>(args)...);
 }
 
 NAMESPACE_END(binding)

@@ -58,6 +58,8 @@ public:
 
 	bool operator!= (decltype (nullptr)) const;
 
+	bool operator!= (const TFunction<ReturnType(Arguments...)> & function) const;
+
 	/*!
 	 * \brief
 	 *    Выполняет вызов функции.
@@ -77,7 +79,7 @@ public:
 	ReturnType call(Arguments... args);
 
 protected:
-	ProcAddress_t _funcPtr; /*!< Указатель на функции. */
+	ProcAddress_t _invoker; /*!< Указатель на функции. */
 };
 
 NAMESPACE_END(binding)
