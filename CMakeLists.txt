@@ -1,12 +1,12 @@
 # Проверяем версию CMake
-cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 
 # Мета-информация о проекте
 set(META_PROJECT_NAME module_core)
 set(META_LIB_NAME lib${META_PROJECT_NAME})
 set(META_VERSION_MAJOR 0)
 set(META_VERSION_MINOR 5)
-set(META_VERSION_PATCH 38)
+set(META_VERSION_PATCH 39)
 set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
 
 # Опции сборки
