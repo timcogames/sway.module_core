@@ -21,7 +21,7 @@ public:
 };
 
 bool correctMessage(const core::runtime::exceptions::ArgumentNullException & exception) {
-	BOOST_CHECK_EQUAL(exception.what(), std::string("Value cannot be null. Parameter name: object"));
+	BOOST_CHECK_EQUAL(exception.what(), "Value cannot be null. Parameter name: object");
 	return true;
 }
 

@@ -2,6 +2,7 @@
 #define SWAY_CORE_RUNTIME_EXCEPTIONS_SYMBOLNOTFOUNDEXCEPTION_H
 
 #include <sway/core/runtime/exception.h>
+#include <sway/core/misc/format.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -22,7 +23,7 @@ public:
 	 */
 	SymbolNotFoundException(const std::string & symbolName, const std::string & dlerror = "")
 		: Exception([symbolName]() -> std::string {
-			return (boost::format("Cannot find symbol: %s") % symbolName).str();
+			return misc::format("Cannot find symbol: %s", symbolName.c_str());
 		} ())
 		, _symbolName(symbolName)
 		, _dlerror(dlerror) {

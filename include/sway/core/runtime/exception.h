@@ -4,7 +4,6 @@
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
 
-#include <boost/format.hpp> // boost::format
 #include <exception> // std::exception
 #include <string> // std::string
 

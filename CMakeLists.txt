@@ -6,7 +6,7 @@ set(META_PROJECT_NAME module_core)
 set(META_LIB_NAME lib${META_PROJECT_NAME})
 set(META_VERSION_MAJOR 0)
 set(META_VERSION_MINOR 5)
-set(META_VERSION_PATCH 33)
+set(META_VERSION_PATCH 38)
 set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
 
 # Опции сборки
@@ -45,26 +45,6 @@ include_directories(${MODULE_CORE_DIR}/include)
 file(GLOB_RECURSE MODULE_CORE_HEADERS ${MODULE_CORE_DIR}/include/*.*)
 file(GLOB_RECURSE MODULE_CORE_SOURCE ${MODULE_CORE_DIR}/src/*.*)
 
-set(Boost_USE_STATIC_LIBS ON)
-set(Boost_NO_SYSTEM_PATHS TRUE)
-set(BOOST_COMPONENTS system filesystem)
-
-if (Boost_NO_SYSTEM_PATHS)
-	set(BOOST_ROOT "/usr/local")
-	set(BOOST_INCLUDEDIR "${BOOST_ROOT}/include")
-	set(BOOST_LIBRARYDIR "${BOOST_ROOT}/lib")
-endif (Boost_NO_SYSTEM_PATHS)
-
-find_package(Boost 1.69.0 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
-if(NOT Boost_FOUND)
-	message(FATAL_ERROR "Fatal error: Boost (version >= 1.69.0) required.")
-else()
-	message(STATUS "Boost includes: ${BOOST_INCLUDEDIR}")
-	message(STATUS "Boost libs: ${BOOST_LIBRARYDIR}")
-
-	include_directories(${BOOST_INCLUDEDIR})
-endif()
-
 if(MODULE_CORE_BUILD_SHARED)
 	# Добавляем в проект цель для сборки статической библиотеки
 	add_library(${META_LIB_NAME} SHARED ${MODULE_CORE_SOURCE})
@@ -79,7 +59,7 @@ else()
 	set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".a.${META_VERSION}")
 endif()
 
-target_link_libraries(${META_LIB_NAME} ${BOOST_LIBRARYDIR})
+target_link_libraries(${META_LIB_NAME})
 
 # Добавляем построение тестов
 if(ENABLE_TESTS)

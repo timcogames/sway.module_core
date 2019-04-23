@@ -3,13 +3,12 @@
 #include <sway/core/runtime/exceptions/librarynotfoundexception.h>
 #include <sway/core/runtime/exceptions/symbolnotfoundexception.h>
 
-#include <boost/format.hpp>
 #include <dlfcn.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
-Plugin::Plugin(boost::filesystem::path filepath) {
+Plugin::Plugin(const std::experimental::filesystem::path & filepath) {
 	if (filepath.empty())
 		throw runtime::exceptions::ArgumentNullException("filepath");
 

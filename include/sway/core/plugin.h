@@ -5,9 +5,7 @@
 #include <sway/core/plugininfo.h>
 #include <sway/namespacemacros.h>
 
-#include <boost/shared_ptr.hpp>
-#include <boost/make_shared.hpp>
-#include <boost/filesystem/path.hpp>
+#include <experimental/filesystem>
 #include <string>
 
 NAMESPACE_BEGIN(sway)
@@ -28,7 +26,7 @@ public:
 	 * \param[in] filepath
 	 *    Полный путь к файлу плагина
 	 */
-	Plugin(boost::filesystem::path filepath);
+	Plugin(const std::experimental::filesystem::path & filepath);
 
 	/*!
 	 * \brief

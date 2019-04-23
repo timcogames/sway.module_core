@@ -2,6 +2,7 @@
 #define SWAY_CORE_RUNTIME_EXCEPTIONS_ARGUMENTNULLEXCEPTION_H
 
 #include <sway/core/runtime/exception.h>
+#include <sway/core/misc/format.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -22,9 +23,8 @@ public:
 	 */
 	ArgumentNullException(const std::string & argumentName, std::string message = std::string())
 		: Exception([argumentName, message]() -> std::string {
-			return (boost::format((message.empty())
-				? "Value cannot be null. Parameter name: %s"
-				: message) % argumentName).str();
+			return misc::format(message.empty()
+				? "Value cannot be null. Parameter name: %s" : message.c_str(), argumentName.c_str());
 		} ())
 		, _argumentName(argumentName) {
 		// Empty

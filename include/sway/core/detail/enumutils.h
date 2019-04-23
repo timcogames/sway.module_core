@@ -14,7 +14,7 @@ using enableEnum_t = typename std::enable_if<std::is_enum<Enum>::value, typename
 template<typename Enum>
 constexpr inline enableEnum_t<Enum> toUnderlying(Enum key) noexcept {
 	return static_cast<typename std::underlying_type<Enum>::type>(key);
-}   
+}
 
 template<typename Enum, typename Type>
 constexpr inline typename std::enable_if<std::is_enum<Enum>::value && std::is_integral<Type>::value, Enum>::type toEnum(Type value) noexcept {

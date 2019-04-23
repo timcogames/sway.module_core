@@ -22,7 +22,7 @@ public:
 	 */
 	LibraryNotFoundException(const std::string & libName, const std::string & dlerror = "")
 		: Exception([libName]() -> std::string {
-			return (boost::format("Cannot load library: %s") % libName).str();
+			return misc::format("Cannot load library: %s", libName.c_str());
 		} ())
 		, _libName(libName)
 		, _dlerror(dlerror) {

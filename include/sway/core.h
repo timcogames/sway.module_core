@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_H
 #define SWAY_CORE_H
 
+#include <sway/core/misc/format.h>
 #include <sway/core/runtime/exception.h>
 #include <sway/core/runtime/exceptions/argumentnullexception.h>
 #include <sway/core/runtime/exceptions/librarynotfoundexception.h>
