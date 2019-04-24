@@ -12,7 +12,7 @@ TFunction<ReturnType (Arguments...)>::TFunction()
 }
 
 template <typename ReturnType, typename... Arguments>
-TFunction<ReturnType (Arguments...)>::TFunction(decltype (nullptr)) : TFunction() {
+TFunction<ReturnType (Arguments...)>::TFunction(decltype (nullptr)) {
 	// Empty
 }
 

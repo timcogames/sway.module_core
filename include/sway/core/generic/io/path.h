@@ -18,19 +18,19 @@ public:
 	 * \brief
 	 *    Конструктор класса по умолчанию.
 	 */
-	Path();
+	Path(const std::string & path);
 
 	/*!
 	 * \brief
 	 *    Деструктор класса.
 	 */
-	~Path();
+	~Path() = default;
 
 	/*!
 	 * \brief
 	 *    Возвращает имя файла и расширение.
 	 */
-	std::string getFileName() const;
+	std::string getFilename() const;
 
 	/*!
 	 * \brief
@@ -38,8 +38,14 @@ public:
 	 */
 	std::string getExtension() const;
 
+	bool isExists(const std::string & filename);
+
+	bool isEmpty() const;
+
+	std::string toString() const;
+
 private:
-	std::vector<std::string> _path; /*!< Путь к файлу или каталогу. */
+	std::string _path; /*!< Путь к файлу или каталогу. */
 };
 
 NAMESPACE_END(io)

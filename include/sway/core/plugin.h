@@ -2,10 +2,10 @@
 #define SWAY_CORE_PLUGIN_H
 
 #include <sway/core/binding/function.h>
+#include <sway/core/generic/io/path.h>
 #include <sway/core/plugininfo.h>
 #include <sway/namespacemacros.h>
 
-#include <experimental/filesystem>
 #include <string>
 
 NAMESPACE_BEGIN(sway)
@@ -26,7 +26,7 @@ public:
 	 * \param[in] filepath
 	 *    Полный путь к файлу плагина
 	 */
-	Plugin(const std::experimental::filesystem::path & filepath);
+	Plugin(const generic::io::Path & filepath);
 
 	/*!
 	 * \brief

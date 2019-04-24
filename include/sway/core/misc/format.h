@@ -4,8 +4,10 @@
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
 
+#include <string>
 #include <vector>
 #include <cstdarg> // va_start, va_end, std::va_list
+#include <stdio.h> // vsnprintf
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -18,7 +20,7 @@ inline std::string format(lpcstr_t const fmt, ...) {
 	while (temp.size() <= size) {
 		temp.resize(size + 1);
 		va_start(args, fmt);
-		int nsize = std::vsnprintf(temp.data(), temp.size(), fmt, args);
+		int nsize = vsnprintf(temp.data(), temp.size(), fmt, args);
 		va_end(args);
 
 		if (nsize < 0)

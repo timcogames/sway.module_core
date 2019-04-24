@@ -8,13 +8,13 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
-Plugin::Plugin(const std::experimental::filesystem::path & filepath) {
-	if (filepath.empty())
+Plugin::Plugin(const generic::io::Path & filepath) {
+	if (filepath.isEmpty())
 		throw runtime::exceptions::ArgumentNullException("filepath");
 
-	_handle = dlopen(filepath.c_str(), RTLD_LAZY | RTLD_GLOBAL);
+	_handle = dlopen(filepath.toString().c_str(), RTLD_LAZY | RTLD_GLOBAL);
 	if (!isLoaded())
-		throw runtime::exceptions::LibraryNotFoundException(filepath.stem().string(), dlerror());
+		throw runtime::exceptions::LibraryNotFoundException(filepath.getFilename(), dlerror());
 }
 
 Plugin::~Plugin() {
