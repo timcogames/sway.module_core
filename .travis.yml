@@ -26,12 +26,9 @@ matrix:
       apt:
         sources:
           - ubuntu-toolchain-r-test
-          - sourceline: ppa:kzemek/boost
         packages:
           - gcc-5
           - g++-5
-          - libboost1.69-dev
-          - libboost-test1.69-dev
     script:
       - |
         cmake .. \
@@ -51,13 +48,10 @@ matrix:
         sources:
           - ubuntu-toolchain-r-test
           - llvm-toolchain-trusty-4.0
-          - sourceline: ppa:kzemek/boost
         packages:
           - clang-3.8
           - gcc-5
           - g++-5
-          - libboost1.69-dev
-          - libboost-test1.69-dev
     script:
       - |
         cmake .. \
@@ -77,12 +71,9 @@ matrix:
       apt:
         sources:
           - ubuntu-toolchain-r-test
-          - sourceline: ppa:kzemek/boost
         packages:
           - gcc-5
           - g++-5
-          - libboost1.69-dev
-          - libboost-test1.69-dev
     install:
       - pip install --user --upgrade pip
       - pip --version
@@ -113,12 +104,9 @@ matrix:
       apt:
         sources:
           - ubuntu-toolchain-r-test
-          - sourceline: ppa:kzemek/boost
         packages:
           - gcc-5
           - g++-5
-          - libboost1.69-dev
-          - libboost-test1.69-dev
       coverity_scan:
         project:
           name: "timcogames/sway.module_core"
@@ -140,12 +128,9 @@ matrix:
       apt:
         sources:
           - ubuntu-toolchain-r-test
-          - sourceline: ppa:kzemek/boost
         packages:
           - gcc-5
           - g++-5
-          - libboost1.69-dev
-          - libboost-test1.69-dev
     script:
       - pip install --upgrade --user git+git://github.com/eddyxu/cpp-coveralls.git
       - |
@@ -163,6 +148,23 @@ matrix:
           -e build/CMakeFiles/3.8.0 \
           -e build/CMakeFiles/feature_tests.c \
           -e build/CMakeFiles/feature_tests.cxx
+
+install:
+  - |
+  THIRD_PART_DIR="${TRAVIS_BUILD_DIR}/../thirdpart"
+  mkdir -p ${THIRD_PART_DIR}
+  cd ${THIRD_PART_DIR}
+  - |
+  BOOST_VERSION=1.69
+  BOOST_DIR=${THIRD_PARTY_DIR}/boost-${BOOST_VERSION}
+  BOOST_URL="https://dl.bintray.com/boostorg/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION//\./_}.tar.bz2"
+  BOOST_LIBS="filesystem,system,thread,test"
+  BOOST_BUILD_TYPE="architecture=x86 address-model=32_64 variant=release threading=multi link=static stage"
+  mkdir -p ${BOOST_DIR} && travis_retry wget --quiet -O - ${BOOST_URL} | tar --strip-components=1 -xj -C ${BOOST_DIR}
+  cd ${BOOST_DIR}
+  ./bootstrap.sh --with-libraries=${BOOST_LIBS}
+  sudo ./b2 ${BOOST_BUILD_TYPE}
+  sudo checkinstall ./b2 install
 
 notifications:
   email: false
