@@ -38,8 +38,8 @@ cmake --build .
 
 См. [CONTRIBUTING](./github/CONTRIBUTING.md)
 
-[travis-svg]: https://travis-ci.com/timcogames/sway.module_core.svg?branch=master
-[travis-url]: https://travis-ci.com/timcogames/sway.module_core
+[travis-svg]: https://travis-ci.org/timcogames/sway.module_core.svg?branch=master
+[travis-url]: https://travis-ci.org/timcogames/sway.module_core
 [coverity-svg]: https://scan.coverity.com/projects/15977/badge.svg
 [coverity-url]: https://scan.coverity.com/projects/15977
 [coverage-svg]: https://coveralls.io/repos/github/timcogames/sway.module_core/badge.svg?branch=master
