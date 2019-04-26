@@ -7,13 +7,17 @@ branches:
 
 env:
   global:
-    # scan.coverity token
-    - secure: "TwI3eYhcyqUUephcIdyRQu8pLHgI6Q84qUBz3Ml66wdzBQwN1ti+w8iS2Lc6tl7E9M7YEtHvuTQASVJsN+9j40LGvmtAb2TcZahMgEvogtcUVpM3T1oHXPiy54iqE8HtLIGiRLRPD+bSqTy2EIVtuowyjKiwXhIhDi7fBB+APa1Qzkv6vpKIg+7W7ndbrC8RmkBQn007PTAk8JRq0ThhRqeT1aiQCwRx+PMsEDYlvXexnUeGWGLtZc2LOoN7IJSoc0LS6DQlJXPCQQDt0lozXEmShIxrrEuIPZ4qTxJ2d79tChClQ6e1/YOiIihBdYO9BLMjkqAN44jBHogUZNHKr9ANM8tdrKm23K9N30GqZ908nq5gknpWeyBEB4B53+xUhXQq45yWgQ8wqShB85i5n5hkHA3zj3aP/kGCNPNp0GUZcQx9oQWhK3qxBStqsfW1QK/fEXlOEB1Ee4wD0IowgVXuLoY2dBz1wmFOwWCGUX5c9A5qwDRrtiYf4atWxdT6dBB1SxllbEIJyWk49JH/hHX/mnCwM73qDVydmWezOjcpN7PR+LLsJ4XkVY8NrIWEMXNOxg5KNYdSRXaG/hAxZFwxtc4gBaYrQqzubu0AxpFkKa6kkbM19ky76AiMjJEkIkvpbF2kz4gsO8VdGmv4/YusEobBlv2NdEuW0YubftQ="
+    - BUILD_TYPE=Debug
+    - THIRD_PART_DIR="${TRAVIS_BUILD_DIR}/thirdpart"
+    - BOOST_VERSION=1.69.0
+    - BOOST_ROOT=${THIRD_PART_DIR}/boost
+    - CMAKE_VERSION=3.14.3
+    - CMAKE_ROOT=${THIRD_PART_DIR}/cmake
 
-before_script:
-  - mkdir build && cd build
+install:
+  - mkdir ${THIRD_PART_DIR} && cd ${THIRD_PART_DIR}
+  - . ./../scripts/travis/install-boost.sh
   - . ./../scripts/travis/install-cmake.sh
-  
 matrix:
   include:
   #
@@ -33,7 +37,8 @@ matrix:
       - |
         cmake .. \
         -DCMAKE_CXX_COMPILER=g++-5 \
-        -DCMAKE_BUILD_TYPE=Debug \
+        -DBOOST_ROOT:PATH=${BOOST_ROOT} \
+        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
         -DENABLE_TESTS=ON
       - cmake --build .
 
@@ -57,6 +62,7 @@ matrix:
         cmake .. \
         -DCMAKE_C_COMPILER=clang-3.8 \
         -DCMAKE_CXX_COMPILER=clang++-3.8 \
+        -DBOOST_ROOT:PATH=${BOOST_ROOT} \
         -DENABLE_COVERAGE=ON \
         -DENABLE_TESTS=ON
       - cmake --build .
@@ -74,7 +80,7 @@ matrix:
         packages:
           - gcc-5
           - g++-5
-    install:
+    before_script:
       - pip install --user --upgrade pip
       - pip --version
       - pip install --user codecov
@@ -84,39 +90,16 @@ matrix:
       - gcov --version
     script:
       - |
-        cmake .. \
+        cmake ./../ \
         -DCMAKE_CXX_COMPILER=g++-5 \
-        -DCMAKE_BUILD_TYPE=Debug \
+        -DBOOST_ROOT:PATH=${BOOST_ROOT} \
+        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
         -DENABLE_COVERAGE=ON \
         -DENABLE_TESTS=ON
       - cmake --build .
       - bash ./../scripts/travis/codecov.sh
     after_success:
       - bash <(curl -s https://codecov.io/bash)
-
-  #
-  # Coverity Scan
-  #
-  - os: linux
-    env:
-      - TASK="Coverity Scan"
-    addons:
-      apt:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - gcc-5
-          - g++-5
-      coverity_scan:
-        project:
-          name: "timcogames/sway.module_core"
-          description: "Базовый модуль игрового фреймворка с открытым исходным кодом"
-        notification_email: victor-timoshin@hotmail.com
-        build_command_prepend: cmake -DCMAKE_BUILD_TYPE=Debug -DENABLE_TESTS=ON ..
-        build_command: cmake --build .
-        branch_pattern: master
-    script:
-      - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-certificates.crt
 
   #
   # Coveralls
@@ -131,40 +114,18 @@ matrix:
         packages:
           - gcc-5
           - g++-5
+    before_script:
+      - sudo pip install cpp-coveralls
     script:
-      - pip install --upgrade --user git+git://github.com/eddyxu/cpp-coveralls.git
       - |
-        cmake .. \
+        cmake ./../ \
         -DCMAKE_CXX_COMPILER=g++-5 \
-        -DCMAKE_BUILD_TYPE=Debug \
+        -DBOOST_ROOT:PATH=${BOOST_ROOT} \
+        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
         -DENABLE_COVERAGE=ON \
         -DENABLE_TESTS=ON
       - cmake --build .
-      - cd ..
-      - |
-        coveralls --build-root build --gcov-options '\-lp' \
-          -e build/external \
-          -e build/include \
-          -e build/CMakeFiles/3.8.0 \
-          -e build/CMakeFiles/feature_tests.c \
-          -e build/CMakeFiles/feature_tests.cxx
-
-  install:
-    - |
-      THIRD_PART_DIR="${TRAVIS_BUILD_DIR}/../thirdpart"
-      mkdir -p ${THIRD_PART_DIR}
-      cd ${THIRD_PART_DIR}
-    - |
-      BOOST_VERSION=1.69
-      BOOST_DIR=${THIRD_PARTY_DIR}/boost-${BOOST_VERSION}
-      BOOST_URL="https://dl.bintray.com/boostorg/release/${BOOST_VERSION}/source/boost_${BOOST_VERSION//\./_}.tar.bz2"
-      BOOST_LIBS="filesystem,system,thread,test"
-      BOOST_BUILD_TYPE="architecture=x86 address-model=32_64 variant=release threading=multi link=static stage"
-      mkdir -p ${BOOST_DIR} && travis_retry wget --quiet -O - ${BOOST_URL} | tar --strip-components=1 -xj -C ${BOOST_DIR}
-      cd ${BOOST_DIR}
-      ./bootstrap.sh --with-libraries=${BOOST_LIBS}
-      sudo ./b2 ${BOOST_BUILD_TYPE}
-      sudo checkinstall ./b2 install
+      - cd .. && coveralls --build-root . --gcov $(which gcov) --gcov-options '\-o build-coverage/' --include py --include extmod
 
 notifications:
   email: false

@@ -5,11 +5,12 @@ cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 set(META_PROJECT_NAME module_core)
 set(META_LIB_NAME lib${META_PROJECT_NAME})
 set(META_VERSION_MAJOR 0)
-set(META_VERSION_MINOR 7)
+set(META_VERSION_MINOR 8)
 set(META_VERSION_PATCH 42)
 set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATCH})
 
 # Опции сборки
+option(BOOST_ROOT "Path to build Boost" OFF)
 option(MODULE_CORE_BUILD_SHARED "Build shared library" OFF)
 option(ENABLE_COVERAGE "Enable coverage builds" OFF)
 option(ENABLE_TESTS "Enable test builds" OFF)

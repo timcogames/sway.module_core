@@ -1,6 +1,6 @@
 # sway.module_core
 
-[![Build Status][travis-svg]][travis-url] [![Coverity Scan Build Status][coverity-svg]][coverity-url] [![codecov][codecov-svg]][codecov-url] [![Coverage Status][coverage-svg]][coverage-url] [![BCH compliance][bettercodehub-svg]][bettercodehub-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
+[![Build Status][travis-svg]][travis-url] [![codecov][codecov-svg]][codecov-url] [![Coverage Status][coverage-svg]][coverage-url] [![BCH compliance][bettercodehub-svg]][bettercodehub-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
 
 ## Клонирование проекта
 
@@ -40,8 +40,6 @@ cmake --build .
 
 [travis-svg]: https://travis-ci.org/timcogames/sway.module_core.svg?branch=master
 [travis-url]: https://travis-ci.org/timcogames/sway.module_core
-[coverity-svg]: https://scan.coverity.com/projects/15977/badge.svg
-[coverity-url]: https://scan.coverity.com/projects/15977
 [coverage-svg]: https://coveralls.io/repos/github/timcogames/sway.module_core/badge.svg?branch=master
 [coverage-url]: https://coveralls.io/github/timcogames/sway.module_core?branch=master
 [bettercodehub-svg]: https://bettercodehub.com/edge/badge/timcogames/sway.module_core?branch=master
