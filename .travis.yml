@@ -39,7 +39,7 @@ matrix:
         -DCMAKE_CXX_COMPILER=g++-5 \
         -DBOOST_ROOT:PATH=${BOOST_ROOT} \
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
-        -DENABLE_TESTS=ON
+        -DMODULE_CORE_ENABLE_TESTS=ON
       - cmake --build .
 
   #
@@ -63,8 +63,8 @@ matrix:
         -DCMAKE_C_COMPILER=clang-3.8 \
         -DCMAKE_CXX_COMPILER=clang++-3.8 \
         -DBOOST_ROOT:PATH=${BOOST_ROOT} \
-        -DENABLE_COVERAGE=ON \
-        -DENABLE_TESTS=ON
+        -DMODULE_CORE_ENABLE_COVERAGE=ON \
+        -DMODULE_CORE_ENABLE_TESTS=ON
       - cmake --build .
 
   #
@@ -94,8 +94,8 @@ matrix:
         -DCMAKE_CXX_COMPILER=g++-5 \
         -DBOOST_ROOT:PATH=${BOOST_ROOT} \
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
-        -DENABLE_COVERAGE=ON \
-        -DENABLE_TESTS=ON
+        -DMODULE_CORE_ENABLE_COVERAGE=ON \
+        -DMODULE_CORE_ENABLE_TESTS=ON
       - cmake --build .
       - bash ./../scripts/travis/codecov.sh
     after_success:
@@ -122,8 +122,8 @@ matrix:
         -DCMAKE_CXX_COMPILER=g++-5 \
         -DBOOST_ROOT:PATH=${BOOST_ROOT} \
         -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
-        -DENABLE_COVERAGE=ON \
-        -DENABLE_TESTS=ON
+        -DMODULE_CORE_ENABLE_COVERAGE=ON \
+        -DMODULE_CORE_ENABLE_TESTS=ON
       - cmake --build .
       - cd .. && coveralls --build-root . --gcov $(which gcov) --gcov-options '\-o build-coverage/' --include py --include extmod
 

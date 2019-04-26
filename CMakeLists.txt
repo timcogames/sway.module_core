@@ -12,15 +12,15 @@ set(META_VERSION ${META_VERSION_MAJOR}.${META_VERSION_MINOR}.${META_VERSION_PATC
 # Опции сборки
 option(BOOST_ROOT "Path to build Boost" OFF)
 option(MODULE_CORE_BUILD_SHARED "Build shared library" OFF)
-option(ENABLE_COVERAGE "Enable coverage builds" OFF)
-option(ENABLE_TESTS "Enable test builds" OFF)
+option(MODULE_CORE_ENABLE_COVERAGE "Enable coverage builds" OFF)
+option(MODULE_CORE_ENABLE_TESTS "Enable test builds" OFF)
 
 project(${META_PROJECT_NAME} C CXX)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-if(ENABLE_COVERAGE)
+if(MODULE_CORE_ENABLE_COVERAGE)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g ")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs")
@@ -63,7 +63,7 @@ endif()
 target_link_libraries(${META_LIB_NAME})
 
 # Добавляем построение тестов
-if(ENABLE_TESTS)
+if(MODULE_CORE_ENABLE_TESTS)
 	message(STATUS "Tests have been enabled")
 	add_subdirectory(tests)
 endif()
