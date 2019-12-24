@@ -2,7 +2,10 @@
 #define SWAY_CORE_H
 
 #include <sway/core/misc/format.h>
-#include <sway/core/containers/hierarchy.h>
+#include <sway/core/misc/guid.h>
+#include <sway/core/containers/treelistener.h>
+#include <sway/core/containers/treenodebase.h>
+#include <sway/core/containers/tree.h>
 #include <sway/core/runtime/exception.h>
 #include <sway/core/runtime/exceptions/argumentnullexception.h>
 #include <sway/core/runtime/exceptions/librarynotfoundexception.h>
