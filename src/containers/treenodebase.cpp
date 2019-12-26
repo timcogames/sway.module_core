@@ -19,22 +19,28 @@ TreeNodeBase::~TreeNodeBase() {
 	// Empty
 }
 
-TreeNodeIndex TreeNodeBase::addChild(TreeNodePtr_t child) {
-	TreeNodeIndex childIndex = TreeNodeIndex();
-	if (hasChild(child->getNodeId()))
-		return childIndex;
+TreeNodeIndex TreeNodeBase::addChild(TreeNodePtr_t node) {
+	const TreeNodeIndex nodeIndex = TreeNodeIndex(getNodeIndex(), _children.size());
+	if (hasChild(node->getNodeId()))
+		return TreeNodeIndex();
 
-	childIndex = TreeNodeIndex(getNodeIndex(), _children.size());
-	child->setNodeIndex(childIndex);
-
-	_children.push_back(child);
+	_children.push_back(node);
+	_children.back()->setNodeIndex(nodeIndex);
 
 	if (_tree) {
 		for (TreeListener * listener : _tree->getListeners())
-			listener->onNodeAdded(this, child);
+			listener->onNodeAdded(nodeIndex);
 	}
 
-	return childIndex;
+	return nodeIndex;
+}
+
+TreeNodeIndex TreeNodeBase::add(TreeNodePtr_t node, std::function<void (const TreeNodeIndex &)> handleNodeAdded) {
+	const TreeNodeIndex nodeIndex = addChild(node);
+	if (handleNodeAdded)
+		handleNodeAdded(nodeIndex);
+
+	return nodeIndex;
 }
 
 void TreeNodeBase::removeChild(TreeNodePtr_t child) {

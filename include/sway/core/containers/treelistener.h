@@ -1,6 +1,7 @@
 #ifndef _SWAY_CORE_CONTAINERS_TREELISTENER_H
 #define _SWAY_CORE_CONTAINERS_TREELISTENER_H
 
+#include <sway/core/containers/treenodeindex.h>
 #include <sway/namespacemacros.h>
 
 NAMESPACE_BEGIN(sway)
@@ -19,7 +20,7 @@ public:
 		// Empty
 	}
 
-	virtual void onNodeAdded(TreeNodePtr_t parent, TreeNodePtr_t child) {
+	virtual void onNodeAdded(const TreeNodeIndex & nodeIndex) {
 		// Empty
 	}
 

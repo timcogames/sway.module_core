@@ -10,6 +10,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include <functional>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -50,6 +51,7 @@ public:
 	 *    Указатель на дочерний узел.
 	 */
 	TreeNodeIndex addChild(TreeNodePtr_t child);
+	TreeNodeIndex add(TreeNodePtr_t child, std::function<void (const TreeNodeIndex &)> handleNodeAdded);
 
 	void removeChild(TreeNodePtr_t child);
 
@@ -72,6 +74,11 @@ public:
 	 *    Индекс дочерний узла.
 	 */
 	TreeNodePtr_t getChild(u32_t nodeIdx) const;
+
+	template<typename TYPE>
+	TYPE getChildAt(u32_t nodeIdx) const {
+		return static_cast<TYPE> (getChild(nodeIdx));
+	}
 
 	/*!
 	 * \brief

@@ -15,7 +15,7 @@ Tree::~Tree() {
 
 TreeNodePtr_t Tree::find(const TreeNodeIndex & index) {
 	TreeNodePtr_t retrieved = _root;
-	for (int i = 0; i < index.getDepth(); ++i) {
+	for (int i = 1/* пропускаем корневой индекс */; i < index.getDepth(); ++i) {
 		if (index[i] >= retrieved->getChildCount())
 			return nullptr;
 
