@@ -16,15 +16,15 @@ class TreeListener {
 public:
 	virtual ~TreeListener() = default;
 
-	virtual void onNodeUpdated(TreeNodePtr_t child) {
-		// Empty
-	}
-
 	virtual void onNodeAdded(const TreeNodeIndex & nodeIndex) {
 		// Empty
 	}
 
 	virtual void onNodeRemoved(TreeNodePtr_t parent, TreeNodePtr_t child) {
+		// Empty
+	}
+
+	virtual void onNodeUpdated(const TreeNodeIndex & nodeIndex) {
 		// Empty
 	}
 };
