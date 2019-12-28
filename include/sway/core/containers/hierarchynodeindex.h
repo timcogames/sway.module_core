@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_CONTAINERS_TREENODEINDEX_H
-#define _SWAY_CORE_CONTAINERS_TREENODEINDEX_H
+#ifndef _SWAY_CORE_CONTAINERS_HIERARCHYNODEINDEX_H
+#define _SWAY_CORE_CONTAINERS_HIERARCHYNODEINDEX_H
 
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
@@ -12,14 +12,17 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
-class TreeNodeIndex {
+class HierarchyNodeIndex {
 public:
+
+#pragma region "Constructors / Destructor"
+
 	/*!
 	 * \brief
 	 *    Конструктор класса.
 	 *    Выполняет инициализацию нового экземпляра класса.
 	 */
-	TreeNodeIndex(std::vector<s32_t> indexes = std::vector<s32_t>())
+	HierarchyNodeIndex(std::vector<s32_t> indexes = std::vector<s32_t>())
 		: _indexes(indexes) {
 		// Empty
 	}
@@ -29,7 +32,7 @@ public:
 	 *    Конструктор класса.
 	 *    Выполняет инициализацию нового экземпляра класса.
 	 */
-	TreeNodeIndex(const TreeNodeIndex & parent, s32_t index)
+	HierarchyNodeIndex(const HierarchyNodeIndex & parent, s32_t index)
 		: _indexes(parent._indexes) {
 
 		_indexes.push_back(index);
@@ -39,12 +42,14 @@ public:
 	 * \brief
 	 *    Деструктор класса.
 	 */
-	~TreeNodeIndex() = default;
+	~HierarchyNodeIndex() = default;
 
-	TreeNodeIndex getParent() const {
+#pragma endregion // Constructors / Destructor
+
+	HierarchyNodeIndex getParent() const {
 		std::vector<s32_t> parentIndexes = _indexes;
 		parentIndexes.pop_back();
-		return TreeNodeIndex(parentIndexes);
+		return HierarchyNodeIndex(parentIndexes);
 	}
 
 	/*!
@@ -88,4 +93,4 @@ NAMESPACE_END(containers)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_CONTAINERS_TREENODEINDEX_H
+#endif // _SWAY_CORE_CONTAINERS_HIERARCHYNODEINDEX_H

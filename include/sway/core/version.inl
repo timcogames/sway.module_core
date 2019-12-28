@@ -13,15 +13,6 @@ Version & Version::operator=(const Version & version) {
 	return *this;
 }
 
-Version & Version::operator=(Version && version) {
-	_major = std::move(version.getMajor());
-	_minor = std::move(version.getMinor());
-	_patch = std::move(version.getPatch());
-	_extra = std::move(version.getExtra());
-
-	return *this;
-}
-
 bool Version::operator<(const Version & version) const {
 	return compare(version) < 0;
 }

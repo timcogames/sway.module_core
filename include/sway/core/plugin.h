@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_PLUGIN_H
-#define SWAY_CORE_PLUGIN_H
+#ifndef _SWAY_CORE_PLUGIN_H
+#define _SWAY_CORE_PLUGIN_H
 
 #include <sway/core/binding/function.h>
 #include <sway/core/generic/io/path.h>
@@ -51,4 +51,4 @@ private:
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_PLUGIN_H
+#endif // _SWAY_CORE_PLUGIN_H

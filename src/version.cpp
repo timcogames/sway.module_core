@@ -24,14 +24,6 @@ Version::Version(const Version & version)
 	// Empty
 }
 
-Version::Version(Version && version)
-	: _major(std::move(version.getMajor()))
-	, _minor(std::move(version.getMinor()))
-	, _patch(std::move(version.getPatch()))
-	, _extra(std::move(version.getExtra())) {
-	// Empty
-}
-
 s32_t Version::compare(const Version & version) const {
 	if (_major < version.getMajor()) return -1;
 	if (_major > version.getMajor()) return 1;

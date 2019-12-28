@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_FOUNDATION_OBJECT_H
-#define SWAY_CORE_FOUNDATION_OBJECT_H
+#ifndef _SWAY_CORE_FOUNDATION_OBJECT_H
+#define _SWAY_CORE_FOUNDATION_OBJECT_H
 
 #include <sway/core/foundation/objectmetadata.h>
 
@@ -72,4 +72,4 @@ NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_FOUNDATION_OBJECT_H
+#endif // _SWAY_CORE_FOUNDATION_OBJECT_H

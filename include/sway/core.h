@@ -1,11 +1,15 @@
-#ifndef SWAY_CORE_H
-#define SWAY_CORE_H
+#ifndef _SWAY_CORE_H
+#define _SWAY_CORE_H
 
+#include <sway/core/utilities/observer.h>
+#include <sway/core/utilities/observable.h>
+#include <sway/core/utilities/visitor.h>
+#include <sway/core/utilities/visitable.h>
 #include <sway/core/misc/format.h>
 #include <sway/core/misc/guid.h>
-#include <sway/core/containers/treelistener.h>
-#include <sway/core/containers/treenodebase.h>
-#include <sway/core/containers/tree.h>
+#include <sway/core/containers/hierarchylistener.h>
+#include <sway/core/containers/hierarchynode.h>
+#include <sway/core/containers/hierarchy.h>
 #include <sway/core/runtime/exception.h>
 #include <sway/core/runtime/exceptions/argumentnullexception.h>
 #include <sway/core/runtime/exceptions/librarynotfoundexception.h>
@@ -31,4 +35,4 @@
 #include <sway/defines.h>
 #include <sway/types.h>
 
-#endif // SWAY_CORE_H
+#endif // _SWAY_CORE_H

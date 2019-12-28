@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_BINDING_PROCADDRESS_H
-#define SWAY_CORE_BINDING_PROCADDRESS_H
+#ifndef _SWAY_CORE_BINDING_PROCADDRESS_H
+#define _SWAY_CORE_BINDING_PROCADDRESS_H
 
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
@@ -16,4 +16,4 @@ NAMESPACE_END(binding)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_BINDING_PROCADDRESS_H
+#endif // _SWAY_CORE_BINDING_PROCADDRESS_H

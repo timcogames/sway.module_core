@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_VERSION_H
-#define SWAY_CORE_VERSION_H
+#ifndef _SWAY_CORE_VERSION_H
+#define _SWAY_CORE_VERSION_H
 
 #include <sway/namespacemacros.h>
 #include <sway/defines.h>
@@ -16,6 +16,9 @@ NAMESPACE_BEGIN(core)
  */
 class Version {
 public:
+
+#pragma region "Constructors / Destructor"
+
 	/*!
 	 * \brief
 	 *    Конструктор класса по умолчанию.
@@ -64,25 +67,13 @@ public:
 
 	/*!
 	 * \brief
-	 *    Конструктор перемещения.
-	 * 
-	 * \param[in] version
-	 *    Версия, из которой необходимо переместить данные.
-	 * 
-	 * \sa
-	 *    Version()
-	 *    Version(s32_t, s32_t, s32_t, lpcstr_t)
-	 *    Version(const Version &)
-	 */
-	Version(Version && version);
-
-	/*!
-	 * \brief
 	 *    Деструктор класса.
 	 */
 	~Version() = default;
 
-#pragma region "Setter/Getter Major"
+#pragma endregion // Constructors / Destructor
+
+#pragma region "Setter / Getter Major"
 
 	/*!
 	 * \brief
@@ -113,9 +104,9 @@ public:
 		return _major;
 	}
 
-#pragma endregion
+#pragma endregion // Setter / Getter Major
 
-#pragma region "Setter/Getter Minor"
+#pragma region "Setter / Getter Minor"
 
 	/*!
 	 * \brief
@@ -146,9 +137,9 @@ public:
 		return _minor;
 	}
 
-#pragma endregion
+#pragma endregion // Setter / Getter Minor
 
-#pragma region "Setter/Getter Patch Level"
+#pragma region "Setter / Getter Patch Level"
 
 	/*!
 	 * \brief
@@ -179,9 +170,9 @@ public:
 		return _patch;
 	}
 
-#pragma endregion
+#pragma endregion // Setter / Getter Patch Level
 
-#pragma region "Setter/Getter Extra"
+#pragma region "Setter / Getter Extra"
 
 	/*!
 	 * \brief
@@ -212,7 +203,7 @@ public:
 		return _extra;
 	}
 
-#pragma endregion
+#pragma endregion // Setter / Getter Extra
 
 	/*!
 	 * \brief
@@ -237,18 +228,6 @@ public:
 	 *    Ссылка на эту версию.
 	 */
 	inline Version & operator=(const Version & version);
-
-	/*!
-	 * \brief
-	 *    Оператор присваивания другой версии.
-	 * 
-	 * \param[in] version
-	 *    Версия, из которой необходимо переместить данные.
-	 * 
-	 * \return
-	 *    Ссылка на эту версию.
-	 */
-	inline Version & operator=(Version && version);
 
 	/*!
 	 * \brief
@@ -352,4 +331,4 @@ NAMESPACE_END(sway)
 
 #include <sway/core/version.inl>
 
-#endif // SWAY_CORE_VERSION_H
+#endif // _SWAY_CORE_VERSION_H

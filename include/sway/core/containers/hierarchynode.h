@@ -1,8 +1,9 @@
-#ifndef _SWAY_CORE_CONTAINERS_TREENODEBASE_H
-#define _SWAY_CORE_CONTAINERS_TREENODEBASE_H
+#ifndef _SWAY_CORE_CONTAINERS_HIERARCHYNODE_H
+#define _SWAY_CORE_CONTAINERS_HIERARCHYNODE_H
 
-#include <sway/core/containers/treenodeindex.h>
-#include <sway/core/containers/treelistener.h>
+#include <sway/core/containers/hierarchynodeindex.h>
+#include <sway/core/containers/hierarchylistener.h>
+#include <sway/core/utilities/visitable.h>
 #include <sway/core/memory/safedeletemacros.h>
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
@@ -16,14 +17,19 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
-class TreeNodeBase;
-//typedef std::shared_ptr<TreeNodeBase> TreeNodePtr_t;
-typedef TreeNodeBase * TreeNodePtr_t;
+class HierarchyNode;
+//typedef std::shared_ptr<HierarchyNode> HierarchyNodePtr_t;
+typedef HierarchyNode * HierarchyNodePtr_t;
 
-class Tree;
-class TreeNodeIndex;
-class TreeNodeBase {
+class Hierarchy;
+class HierarchyNodeIndex;
+class HierarchyNode
+	: public virtual utilities::IVisitable {
+
 public:
+
+#pragma region "Constructor / Destructor"
+
 	/*!
 	 * \brief
 	 *    Конструктор класса.
@@ -32,16 +38,27 @@ public:
 	 * \param[in] parent
 	 *    Указатель на родительский узел.
 	 * 
+	 * \param[in] nodeIndex
+	 *    Индекс узела.
+	 * 
 	 * \param[in] nodeId
 	 *    Идентификатор узла.
 	 */
-	TreeNodeBase(TreeNodePtr_t parent, const TreeNodeIndex & nodeIndex, const std::string & nodeId);
+	HierarchyNode(HierarchyNodePtr_t parent, const HierarchyNodeIndex & nodeIndex, const std::string & nodeId);
 
 	/*!
 	 * \brief
 	 *    Деструктор класса.
 	 */
-	virtual ~TreeNodeBase();
+	virtual ~HierarchyNode();
+
+#pragma endregion // Constructor / Destructor
+
+#pragma region "IVisitable implementation"
+
+	virtual void accept(utilities::Visitor * visitor) override;
+
+#pragma endregion // IVisitable implementation
 
 	/*!
 	 * \brief
@@ -50,10 +67,11 @@ public:
 	 * \param[in] child
 	 *    Указатель на дочерний узел.
 	 */
-	TreeNodeIndex addChild(TreeNodePtr_t child);
-	TreeNodeIndex add(TreeNodePtr_t child, std::function<void (const TreeNodeIndex &)> handleNodeAdded);
+	HierarchyNodeIndex addChild(HierarchyNodePtr_t child);
 
-	void removeChild(TreeNodePtr_t child);
+	HierarchyNodeIndex add(HierarchyNodePtr_t child, std::function<void (const HierarchyNodeIndex &)> handleNodeAdded);
+
+	void removeChild(HierarchyNodePtr_t child);
 
 	/*!
 	 * \brief
@@ -62,7 +80,7 @@ public:
 	 * \param[in] nodeId
 	 *    Идентификатор узла.
 	 */
-	TreeNodePtr_t findChild(const std::string & nodeId) const;
+	HierarchyNodePtr_t findChild(const std::string & nodeId) const;
 
 	bool hasChild(const std::string & nodeId) const;
 
@@ -70,21 +88,21 @@ public:
 	 * \brief
 	 *    Возвращает дочерний узел по индексу.
 	 * 
-	 * \param[in] nodeIdx
+	 * \param[in] nodeIndex
 	 *    Индекс дочерний узла.
 	 */
-	TreeNodePtr_t getChild(u32_t nodeIdx) const;
+	HierarchyNodePtr_t getChild(u32_t nodeIndex) const;
 
 	template<typename TYPE>
-	TYPE getChildAt(u32_t nodeIdx) const {
-		return static_cast<TYPE> (getChild(nodeIdx));
+	TYPE getChildAt(u32_t nodeIndex) const {
+		return static_cast<TYPE> (getChild(nodeIndex));
 	}
 
 	/*!
 	 * \brief
 	 *    Возвращает дочерние узлы.
 	 */
-	const std::vector<TreeNodePtr_t> & getChildren() const;
+	const std::vector<HierarchyNodePtr_t> & getChildren() const;
 
 	/*!
 	 * \brief
@@ -92,15 +110,15 @@ public:
 	 */
 	u32_t getChildCount();
 
-	Tree * getHostTree();
+	Hierarchy * getHostTree();
 
-	void setHostTree(Tree * tree);
+	void setHostTree(Hierarchy * tree);
 
 	/*!
 	 * \brief
 	 *    Возвращает родительский узел.
 	 */
-	TreeNodePtr_t getParentNode();
+	HierarchyNodePtr_t getParentNode();
 
 	/*!
 	 * \brief
@@ -109,13 +127,13 @@ public:
 	 * \param[in] parent
 	 *    Указатель на родительский узел.
 	 */
-	void setParentNode(TreeNodePtr_t parent);
+	void setParentNode(HierarchyNodePtr_t parent);
 
 	/*!
 	 * \brief
 	 *    Возвращает индекс узла.
 	 */
-	TreeNodeIndex getNodeIndex() const;
+	HierarchyNodeIndex getNodeIndex() const;
 
 	/*!
 	 * \brief
@@ -124,7 +142,7 @@ public:
 	 * \param[in] nodeIndex
 	 *    Индекс узла.
 	 */
-	void setNodeIndex(const TreeNodeIndex & nodeIndex);
+	void setNodeIndex(const HierarchyNodeIndex & nodeIndex);
 
 	/*!
 	 * \brief
@@ -142,10 +160,10 @@ public:
 	void setNodeId(const std::string & nodeId);
 
 private:
-	Tree * _tree = nullptr;
-	TreeNodePtr_t _parent; /*!< Родительский узел. */
-	TreeNodeIndex _nodeIndex;
-	std::vector<TreeNodePtr_t> _children; /*!< Последовательный контейнер дочерних узлов. */
+	Hierarchy * _tree = nullptr;
+	HierarchyNodePtr_t _parent; /*!< Родительский узел. */
+	HierarchyNodeIndex _nodeIndex;
+	std::vector<HierarchyNodePtr_t> _children; /*!< Последовательный контейнер дочерних узлов. */
 	std::string _nodeId; /*!< Уникальный идентификатор узла. */
 };
 
@@ -153,4 +171,4 @@ NAMESPACE_END(containers)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_CONTAINERS_TREENODEBASE_H
+#endif // _SWAY_CORE_CONTAINERS_HIERARCHYNODE_H

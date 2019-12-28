@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_FOUNDATION_DECLAREOBJECTMACROS_H
-#define SWAY_CORE_FOUNDATION_DECLAREOBJECTMACROS_H
+#ifndef _SWAY_CORE_FOUNDATION_DECLAREOBJECTMACROS_H
+#define _SWAY_CORE_FOUNDATION_DECLAREOBJECTMACROS_H
 
 #define DECLARE_OBJECT(Class, SuperClass) \
 	public: \
@@ -11,4 +11,4 @@
 	virtual const sway::core::foundation::ObjectMetadata * getSuperClass() const { return getObjectMetadata()->getSuperClass(); } \
 	virtual const std::string & getClassName() const { return getObjectMetadata()->getClassName(); }
 
-#endif // SWAY_CORE_FOUNDATION_DECLAREOBJECTMACROS_H
+#endif // _SWAY_CORE_FOUNDATION_DECLAREOBJECTMACROS_H

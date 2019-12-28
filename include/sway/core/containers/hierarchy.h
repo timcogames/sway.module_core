@@ -1,8 +1,8 @@
-#ifndef SWAY_CORE_CONTAINERS_TREE_H
-#define SWAY_CORE_CONTAINERS_TREE_H
+#ifndef _SWAY_CORE_CONTAINERS_HIERARCHY_H
+#define _SWAY_CORE_CONTAINERS_HIERARCHY_H
 
-#include <sway/core/containers/treelistener.h>
-#include <sway/core/containers/treenodebase.h>
+#include <sway/core/containers/hierarchylistener.h>
+#include <sway/core/containers/hierarchynode.h>
 #include <sway/core/memory/safedeletemacros.h>
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
@@ -14,24 +14,29 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
-typedef std::vector<TreeListener *> TreeListenerVec_t;
+typedef std::vector<HierarchyListener *> HierarchyListenerVec_t;
 
-class Tree {
+class Hierarchy {
 public:
+
+#pragma region "Constructor / Destructor"
+
 	/*!
 	 * \brief
 	 *    Конструктор класса.
 	 *    Выполняет инициализацию нового экземпляра класса.
 	 */
-	Tree();
+	Hierarchy();
 
 	/*!
 	 * \brief
 	 *    Деструктор класса.
 	 */
-	~Tree();
+	~Hierarchy();
 
-	TreeNodePtr_t find(const TreeNodeIndex & index);
+#pragma endregion // Constructor / Destructor
+
+	HierarchyNodePtr_t find(const HierarchyNodeIndex & index);
 
 	/*!
 	 * \brief
@@ -40,7 +45,7 @@ public:
 	 * \param[in] listener
 	 *    Указатель на слушателя.
 	 */
-	void attachListener(TreeListener * listener);
+	void attachListener(HierarchyListener * listener);
 
 	/*!
 	 * \brief
@@ -49,21 +54,21 @@ public:
 	 * \param[in] listener
 	 *    Указатель на слушателя.
 	 */
-	void detachListener(TreeListener * listener);
+	void detachListener(HierarchyListener * listener);
 
-	TreeNodePtr_t getRootNode();
+	HierarchyListenerVec_t getListeners();
 
-	void setRootNode(TreeNodePtr_t root);
+	HierarchyNodePtr_t getRootNode();
 
-	TreeListenerVec_t getListeners();
+	void setRootNode(HierarchyNodePtr_t root);
 
 private:
-	TreeNodePtr_t _root;
-	TreeListenerVec_t _listeners;
+	HierarchyListenerVec_t _listeners;
+	HierarchyNodePtr_t _root;
 };
 
 NAMESPACE_END(containers)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_CONTAINERS_TREE_H
+#endif // _SWAY_CORE_CONTAINERS_HIERARCHY_H

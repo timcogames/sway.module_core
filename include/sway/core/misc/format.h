@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_MISC_FORMAT_H
-#define SWAY_CORE_MISC_FORMAT_H
+#ifndef _SWAY_CORE_MISC_FORMAT_H
+#define _SWAY_CORE_MISC_FORMAT_H
 
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
@@ -36,4 +36,4 @@ NAMESPACE_END(misc)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_MISC_FORMAT_H
+#endif // _SWAY_CORE_MISC_FORMAT_H

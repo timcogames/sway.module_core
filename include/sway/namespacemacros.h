@@ -1,5 +1,5 @@
-#ifndef SWAY_NAMESPACEMACROS_H
-#define SWAY_NAMESPACEMACROS_H
+#ifndef _SWAY_NAMESPACEMACROS_H
+#define _SWAY_NAMESPACEMACROS_H
 
 /*!
  * \brief
@@ -25,4 +25,4 @@
  */
 #define NAMESPACE_END(name) }
 
-#endif // SWAY_NAMESPACEMACROS_H
+#endif // _SWAY_NAMESPACEMACROS_H

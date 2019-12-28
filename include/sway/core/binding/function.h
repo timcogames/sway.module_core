@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_BINDING_FUNCTION_H
-#define SWAY_CORE_BINDING_FUNCTION_H
+#ifndef _SWAY_CORE_BINDING_FUNCTION_H
+#define _SWAY_CORE_BINDING_FUNCTION_H
 
 #include <sway/core/binding/procaddress.h>
 #include <sway/namespacemacros.h>
@@ -88,4 +88,4 @@ NAMESPACE_END(sway)
 
 #include <sway/core/binding/function.inl>
 
-#endif // SWAY_CORE_BINDING_FUNCTION_H
+#endif // _SWAY_CORE_BINDING_FUNCTION_H

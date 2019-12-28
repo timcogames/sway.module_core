@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_RUNTIME_EXCEPTION_H
-#define SWAY_CORE_RUNTIME_EXCEPTION_H
+#ifndef _SWAY_CORE_RUNTIME_EXCEPTION_H
+#define _SWAY_CORE_RUNTIME_EXCEPTION_H
 
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
@@ -47,4 +47,4 @@ NAMESPACE_END(runtime)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_RUNTIME_EXCEPTION_H
+#endif // _SWAY_CORE_RUNTIME_EXCEPTION_H

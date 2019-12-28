@@ -1,5 +1,5 @@
-#ifndef SWAY_VISIBILITYMACROS_H
-#define SWAY_VISIBILITYMACROS_H
+#ifndef _SWAY_VISIBILITYMACROS_H
+#define _SWAY_VISIBILITYMACROS_H
 
 #ifdef __cplusplus
 #	define EXTERN_C extern "C"
@@ -22,4 +22,4 @@
 #	define DLLAPI_EXPORT
 #endif
 
-#endif // SWAY_VISIBILITYMACROS_H
+#endif // _SWAY_VISIBILITYMACROS_H

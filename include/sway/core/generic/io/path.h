@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_GENERIC_IO_PATH_H
-#define SWAY_CORE_GENERIC_IO_PATH_H
+#ifndef _SWAY_CORE_GENERIC_IO_PATH_H
+#define _SWAY_CORE_GENERIC_IO_PATH_H
 
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
@@ -53,4 +53,4 @@ NAMESPACE_END(generic)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_GENERIC_IO_PATH_H
+#endif // _SWAY_CORE_GENERIC_IO_PATH_H

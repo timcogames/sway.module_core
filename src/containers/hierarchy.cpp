@@ -1,20 +1,20 @@
-#include <sway/core/containers/tree.h>
+#include <sway/core/containers/hierarchy.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
-Tree::Tree()
+Hierarchy::Hierarchy()
 	: _root(nullptr) {
 	// Empty
 }
 
-Tree::~Tree() {
+Hierarchy::~Hierarchy() {
 	SAFE_DELETE(_root)
 }
 
-TreeNodePtr_t Tree::find(const TreeNodeIndex & index) {
-	TreeNodePtr_t retrieved = _root;
+HierarchyNodePtr_t Hierarchy::find(const HierarchyNodeIndex & index) {
+	HierarchyNodePtr_t retrieved = _root;
 	for (int i = 1/* пропускаем корневой индекс */; i < index.getDepth(); ++i) {
 		if (index[i] >= retrieved->getChildCount())
 			return nullptr;
@@ -25,24 +25,24 @@ TreeNodePtr_t Tree::find(const TreeNodeIndex & index) {
 	return retrieved;
 }
 
-void Tree::attachListener(TreeListener * listener) {
+void Hierarchy::attachListener(HierarchyListener * listener) {
 	_listeners.push_back(listener);
 }
 
-void Tree::detachListener(TreeListener * listener) {
+void Hierarchy::detachListener(HierarchyListener * listener) {
 	// Empty
 }
 
-TreeNodePtr_t Tree::getRootNode() {
+HierarchyNodePtr_t Hierarchy::getRootNode() {
 	return _root;
 }
 
-void Tree::setRootNode(TreeNodePtr_t root) {
+void Hierarchy::setRootNode(HierarchyNodePtr_t root) {
 	_root = root;
 	_root->setHostTree(this);
 }
 
-TreeListenerVec_t Tree::getListeners() {
+HierarchyListenerVec_t Hierarchy::getListeners() {
 	return _listeners;
 }
 

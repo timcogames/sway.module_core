@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_GENERIC_IO_FILESOURCE_H
-#define SWAY_CORE_GENERIC_IO_FILESOURCE_H
+#ifndef _SWAY_CORE_GENERIC_IO_FILESOURCE_H
+#define _SWAY_CORE_GENERIC_IO_FILESOURCE_H
 
 #include <sway/namespacemacros.h>
 #include <fstream> // std::ifstream
@@ -47,4 +47,4 @@ NAMESPACE_END(generic)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_GENERIC_IO_FILESOURCE_H
+#endif // _SWAY_CORE_GENERIC_IO_FILESOURCE_H

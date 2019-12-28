@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_DETAIL_RAWTYPE_H
-#define SWAY_CORE_DETAIL_RAWTYPE_H
+#ifndef _SWAY_CORE_DETAIL_RAWTYPE_H
+#define _SWAY_CORE_DETAIL_RAWTYPE_H
 
 #include <sway/namespacemacros.h>
 #include <type_traits>
@@ -15,4 +15,4 @@ NAMESPACE_END(detail)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_DETAIL_RAWTYPE_H
+#endif // _SWAY_CORE_DETAIL_RAWTYPE_H

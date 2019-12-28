@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_DETAIL_DATATYPEMACROS_H
-#define SWAY_CORE_DETAIL_DATATYPEMACROS_H
+#ifndef _SWAY_CORE_DETAIL_DATATYPEMACROS_H
+#define _SWAY_CORE_DETAIL_DATATYPEMACROS_H
 
 #define ENUM_DATATYPE(Key, Type) \
 	template<> \
@@ -11,4 +11,4 @@
 		static constexpr DataType_t value = Key; \
 	};
 
-#endif // SWAY_CORE_DETAIL_DATATYPEMACROS_H
+#endif // _SWAY_CORE_DETAIL_DATATYPEMACROS_H

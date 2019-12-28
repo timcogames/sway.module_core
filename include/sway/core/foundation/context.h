@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_FOUNDATION_CONTEXT_H
-#define SWAY_CORE_FOUNDATION_CONTEXT_H
+#ifndef _SWAY_CORE_FOUNDATION_CONTEXT_H
+#define _SWAY_CORE_FOUNDATION_CONTEXT_H
 
 #include <sway/core/foundation/object.h>
 #include <sway/namespacemacros.h>
@@ -76,4 +76,4 @@ NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // SWAY_CORE_FOUNDATION_CONTEXT_H
+#endif // _SWAY_CORE_FOUNDATION_CONTEXT_H
