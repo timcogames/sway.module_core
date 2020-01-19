@@ -71,7 +71,7 @@ public:
 	 */
 	~Version() = default;
 
-#pragma endregion // Constructors / Destructor
+#pragma endregion
 
 #pragma region "Setter / Getter Major"
 
@@ -104,7 +104,7 @@ public:
 		return _major;
 	}
 
-#pragma endregion // Setter / Getter Major
+#pragma endregion
 
 #pragma region "Setter / Getter Minor"
 
@@ -137,7 +137,7 @@ public:
 		return _minor;
 	}
 
-#pragma endregion // Setter / Getter Minor
+#pragma endregion
 
 #pragma region "Setter / Getter Patch Level"
 
@@ -170,7 +170,7 @@ public:
 		return _patch;
 	}
 
-#pragma endregion // Setter / Getter Patch Level
+#pragma endregion
 
 #pragma region "Setter / Getter Extra"
 
@@ -203,7 +203,7 @@ public:
 		return _extra;
 	}
 
-#pragma endregion // Setter / Getter Extra
+#pragma endregion
 
 	/*!
 	 * \brief

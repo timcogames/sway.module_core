@@ -7,88 +7,64 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
-HierarchyNode::HierarchyNode(HierarchyNodePtr_t parent, const HierarchyNodeIndex & nodeIndex, const std::string & nodeId)
+HierarchyNode::HierarchyNode(HierarchyNode * parent,
+	const HierarchyNodeIdx & nodeIdx, const std::string & nodeUid)
 	: _parent(parent)
-	, _nodeIndex(nodeIndex)
-	, _nodeId(nodeId) {
+	, _nodeIdx(nodeIdx)
+	, _nodeUid(nodeUid) {
 
 	if (_parent)
 		_tree = _parent->getHostTree();
 }
 
-HierarchyNode::~HierarchyNode() {
-	// Empty
+TraversalAction_t HierarchyNode::traverse(IHierarchyTraverser * traverser) {
+	TraversalAction_t result = traverser->visit(this);
+
+	switch (result) {
+	case TraversalAction_t::Continue:
+		for (HierarchyNode * node : getChildren()) {
+			if (node->traverse(traverser) == TraversalAction_t::Abort)
+				return TraversalAction_t::Abort;
+		}
+
+	case TraversalAction_t::Prune:
+		return TraversalAction_t::Continue;
+
+	case TraversalAction_t::Abort:
+		break;
+	}
+
+	return TraversalAction_t::Abort;
 }
 
-void HierarchyNode::accept(utilities::Visitor * visitor) {
-	// Empty
-}
+HierarchyNodeIdx HierarchyNode::addChild(HierarchyNode * child) {
+	const HierarchyNodeIdx childIdx = HierarchyNodeIdx(getNodeIdx(), _children.size());
+	if (getChild(child->getNodeUid()) != nullptr)
+		return HierarchyNodeIdx();
 
-HierarchyNodeIndex HierarchyNode::addChild(HierarchyNodePtr_t node) {
-	const HierarchyNodeIndex nodeIndex = HierarchyNodeIndex(getNodeIndex(), _children.size());
-	if (hasChild(node->getNodeId()))
-		return HierarchyNodeIndex();
-
-	_children.push_back(node);
-	_children.back()->setNodeIndex(nodeIndex);
+	_children.push_back(child);
+	_children.back()->setNodeIdx(childIdx);
 
 	if (_tree) {
 		for (HierarchyListener * listener : _tree->getListeners())
-			listener->onNodeAdded(nodeIndex);
+			listener->onNodeAdded(childIdx);
 	}
 
-	return nodeIndex;
+	return childIdx;
 }
 
-HierarchyNodeIndex HierarchyNode::add(HierarchyNodePtr_t node, std::function<void (const HierarchyNodeIndex &)> handleNodeAdded) {
-	const HierarchyNodeIndex nodeIndex = addChild(node);
-	if (handleNodeAdded)
-		handleNodeAdded(nodeIndex);
-
-	return nodeIndex;
-}
-
-void HierarchyNode::removeChild(HierarchyNodePtr_t child) {
-	_children.erase(std::remove_if(_children.begin(), _children.end(), [&](HierarchyNodePtr_t node) {
-		return child->getNodeId().compare(node->getNodeId());
+void HierarchyNode::removeChild(HierarchyNode * child) {
+	_children.erase(std::remove_if(_children.begin(), _children.end(), [&](HierarchyNode * node) {
+		return child->getNodeUid().compare(node->getNodeUid());
 	}), _children.end());
 
 	if (_tree) {
 		for (HierarchyListener * listener : _tree->getListeners())
-			listener->onNodeRemoved(this, child);
+			listener->onNodeRemoved(child->getNodeIdx());
 	}
 }
 
-HierarchyNodePtr_t HierarchyNode::findChild(const std::string & nodeId) const {
-	std::vector<HierarchyNodePtr_t>::const_iterator iter = _children.begin();
-	while (iter != _children.end()) {
-		if ((*iter)->getNodeId().compare(nodeId) == 0)
-			break;
-
-		iter++;
-	}
-
-	if (iter != _children.end())
-		return *iter;
-
-	return nullptr;
-}
-
-bool HierarchyNode::hasChild(const std::string & nodeId) const {
-	if (findChild(nodeId) == nullptr)
-		return false;
-
-	return true;
-}
-
-HierarchyNodePtr_t HierarchyNode::getChild(u32_t nodeIndex) const {
-	if (nodeIndex >= 0 && nodeIndex < _children.size())
-		return _children[nodeIndex];
-
-	return nullptr;
-}
-
-const std::vector<HierarchyNodePtr_t> & HierarchyNode::getChildren() const {
+const std::vector<HierarchyNode *> & HierarchyNode::getChildren() const {
 	return _children;
 }
 
@@ -101,32 +77,31 @@ Hierarchy * HierarchyNode::getHostTree() {
 }
 
 void HierarchyNode::setHostTree(Hierarchy * tree) {
-	if (tree)
-		_tree = tree;
+	_tree = tree;
 }
 
-HierarchyNodePtr_t HierarchyNode::getParentNode() {
+HierarchyNode * HierarchyNode::getParentNode() {
 	return _parent;
 }
 
-void HierarchyNode::setParentNode(HierarchyNodePtr_t parent) {
+void HierarchyNode::setParentNode(HierarchyNode * parent) {
 	_parent = parent;
 }
 
-HierarchyNodeIndex HierarchyNode::getNodeIndex() const {
-	return _nodeIndex;
+HierarchyNodeIdx HierarchyNode::getNodeIdx() const {
+	return _nodeIdx;
 }
 
-void HierarchyNode::setNodeIndex(const HierarchyNodeIndex & nodeIndex) {
-	_nodeIndex = nodeIndex;
+void HierarchyNode::setNodeIdx(const HierarchyNodeIdx & nodeIdx) {
+	_nodeIdx = nodeIdx;
 }
 
-std::string HierarchyNode::getNodeId() const {
-	return _nodeId;
+std::string HierarchyNode::getNodeUid() const {
+	return _nodeUid;
 }
 
-void HierarchyNode::setNodeId(const std::string & nodeId) {
-	_nodeId = nodeId;
+void HierarchyNode::setNodeUid(const std::string & nodeUid) {
+	_nodeUid = nodeUid;
 }
 
 NAMESPACE_END(containers)

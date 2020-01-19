@@ -1,6 +1,8 @@
 # Проверяем версию CMake
 cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmakehelpers/custom_enable_cxx17.cmake)
+
 # Мета-информация о проекте
 set(META_PROJECT_NAME module_core)
 set(META_LIB_NAME lib${META_PROJECT_NAME})
@@ -23,7 +25,6 @@ if(MODULE_CORE_EMSCRIPTEN)
 	set(CMAKE_CXX_COMPILER "emcc")
 endif()
 
-set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(MODULE_CORE_ENABLE_COVERAGE)
@@ -66,6 +67,7 @@ else()
 	set_target_properties(${META_LIB_NAME} PROPERTIES SUFFIX ".a.${META_VERSION}")
 endif()
 
+custom_enable_cxx17(${META_LIB_NAME})
 target_link_libraries(${META_LIB_NAME})
 
 # Добавляем построение тестов

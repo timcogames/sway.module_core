@@ -34,7 +34,7 @@ public:
 	 */
 	~Plugin();
 
-	bool isLoaded () const;
+	bool isLoaded() const;
 
 	/*!
 	 * \brief

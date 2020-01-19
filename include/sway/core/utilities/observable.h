@@ -27,7 +27,7 @@ public:
 	 */
 	virtual ~Observable();
 
-#pragma endregion // Constructor / Destructor
+#pragma endregion
 
 	/**
 	 * \brief

@@ -34,9 +34,10 @@ public:
 	 */
 	~Hierarchy();
 
-#pragma endregion // Constructor / Destructor
+#pragma endregion
 
-	HierarchyNodePtr_t find(const HierarchyNodeIndex & index);
+	template<typename TYPE = HierarchyNode>
+	TYPE * findNode(const HierarchyNodeIdx & nodeIdx);
 
 	/*!
 	 * \brief
@@ -58,17 +59,19 @@ public:
 
 	HierarchyListenerVec_t getListeners();
 
-	HierarchyNodePtr_t getRootNode();
+	HierarchyNode * getRootNode();
 
-	void setRootNode(HierarchyNodePtr_t root);
+	void setRootNode(HierarchyNode * root);
 
 private:
 	HierarchyListenerVec_t _listeners;
-	HierarchyNodePtr_t _root;
+	HierarchyNode * _root;
 };
 
 NAMESPACE_END(containers)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
+
+#include <sway/core/containers/hierarchy.inl>
 
 #endif // _SWAY_CORE_CONTAINERS_HIERARCHY_H

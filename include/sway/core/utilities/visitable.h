@@ -20,13 +20,13 @@ public:
 	 */
 	virtual ~IVisitable() = default;
 
-#pragma endregion // Constructor / Destructor
+#pragma endregion
 
 #pragma region "Pure virtual methods"
 
 	virtual void accept(Visitor * visitor) = 0;
 
-#pragma endregion // Pure virtual methods
+#pragma endregion
 };
 
 NAMESPACE_END(utilities)

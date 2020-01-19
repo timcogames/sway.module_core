@@ -1,16 +1,12 @@
 #ifndef _SWAY_CORE_CONTAINERS_HIERARCHYLISTENER_H
 #define _SWAY_CORE_CONTAINERS_HIERARCHYLISTENER_H
 
-#include <sway/core/containers/hierarchynodeindex.h>
+#include <sway/core/containers/hierarchynodeidx.h>
 #include <sway/namespacemacros.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
-
-class HierarchyNode;
-//typedef std::shared_ptr<HierarchyNode> HierarchyNodePtr_t;
-typedef HierarchyNode * HierarchyNodePtr_t;
 
 class HierarchyListener {
 public:
@@ -25,15 +21,15 @@ public:
 
 #pragma endregion // Constructor / Destructor
 
-	virtual void onNodeAdded(const HierarchyNodeIndex & nodeIndex) {
+	virtual void onNodeAdded(const HierarchyNodeIdx & nodeIdx) {
 		// Empty
 	}
 
-	virtual void onNodeRemoved(HierarchyNodePtr_t parent, HierarchyNodePtr_t child) {
+	virtual void onNodeRemoved(const HierarchyNodeIdx & nodeIdx) {
 		// Empty
 	}
 
-	virtual void onNodeUpdated(const HierarchyNodeIndex & nodeIndex) {
+	virtual void onNodeUpdated(const HierarchyNodeIdx & nodeIdx) {
 		// Empty
 	}
 };

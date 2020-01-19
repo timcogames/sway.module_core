@@ -8,6 +8,11 @@
 git clone https://github.com/timcogames/sway.module_core.git
 ```
 
+## Зависимости
+
+cmake v3.14.3
+boost v1.72.0 (под тестирование)
+
 ## Сборка проекта
 
 Создаем директорию build и переходим в неё

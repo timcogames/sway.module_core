@@ -26,7 +26,7 @@ public:
 	 */
 	virtual ~IObserver() = default;
 
-#pragma endregion // Constructor / Destructor
+#pragma endregion
 
 #pragma region "Pure virtual methods"
 
@@ -36,8 +36,7 @@ public:
 	 */
 	virtual void update() = 0;
 
-#pragma endregion // Pure virtual methods
-
+#pragma endregion
 };
 
 NAMESPACE_END(utilities)

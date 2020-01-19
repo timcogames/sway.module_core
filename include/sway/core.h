@@ -7,6 +7,9 @@
 #include <sway/core/utilities/visitable.h>
 #include <sway/core/misc/format.h>
 #include <sway/core/misc/guid.h>
+#include <sway/core/containers/hierarchynodeidx.h>
+#include <sway/core/containers/hierarchytraversalactions.h>
+#include <sway/core/containers/hierarchytraverser.h>
 #include <sway/core/containers/hierarchylistener.h>
 #include <sway/core/containers/hierarchynode.h>
 #include <sway/core/containers/hierarchy.h>
