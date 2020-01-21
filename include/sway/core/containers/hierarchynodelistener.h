@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_CONTAINERS_HIERARCHYLISTENER_H
-#define _SWAY_CORE_CONTAINERS_HIERARCHYLISTENER_H
+#ifndef _SWAY_CORE_CONTAINERS_HIERARCHYNODELISTENER_H
+#define _SWAY_CORE_CONTAINERS_HIERARCHYNODELISTENER_H
 
 #include <sway/core/containers/hierarchynodeidx.h>
 #include <sway/namespacemacros.h>
@@ -8,7 +8,15 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
-class HierarchyListener {
+enum HierarchyNodeListenerFlags : u32_t {
+	Added,
+	Removed,
+	Updated
+};
+
+typedef HierarchyNodeListenerFlags NodeListenerFlag_t;
+
+class HierarchyNodeListener {
 public:
 
 #pragma region "Constructor / Destructor"
@@ -17,9 +25,9 @@ public:
 	 * \brief
 	 *    Виртуальный деструктор класса.
 	 */
-	virtual ~HierarchyListener() = default;
+	virtual ~HierarchyNodeListener() = default;
 
-#pragma endregion // Constructor / Destructor
+#pragma endregion
 
 	virtual void onNodeAdded(const HierarchyNodeIdx & nodeIdx) {
 		// Empty
@@ -29,7 +37,7 @@ public:
 		// Empty
 	}
 
-	virtual void onNodeUpdated(const HierarchyNodeIdx & nodeIdx) {
+	virtual void onNodeChanged(const HierarchyNodeIdx & nodeIdx) {
 		// Empty
 	}
 };
@@ -38,4 +46,4 @@ NAMESPACE_END(containers)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_CONTAINERS_HIERARCHYLISTENER_H
+#endif // _SWAY_CORE_CONTAINERS_HIERARCHYNODELISTENER_H

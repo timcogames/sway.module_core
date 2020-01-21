@@ -4,7 +4,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
-template<typename TYPE = HierarchyNode>
+template<typename TYPE>
 TYPE * Hierarchy::findNode(const HierarchyNodeIdx & nodeIdx) {
 	HierarchyNode * retrieved = _root;
 	for (int i = 1/* пропускаем корневой индекс */; i < nodeIdx.getDepth(); ++i) {

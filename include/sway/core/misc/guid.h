@@ -16,13 +16,22 @@ NAMESPACE_BEGIN(misc)
  * \brief
  *    Генерирует уникальный идентификатор.
  */
-inline std::string guid() {
-	return format("%x%x-%x-%x-%x-%x%x%x",
-		rand(), rand(),
-		rand(),
-		((rand() & 0x0fff) | 0x4000),
-		rand() % 0x3fff + 0x8000,
-		rand(), rand(), rand());
+inline std::string genUid(const std::vector<s32_t> & format) {
+	static const std::string bucket = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+	std::string result;
+	std::vector<s32_t>::const_iterator iter = format.begin();
+	while (iter != format.end()) {
+		if (iter != format.begin())
+			result += '-';
+
+		for (u32_t i = 0; i < *iter; ++i)
+			result += bucket[rand() % bucket.size()];
+
+		++iter;
+	}
+
+	return result;
 }
 
 NAMESPACE_END(misc)

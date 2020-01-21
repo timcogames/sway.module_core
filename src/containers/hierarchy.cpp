@@ -13,11 +13,15 @@ Hierarchy::~Hierarchy() {
 	SAFE_DELETE(_root)
 }
 
-void Hierarchy::attachListener(HierarchyListener * listener) {
+void Hierarchy::addNodeListener(HierarchyNodeListener * listener) {
 	_listeners.push_back(listener);
 }
 
-void Hierarchy::detachListener(HierarchyListener * listener) {
+// void Hierarchy::addNodeListener(HierarchyNodeListener * listener, HierarchyNode * node, u32_t flags) {
+// 	_listeners.push_back(listener);
+// }
+
+void Hierarchy::removeNodeListener(HierarchyNodeListener * listener) {
 	// Empty
 }
 
@@ -30,7 +34,7 @@ void Hierarchy::setRootNode(HierarchyNode * root) {
 	_root->setHostTree(this);
 }
 
-HierarchyListenerVec_t Hierarchy::getListeners() {
+HierarchyNodeListenerVec_t Hierarchy::getListeners() {
 	return _listeners;
 }
 

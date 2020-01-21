@@ -10,7 +10,7 @@
 #include <sway/core/containers/hierarchynodeidx.h>
 #include <sway/core/containers/hierarchytraversalactions.h>
 #include <sway/core/containers/hierarchytraverser.h>
-#include <sway/core/containers/hierarchylistener.h>
+#include <sway/core/containers/hierarchynodelistener.h>
 #include <sway/core/containers/hierarchynode.h>
 #include <sway/core/containers/hierarchy.h>
 #include <sway/core/runtime/exception.h>

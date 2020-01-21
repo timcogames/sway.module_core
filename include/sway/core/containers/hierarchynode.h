@@ -4,7 +4,7 @@
 #include <sway/core/containers/hierarchytraversalactions.h>
 #include <sway/core/containers/hierarchytraverser.h>
 #include <sway/core/containers/hierarchynodeidx.h>
-#include <sway/core/containers/hierarchylistener.h>
+#include <sway/core/containers/hierarchynodelistener.h>
 #include <sway/core/utilities/visitable.h>
 #include <sway/core/memory/safedeletemacros.h>
 #include <sway/namespacemacros.h>
@@ -97,6 +97,8 @@ public:
 	template<typename TYPE = HierarchyNode>
 	TYPE * getChildAt(u32_t targetIdx) const;
 
+	bool hasChild(const std::string & nodeUid) const;
+
 	/*!
 	 * \brief
 	 *    Возвращает дочерние узлы.
@@ -127,6 +129,8 @@ public:
 	 *    Указатель на родительский узел.
 	 */
 	void setParentNode(HierarchyNode * parent);
+
+	bool hasParentNode() const;
 
 	/*!
 	 * \brief
@@ -164,6 +168,19 @@ private:
 	std::vector<HierarchyNode *> _children; /*!< Последовательный контейнер дочерних узлов. */
 	HierarchyNodeIdx _nodeIdx;
 	std::string _nodeUid; /*!< Уникальный идентификатор узла. */
+};
+
+struct HierarchyNodeEventData {
+	HierarchyNodeListener * listener;
+	HierarchyNode * node;
+	u32_t flags;
+
+	HierarchyNodeEventData(HierarchyNodeListener * listener, HierarchyNode * node, u32_t flags)
+		: listener(listener)
+		, node(node)
+		, flags(flags) {
+		// Empty
+	}
 };
 
 NAMESPACE_END(containers)

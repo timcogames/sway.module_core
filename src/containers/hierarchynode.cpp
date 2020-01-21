@@ -13,7 +13,7 @@ HierarchyNode::HierarchyNode(HierarchyNode * parent,
 	, _nodeIdx(nodeIdx)
 	, _nodeUid(nodeUid) {
 
-	if (_parent)
+	if (hasParentNode())
 		_tree = _parent->getHostTree();
 }
 
@@ -39,14 +39,14 @@ TraversalAction_t HierarchyNode::traverse(IHierarchyTraverser * traverser) {
 
 HierarchyNodeIdx HierarchyNode::addChild(HierarchyNode * child) {
 	const HierarchyNodeIdx childIdx = HierarchyNodeIdx(getNodeIdx(), _children.size());
-	if (getChild(child->getNodeUid()) != nullptr)
+	if (hasChild(child->getNodeUid()))
 		return HierarchyNodeIdx();
 
 	_children.push_back(child);
 	_children.back()->setNodeIdx(childIdx);
 
 	if (_tree) {
-		for (HierarchyListener * listener : _tree->getListeners())
+		for (HierarchyNodeListener * listener : _tree->getListeners())
 			listener->onNodeAdded(childIdx);
 	}
 
@@ -59,9 +59,16 @@ void HierarchyNode::removeChild(HierarchyNode * child) {
 	}), _children.end());
 
 	if (_tree) {
-		for (HierarchyListener * listener : _tree->getListeners())
+		for (HierarchyNodeListener * listener : _tree->getListeners())
 			listener->onNodeRemoved(child->getNodeIdx());
 	}
+}
+
+bool HierarchyNode::hasChild(const std::string & nodeUid) const {
+	if (getChild(nodeUid) == nullptr)
+		return false;
+
+	return true;
 }
 
 const std::vector<HierarchyNode *> & HierarchyNode::getChildren() const {
@@ -86,6 +93,10 @@ HierarchyNode * HierarchyNode::getParentNode() {
 
 void HierarchyNode::setParentNode(HierarchyNode * parent) {
 	_parent = parent;
+}
+
+bool HierarchyNode::hasParentNode() const {
+	return _parent != nullptr;
 }
 
 HierarchyNodeIdx HierarchyNode::getNodeIdx() const {

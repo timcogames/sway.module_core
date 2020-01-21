@@ -1,7 +1,7 @@
 #ifndef _SWAY_CORE_CONTAINERS_HIERARCHY_H
 #define _SWAY_CORE_CONTAINERS_HIERARCHY_H
 
-#include <sway/core/containers/hierarchylistener.h>
+#include <sway/core/containers/hierarchynodelistener.h>
 #include <sway/core/containers/hierarchynode.h>
 #include <sway/core/memory/safedeletemacros.h>
 #include <sway/namespacemacros.h>
@@ -14,7 +14,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
-typedef std::vector<HierarchyListener *> HierarchyListenerVec_t;
+typedef std::vector<HierarchyNodeListener *> HierarchyNodeListenerVec_t;
 
 class Hierarchy {
 public:
@@ -46,7 +46,9 @@ public:
 	 * \param[in] listener
 	 *    Указатель на слушателя.
 	 */
-	void attachListener(HierarchyListener * listener);
+	void addNodeListener(HierarchyNodeListener * listener);
+
+	//void addNodeListener(HierarchyNodeListener * listener, HierarchyNode * node, u32_t flags);
 
 	/*!
 	 * \brief
@@ -55,16 +57,16 @@ public:
 	 * \param[in] listener
 	 *    Указатель на слушателя.
 	 */
-	void detachListener(HierarchyListener * listener);
+	void removeNodeListener(HierarchyNodeListener * listener);
 
-	HierarchyListenerVec_t getListeners();
+	HierarchyNodeListenerVec_t getListeners();
 
 	HierarchyNode * getRootNode();
 
 	void setRootNode(HierarchyNode * root);
 
 private:
-	HierarchyListenerVec_t _listeners;
+	HierarchyNodeListenerVec_t _listeners;
 	HierarchyNode * _root;
 };
 
