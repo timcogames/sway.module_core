@@ -1,37 +1,24 @@
 #include <sway/core/foundation/context.h>
-#include <sway/core/runtime/exceptions/argumentnullexception.h>
+
+#ifdef _EMSCRIPTEN
+	#include <emscripten/emscripten.h>
+	#include <emscripten/bind.h>
+	#include <emscripten/val.h>
+#endif
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-Context::~Context() {
-	_objects.clear();
+void Context::registerEmsClass() {
+#ifdef _EMSCRIPTEN
+	emscripten::class_<Context>("Context")
+		.constructor<>();
+#endif
 }
 
-void Context::registerObject(Object * object) {
-	if (!object)
-		throw runtime::exceptions::ArgumentNullException("object");
-
-	_objects.insert(std::make_pair(object->getClassName(), object));
-}
-
-void Context::unregisterObject(const std::string & objectClassName) {
-	ObjectMap_t::const_iterator iter = _objects.find(objectClassName);
-	if (iter != _objects.end())
-		_objects.erase(iter);
-}
-
-Object * Context::getObject(const std::string & objectClassName) const {
-	ObjectMap_t::const_iterator iter = _objects.find(objectClassName);
-	if (iter != _objects.end())
-		return iter->second;
-
-	return 0;
-}
-
-u32_t Context::getObjectCount() const {
-	return _objects.size();
+Context::Context() {
+	// Empty
 }
 
 NAMESPACE_END(foundation)

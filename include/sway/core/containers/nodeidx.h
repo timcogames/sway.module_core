@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_CONTAINERS_HIERARCHYNODEIDX_H
-#define _SWAY_CORE_CONTAINERS_HIERARCHYNODEIDX_H
+#ifndef _SWAY_CORE_CONTAINERS_NODEIDX_H
+#define _SWAY_CORE_CONTAINERS_NODEIDX_H
 
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
@@ -12,8 +12,13 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
-class HierarchyNodeIdx {
+class NodeIdx {
 public:
+#pragma region "Static methods"
+
+	static void registerEmsClass();
+
+#pragma endregion
 
 #pragma region "Constructors / Destructor"
 
@@ -22,24 +27,24 @@ public:
 	 *    Конструктор класса.
 	 *    Выполняет инициализацию нового экземпляра класса.
 	 */
-	HierarchyNodeIdx(std::vector<s32_t> indexes = std::vector<s32_t>());
+	NodeIdx(std::vector<s32_t> indexes = std::vector<s32_t>());
 
 	/*!
 	 * \brief
 	 *    Конструктор класса.
 	 *    Выполняет инициализацию нового экземпляра класса.
 	 */
-	HierarchyNodeIdx(const HierarchyNodeIdx & parent, s32_t idx);
+	NodeIdx(const NodeIdx & parent, s32_t idx);
 
 	/*!
 	 * \brief
 	 *    Деструктор класса.
 	 */
-	~HierarchyNodeIdx() = default;
+	~NodeIdx() = default;
 
 #pragma endregion
 
-	HierarchyNodeIdx getParent() const;
+	NodeIdx getParent() const;
 
 	/*!
 	 * \brief
@@ -52,13 +57,13 @@ public:
 	bool isValid() const;
 
 private:
-	std::vector<s32_t> _indexes;
+	std::vector<s32_t> indexes_;
 };
 
 NAMESPACE_END(containers)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#include <sway/core/containers/hierarchynodeidx.inl>
+#include <sway/core/containers/nodeidx.inl>
 
-#endif // _SWAY_CORE_CONTAINERS_HIERARCHYNODEIDX_H
+#endif // _SWAY_CORE_CONTAINERS_NODEIDX_H

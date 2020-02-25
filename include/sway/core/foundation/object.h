@@ -1,22 +1,27 @@
 #ifndef _SWAY_CORE_FOUNDATION_OBJECT_H
 #define _SWAY_CORE_FOUNDATION_OBJECT_H
 
-#include <sway/core/foundation/objectmetadata.h>
+#include <sway/core/foundation/event.h>
+#include <sway/core/foundation/eventhandler.h>
+#include <sway/namespacemacros.h>
+#include <sway/types.h>
+#include <vector>
+#include <algorithm> // std::remove_if
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 class Context;
-
-/*!
- * \brief
- *    Базовый класс для объектов.
- */
 class Object {
-	friend class Context;
-
 public:
+
+#pragma region "Static methods"
+
+	static void registerEmsClass();
+
+#pragma endregion
+
 	/*!
 	 * \brief
 	 *    Конструктор класса.
@@ -25,47 +30,52 @@ public:
 	 * \param[in] context
 	 *    Контекст.
 	 */
-	Object(Context * context)
-		 : _context(context) {
-		// Empty
-	}
+	Object(Context * context);
 
 	/*!
 	 * \brief
-	 *    Виртуальный деструктор класса.
+	 *    Деструктор класса.
+	 *    Освобождает захваченные ресурсы.
 	 */
-	virtual ~Object() {
-		// Empty
-	}
+	~Object();
+
+	void subscribe(Object * sender, const std::string & eventname, AEventHandler * handler);
+
+	void unsubscribe(const std::string & eventname);
 
 	/*!
 	 * \brief
-	 *    Получает метаданные текущего класса.
+	 *    Испускает построенное событие.
+	 * 
+	 * \param[in] eventname
+	 *    Имя события.
+	 * 
+	 * \param[in] event
+	 *    Данные события.
 	 */
-	static const ObjectMetadata * getObjectMetadata() { return 0; }
+	void emit(const std::string & eventname, IEvent * event);
+
+	AEventHandler * findEventHandler(const std::string & eventname);
 
 	/*!
 	 * \brief
-	 *    Получает метаданные базового класса.
+	 *    Возвращает идентификатор объекта.
 	 */
-	virtual const ObjectMetadata * getSuperClass() const = 0;
+	std::string getUid() const;
 
 	/*!
 	 * \brief
-	 *    Получает имя класса.
+	 *    Устанавливает идентификатор для текущего объекта.
+	 * 
+	 * \param[in] id
+	 *    Уникальный идентификатор.
 	 */
-	virtual const std::string & getClassName() const = 0;
+	void setUid(const std::string & id);
 
-	/*!
-	 * \brief
-	 *    Получает контекст.
-	 */
-	Context * getContext() const {
-		return _context;
-	}
-
-private:
-	Context * _context; /*!< Контекст. */
+protected:
+	Context * context_; /*!< Контекст. */
+	std::vector<AEventHandler *> eventHandlers_; /*!< Обработчики событий. */
+	std::string uniqueid_; /*!< Уникальный идентификатор текущего объекта. */
 };
 
 NAMESPACE_END(foundation)

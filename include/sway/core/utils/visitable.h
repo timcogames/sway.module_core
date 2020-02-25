@@ -1,18 +1,18 @@
-#ifndef _SWAY_CORE_UTILITIES_VISITABLE_H
-#define _SWAY_CORE_UTILITIES_VISITABLE_H
+#ifndef _SWAY_CORE_UTILS_VISITABLE_H
+#define _SWAY_CORE_UTILS_VISITABLE_H
 
+#include <sway/core/utils/traversalactions.h>
 #include <sway/namespacemacros.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(utilities)
+NAMESPACE_BEGIN(utils)
 
-class Visitor;
-
+class ITraverser;
 class IVisitable {
 public:
 
-#pragma region "Constructor / Destructor"
+#pragma region "Constructors / Destructor"
 
 	/*!
 	 * \brief
@@ -24,13 +24,13 @@ public:
 
 #pragma region "Pure virtual methods"
 
-	virtual void accept(Visitor * visitor) = 0;
+	virtual TraversalAction traverse(ITraverser * traverser) = 0;
 
 #pragma endregion
 };
 
-NAMESPACE_END(utilities)
+NAMESPACE_END(utils)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_UTILITIES_VISITABLE_H
+#endif // _SWAY_CORE_UTILS_VISITABLE_H

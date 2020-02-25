@@ -1,17 +1,15 @@
 #ifndef _SWAY_CORE_H
 #define _SWAY_CORE_H
 
-#include <sway/core/utilities/observer.h>
-#include <sway/core/utilities/observable.h>
-#include <sway/core/utilities/visitor.h>
-#include <sway/core/utilities/visitable.h>
+#include <sway/core/utils/observer.h>
+#include <sway/core/utils/observable.h>
+#include <sway/core/utils/visitable.h>
+#include <sway/core/utils/traversalactions.h>
+#include <sway/core/utils/traverser.h>
 #include <sway/core/misc/format.h>
 #include <sway/core/misc/guid.h>
-#include <sway/core/containers/hierarchynodeidx.h>
-#include <sway/core/containers/hierarchytraversalactions.h>
-#include <sway/core/containers/hierarchytraverser.h>
-#include <sway/core/containers/hierarchynodelistener.h>
-#include <sway/core/containers/hierarchynode.h>
+#include <sway/core/containers/nodeidx.h>
+#include <sway/core/containers/node.h>
 #include <sway/core/containers/hierarchy.h>
 #include <sway/core/runtime/exception.h>
 #include <sway/core/runtime/exceptions/argumentnullexception.h>
@@ -20,9 +18,9 @@
 #include <sway/core/detail/rawtype.h>
 #include <sway/core/detail/datatypes.h>
 #include <sway/core/detail/enumutils.h>
-#include <sway/core/foundation/objectmetadata.h>
+#include <sway/core/foundation/eventhandler.h>
+#include <sway/core/foundation/eventhandlerimpl.h>
 #include <sway/core/foundation/object.h>
-#include <sway/core/foundation/declareobjectmacros.h>
 #include <sway/core/foundation/context.h>
 #include <sway/core/binding/procaddress.h>
 #include <sway/core/binding/function.h>

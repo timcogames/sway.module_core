@@ -1,8 +1,24 @@
 #include <sway/core/containers/hierarchy.h>
 
+#ifdef _EMSCRIPTEN
+	#include <emscripten/emscripten.h>
+	#include <emscripten/bind.h>
+	#include <emscripten/val.h>
+#endif
+
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
+
+void Hierarchy::registerEmsClass() {
+#ifdef _EMSCRIPTEN
+	emscripten::class_<Hierarchy>("Hierarchy")
+		.constructor()
+		.class_function("findNode", &Hierarchy::findNode, emscripten::allow_raw_pointers())
+		.function("getRootNode", &Hierarchy::getRootNode, emscripten::allow_raw_pointers())
+		.function("setRootNode", &Hierarchy::setRootNode, emscripten::allow_raw_pointers());
+#endif
+}
 
 Hierarchy::Hierarchy()
 	: _root(nullptr) {
@@ -13,29 +29,24 @@ Hierarchy::~Hierarchy() {
 	SAFE_DELETE(_root)
 }
 
-void Hierarchy::addNodeListener(HierarchyNodeListener * listener) {
-	_listeners.push_back(listener);
+Node * Hierarchy::findNode(Node * root, const NodeIdx & nodeIdx) {
+	Node * retrieved = root;
+	for (int i = 1/* пропускаем корневой индекс */; i < nodeIdx.getDepth(); ++i) {
+		if (nodeIdx.getIdxAt(i) >= retrieved->getChildCount())
+			return nullptr;
+
+		retrieved = retrieved->getChildAt(nodeIdx.getIdxAt(i));
+	}
+
+	return retrieved;
 }
 
-// void Hierarchy::addNodeListener(HierarchyNodeListener * listener, HierarchyNode * node, u32_t flags) {
-// 	_listeners.push_back(listener);
-// }
-
-void Hierarchy::removeNodeListener(HierarchyNodeListener * listener) {
-	// Empty
-}
-
-HierarchyNode * Hierarchy::getRootNode() {
+Node * Hierarchy::getRootNode() {
 	return _root;
 }
 
-void Hierarchy::setRootNode(HierarchyNode * root) {
+void Hierarchy::setRootNode(Node * root) {
 	_root = root;
-	_root->setHostTree(this);
-}
-
-HierarchyNodeListenerVec_t Hierarchy::getListeners() {
-	return _listeners;
 }
 
 NAMESPACE_END(containers)

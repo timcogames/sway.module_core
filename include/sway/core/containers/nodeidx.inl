@@ -1,10 +1,10 @@
-#include <sway/core/containers/hierarchynodeidx.h>
+#include <sway/core/containers/nodeidx.h>
 #include <string> // std::string
 
 NAMESPACE_BEGIN(std)
 
 template<typename TYPE>
-inline string to_string(const sway::core::containers::HierarchyNodeIdx & nodeIdx) {
+inline string to_string(const sway::core::containers::NodeIdx & nodeIdx) {
 	std::string str = "[";
 	for (sway::u32_t i = 0; i < nodeIdx.getDepth(); ++i) {
 		str += std::to_string(nodeIdx.getIdxAt(i));

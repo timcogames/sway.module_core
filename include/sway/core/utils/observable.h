@@ -1,18 +1,18 @@
-#ifndef _SWAY_CORE_UTILITIES_OBSERVABLE_H
-#define _SWAY_CORE_UTILITIES_OBSERVABLE_H
+#ifndef _SWAY_CORE_UTILS_OBSERVABLE_H
+#define _SWAY_CORE_UTILS_OBSERVABLE_H
 
-#include <sway/core/utilities/observer.h>
+#include <sway/core/utils/observer.h>
 #include <sway/namespacemacros.h>
 #include <sway/types.h>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(utilities)
+NAMESPACE_BEGIN(utils)
 
 class Observable {
 public:
 
-#pragma region "Constructor / Destructor"
+#pragma region "Constructors / Destructor"
 
 	/*!
 	 * \brief
@@ -54,11 +54,11 @@ public:
 	void notify();
 
 private:
-	ObserverArray_t _observers; /*!< Массив наблюдателей, которые слушают этот наблюдаемый объект. */
+	ObserverArray_t observers_; /*!< Массив наблюдателей, которые слушают этот наблюдаемый объект. */
 };
 
-NAMESPACE_END(utilities)
+NAMESPACE_END(utils)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_UTILITIES_OBSERVABLE_H
+#endif // _SWAY_CORE_UTILS_OBSERVABLE_H

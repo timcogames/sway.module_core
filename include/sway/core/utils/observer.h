@@ -1,12 +1,12 @@
-#ifndef _SWAY_CORE_UTILITIES_OBSERVER_H
-#define _SWAY_CORE_UTILITIES_OBSERVER_H
+#ifndef _SWAY_CORE_UTILS_OBSERVER_H
+#define _SWAY_CORE_UTILS_OBSERVER_H
 
 #include <sway/namespacemacros.h>
 #include <vector>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(utilities)
+NAMESPACE_BEGIN(utils)
 
 typedef std::vector<class IObserver *> ObserverArray_t;
 typedef ObserverArray_t::const_iterator ObserverArrayIterator_t;
@@ -18,7 +18,7 @@ typedef ObserverArray_t::const_iterator ObserverArrayIterator_t;
 class IObserver {
 public:
 
-#pragma region "Constructor / Destructor"
+#pragma region "Constructors / Destructor"
 
 	/*!
 	 * \brief
@@ -39,8 +39,8 @@ public:
 #pragma endregion
 };
 
-NAMESPACE_END(utilities)
+NAMESPACE_END(utils)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_UTILITIES_OBSERVER_H
+#endif // _SWAY_CORE_UTILS_OBSERVER_H
