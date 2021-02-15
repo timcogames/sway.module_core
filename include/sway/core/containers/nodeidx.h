@@ -12,6 +12,8 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
+typedef std::vector<s32_t> IndexVector_t;
+
 class NodeIdx {
 public:
 #pragma region "Static methods"
@@ -27,7 +29,7 @@ public:
 	 *    Конструктор класса.
 	 *    Выполняет инициализацию нового экземпляра класса.
 	 */
-	NodeIdx(std::vector<s32_t> indexes = std::vector<s32_t>());
+	NodeIdx(IndexVector_t indexes = std::vector<s32_t>());
 
 	/*!
 	 * \brief
@@ -54,10 +56,14 @@ public:
 
 	s32_t getIdxAt(int idx) const;
 
+	IndexVector_t getIndexes() const;
+
 	bool isValid() const;
 
+	inline bool operator == (const NodeIdx & other) const;
+
 private:
-	std::vector<s32_t> indexes_;
+	IndexVector_t indexes_;
 };
 
 NAMESPACE_END(containers)

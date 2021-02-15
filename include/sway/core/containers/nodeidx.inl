@@ -17,3 +17,16 @@ inline string to_string(const sway::core::containers::NodeIdx & nodeIdx) {
 }
 
 NAMESPACE_END(std)
+
+NAMESPACE_BEGIN(sway)
+NAMESPACE_BEGIN(core)
+NAMESPACE_BEGIN(containers)
+
+bool NodeIdx::operator == (const NodeIdx & other) const {
+	return indexes_.size() == other.getIndexes().size()
+		&& std::equal(indexes_.begin(), indexes_.end(), other.getIndexes().begin());
+}
+
+NAMESPACE_END(containers)
+NAMESPACE_END(core)
+NAMESPACE_END(sway)

@@ -22,7 +22,7 @@ void NodeIdx::registerEmsClass() {
 #endif
 }
 
-NodeIdx::NodeIdx(std::vector<s32_t> indexes)
+NodeIdx::NodeIdx(IndexVector_t indexes)
 	: indexes_(indexes) {
 	// Empty
 }
@@ -34,7 +34,7 @@ NodeIdx::NodeIdx(const NodeIdx & parent, s32_t idx)
 }
 
 NodeIdx NodeIdx::getParent() const {
-	std::vector<s32_t> parentIndexes = indexes_;
+	IndexVector_t parentIndexes = indexes_;
 	parentIndexes.pop_back();
 	return NodeIdx(parentIndexes);
 }
@@ -45,6 +45,10 @@ s32_t NodeIdx::getDepth() const {
 
 s32_t NodeIdx::getIdxAt(int idx) const {
 		return indexes_[idx];
+}
+
+IndexVector_t NodeIdx::getIndexes() const {
+	return indexes_;
 }
 
 bool NodeIdx::isValid() const {
