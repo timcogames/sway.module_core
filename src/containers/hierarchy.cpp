@@ -1,4 +1,4 @@
-#include <sway/core/containers/hierarchy.h>
+#include <sway/core/containers/hierarchy.hpp>
 
 #ifdef _EMSCRIPTEN
 	#include <emscripten/emscripten.h>

@@ -1,8 +1,8 @@
-#ifndef _SWAY_CORE_FOUNDATION_OBJECT_H
-#define _SWAY_CORE_FOUNDATION_OBJECT_H
+#ifndef _SWAY_CORE_FOUNDATION_OBJECT_HPP
+#define _SWAY_CORE_FOUNDATION_OBJECT_HPP
 
-#include <sway/core/foundation/event.h>
-#include <sway/core/foundation/eventhandler.h>
+#include <sway/core/foundation/event.hpp>
+#include <sway/core/foundation/eventhandler.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 #include <vector>
@@ -82,4 +82,4 @@ NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_FOUNDATION_OBJECT_H
+#endif // _SWAY_CORE_FOUNDATION_OBJECT_HPP

@@ -1,7 +1,7 @@
-#ifndef _SWAY_CORE_UTILS_TRAVERSER_H
-#define _SWAY_CORE_UTILS_TRAVERSER_H
+#ifndef _SWAY_CORE_UTILS_TRAVERSER_HPP
+#define _SWAY_CORE_UTILS_TRAVERSER_HPP
 
-#include <sway/core/utils/traversalactions.h>
+#include <sway/core/utils/traversalactions.hpp>
 #include <sway/namespacemacros.hpp>
 
 NAMESPACE_BEGIN(sway)
@@ -34,4 +34,4 @@ NAMESPACE_END(utils)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_UTILS_TRAVERSER_H
+#endif // _SWAY_CORE_UTILS_TRAVERSER_HPP

@@ -1,7 +1,7 @@
-#ifndef _SWAY_CORE_MISC_GUID_H
-#define _SWAY_CORE_MISC_GUID_H
+#ifndef _SWAY_CORE_MISC_GUID_HPP
+#define _SWAY_CORE_MISC_GUID_HPP
 
-#include <sway/core/misc/format.h>
+#include <sway/core/misc/format.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
@@ -38,4 +38,4 @@ NAMESPACE_END(misc)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_MISC_GUID_H
+#endif // _SWAY_CORE_MISC_GUID_HPP

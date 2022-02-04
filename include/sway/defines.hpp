@@ -1,5 +1,5 @@
-#ifndef _SWAY_DEFINES_H
-#define _SWAY_DEFINES_H
+#ifndef _SWAY_DEFINES_HPP
+#define _SWAY_DEFINES_HPP
 
 #define DONT_CARE (-1)
 
@@ -8,4 +8,4 @@
 
 #define ENUM_BITMASK(x) (1 << x)
 
-#endif // _SWAY_DEFINES_H
+#endif // _SWAY_DEFINES_HPP

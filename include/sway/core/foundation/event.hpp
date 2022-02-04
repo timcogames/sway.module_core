@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_FOUNDATION_EVENT_H
-#define _SWAY_CORE_FOUNDATION_EVENT_H
+#ifndef _SWAY_CORE_FOUNDATION_EVENT_HPP
+#define _SWAY_CORE_FOUNDATION_EVENT_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -85,4 +85,4 @@ NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_FOUNDATION_EVENT_H
+#endif // _SWAY_CORE_FOUNDATION_EVENT_HPP

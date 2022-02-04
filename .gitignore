@@ -1,3 +1,13 @@
-/.vscode
+# project output
 /build
 /bin
+
+# osx noise
+.DS_Store
+profile
+
+# xcode noise
+build/*
+bin/*
+*.pbxuser
+*.mode1v3

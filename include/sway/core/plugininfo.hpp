@@ -1,7 +1,7 @@
-#ifndef _SWAY_CORE_PLUGININFO_H
-#define _SWAY_CORE_PLUGININFO_H
+#ifndef _SWAY_CORE_PLUGININFO_HPP
+#define _SWAY_CORE_PLUGININFO_HPP
 
-#include <sway/core/version.h>
+#include <sway/core/version.hpp>
 #include <sway/namespacemacros.hpp>
 #include <string>
 
@@ -24,4 +24,4 @@ struct PluginInfo {
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_PLUGININFO_H
+#endif // _SWAY_CORE_PLUGININFO_HPP

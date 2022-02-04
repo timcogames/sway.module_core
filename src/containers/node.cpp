@@ -1,6 +1,6 @@
-#include <sway/core/containers/node.h>
-#include <sway/core/foundation/context.h>
-#include <sway/core/detail/enumutils.h>
+#include <sway/core/containers/node.hpp>
+#include <sway/core/foundation/context.hpp>
+#include <sway/core/detail/enumutils.hpp>
 #include <algorithm> // std::remove_if
 
 #ifdef _EMSCRIPTEN

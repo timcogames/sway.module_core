@@ -1,4 +1,4 @@
-#include <sway/core/version.h>
+#include <sway/core/version.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

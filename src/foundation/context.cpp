@@ -1,4 +1,4 @@
-#include <sway/core/foundation/context.h>
+#include <sway/core/foundation/context.hpp>
 
 #ifdef _EMSCRIPTEN
 	#include <emscripten/emscripten.h>

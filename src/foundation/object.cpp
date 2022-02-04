@@ -1,6 +1,6 @@
-#include <sway/core/foundation/object.h>
-#include <sway/core/foundation/context.h>
-#include <sway/core/misc/guid.h>
+#include <sway/core/foundation/object.hpp>
+#include <sway/core/foundation/context.hpp>
+#include <sway/core/misc/guid.hpp>
 
 #ifdef _EMSCRIPTEN
 #include <emscripten/emscripten.h>

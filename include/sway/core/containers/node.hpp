@@ -1,13 +1,13 @@
-#ifndef _SWAY_CORE_CONTAINERS_NODE_H
-#define _SWAY_CORE_CONTAINERS_NODE_H
+#ifndef _SWAY_CORE_CONTAINERS_NODE_HPP
+#define _SWAY_CORE_CONTAINERS_NODE_HPP
 
-#include <sway/core/foundation/event.h>
-#include <sway/core/foundation/object.h>
-#include <sway/core/containers/nodeidx.h>
-#include <sway/core/utils/traversalactions.h>
-#include <sway/core/utils/traverser.h>
-#include <sway/core/utils/visitable.h>
-#include <sway/core/memory/safedeletemacros.h>
+#include <sway/core/foundation/event.hpp>
+#include <sway/core/foundation/object.hpp>
+#include <sway/core/containers/nodeidx.hpp>
+#include <sway/core/utils/traversalactions.hpp>
+#include <sway/core/utils/traverser.hpp>
+#include <sway/core/utils/visitable.hpp>
+#include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
@@ -175,4 +175,4 @@ NAMESPACE_END(containers)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_CONTAINERS_NODE_H
+#endif // _SWAY_CORE_CONTAINERS_NODE_HPP

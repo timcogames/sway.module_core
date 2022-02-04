@@ -1,4 +1,4 @@
-#include <sway/core/containers/nodeidx.h>
+#include <sway/core/containers/nodeidx.hpp>
 
 #ifdef _EMSCRIPTEN
 	#include <emscripten/emscripten.h>

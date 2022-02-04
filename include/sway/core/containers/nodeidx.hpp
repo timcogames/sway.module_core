@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_CONTAINERS_NODEIDX_H
-#define _SWAY_CORE_CONTAINERS_NODEIDX_H
+#ifndef _SWAY_CORE_CONTAINERS_NODEIDX_HPP
+#define _SWAY_CORE_CONTAINERS_NODEIDX_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -70,6 +70,4 @@ NAMESPACE_END(containers)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#include <sway/core/containers/nodeidx.inl>
-
-#endif // _SWAY_CORE_CONTAINERS_NODEIDX_H
+#endif // _SWAY_CORE_CONTAINERS_NODEIDX_HPP

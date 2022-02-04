@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_DETAIL_ENUMUTILS_H
-#define _SWAY_CORE_DETAIL_ENUMUTILS_H
+#ifndef _SWAY_CORE_DETAIL_ENUMUTILS_HPP
+#define _SWAY_CORE_DETAIL_ENUMUTILS_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <type_traits>
@@ -25,4 +25,4 @@ NAMESPACE_END(detail)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_DETAIL_ENUMUTILS_H
+#endif // _SWAY_CORE_DETAIL_ENUMUTILS_HPP

@@ -1,7 +1,7 @@
-#ifndef _SWAY_TYPES_H
-#define _SWAY_TYPES_H
+#ifndef _SWAY_TYPES_HPP
+#define _SWAY_TYPES_HPP
 
-#include <sway/namespacemacros.h>
+#include <sway/namespacemacros.hpp>
 
 NAMESPACE_BEGIN(sway)
 
@@ -22,4 +22,4 @@ typedef const s8_t * lpcstr_t;
 
 NAMESPACE_END(sway)
 
-#endif // _SWAY_TYPES_H
+#endif // _SWAY_TYPES_HPP

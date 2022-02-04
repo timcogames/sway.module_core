@@ -1,4 +1,4 @@
-#include <sway/core/utils/observable.h>
+#include <sway/core/utils/observable.hpp>
 #include <algorithm>
 
 NAMESPACE_BEGIN(sway)

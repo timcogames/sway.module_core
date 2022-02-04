@@ -1,7 +1,7 @@
-#include <sway/core/plugin.h>
-#include <sway/core/runtime/exceptions/argumentnullexception.h>
-#include <sway/core/runtime/exceptions/librarynotfoundexception.h>
-#include <sway/core/runtime/exceptions/symbolnotfoundexception.h>
+#include <sway/core/plugin.hpp>
+#include <sway/core/runtime/exceptions/argumentnullexception.hpp>
+#include <sway/core/runtime/exceptions/librarynotfoundexception.hpp>
+#include <sway/core/runtime/exceptions/symbolnotfoundexception.hpp>
 
 #include <dlfcn.h>
 

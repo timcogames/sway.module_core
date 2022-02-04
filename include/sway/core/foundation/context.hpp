@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_FOUNDATION_CONTEXT_H
-#define _SWAY_CORE_FOUNDATION_CONTEXT_H
+#ifndef _SWAY_CORE_FOUNDATION_CONTEXT_HPP
+#define _SWAY_CORE_FOUNDATION_CONTEXT_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -31,4 +31,4 @@ NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_FOUNDATION_CONTEXT_H
+#endif // _SWAY_CORE_FOUNDATION_CONTEXT_HPP

@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_BINDING_PROCADDRESS_H
-#define _SWAY_CORE_BINDING_PROCADDRESS_H
+#ifndef _SWAY_CORE_BINDING_PROCADDRESS_HPP
+#define _SWAY_CORE_BINDING_PROCADDRESS_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -16,4 +16,4 @@ NAMESPACE_END(binding)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_BINDING_PROCADDRESS_H
+#endif // _SWAY_CORE_BINDING_PROCADDRESS_HPP

@@ -1,11 +1,12 @@
-#ifndef _SWAY_CORE_VERSION_H
-#define _SWAY_CORE_VERSION_H
+#ifndef _SWAY_CORE_VERSION_HPP
+#define _SWAY_CORE_VERSION_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <sway/defines.hpp>
 #include <sway/types.hpp>
 
 #include <string>
+#include <utility> // std::move
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -227,7 +228,14 @@ public:
 	 * \return
 	 *    Ссылка на эту версию.
 	 */
-	inline Version & operator=(const Version & version);
+	inline Version & operator=(const Version & version) {
+		_major = version.getMajor();
+		_minor = version.getMinor();
+		_patch = version.getPatch();
+		_extra = version.getExtra();
+
+		return *this;
+	}
 
 	/*!
 	 * \brief
@@ -242,7 +250,9 @@ public:
 	 * \return
 	 *    Значение 'true', если эта версия меньше, чем другая версия, иначе 'false'.
 	 */
-	inline bool operator<(const Version & version) const;
+	inline bool operator<(const Version & version) const {
+		return compare(version) < 0;
+	}
 
 	/*!
 	 * \brief
@@ -257,7 +267,9 @@ public:
 	 * \return
 	 *    Значение 'true', если эта версия больше, чем другая версия, иначе 'false'.
 	 */
-	inline bool operator>(const Version & version) const;
+	inline bool operator>(const Version & version) const {
+		return compare(version) > 0;
+	}
 
 	/*!
 	 * \brief
@@ -272,7 +284,9 @@ public:
 	 * \return
 	 *    Значение 'true', если эта версия равна другой версии, иначе 'false'.
 	 */
-	inline bool operator==(const Version & version) const;
+	inline bool operator==(const Version & version) const {
+		return compare(version) == 0;
+	}
 
 	/*!
 	 * \brief
@@ -287,7 +301,9 @@ public:
 	 * \return
 	 *    Значение 'true', если эта версия не равна другой версии, иначе 'false'.
 	 */
-	inline bool operator!=(const Version & version) const;
+	inline bool operator!=(const Version & version) const {
+		return compare(version) != 0;
+	}
 
 	/*!
 	 * \brief
@@ -302,7 +318,9 @@ public:
 	 * \return
 	 *    Значение 'true', если эта версия больше или равна другой версии, иначе 'false'.
 	 */
-	inline bool operator>=(const Version & version) const;
+	inline bool operator>=(const Version & version) const {
+		return *this > version || *this == version;
+	}
 
 	/*!
 	 * \brief
@@ -317,7 +335,9 @@ public:
 	 * \return
 	 *    Значение 'true', если эта версия меньше или равна другой версии, иначе 'false'.
 	 */
-	inline bool operator<=(const Version & version) const;
+	inline bool operator<=(const Version & version) const {
+		return *this < version || *this == version;
+	}
 
 private:
 	s32_t _major; /*!< Главный номер версии. */
@@ -329,6 +349,4 @@ private:
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#include <sway/core/version.inl>
-
-#endif // _SWAY_CORE_VERSION_H
+#endif // _SWAY_CORE_VERSION_HPP

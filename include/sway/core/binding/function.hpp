@@ -1,9 +1,11 @@
-#ifndef _SWAY_CORE_BINDING_FUNCTION_H
-#define _SWAY_CORE_BINDING_FUNCTION_H
+#ifndef _SWAY_CORE_BINDING_FUNCTION_HPP
+#define _SWAY_CORE_BINDING_FUNCTION_HPP
 
-#include <sway/core/binding/procaddress.h>
+#include <sway/core/binding/procaddress.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
+
+#include <utility> // std::forward
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -23,7 +25,7 @@ public:
 	 *    TFunction(decltype (nullptr))
 	 *    TFunction(ProcAddress_t ptr)
 	 */
-	TFunction();
+	TFunction() : _invoker(nullptr) { }
 
 	/*!
 	 * \brief
@@ -33,7 +35,7 @@ public:
 	 *    TFunction()
 	 *    TFunction(ProcAddress_t ptr)
 	 */
-	TFunction(decltype (nullptr));
+	TFunction(decltype (nullptr)) { }
 
 	/*!
 	 * \brief
@@ -46,19 +48,27 @@ public:
 	 *    TFunction()
 	 *    TFunction(decltype (nullptr))
 	 */
-	TFunction(ProcAddress_t ptr);
+	TFunction(ProcAddress_t ptr) : _invoker(ptr) { }
 
 	/*!
 	 * \brief
 	 *    Определяет, сохранен ли объект вызываемой функции.
 	 */
-	operator bool() const;
+	operator bool() const {
+		return _invoker != nullptr;
+	}
 
-	bool operator== (decltype (nullptr)) const;
+	bool operator== (decltype (nullptr)) const {
+		return (_invoker == nullptr);
+	}
 
-	bool operator!= (decltype (nullptr)) const;
+	bool operator!= (decltype (nullptr)) const {
+		return (_invoker != nullptr);
+	}
 
-	bool operator!= (const TFunction<ReturnType(Arguments...)> & function) const;
+	bool operator!= (const TFunction<ReturnType(Arguments...)> & function) const {
+		return _invoker != function._invoker;
+	}
 
 	/*!
 	 * \brief
@@ -67,7 +77,9 @@ public:
 	 * \param[in] args
 	 *     Аргументы функции.
 	 */
-	ReturnType operator() (Arguments... args);
+	ReturnType operator() (Arguments... args) {
+		return call(args...);
+	}
 
 	/*!
 	 * \brief
@@ -76,7 +88,9 @@ public:
 	 * \param[in] args
 	 *     Аргументы функции.
 	 */
-	ReturnType call(Arguments... args);
+	ReturnType call(Arguments... args) {
+		return (*reinterpret_cast<ReturnType (*)(Arguments...)>(_invoker))(std::forward<Arguments>(args)...);
+	}
 
 protected:
 	ProcAddress_t _invoker; /*!< Указатель на функции. */
@@ -86,6 +100,4 @@ NAMESPACE_END(binding)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#include <sway/core/binding/function.inl>
-
-#endif // _SWAY_CORE_BINDING_FUNCTION_H
+#endif // _SWAY_CORE_BINDING_FUNCTION_HPP

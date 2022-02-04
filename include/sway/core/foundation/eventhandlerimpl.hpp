@@ -1,7 +1,7 @@
-#ifndef _SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_H
-#define _SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_H
+#ifndef _SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_HPP
+#define _SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_HPP
 
-#include <sway/core/foundation/eventhandler.h>
+#include <sway/core/foundation/eventhandler.hpp>
 #include <sway/namespacemacros.hpp>
 #include <vector>
 #include <algorithm> // std::remove_if
@@ -28,7 +28,7 @@ public:
 	 * \param[in] function
 	 *    Функция обработчика события.
 	 */
-	TEventHandlerImpl(TYPE * receiver, HandlerFunction_t function);
+	TEventHandlerImpl(TYPE * receiver, HandlerFunction_t function) : AEventHandler(receiver), function_(std::move(function)) { }
 
 	/*!
 	 * \brief
@@ -45,7 +45,10 @@ public:
 	 * \param[in] eventdata
 	 *    Данные события.
 	 */
-	void invoke(IEvent * event) override;
+	void invoke(IEvent * event) override {
+		TYPE * receiver = static_cast<TYPE *>(receiver_);
+		(receiver->*function_)(event);
+	}
 
 private:
 	HandlerFunction_t function_; /*!< Функцию обработчика событий. */
@@ -115,9 +118,7 @@ NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#include <sway/core/foundation/eventhandlerimpl.inl>
-
 #define EVENT_HANDLER(classname, function) \
 	(new core::foundation::TEventHandlerImpl<classname>(this, &classname::function))
 
-#endif // _SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_H
+#endif // _SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_HPP

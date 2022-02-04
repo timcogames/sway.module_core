@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_DETAIL_DATATYPES_H
-#define _SWAY_CORE_DETAIL_DATATYPES_H
+#ifndef _SWAY_CORE_DETAIL_DATATYPES_HPP
+#define _SWAY_CORE_DETAIL_DATATYPES_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -50,4 +50,4 @@ NAMESPACE_END(detail)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_DETAIL_DATATYPES_H
+#endif // _SWAY_CORE_DETAIL_DATATYPES_HPP

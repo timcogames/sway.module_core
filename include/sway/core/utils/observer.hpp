@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_UTILS_OBSERVER_H
-#define _SWAY_CORE_UTILS_OBSERVER_H
+#ifndef _SWAY_CORE_UTILS_OBSERVER_HPP
+#define _SWAY_CORE_UTILS_OBSERVER_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <vector>
@@ -43,4 +43,4 @@ NAMESPACE_END(utils)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_UTILS_OBSERVER_H
+#endif // _SWAY_CORE_UTILS_OBSERVER_HPP

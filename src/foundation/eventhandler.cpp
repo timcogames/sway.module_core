@@ -1,5 +1,5 @@
-#include <sway/core/foundation/eventhandler.h>
-#include <sway/core/foundation/object.h>
+#include <sway/core/foundation/eventhandler.hpp>
+#include <sway/core/foundation/object.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

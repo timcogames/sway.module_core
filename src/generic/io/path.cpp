@@ -1,4 +1,4 @@
-#include <sway/core/generic/io/path.h>
+#include <sway/core/generic/io/path.hpp>
 #include <algorithm>
 #include <fstream>
 

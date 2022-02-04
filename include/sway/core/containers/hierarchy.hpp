@@ -1,9 +1,9 @@
-#ifndef _SWAY_CORE_CONTAINERS_HIERARCHY_H
-#define _SWAY_CORE_CONTAINERS_HIERARCHY_H
+#ifndef _SWAY_CORE_CONTAINERS_HIERARCHY_HPP
+#define _SWAY_CORE_CONTAINERS_HIERARCHY_HPP
 
-#include <sway/core/containers/nodeidx.h>
-#include <sway/core/containers/node.h>
-#include <sway/core/memory/safedeletemacros.h>
+#include <sway/core/containers/nodeidx.hpp>
+#include <sway/core/containers/node.hpp>
+#include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
@@ -54,4 +54,4 @@ NAMESPACE_END(containers)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_CONTAINERS_HIERARCHY_H
+#endif // _SWAY_CORE_CONTAINERS_HIERARCHY_HPP

@@ -1,4 +1,4 @@
-#include <sway/core/generic/io/filesource.h>
+#include <sway/core/generic/io/filesource.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

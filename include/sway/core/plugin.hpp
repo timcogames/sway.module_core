@@ -1,9 +1,9 @@
-#ifndef _SWAY_CORE_PLUGIN_H
-#define _SWAY_CORE_PLUGIN_H
+#ifndef _SWAY_CORE_PLUGIN_HPP
+#define _SWAY_CORE_PLUGIN_HPP
 
-#include <sway/core/binding/function.h>
-#include <sway/core/generic/io/path.h>
-#include <sway/core/plugininfo.h>
+#include <sway/core/binding/function.hpp>
+#include <sway/core/generic/io/path.hpp>
+#include <sway/core/plugininfo.hpp>
 #include <sway/namespacemacros.hpp>
 
 #include <string>
@@ -51,4 +51,4 @@ private:
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_PLUGIN_H
+#endif // _SWAY_CORE_PLUGIN_HPP
