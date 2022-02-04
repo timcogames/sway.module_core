@@ -1,9 +1,9 @@
-#ifndef _SWAY_CORE_CONTAINERS_NODE_HPP
-#define _SWAY_CORE_CONTAINERS_NODE_HPP
+#ifndef _SWAY_CORE_CONTAINER_NODE_HPP
+#define _SWAY_CORE_CONTAINER_NODE_HPP
 
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/object.hpp>
-#include <sway/core/containers/nodeidx.hpp>
+#include <sway/core/container/nodeidx.hpp>
 #include <sway/core/utils/traverser.hpp>
 #include <sway/core/utils/visitable.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
@@ -17,7 +17,7 @@
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(containers)
+NAMESPACE_BEGIN(container)
 
 #define DECLARE_EVENT(EventId, EventName) \
 	public: \
@@ -168,8 +168,8 @@ private:
 	NodeIdx nodeIdx_;
 };
 
-NAMESPACE_END(containers)
+NAMESPACE_END(container)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_CONTAINERS_NODE_HPP
+#endif // _SWAY_CORE_CONTAINER_NODE_HPP

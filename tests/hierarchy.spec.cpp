@@ -15,18 +15,18 @@ BOOST_AUTO_TEST_SUITE(Hierarchy_TestSuite)
 
 BOOST_AUTO_TEST_CASE(Hierarchy_TestCase) {
 	foundation::Context * ctx = new foundation::Context();
-	containers::Hierarchy * tree = new containers::Hierarchy();
-	containers::Node * root = new containers::Node(ctx, nullptr, containers::NodeIdx({ 0 }));
+	container::Hierarchy * tree = new container::Hierarchy();
+	container::Node * root = new container::Node(ctx, nullptr, container::NodeIdx({ 0 }));
 
 	tree->setRootNode(root);
 
-	containers::Node * child1 = new containers::Node(ctx, root, containers::NodeIdx());
+	container::Node * child1 = new container::Node(ctx, root, container::NodeIdx());
 	root->addChild(child1);
-	//BOOST_CHECK_EQUAL(std::to_string<containers::NodeIdx>(child1->getNodeIdx()), "[0, 0]");
+	//BOOST_CHECK_EQUAL(std::to_string<container::NodeIdx>(child1->getNodeIdx()), "[0, 0]");
 
-	containers::Node * child2 = new containers::Node(ctx, root, containers::NodeIdx());
+	container::Node * child2 = new container::Node(ctx, root, container::NodeIdx());
 	root->addChild(child2);
-	//BOOST_CHECK_EQUAL(std::to_string<containers::NodeIdx>(child2->getNodeIdx()), "[0, 1]");
+	//BOOST_CHECK_EQUAL(std::to_string<container::NodeIdx>(child2->getNodeIdx()), "[0, 1]");
 
 	HierarchyChildTraverser traverser;
 	root->traverse(&traverser);

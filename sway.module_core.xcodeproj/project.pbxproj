@@ -54,15 +54,6 @@
 		93649F3927ACDF9B00311174 /* types.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649F1427ACDF9B00311174 /* types.hpp */; };
 		93649F3A27ACDF9B00311174 /* defines.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649F1527ACDF9B00311174 /* defines.hpp */; };
 		93649F3B27ACDF9B00311174 /* visibilitymacros.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649F1627ACDF9B00311174 /* visibilitymacros.hpp */; };
-		93649F4727ACDFBC00311174 /* rawtype.spec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F3D27ACDFBC00311174 /* rawtype.spec.cpp */; };
-		93649F4827ACDFBC00311174 /* foundation.spec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F3F27ACDFBC00311174 /* foundation.spec.cpp */; };
-		93649F4927ACDFBC00311174 /* path.spec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F4027ACDFBC00311174 /* path.spec.cpp */; };
-		93649F4A27ACDFBC00311174 /* function.spec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F4127ACDFBC00311174 /* function.spec.cpp */; };
-		93649F4B27ACDFBC00311174 /* enum.spec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F4227ACDFBC00311174 /* enum.spec.cpp */; };
-		93649F4C27ACDFBC00311174 /* hierarchy.spec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F4327ACDFBC00311174 /* hierarchy.spec.cpp */; };
-		93649F4D27ACDFBC00311174 /* version.spec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F4427ACDFBC00311174 /* version.spec.cpp */; };
-		93649F4E27ACDFBC00311174 /* format.spec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F4527ACDFBC00311174 /* format.spec.cpp */; };
-		93649F4F27ACDFBC00311174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F4627ACDFBC00311174 /* main.cpp */; };
 		93649F5127ACE2E000311174 /* keywords.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649F5027ACE2E000311174 /* keywords.hpp */; };
 		93AA460D27AD5C390066041E /* libsway.module_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93649E9E27ACD9B300311174 /* libsway.module_core.a */; };
 		93AA461427AD5CE80066041E /* nodeidx.spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AA461327AD5CE80066041E /* nodeidx.spec.m */; };
@@ -155,6 +146,7 @@
 		93AA460427AD5AA60066041E /* README-CMake.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = "README-CMake.md"; sourceTree = "<group>"; };
 		93AA460927AD5C390066041E /* sway.module_core.tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sway.module_core.tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93AA461327AD5CE80066041E /* nodeidx.spec.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = nodeidx.spec.m; sourceTree = "<group>"; };
+		93AA461527AD61B60066041E /* nodeidx.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = nodeidx.ts; path = include/sway/core/container/nodeidx.ts; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,7 +208,7 @@
 		93649EAA27ACDAA800311174 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				93649ED927ACDF5E00311174 /* containers */,
+				93649ED927ACDF5E00311174 /* container */,
 				93649ED727ACDF1800311174 /* version.cpp */,
 				93649ED527ACDF1100311174 /* plugin.cpp */,
 				93649ED227ACDF0A00311174 /* utils */,
@@ -324,14 +316,15 @@
 			path = utils;
 			sourceTree = "<group>";
 		};
-		93649ED927ACDF5E00311174 /* containers */ = {
+		93649ED927ACDF5E00311174 /* container */ = {
 			isa = PBXGroup;
 			children = (
+				93AA461527AD61B60066041E /* nodeidx.ts */,
 				93649EDA27ACDF5E00311174 /* nodeidx.cpp */,
 				93649EDB27ACDF5E00311174 /* node.cpp */,
 				93649EDC27ACDF5E00311174 /* hierarchy.cpp */,
 			);
-			path = containers;
+			path = container;
 			sourceTree = "<group>";
 		};
 		93649EE027ACDF9B00311174 /* sway */ = {
@@ -363,7 +356,7 @@
 				93649F0327ACDF9B00311174 /* detail */,
 				93649F0827ACDF9B00311174 /* intrusive */,
 				93649F0A27ACDF9B00311174 /* generic */,
-				93649F0E27ACDF9B00311174 /* containers */,
+				93649F0E27ACDF9B00311174 /* container */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -472,7 +465,7 @@
 			path = io;
 			sourceTree = "<group>";
 		};
-		93649F0E27ACDF9B00311174 /* containers */ = {
+		93649F0E27ACDF9B00311174 /* container */ = {
 			isa = PBXGroup;
 			children = (
 				93649F0F27ACDF9B00311174 /* hierarchy.hpp */,
@@ -480,7 +473,7 @@
 				93649F1127ACDF9B00311174 /* nodeidx.hpp */,
 				93AA461327AD5CE80066041E /* nodeidx.spec.m */,
 			);
-			path = containers;
+			path = container;
 			sourceTree = "<group>";
 		};
 		93649F3C27ACDFBC00311174 /* tests */ = {
@@ -638,23 +631,14 @@
 			files = (
 				93649ECB27ACDEF800311174 /* eventhandler.cpp in Sources */,
 				93649EDD27ACDF5E00311174 /* nodeidx.cpp in Sources */,
-				93649F4727ACDFBC00311174 /* rawtype.spec.cpp in Sources */,
 				93649ED627ACDF1100311174 /* plugin.cpp in Sources */,
-				93649F4E27ACDFBC00311174 /* format.spec.cpp in Sources */,
-				93649F4927ACDFBC00311174 /* path.spec.cpp in Sources */,
-				93649F4C27ACDFBC00311174 /* hierarchy.spec.cpp in Sources */,
-				93649F4D27ACDFBC00311174 /* version.spec.cpp in Sources */,
-				93649F4827ACDFBC00311174 /* foundation.spec.cpp in Sources */,
 				93649EDE27ACDF5E00311174 /* node.cpp in Sources */,
-				93649F4A27ACDFBC00311174 /* function.spec.cpp in Sources */,
 				93649ED127ACDF0200311174 /* path.cpp in Sources */,
 				93649EDF27ACDF5E00311174 /* hierarchy.cpp in Sources */,
 				93649ED427ACDF0A00311174 /* observable.cpp in Sources */,
 				93649ECA27ACDEF800311174 /* object.cpp in Sources */,
-				93649F4B27ACDFBC00311174 /* enum.spec.cpp in Sources */,
 				93649ED827ACDF1800311174 /* version.cpp in Sources */,
 				93649ED027ACDF0200311174 /* filesource.cpp in Sources */,
-				93649F4F27ACDFBC00311174 /* main.cpp in Sources */,
 				93649EC927ACDEF800311174 /* context.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -794,11 +778,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/include",
-					"/Users/apriori85/Documents/Third-party/boost_1_78_0",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include,
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/include";
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -810,11 +790,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
-				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/include",
-					"/Users/apriori85/Documents/Third-party/boost_1_78_0",
-					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include,
-				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/include";
 				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

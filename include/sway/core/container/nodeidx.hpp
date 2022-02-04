@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_CONTAINERS_NODEIDX_HPP
-#define _SWAY_CORE_CONTAINERS_NODEIDX_HPP
+#ifndef _SWAY_CORE_CONTAINER_NODEIDX_HPP
+#define _SWAY_CORE_CONTAINER_NODEIDX_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -9,7 +9,7 @@
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(containers)
+NAMESPACE_BEGIN(container)
 
 #define NODEIDX_NEGATIVE (-1)
 #define NODEIDX_ROOT NODEIDX_NEGATIVE
@@ -50,8 +50,8 @@ private:
 	NodeIdx::chain_t chainLinks_;
 };
 
-NAMESPACE_END(containers)
+NAMESPACE_END(container)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_CONTAINERS_NODEIDX_HPP
+#endif // _SWAY_CORE_CONTAINER_NODEIDX_HPP

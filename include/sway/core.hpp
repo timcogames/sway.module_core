@@ -7,9 +7,9 @@
 #include <sway/core/utils/traverser.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
-#include <sway/core/containers/nodeidx.hpp>
-#include <sway/core/containers/node.hpp>
-#include <sway/core/containers/hierarchy.hpp>
+#include <sway/core/container/nodeidx.hpp>
+#include <sway/core/container/node.hpp>
+#include <sway/core/container/hierarchy.hpp>
 #include <sway/core/runtime/exception.hpp>
 #include <sway/core/runtime/exceptions/argumentnullexception.hpp>
 #include <sway/core/runtime/exceptions/librarynotfoundexception.hpp>

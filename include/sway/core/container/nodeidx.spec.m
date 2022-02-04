@@ -1,11 +1,11 @@
 #import <XCTest/XCTest.h>
-#import <sway/core/containers/node.hpp>
+#import <sway/core/container/node.hpp>
 #import <sstream>
 
 #define NODE_IDX_SUPERVISOR (0)
 #define NODE_IDX_WORKER (1)
 
-using namespace sway::core::containers;
+using namespace sway::core::container;
 
 @interface xctestcase_commons_NodeIdx : XCTestCase
 @end
