@@ -20,10 +20,7 @@ void Hierarchy::registerEmsClass() {
 #endif
 }
 
-Hierarchy::Hierarchy()
-	: _root(nullptr) {
-	// Empty
-}
+Hierarchy::Hierarchy() : _root(nullptr) { }
 
 Hierarchy::~Hierarchy() {
 	SAFE_DELETE(_root)

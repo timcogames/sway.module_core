@@ -1,5 +1,5 @@
 #include <boost/test/unit_test.hpp>
-#include <sway/core.h>
+#include <sway/core.hpp>
 
 using namespace sway;
 

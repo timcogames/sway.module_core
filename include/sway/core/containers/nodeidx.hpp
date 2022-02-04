@@ -5,65 +5,49 @@
 #include <sway/types.hpp>
 
 #include <string>
-#include <memory>
 #include <vector>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(containers)
 
-typedef std::vector<s32_t> IndexVector_t;
+#define NODEIDX_NEGATIVE (-1)
+#define NODEIDX_ROOT NODEIDX_NEGATIVE
+#define NODEIDX_CHAIN_INITIALROOT std::vector<int>({ NODEIDX_ROOT })
 
 class NodeIdx {
 public:
-#pragma region "Static methods"
+	using index_t = s32_t;
+	using chain_t = std::vector<NodeIdx::index_t>;
 
 	static void registerEmsClass();
 
-#pragma endregion
+	NodeIdx();
+	NodeIdx(const NodeIdx::chain_t & chain);
+	NodeIdx(NodeIdx parent, NodeIdx::index_t idx);
 
-#pragma region "Constructors / Destructor"
-
-	/*!
-	 * \brief
-	 *    Конструктор класса.
-	 *    Выполняет инициализацию нового экземпляра класса.
-	 */
-	NodeIdx(IndexVector_t indexes = std::vector<s32_t>());
-
-	/*!
-	 * \brief
-	 *    Конструктор класса.
-	 *    Выполняет инициализацию нового экземпляра класса.
-	 */
-	NodeIdx(const NodeIdx & parent, s32_t idx);
-
-	/*!
-	 * \brief
-	 *    Деструктор класса.
-	 */
 	~NodeIdx() = default;
 
-#pragma endregion
+	void setAsRoot();
 
-	NodeIdx getParent() const;
+	void setChain(const NodeIdx::chain_t & chain, NodeIdx::index_t idx);
 
-	/*!
-	 * \brief
-	 *    Возвращает уровень узла в дереве.
-	 */
-	s32_t getDepth() const;
+	NodeIdx::chain_t getChain() const;
 
-	s32_t getIdxAt(int idx) const;
+	NodeIdx::chain_t getParent();
 
-	IndexVector_t getIndexes() const;
+	int getDepth() const;
 
-	bool isValid() const;
+	NodeIdx::index_t getIdxAt(int idx) const;
 
-	inline bool operator == (const NodeIdx & other) const;
+	bool equals(const NodeIdx & other);
+
+	bool chainEquals(const NodeIdx::chain_t & other);
+
+	std::string toStr();
 
 private:
-	IndexVector_t indexes_;
+	NodeIdx::chain_t chainLinks_;
 };
 
 NAMESPACE_END(containers)

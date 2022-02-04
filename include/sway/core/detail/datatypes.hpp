@@ -22,16 +22,12 @@ enum class DataType_t : u32_t {
 };
 
 template<typename Type>
-struct DataTypeToEnum {
-	// Empty
-};
+struct DataTypeToEnum { };
 
 template<DataType_t Key>
-struct EnumToDataType {
-	// Empty
-};
+struct EnumToDataType { };
 
-#include <sway/core/detail/datatypemacros.h>
+#include <sway/core/detail/datatypemacros.hpp>
 
 ENUM_DATATYPE(DataType_t::kChar, s8_t)
 ENUM_DATATYPE(DataType_t::kShort, s16_t)

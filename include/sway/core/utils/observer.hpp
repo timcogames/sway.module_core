@@ -2,6 +2,7 @@
 #define _SWAY_CORE_UTILS_OBSERVER_HPP
 
 #include <sway/namespacemacros.hpp>
+#include <sway/keywords.hpp>
 #include <vector>
 
 NAMESPACE_BEGIN(sway)
@@ -17,26 +18,13 @@ typedef ObserverArray_t::const_iterator ObserverArrayIterator_t;
  */
 class IObserver {
 public:
-
-#pragma region "Constructors / Destructor"
-
-	/*!
-	 * \brief
-	 *    Виртуальный деструктор класса.
-	 */
 	virtual ~IObserver() = default;
-
-#pragma endregion
-
-#pragma region "Pure virtual methods"
 
 	/*!
 	 * \brief
 	 *    Обновляет состояние наблюдателя.
 	 */
-	virtual void update() = 0;
-
-#pragma endregion
+	PURE_VIRTUAL(void update());
 };
 
 NAMESPACE_END(utils)

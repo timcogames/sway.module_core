@@ -30,31 +30,25 @@ void Node::registerEmsClass() {
 #endif
 }
 
-Node::Node(foundation::Context * context, Node * parent, const NodeIdx & nodeIdx)
-	: foundation::Object(context)
-	, parent_(parent)
-	, nodeIdx_(nodeIdx) {
-	// Empty
-}
+Node::Node(foundation::Context * context, Node * parent, const NodeIdx & nodeIdx) : foundation::Object(context)
+	, parent_(parent), nodeIdx_(nodeIdx) { }
 
-utils::TraversalAction Node::traverse(utils::ITraverser * traverser) {
-	utils::TraversalAction result = traverser->visit(this);
-
-	switch (result) {
-	case utils::TraversalAction::Continue:
+u32_t Node::traverse(utils::Traverser * traverser) {
+	switch (static_cast<utils::Traverser::Action>(traverser->visit(this))) {
+	case utils::Traverser::Action::CONTINUE:
 		for (Node * node : getChildren()) {
-			if (node->traverse(traverser) == utils::TraversalAction::Abort)
-				return utils::TraversalAction::Abort;
+			if (node->traverse(traverser) == detail::toUnderlying(utils::Traverser::Action::ABORT))
+				return detail::toUnderlying(utils::Traverser::Action::ABORT);
 		}
 
-	case utils::TraversalAction::Prune:
-		return utils::TraversalAction::Continue;
+	case utils::Traverser::Action::PRUNE:
+		return detail::toUnderlying(utils::Traverser::Action::CONTINUE);
 
-	case utils::TraversalAction::Abort:
+	case utils::Traverser::Action::ABORT:
 		break;
 	}
 
-	return utils::TraversalAction::Abort;
+	return detail::toUnderlying(utils::Traverser::Action::ABORT);
 }
 
 NodeIdx Node::addChild(Node * child) {

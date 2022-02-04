@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>sway.module_core.tests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>sway.module_core.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>

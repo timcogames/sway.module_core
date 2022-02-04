@@ -12,47 +12,79 @@ NAMESPACE_BEGIN(containers)
 
 void NodeIdx::registerEmsClass() {
 #ifdef _EMSCRIPTEN
-	emscripten::class_<NodeIdx>("NodeIdx")
+	 emscripten::class_<NodeIdx>("NodeIdx")
 		.constructor<>()
 		.constructor<std::vector<s32_t>>()
 		.constructor<NodeIdx, s32_t>()
+		.function("getChain", &NodeIdx::getChain)
 		.function("getParent", &NodeIdx::getParent, emscripten::allow_raw_pointers())
 		.function("getDepth", &NodeIdx::getDepth)
-		.function("isValid", &NodeIdx::isValid);
+		.function("getIdxAt", &NodeIdx::getIdxAt)
+		.function("toStr", &NodeIdx::toStr);
 #endif
 }
 
-NodeIdx::NodeIdx(IndexVector_t indexes)
-	: indexes_(indexes) {
-	// Empty
+NodeIdx::NodeIdx() {
+	setAsRoot();
 }
 
-NodeIdx::NodeIdx(const NodeIdx & parent, s32_t idx)
-	: indexes_(parent.indexes_) {
-
-	indexes_.push_back(idx);
+NodeIdx::NodeIdx(const NodeIdx::chain_t & chain) {
+	setChain(chain, NODEIDX_NEGATIVE);
 }
 
-NodeIdx NodeIdx::getParent() const {
-	IndexVector_t parentIndexes = indexes_;
-	parentIndexes.pop_back();
-	return NodeIdx(parentIndexes);
+NodeIdx::NodeIdx(NodeIdx parent, NodeIdx::index_t idx) {
+	setChain(parent.getChain(), idx);
 }
 
-s32_t NodeIdx::getDepth() const {
-	return (s32_t) indexes_.size();
+void NodeIdx::setAsRoot() {
+	chainLinks_.clear();
+	chainLinks_ = NODEIDX_CHAIN_INITIALROOT;
 }
 
-s32_t NodeIdx::getIdxAt(int idx) const {
-		return indexes_[idx];
+void NodeIdx::setChain(const NodeIdx::chain_t & chain, NodeIdx::index_t idx) {
+	chainLinks_ = chain;
+
+	if (idx != NODEIDX_NEGATIVE)
+		chainLinks_.push_back(idx);
 }
 
-IndexVector_t NodeIdx::getIndexes() const {
-	return indexes_;
+NodeIdx::chain_t NodeIdx::getChain() const {
+	return chainLinks_;
 }
 
-bool NodeIdx::isValid() const {
-	return getDepth() > 0;
+NodeIdx::chain_t NodeIdx::getParent() {
+	NodeIdx::chain_t parent = getChain();
+	parent.pop_back();
+
+	return parent;
+}
+
+int NodeIdx::getDepth() const {
+	return (int) chainLinks_.size();
+}
+
+NodeIdx::index_t NodeIdx::getIdxAt(int idx) const {
+	return chainLinks_[idx];
+}
+
+bool NodeIdx::equals(const NodeIdx & other) {
+	return chainEquals(other.getChain());
+}
+
+bool NodeIdx::chainEquals(const NodeIdx::chain_t & other) {
+	return chainLinks_.size() == other.size()
+		&& std::equal(chainLinks_.begin(), chainLinks_.end(), other.begin());
+}
+
+std::string NodeIdx::toStr() {
+	std::string str = "[";
+	for (int i = 0; i < getDepth(); ++i) {
+		str += std::to_string(getIdxAt(i));
+		if (i < getDepth() - 1)
+			str += ", ";
+	}
+	str += "]";
+	return str;
 }
 
 NAMESPACE_END(containers)

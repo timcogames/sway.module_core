@@ -1,33 +1,23 @@
 #ifndef _SWAY_CORE_UTILS_TRAVERSER_HPP
 #define _SWAY_CORE_UTILS_TRAVERSER_HPP
 
-#include <sway/core/utils/traversalactions.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/keywords.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(utils)
 
-class IVisitable;
-class ITraverser {
+class Visitable;
+class Traverser {
 public:
+	enum class Action : u32_t {
+		CONTINUE, /*!< Продолжать обходить. */
+		PRUNE, /*!< Не навещай дочерние узлы. */
+		ABORT /*!< Прервать обход. */
+	};
 
-#pragma region "Constructors / Destructor"
-
-	/*!
-	 * \brief
-	 *    Виртуальный деструктор класса.
-	 */
-	virtual ~ITraverser() = default;
-
-#pragma endregion
-
-#pragma region "Pure virtual methods"
-
-	virtual TraversalAction visit(IVisitable * node) = 0;
-
-#pragma endregion
-
+	PURE_VIRTUAL(u32_t visit(Visitable * node));
 };
 
 NAMESPACE_END(utils)

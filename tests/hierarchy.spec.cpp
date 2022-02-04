@@ -1,14 +1,13 @@
 #include <boost/test/unit_test.hpp>
-#include <sway/core.h>
+#include <sway/core.hpp>
 
 using namespace sway;
+using namespace sway::core;
 
-class HierarchyChildTraverser
-	: public utils::ITraverser {
-
+class HierarchyChildTraverser : public utils::Traverser {
 public:
-	virtual utils::TraversalAction visit(containers::Node * node) override {
-		return utils::TraversalAction::Continue;
+	OVERRIDE(u32_t visit(utils::Visitable * node)) {
+		return detail::toUnderlying(utils::Traverser::Action::CONTINUE);
 	}
 };
 

@@ -4,7 +4,6 @@
 #include <sway/core/utils/observer.hpp>
 #include <sway/core/utils/observable.hpp>
 #include <sway/core/utils/visitable.hpp>
-#include <sway/core/utils/traversalactions.hpp>
 #include <sway/core/utils/traverser.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
@@ -32,6 +31,7 @@
 #include <sway/core/plugininfo.hpp>
 #include <sway/core/plugin.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/keywords.hpp>
 #include <sway/visibilitymacros.hpp>
 #include <sway/defines.hpp>
 #include <sway/types.hpp>

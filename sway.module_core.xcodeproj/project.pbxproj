@@ -37,7 +37,6 @@
 		93649F2727ACDF9B00311174 /* object.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649EF827ACDF9B00311174 /* object.hpp */; };
 		93649F2827ACDF9B00311174 /* observer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649EFA27ACDF9B00311174 /* observer.hpp */; };
 		93649F2927ACDF9B00311174 /* visitable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649EFB27ACDF9B00311174 /* visitable.hpp */; };
-		93649F2A27ACDF9B00311174 /* traversalactions.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649EFC27ACDF9B00311174 /* traversalactions.hpp */; };
 		93649F2B27ACDF9B00311174 /* observable.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649EFD27ACDF9B00311174 /* observable.hpp */; };
 		93649F2C27ACDF9B00311174 /* traverser.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649EFE27ACDF9B00311174 /* traverser.hpp */; };
 		93649F2D27ACDF9B00311174 /* procaddress.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649F0127ACDF9B00311174 /* procaddress.hpp */; };
@@ -65,13 +64,25 @@
 		93649F4E27ACDFBC00311174 /* format.spec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F4527ACDFBC00311174 /* format.spec.cpp */; };
 		93649F4F27ACDFBC00311174 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93649F4627ACDFBC00311174 /* main.cpp */; };
 		93649F5127ACE2E000311174 /* keywords.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649F5027ACE2E000311174 /* keywords.hpp */; };
+		93AA460D27AD5C390066041E /* libsway.module_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93649E9E27ACD9B300311174 /* libsway.module_core.a */; };
+		93AA461427AD5CE80066041E /* nodeidx.spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AA461327AD5CE80066041E /* nodeidx.spec.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		93AA460E27AD5C390066041E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 93649E9627ACD9B300311174 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 93649E9D27ACD9B300311174;
+			remoteInfo = sway.module_core;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		93649E9E27ACD9B300311174 /* libsway.module_core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libsway.module_core.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		93649EB127ACDE1500311174 /* custom_add_subdirectory.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = custom_add_subdirectory.cmake; sourceTree = "<group>"; };
 		93649EB227ACDE1500311174 /* custom_enable_cxx17.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = custom_enable_cxx17.cmake; sourceTree = "<group>"; };
-		93649EB327ACDE6500311174 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		93649EB327ACDE6500311174 /* README.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; fileEncoding = 4; path = README.md; sourceTree = "<group>"; };
 		93649EB427ACDE6F00311174 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		93649EB527ACDE7700311174 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
 		93649EB827ACDE8500311174 /* doxyfile.doxy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = doxyfile.doxy; sourceTree = "<group>"; };
@@ -113,7 +124,6 @@
 		93649EF827ACDF9B00311174 /* object.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = object.hpp; sourceTree = "<group>"; };
 		93649EFA27ACDF9B00311174 /* observer.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = observer.hpp; sourceTree = "<group>"; };
 		93649EFB27ACDF9B00311174 /* visitable.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = visitable.hpp; sourceTree = "<group>"; };
-		93649EFC27ACDF9B00311174 /* traversalactions.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = traversalactions.hpp; sourceTree = "<group>"; };
 		93649EFD27ACDF9B00311174 /* observable.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = observable.hpp; sourceTree = "<group>"; };
 		93649EFE27ACDF9B00311174 /* traverser.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = traverser.hpp; sourceTree = "<group>"; };
 		93649F0127ACDF9B00311174 /* procaddress.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = procaddress.hpp; sourceTree = "<group>"; };
@@ -142,6 +152,9 @@
 		93649F4527ACDFBC00311174 /* format.spec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = format.spec.cpp; sourceTree = "<group>"; };
 		93649F4627ACDFBC00311174 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		93649F5027ACE2E000311174 /* keywords.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = keywords.hpp; sourceTree = "<group>"; };
+		93AA460427AD5AA60066041E /* README-CMake.md */ = {isa = PBXFileReference; explicitFileType = net.daringfireball.markdown; path = "README-CMake.md"; sourceTree = "<group>"; };
+		93AA460927AD5C390066041E /* sway.module_core.tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = sway.module_core.tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		93AA461327AD5CE80066041E /* nodeidx.spec.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = nodeidx.spec.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,12 +165,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		93AA460627AD5C390066041E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93AA460D27AD5C390066041E /* libsway.module_core.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		93649E9527ACD9B300311174 = {
 			isa = PBXGroup;
 			children = (
+				93AA460427AD5AA60066041E /* README-CMake.md */,
 				93649F3C27ACDFBC00311174 /* tests */,
 				93649EC027ACDEA700311174 /* scripts */,
 				93649EBB27ACDE9D00311174 /* github */,
@@ -177,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				93649E9E27ACD9B300311174 /* libsway.module_core.a */,
+				93AA460927AD5C390066041E /* sway.module_core.tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -398,7 +421,6 @@
 			children = (
 				93649EFA27ACDF9B00311174 /* observer.hpp */,
 				93649EFB27ACDF9B00311174 /* visitable.hpp */,
-				93649EFC27ACDF9B00311174 /* traversalactions.hpp */,
 				93649EFD27ACDF9B00311174 /* observable.hpp */,
 				93649EFE27ACDF9B00311174 /* traverser.hpp */,
 			);
@@ -456,6 +478,7 @@
 				93649F0F27ACDF9B00311174 /* hierarchy.hpp */,
 				93649F1027ACDF9B00311174 /* node.hpp */,
 				93649F1127ACDF9B00311174 /* nodeidx.hpp */,
+				93AA461327AD5CE80066041E /* nodeidx.spec.m */,
 			);
 			path = containers;
 			sourceTree = "<group>";
@@ -503,7 +526,6 @@
 				93649F3B27ACDF9B00311174 /* visibilitymacros.hpp in Headers */,
 				93649F2427ACDF9B00311174 /* eventhandlerimpl.hpp in Headers */,
 				93649F2827ACDF9B00311174 /* observer.hpp in Headers */,
-				93649F2A27ACDF9B00311174 /* traversalactions.hpp in Headers */,
 				93649F3527ACDF9B00311174 /* filesource.hpp in Headers */,
 				93649F3827ACDF9B00311174 /* nodeidx.hpp in Headers */,
 				93649F2127ACDF9B00311174 /* argumentnullexception.hpp in Headers */,
@@ -545,6 +567,24 @@
 			productReference = 93649E9E27ACD9B300311174 /* libsway.module_core.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		93AA460827AD5C390066041E /* sway.module_core.tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 93AA461227AD5C390066041E /* Build configuration list for PBXNativeTarget "sway.module_core.tests" */;
+			buildPhases = (
+				93AA460527AD5C390066041E /* Sources */,
+				93AA460627AD5C390066041E /* Frameworks */,
+				93AA460727AD5C390066041E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				93AA460F27AD5C390066041E /* PBXTargetDependency */,
+			);
+			name = sway.module_core.tests;
+			productName = sway.module_core.tests;
+			productReference = 93AA460927AD5C390066041E /* sway.module_core.tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -555,6 +595,9 @@
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
 					93649E9D27ACD9B300311174 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+					93AA460827AD5C390066041E = {
 						CreatedOnToolsVersion = 13.2.1;
 					};
 				};
@@ -573,9 +616,20 @@
 			projectRoot = "";
 			targets = (
 				93649E9D27ACD9B300311174 /* sway.module_core */,
+				93AA460827AD5C390066041E /* sway.module_core.tests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		93AA460727AD5C390066041E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		93649E9B27ACD9B300311174 /* Sources */ = {
@@ -605,7 +659,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		93AA460527AD5C390066041E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				93AA461427AD5CE80066041E /* nodeidx.spec.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		93AA460F27AD5C390066041E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 93649E9D27ACD9B300311174 /* sway.module_core */;
+			targetProxy = 93AA460E27AD5C390066041E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		93649EA027ACD9B300311174 /* Debug */ = {
@@ -724,6 +794,12 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/include",
+					"/Users/apriori85/Documents/Third-party/boost_1_78_0",
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -734,8 +810,50 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/include",
+					"/Users/apriori85/Documents/Third-party/boost_1_78_0",
+					/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		93AA461027AD5C390066041E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/include",
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "apriori85.sway-module-core-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+			};
+			name = Debug;
+		};
+		93AA461127AD5C390066041E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/include",
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "apriori85.sway-module-core-tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
 			};
 			name = Release;
 		};
@@ -756,6 +874,15 @@
 			buildConfigurations = (
 				93649EA327ACD9B300311174 /* Debug */,
 				93649EA427ACD9B300311174 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		93AA461227AD5C390066041E /* Build configuration list for PBXNativeTarget "sway.module_core.tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				93AA461027AD5C390066041E /* Debug */,
+				93AA461127AD5C390066041E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

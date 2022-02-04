@@ -7,15 +7,15 @@ project(${META_PROJECT_NAME_TESTS} C CXX)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(Boost_USE_STATIC_LIBS ON)
-set(Boost_NO_SYSTEM_PATHS TRUE)
+set(BOOST_USE_STATIC_LIBS ON)
+set(BOOST_NO_SYSTEM_PATHS TRUE)
 set(BOOST_COMPONENTS unit_test_framework)
 
 set(BOOST_INCLUDEDIR "${BOOST_ROOT}")
 set(BOOST_LIBRARYDIR "${BOOST_ROOT}/stage/lib")
 
 find_package(Boost 1.72.0 REQUIRED COMPONENTS ${BOOST_COMPONENTS})
-if(NOT Boost_FOUND)
+if(NOT BOOST_FOUND)
 	message(FATAL_ERROR "Fatal error: Boost (version >= 1.72.0) required.")
 else()
 	message(STATUS "Boost includes: ${BOOST_INCLUDEDIR}")

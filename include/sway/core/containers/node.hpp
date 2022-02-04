@@ -4,7 +4,6 @@
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/object.hpp>
 #include <sway/core/containers/nodeidx.hpp>
-#include <sway/core/utils/traversalactions.hpp>
 #include <sway/core/utils/traverser.hpp>
 #include <sway/core/utils/visitable.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
@@ -37,9 +36,7 @@ NAMESPACE_BEGIN(containers)
 
 typedef std::vector<class Node *> NodeVec_t;
 
-class Node
-	: public foundation::Object
-	, public utils::IVisitable {
+class Node : public foundation::Object, public utils::Visitable {
 
 	DECLARE_EVENT(EVT_ADDED, NodeAdded)
 	DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
@@ -73,7 +70,7 @@ public:
 
 #pragma endregion
 
-	virtual utils::TraversalAction traverse(utils::ITraverser * traverser);
+	virtual u32_t traverse(utils::Traverser * traverser);
 
 	/*!
 	 * \brief

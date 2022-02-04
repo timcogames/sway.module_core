@@ -2,6 +2,7 @@
 #define _SWAY_CORE_FOUNDATION_EVENT_HPP
 
 #include <sway/namespacemacros.hpp>
+#include <sway/keywords.hpp>
 #include <sway/types.hpp>
 #include <string>
 #include <memory>
@@ -43,23 +44,11 @@ public:
 
 #pragma endregion
 
-#pragma region "Constructors / Destructor"
-
-	/*!
-	 * \brief
-	 *    Виртуальный деструктор класса.
-	 */
 	virtual ~IEvent() = default;
 
-#pragma endregion
+	PURE_VIRTUAL(u32_t getType() const);
 
-	/*!
-	 * \brief
-	 *    Возвращает тип события.
-	 */
-	virtual u32_t getType() const = 0;
-
-	virtual EventData_t getUserData() const = 0;
+	PURE_VIRTUAL(EventData_t getUserData() const);
 };
 
 #ifdef _EMSCRIPTEN
@@ -67,15 +56,11 @@ class EventWrapper : public emscripten::wrapper<IEvent> {
 public:
 	EMSCRIPTEN_WRAPPER(EventWrapper);
 
-	/*!
-	 * \brief
-	 *    Возвращает тип события.
-	 */
-	u32_t getType() const override {
+	OVERRIDE(u32_t getType() const) {
 		return call<u32_t>("getType");
 	}
 
-	EventData_t getUserData() const override {
+	OVERRIDE(EventData_t getUserData() const) {
 		return call<EventData_t>("getUserData");
 	}
 };
