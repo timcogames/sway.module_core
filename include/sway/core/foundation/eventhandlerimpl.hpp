@@ -2,7 +2,7 @@
 #define _SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_H
 
 #include <sway/core/foundation/eventhandler.h>
-#include <sway/namespacemacros.h>
+#include <sway/namespacemacros.hpp>
 #include <vector>
 #include <algorithm> // std::remove_if
 

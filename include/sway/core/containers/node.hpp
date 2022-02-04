@@ -8,8 +8,8 @@
 #include <sway/core/utils/traverser.h>
 #include <sway/core/utils/visitable.h>
 #include <sway/core/memory/safedeletemacros.h>
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 #include <string>
 #include <memory>

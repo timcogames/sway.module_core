@@ -2,8 +2,8 @@
 #define _SWAY_CORE_UTILS_OBSERVABLE_H
 
 #include <sway/core/utils/observer.h>
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

@@ -1,7 +1,7 @@
 #ifndef _SWAY_CORE_GENERIC_IO_FILESOURCE_H
 #define _SWAY_CORE_GENERIC_IO_FILESOURCE_H
 
-#include <sway/namespacemacros.h>
+#include <sway/namespacemacros.hpp>
 #include <fstream> // std::ifstream
 
 NAMESPACE_BEGIN(sway)

@@ -1,8 +1,8 @@
 #ifndef _SWAY_CORE_FOUNDATION_CONTEXT_H
 #define _SWAY_CORE_FOUNDATION_CONTEXT_H
 
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

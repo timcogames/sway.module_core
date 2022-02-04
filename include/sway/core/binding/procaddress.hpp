@@ -1,8 +1,8 @@
 #ifndef _SWAY_CORE_BINDING_PROCADDRESS_H
 #define _SWAY_CORE_BINDING_PROCADDRESS_H
 
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 #include <functional>
 
 NAMESPACE_BEGIN(sway)

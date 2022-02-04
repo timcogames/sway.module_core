@@ -1,8 +1,8 @@
 #ifndef _SWAY_CORE_GENERIC_IO_PATH_H
 #define _SWAY_CORE_GENERIC_IO_PATH_H
 
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 #include <vector>
 #include <string>

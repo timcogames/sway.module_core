@@ -3,8 +3,8 @@
 
 #include <sway/core/foundation/event.h>
 #include <sway/core/foundation/eventhandler.h>
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 #include <vector>
 #include <algorithm> // std::remove_if
 

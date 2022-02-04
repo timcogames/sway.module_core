@@ -4,8 +4,8 @@
 #include <sway/core/containers/nodeidx.h>
 #include <sway/core/containers/node.h>
 #include <sway/core/memory/safedeletemacros.h>
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

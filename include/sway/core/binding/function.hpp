@@ -2,8 +2,8 @@
 #define _SWAY_CORE_BINDING_FUNCTION_H
 
 #include <sway/core/binding/procaddress.h>
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

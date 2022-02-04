@@ -1,7 +1,7 @@
 #ifndef _SWAY_CORE_DETAIL_ENUMUTILS_H
 #define _SWAY_CORE_DETAIL_ENUMUTILS_H
 
-#include <sway/namespacemacros.h>
+#include <sway/namespacemacros.hpp>
 #include <type_traits>
 
 NAMESPACE_BEGIN(sway)

@@ -1,7 +1,7 @@
 #ifndef _SWAY_CORE_UTILS_OBSERVER_H
 #define _SWAY_CORE_UTILS_OBSERVER_H
 
-#include <sway/namespacemacros.h>
+#include <sway/namespacemacros.hpp>
 #include <vector>
 
 NAMESPACE_BEGIN(sway)

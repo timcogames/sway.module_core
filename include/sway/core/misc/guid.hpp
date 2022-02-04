@@ -2,8 +2,8 @@
 #define _SWAY_CORE_MISC_GUID_H
 
 #include <sway/core/misc/format.h>
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 #include <string> // std::string
 #include <stdlib.h> // rand

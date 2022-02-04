@@ -1,9 +1,9 @@
 #ifndef _SWAY_CORE_VERSION_H
 #define _SWAY_CORE_VERSION_H
 
-#include <sway/namespacemacros.h>
-#include <sway/defines.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/defines.hpp>
+#include <sway/types.hpp>
 
 #include <string>
 

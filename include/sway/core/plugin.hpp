@@ -4,7 +4,7 @@
 #include <sway/core/binding/function.h>
 #include <sway/core/generic/io/path.h>
 #include <sway/core/plugininfo.h>
-#include <sway/namespacemacros.h>
+#include <sway/namespacemacros.hpp>
 
 #include <string>
 

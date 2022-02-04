@@ -2,7 +2,7 @@
 #define _SWAY_CORE_PLUGININFO_H
 
 #include <sway/core/version.h>
-#include <sway/namespacemacros.h>
+#include <sway/namespacemacros.hpp>
 #include <string>
 
 NAMESPACE_BEGIN(sway)

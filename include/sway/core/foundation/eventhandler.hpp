@@ -2,8 +2,8 @@
 #define _SWAY_CORE_FOUNDATION_EVENTHANDLER_H
 
 #include <sway/core/foundation/event.h>
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 #include <string>
 
 #ifdef _EMSCRIPTEN

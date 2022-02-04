@@ -1,8 +1,8 @@
 #ifndef _SWAY_CORE_RUNTIME_EXCEPTION_H
 #define _SWAY_CORE_RUNTIME_EXCEPTION_H
 
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 #include <exception> // std::exception
 #include <string> // std::string

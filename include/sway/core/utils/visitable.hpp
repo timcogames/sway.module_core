@@ -2,7 +2,7 @@
 #define _SWAY_CORE_UTILS_VISITABLE_H
 
 #include <sway/core/utils/traversalactions.h>
-#include <sway/namespacemacros.h>
+#include <sway/namespacemacros.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

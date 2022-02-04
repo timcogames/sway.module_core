@@ -1,8 +1,8 @@
 #ifndef _SWAY_CORE_DETAIL_DATATYPES_H
 #define _SWAY_CORE_DETAIL_DATATYPES_H
 
-#include <sway/namespacemacros.h>
-#include <sway/types.h>
+#include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
