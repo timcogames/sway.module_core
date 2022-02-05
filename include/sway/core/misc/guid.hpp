@@ -12,20 +12,19 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(misc)
 
-/*!
- * \brief
- *    Генерирует уникальный идентификатор.
- */
-inline std::string genUid(const std::vector<s32_t> & format) {
+#define UID_ROOT ("root")
+#define UID_ZERO ("00000000-0000-0000-0000-000000000000")
+
+inline std::string randomUid(const std::vector<int> & format) {
 	static const std::string bucket = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 	std::string result;
-	std::vector<s32_t>::const_iterator iter = format.begin();
+	std::vector<int>::const_iterator iter = format.begin();
 	while (iter != format.end()) {
 		if (iter != format.begin())
 			result += '-';
 
-		for (u32_t i = 0; i < *iter; ++i)
+		for (int i = 0; i < *iter; ++i)
 			result += bucket[rand() % bucket.size()];
 
 		++iter;

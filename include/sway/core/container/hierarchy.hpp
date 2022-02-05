@@ -13,41 +13,20 @@ NAMESPACE_BEGIN(container)
 
 class Hierarchy {
 public:
-#pragma region "Static methods"
-
 	static void registerEmsClass();
 
-	static Node * findNode(Node * root, const NodeIdx & nodeIdx);
+	static std::shared_ptr<Node> findNode(std::shared_ptr<Node> root, const NodeIdx & nodeIdx);
 
-#pragma endregion
-
-#pragma region "Constructors / Destructor"
-
-	/*!
-	 * \brief
-	 *    Конструктор класса.
-	 *    Выполняет инициализацию нового экземпляра класса.
-	 */
 	Hierarchy();
 
-	/*!
-	 * \brief
-	 *    Деструктор класса.
-	 */
-	~Hierarchy();
+	~Hierarchy() = default;
 
-#pragma endregion
+	std::shared_ptr<Node> getRootNode();
 
-#pragma region "Getters / Setters"
-
-	Node * getRootNode();
-
-	void setRootNode(Node * root);
-
-#pragma endregion
+	void setRootNode(std::shared_ptr<Node> root);
 
 private:
-	Node * _root;
+	std::shared_ptr<Node> _root;
 };
 
 NAMESPACE_END(container)

@@ -3,6 +3,7 @@
 
 #include <sway/core/foundation/event.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/keywords.hpp>
 #include <sway/types.hpp>
 #include <string>
 
@@ -59,7 +60,7 @@ public:
 	 * \param[in] event
 	 *    Данные события.
 	 */
-	virtual void invoke(IEvent * event) = 0;
+	PURE_VIRTUAL(void invoke(IEvent * event));
 
 #pragma endregion
 

@@ -2,6 +2,7 @@
 #define _SWAY_CORE_GENERIC_IO_FILESOURCE_HPP
 
 #include <sway/namespacemacros.hpp>
+#include <sway/keywords.hpp>
 #include <fstream> // std::ifstream
 
 NAMESPACE_BEGIN(sway)
@@ -30,7 +31,7 @@ public:
 	 * \param[in] source
 	 *    Ссылка на поток.
 	 */
-	virtual void * loadFromStream(std::ifstream & source) = 0;
+	PURE_VIRTUAL(void * loadFromStream(std::ifstream & source));
 
 	/*!
 	 * \brief

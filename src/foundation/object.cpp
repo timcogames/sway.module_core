@@ -26,14 +26,9 @@ void Object::registerEmsClass() {
 }
 
 Object::Object(Context * context)
-	: context_(context)
-	, uniqueid_(misc::genUid({ 8, 4, 4, 12 })) {
-	// Empty
-}
+	: context_(context), uniqueid_(misc::randomUid({ 8, 4, 4, 12 })) { }
 
-Object::~Object() {
-	// Empty
-}
+Object::~Object() { }
 
 void Object::subscribe(Object * sender, const std::string & eventname, AEventHandler * handler) {
 	handler->setSender(sender);

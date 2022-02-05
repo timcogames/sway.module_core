@@ -16,16 +16,16 @@ BOOST_AUTO_TEST_SUITE(Hierarchy_TestSuite)
 BOOST_AUTO_TEST_CASE(Hierarchy_TestCase) {
 	foundation::Context * ctx = new foundation::Context();
 	container::Hierarchy * tree = new container::Hierarchy();
-	container::Node * root = new container::Node(ctx, nullptr, container::NodeIdx({ 0 }));
+	std::shared_ptr<container::Node> root = std::make_shared<container::Node>();
 
 	tree->setRootNode(root);
 
-	container::Node * child1 = new container::Node(ctx, root, container::NodeIdx());
-	root->addChild(child1);
+	std::shared_ptr<container::Node> child1 = std::make_shared<container::Node>();
+	root->addChildNode(child1);
 	//BOOST_CHECK_EQUAL(std::to_string<container::NodeIdx>(child1->getNodeIdx()), "[0, 0]");
 
-	container::Node * child2 = new container::Node(ctx, root, container::NodeIdx());
-	root->addChild(child2);
+	std::shared_ptr<container::Node> child2 = std::make_shared<container::Node>();
+	root->addChildNode(child2);
 	//BOOST_CHECK_EQUAL(std::to_string<container::NodeIdx>(child2->getNodeIdx()), "[0, 1]");
 
 	HierarchyChildTraverser traverser;

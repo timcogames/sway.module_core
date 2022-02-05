@@ -17,9 +17,7 @@ void AEventHandler::registerEmsClass() {
 }
 
 AEventHandler::AEventHandler(Object * receiver)
-	: receiver_(receiver) {
-	// Empty
-}
+	: receiver_(receiver) { }
 
 Object * AEventHandler::getSender() const {
 	return sender_;

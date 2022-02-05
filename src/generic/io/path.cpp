@@ -8,9 +8,7 @@ NAMESPACE_BEGIN(generic)
 NAMESPACE_BEGIN(io)
 
 Path::Path(const std::string & path)
-	: _path(path) {
-	// Empty
-}
+	: _path(path) { }
 
 std::string Path::getFilename() const {
 	std::string stem;

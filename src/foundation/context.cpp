@@ -17,9 +17,7 @@ void Context::registerEmsClass() {
 #endif
 }
 
-Context::Context() {
-	// Empty
-}
+Context::Context() { }
 
 NAMESPACE_END(foundation)
 NAMESPACE_END(core)

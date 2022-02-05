@@ -9,12 +9,7 @@ Version::Version() {
 }
 
 Version::Version(s32_t major, s32_t minor, s32_t patch, lpcstr_t extra)
-	: _major(major)
-	, _minor(minor)
-	, _patch(patch)
-	, _extra(extra) {
-	// Empty
-}
+	: _major(major), _minor(minor), _patch(patch), _extra(extra) { }
 
 Version::Version(const Version & version)
 	: _major(version.getMajor())

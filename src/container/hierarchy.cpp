@@ -20,29 +20,26 @@ void Hierarchy::registerEmsClass() {
 #endif
 }
 
-Hierarchy::Hierarchy() : _root(nullptr) { }
+Hierarchy::Hierarchy()
+	: _root(nullptr) { }
 
-Hierarchy::~Hierarchy() {
-	SAFE_DELETE(_root)
-}
-
-Node * Hierarchy::findNode(Node * root, const NodeIdx & nodeIdx) {
-	Node * retrieved = root;
+std::shared_ptr<Node> Hierarchy::findNode(std::shared_ptr<Node> root, const NodeIdx & nodeIdx) {
+	std::shared_ptr<Node> retrieved = root;
 	for (int i = 1/* пропускаем корневой индекс */; i < nodeIdx.getDepth(); ++i) {
-		if (nodeIdx.getIdxAt(i) >= retrieved->getChildCount())
+		if (nodeIdx.getIdxAt(i) >= retrieved->getNumOfChildNodes())
 			return nullptr;
 
-		retrieved = retrieved->getChildAt(nodeIdx.getIdxAt(i));
+		retrieved = retrieved->getChildAt(nodeIdx.getIdxAt(i)).value();
 	}
 
 	return retrieved;
 }
 
-Node * Hierarchy::getRootNode() {
+std::shared_ptr<Node> Hierarchy::getRootNode() {
 	return _root;
 }
 
-void Hierarchy::setRootNode(Node * root) {
+void Hierarchy::setRootNode(std::shared_ptr<Node> root) {
 	_root = root;
 }
 

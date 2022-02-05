@@ -14,6 +14,7 @@
 #include <memory>
 #include <vector>
 #include <any>
+#include <optional>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -34,138 +35,59 @@ NAMESPACE_BEGIN(container)
 			EventData_t userdata_; \
 		};
 
-typedef std::vector<class Node *> NodeVec_t;
-
-class Node : public foundation::Object, public utils::Visitable {
-
+class Node : public std::enable_shared_from_this<Node>, public utils::Visitable {
 	DECLARE_EVENT(EVT_ADDED, NodeAdded)
 	DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
-public:
-#pragma region "Static methods"
 
+public:
 	static void registerEmsClass();
 
-#pragma endregion
+	Node();
 
-#pragma region "Constructors / Destructor"
+	virtual ~Node();
 
-	/*!
-	 * \brief
-	 *    Конструктор класса.
-	 *    Выполняет инициализацию нового экземпляра класса.
-	 * 
-	 * \param[in] parent
-	 *    Указатель на родительский узел.
-	 * 
-	 * \param[in] idx
-	 *    Индекс узела.
-	 */
-	Node(foundation::Context * context, Node * parent, const NodeIdx & idx);
+	virtual unsigned int traverse(utils::Traverser * traverser) override;
 
-	/*!
-	 * \brief
-	 *    Виртуальный еструктор класса.
-	 */
-	virtual ~Node() = default;
+	void addChildNode(std::shared_ptr<Node> child);
 
-#pragma endregion
+	void removeChildNode(std::shared_ptr<Node> child);
+	
+	void recursiveAddChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx);
+	
+	void recursiveRemoveChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx);
 
-	virtual u32_t traverse(utils::Traverser * traverser);
+	std::vector<std::shared_ptr<Node>> getChildNodes();
 
-	/*!
-	 * \brief
-	 *    Добавляет дочерний узел.
-	 * 
-	 * \param[in] child
-	 *    Указатель на дочерний узел.
-	 */
-	NodeIdx addChild(Node * child);
+	std::shared_ptr<Node> getChildNode(const NodeIdx & idx) const;
 
-	bool insertChild(Node * child, const NodeIdx & idx);
+	std::optional<std::shared_ptr<Node>> getChildAt(int targetIdx) const;
 
-	/*!
-	 * \brief
-	 *    Удаляет дочерний узел.
-	 * 
-	 * \param[in] child
-	 *    Указатель на дочерний узел.
-	 */
-	void removeChild(Node * child);
+	int getNumOfChildNodes() const;
 
-	/*!
-	 * \brief
-	 *    Возвращает дочерний узел по его идентификатору.
-	 * 
-	 * \param[in] uid
-	 *    Идентификатор узла.
-	 * 
-	 * \sa
-	 *    getChildAt(u32_t targetIdx)
-	 */
-	Node * getChild(const std::string & uid) const;
+	void setNodeIdx(NodeIdx::chain_t chain, int idx);
 
-	/*!
-	 * \brief
-	 *    Возвращает дочерний узел по индексу.
-	 * 
-	 * \param[in] targetIdx
-	 *    Индекс дочерний узла.
-	 * 
-	 * \sa
-	 *    getChild(const std::string & uid)
-	 */
-	Node * getChildAt(u32_t targetIdx) const;
+	NodeIdx getNodeIdx();
 
-	bool hasChild(const std::string & uid) const;
+	void setParentNode(std::weak_ptr<Node> parent);
 
-	/*!
-	 * \brief
-	 *    Возвращает дочерние узлы.
-	 */
-	const std::vector<Node *> & getChildren() const;
+	std::optional<std::shared_ptr<Node>> getParentNode();
 
-	/*!
-	 * \brief
-	 *    Возвращает количество дочерних узлов.
-	 */
-	u32_t getChildCount();
+	bool equals(std::shared_ptr<Node> other);
 
-	/*!
-	 * \brief
-	 *    Возвращает родительский узел.
-	 */
-	Node * getParent();
+	bool chainEquals(NodeIdx::chain_t other);
 
-	/*!
-	 * \brief
-	 *    Устанавливает родительский узел.
-	 * 
-	 * \param[in] parent
-	 *    Указатель на родительский узел.
-	 */
-	void setParent(Node * parent);
+	void setAsRoot();
 
-	bool hasParent() const;
-
-	/*!
-	 * \brief
-	 *    Возвращает индекс узла.
-	 */
-	NodeIdx getNodeIdx() const;
-
-	/*!
-	 * \brief
-	 *    Устанавливает индекс узла.
-	 * 
-	 * \param[in] idx
-	 *    Индекс узла.
-	 */
-	void setNodeIdx(const NodeIdx & idx);
+protected:
+	template <typename T>
+	std::shared_ptr<T> sharedFrom(T * ptr) {
+		return std::static_pointer_cast<T>(static_cast<Node *>(ptr)->shared_from_this());
+	}
 
 private:
-	Node * parent_; /*!< Родительский узел. */
-	NodeVec_t children_; /*!< Последовательный контейнер дочерних узлов. */
-	NodeIdx nodeIdx_;
+	NodeIdx idx_;
+	std::weak_ptr<Node> parent_;
+	std::vector<std::shared_ptr<Node>> children_;
 };
 
 NAMESPACE_END(container)
