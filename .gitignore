@@ -1,13 +1,14 @@
-# project output
+# project output files
 /build
 /bin
+
+# tests
+/tests/jest/node_modules
 
 # osx noise
 .DS_Store
 profile
 
 # xcode noise
-build/*
-bin/*
 *.pbxuser
 *.mode1v3

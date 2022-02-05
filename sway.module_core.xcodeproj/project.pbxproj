@@ -152,6 +152,12 @@
 		93AA461627AE22F60066041E /* node.spec.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = node.spec.m; sourceTree = "<group>"; };
 		93AA461827AE76D10066041E /* node.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = node.ts; sourceTree = "<group>"; };
 		93AA461927AE7CF20066041E /* _embinds.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = _embinds.cpp; sourceTree = "<group>"; };
+		93AA629627AEAB540066041E /* package-lock.json */ = {isa = PBXFileReference; explicitFileType = text.json; fileEncoding = 4; path = "package-lock.json"; sourceTree = "<group>"; };
+		93AA629727AEAB540066041E /* package.json */ = {isa = PBXFileReference; explicitFileType = text.json; fileEncoding = 4; path = package.json; sourceTree = "<group>"; };
+		93AA629827AEAB540066041E /* tsconfig.json */ = {isa = PBXFileReference; explicitFileType = text.json; fileEncoding = 4; path = tsconfig.json; sourceTree = "<group>"; };
+		93AA629A27AEAB550066041E /* bridge.spec.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = bridge.spec.ts; sourceTree = "<group>"; };
+		93AA629B27AEAB550066041E /* bridge.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = bridge.ts; sourceTree = "<group>"; };
+		93AA629C27AEAB550066041E /* bridgemodule.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = bridgemodule.ts; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -487,8 +493,16 @@
 		93649F3C27ACDFBC00311174 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				93AA461D27AEAB4B0066041E /* jest */,
+				93AA461B27AEA5CE0066041E /* boost */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		93AA461B27AEA5CE0066041E /* boost */ = {
+			isa = PBXGroup;
+			children = (
 				93649F3D27ACDFBC00311174 /* rawtype.spec.cpp */,
-				93649F3E27ACDFBC00311174 /* CMakeLists.txt */,
 				93649F3F27ACDFBC00311174 /* foundation.spec.cpp */,
 				93649F4027ACDFBC00311174 /* path.spec.cpp */,
 				93649F4127ACDFBC00311174 /* function.spec.cpp */,
@@ -497,8 +511,30 @@
 				93649F4427ACDFBC00311174 /* version.spec.cpp */,
 				93649F4527ACDFBC00311174 /* format.spec.cpp */,
 				93649F4627ACDFBC00311174 /* main.cpp */,
+				93649F3E27ACDFBC00311174 /* CMakeLists.txt */,
 			);
-			path = tests;
+			path = boost;
+			sourceTree = "<group>";
+		};
+		93AA461D27AEAB4B0066041E /* jest */ = {
+			isa = PBXGroup;
+			children = (
+				93AA629627AEAB540066041E /* package-lock.json */,
+				93AA629727AEAB540066041E /* package.json */,
+				93AA629827AEAB540066041E /* tsconfig.json */,
+				93AA629927AEAB540066041E /* src */,
+			);
+			path = jest;
+			sourceTree = "<group>";
+		};
+		93AA629927AEAB540066041E /* src */ = {
+			isa = PBXGroup;
+			children = (
+				93AA629A27AEAB550066041E /* bridge.spec.ts */,
+				93AA629B27AEAB550066041E /* bridge.ts */,
+				93AA629C27AEAB550066041E /* bridgemodule.ts */,
+			);
+			path = src;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
