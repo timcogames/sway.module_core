@@ -10,7 +10,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-void Hierarchy::registerEmsClass() {
+void Hierarchy::registerEmClass() {
 #ifdef _EMSCRIPTEN
 	emscripten::class_<Hierarchy>("Hierarchy")
 		.constructor()

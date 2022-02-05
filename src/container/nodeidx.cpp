@@ -10,7 +10,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-void NodeIdx::registerEmsClass() {
+void NodeIdx::registerEmClass() {
 #ifdef _EMSCRIPTEN
 	 emscripten::class_<NodeIdx>("NodeIdx")
 		.constructor<>()

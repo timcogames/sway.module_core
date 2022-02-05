@@ -8,6 +8,7 @@
 #include <sway/core/utils/visitable.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/keywords.hpp>
 #include <sway/types.hpp>
 
 #include <string>
@@ -40,13 +41,13 @@ class Node : public std::enable_shared_from_this<Node>, public utils::Visitable 
 	DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
 
 public:
-	static void registerEmsClass();
+	static void registerEmClass();
 
 	Node();
 
 	virtual ~Node();
 
-	virtual unsigned int traverse(utils::Traverser * traverser) override;
+	OVERRIDE(u32_t traverse(utils::Traverser * traverser));
 
 	void addChildNode(std::shared_ptr<Node> child);
 

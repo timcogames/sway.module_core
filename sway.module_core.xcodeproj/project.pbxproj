@@ -58,6 +58,7 @@
 		93AA460D27AD5C390066041E /* libsway.module_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93649E9E27ACD9B300311174 /* libsway.module_core.a */; };
 		93AA461427AD5CE80066041E /* nodeidx.spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AA461327AD5CE80066041E /* nodeidx.spec.m */; };
 		93AA461727AE22F60066041E /* node.spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AA461627AE22F60066041E /* node.spec.m */; };
+		93AA461A27AE7CF20066041E /* _embinds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93AA461927AE7CF20066041E /* _embinds.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +150,8 @@
 		93AA461327AD5CE80066041E /* nodeidx.spec.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = nodeidx.spec.m; sourceTree = "<group>"; };
 		93AA461527AD61B60066041E /* nodeidx.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; name = nodeidx.ts; path = include/sway/core/container/nodeidx.ts; sourceTree = SOURCE_ROOT; };
 		93AA461627AE22F60066041E /* node.spec.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = node.spec.m; sourceTree = "<group>"; };
+		93AA461827AE76D10066041E /* node.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = node.ts; sourceTree = "<group>"; };
+		93AA461927AE7CF20066041E /* _embinds.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = _embinds.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,7 +324,7 @@
 		93649ED927ACDF5E00311174 /* container */ = {
 			isa = PBXGroup;
 			children = (
-				93AA461527AD61B60066041E /* nodeidx.ts */,
+				93AA461927AE7CF20066041E /* _embinds.cpp */,
 				93649EDA27ACDF5E00311174 /* nodeidx.cpp */,
 				93649EDB27ACDF5E00311174 /* node.cpp */,
 				93649EDC27ACDF5E00311174 /* hierarchy.cpp */,
@@ -470,7 +473,9 @@
 		93649F0E27ACDF9B00311174 /* container */ = {
 			isa = PBXGroup;
 			children = (
+				93AA461827AE76D10066041E /* node.ts */,
 				93AA461627AE22F60066041E /* node.spec.m */,
+				93AA461527AD61B60066041E /* nodeidx.ts */,
 				93649F0F27ACDF9B00311174 /* hierarchy.hpp */,
 				93649F1027ACDF9B00311174 /* node.hpp */,
 				93649F1127ACDF9B00311174 /* nodeidx.hpp */,
@@ -642,6 +647,7 @@
 				93649ECA27ACDEF800311174 /* object.cpp in Sources */,
 				93649ED827ACDF1800311174 /* version.cpp in Sources */,
 				93649ED027ACDF0200311174 /* filesource.cpp in Sources */,
+				93AA461A27AE7CF20066041E /* _embinds.cpp in Sources */,
 				93649EC927ACDEF800311174 /* context.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

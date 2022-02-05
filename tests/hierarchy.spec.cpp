@@ -22,11 +22,11 @@ BOOST_AUTO_TEST_CASE(Hierarchy_TestCase) {
 
 	std::shared_ptr<container::Node> child1 = std::make_shared<container::Node>();
 	root->addChildNode(child1);
-	//BOOST_CHECK_EQUAL(std::to_string<container::NodeIdx>(child1->getNodeIdx()), "[0, 0]");
+	BOOST_CHECK_EQUAL(child1->getNodeIdx().toStr(), "[-1, 0]");
 
 	std::shared_ptr<container::Node> child2 = std::make_shared<container::Node>();
 	root->addChildNode(child2);
-	//BOOST_CHECK_EQUAL(std::to_string<container::NodeIdx>(child2->getNodeIdx()), "[0, 1]");
+	BOOST_CHECK_EQUAL(child2->getNodeIdx().toStr(), "[-1, 1]");
 
 	HierarchyChildTraverser traverser;
 	root->traverse(&traverser);

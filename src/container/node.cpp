@@ -13,20 +13,14 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-void Node::registerEmsClass() {
+void Node::registerEmClass() {
 #ifdef _EMSCRIPTEN
-	emscripten::class_<Node, emscripten::base<Object>>("Node")
-		.function("traverse", &Node::traverse, emscripten::allow_raw_pointers())
-		.function("addChild", &Node::addChild, emscripten::allow_raw_pointers())
-		.function("removeChild", &Node::removeChild, emscripten::allow_raw_pointers())
-		.function("getChild", &Node::getChild, emscripten::allow_raw_pointers())
-		.function("getChildAt", &Node::getChildAt, emscripten::allow_raw_pointers())
-		.function("hasChild", &Node::hasChild)
-		.function("getChildren", &Node::getChildren, emscripten::allow_raw_pointers())
-		.function("getChildCount", &Node::getChildCount)
-		.function("getParent", &Node::getParent, emscripten::allow_raw_pointers())
-		.function("setParent", &Node::setParent, emscripten::allow_raw_pointers())
-		.function("hasParent", &Node::hasParent);
+	emscripten::class_<Node>("Node")
+		.smart_ptr_constructor("Node", &std::make_shared<Node>)
+		.function("addChildNode", &Node::addChildNode, emscripten::allow_raw_pointers())
+		.function("removeChildNode", &Node::removeChildNode, emscripten::allow_raw_pointers())
+		.function("getNumOfChildNodes", &Node::getNumOfChildNodes)
+		.function("getNodeIdx", &Node::getNodeIdx);
 #endif
 }
 
@@ -72,7 +66,7 @@ void Node::addChildNode(std::shared_ptr<Node> child) {
 
 #ifdef _EMSCRIPTEN
 	EventData_t eventdata = emscripten::val::object();
-	eventdata.set("node_idx", emscripten::val(childIdx));
+	eventdata.set("node_idx", emscripten::val(child->getNodeIdx()));
 #else
 	EventData_t eventdata;
 	eventdata["node_idx"] = child->getNodeIdx();

@@ -11,23 +11,9 @@ NAMESPACE_BEGIN(utils)
 
 class Observable {
 public:
-
-#pragma region "Constructors / Destructor"
-
-	/*!
-	 * \brief
-	 *    Конструктор класса.
-	 *    Выполняет инициализацию нового экземпляра класса.
-	 */
 	Observable();
 
-	/*!
-	 * \brief
-	 *    Виртуальный деструктор класса.
-	 */
-	virtual ~Observable();
-
-#pragma endregion
+	~Observable();
 
 	/**
 	 * \brief

@@ -20,7 +20,7 @@ public:
 	using index_t = s32_t;
 	using chain_t = std::vector<NodeIdx::index_t>;
 
-	static void registerEmsClass();
+	static void registerEmClass();
 
 	NodeIdx();
 	NodeIdx(const NodeIdx::chain_t & chain);

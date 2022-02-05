@@ -13,7 +13,7 @@ NAMESPACE_BEGIN(container)
 
 class Hierarchy {
 public:
-	static void registerEmsClass();
+	static void registerEmClass();
 
 	static std::shared_ptr<Node> findNode(std::shared_ptr<Node> root, const NodeIdx & nodeIdx);
 
