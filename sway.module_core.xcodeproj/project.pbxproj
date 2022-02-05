@@ -56,9 +56,10 @@
 		93649F3B27ACDF9B00311174 /* visibilitymacros.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649F1627ACDF9B00311174 /* visibilitymacros.hpp */; };
 		93649F5127ACE2E000311174 /* keywords.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 93649F5027ACE2E000311174 /* keywords.hpp */; };
 		93AA460D27AD5C390066041E /* libsway.module_core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 93649E9E27ACD9B300311174 /* libsway.module_core.a */; };
-		93AA461427AD5CE80066041E /* nodeidx.spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AA461327AD5CE80066041E /* nodeidx.spec.m */; };
-		93AA461727AE22F60066041E /* node.spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AA461627AE22F60066041E /* node.spec.m */; };
 		93AA461A27AE7CF20066041E /* _embinds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93AA461927AE7CF20066041E /* _embinds.cpp */; };
+		93AA62A127AEB1240066041E /* nodeidx.spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AA461327AD5CE80066041E /* nodeidx.spec.m */; };
+		93AA62A227AEB1270066041E /* node.spec.m in Sources */ = {isa = PBXBuildFile; fileRef = 93AA461627AE22F60066041E /* node.spec.m */; };
+		93AA62A427AEB25A0066041E /* _embinds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93AA62A327AEB25A0066041E /* _embinds.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,9 +156,11 @@
 		93AA629627AEAB540066041E /* package-lock.json */ = {isa = PBXFileReference; explicitFileType = text.json; fileEncoding = 4; path = "package-lock.json"; sourceTree = "<group>"; };
 		93AA629727AEAB540066041E /* package.json */ = {isa = PBXFileReference; explicitFileType = text.json; fileEncoding = 4; path = package.json; sourceTree = "<group>"; };
 		93AA629827AEAB540066041E /* tsconfig.json */ = {isa = PBXFileReference; explicitFileType = text.json; fileEncoding = 4; path = tsconfig.json; sourceTree = "<group>"; };
-		93AA629A27AEAB550066041E /* bridge.spec.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = bridge.spec.ts; sourceTree = "<group>"; };
+		93AA629A27AEAB550066041E /* index.spec.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = index.spec.ts; sourceTree = "<group>"; };
 		93AA629B27AEAB550066041E /* bridge.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = bridge.ts; sourceTree = "<group>"; };
 		93AA629C27AEAB550066041E /* bridgemodule.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = bridgemodule.ts; sourceTree = "<group>"; };
+		93AA629E27AEB01F0066041E /* nodeidx.spec.ts */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = nodeidx.spec.ts; sourceTree = "<group>"; };
+		93AA62A327AEB25A0066041E /* _embinds.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = _embinds.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +222,7 @@
 		93649EAA27ACDAA800311174 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				93AA62A327AEB25A0066041E /* _embinds.cpp */,
 				93649ED927ACDF5E00311174 /* container */,
 				93649ED727ACDF1800311174 /* version.cpp */,
 				93649ED527ACDF1100311174 /* plugin.cpp */,
@@ -331,8 +335,11 @@
 			isa = PBXGroup;
 			children = (
 				93AA461927AE7CF20066041E /* _embinds.cpp */,
+				93AA629E27AEB01F0066041E /* nodeidx.spec.ts */,
+				93AA461327AD5CE80066041E /* nodeidx.spec.m */,
 				93649EDA27ACDF5E00311174 /* nodeidx.cpp */,
 				93649EDB27ACDF5E00311174 /* node.cpp */,
+				93AA461627AE22F60066041E /* node.spec.m */,
 				93649EDC27ACDF5E00311174 /* hierarchy.cpp */,
 			);
 			path = container;
@@ -480,12 +487,10 @@
 			isa = PBXGroup;
 			children = (
 				93AA461827AE76D10066041E /* node.ts */,
-				93AA461627AE22F60066041E /* node.spec.m */,
 				93AA461527AD61B60066041E /* nodeidx.ts */,
 				93649F0F27ACDF9B00311174 /* hierarchy.hpp */,
 				93649F1027ACDF9B00311174 /* node.hpp */,
 				93649F1127ACDF9B00311174 /* nodeidx.hpp */,
-				93AA461327AD5CE80066041E /* nodeidx.spec.m */,
 			);
 			path = container;
 			sourceTree = "<group>";
@@ -530,7 +535,7 @@
 		93AA629927AEAB540066041E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				93AA629A27AEAB550066041E /* bridge.spec.ts */,
+				93AA629A27AEAB550066041E /* index.spec.ts */,
 				93AA629B27AEAB550066041E /* bridge.ts */,
 				93AA629C27AEAB550066041E /* bridgemodule.ts */,
 			);
@@ -680,6 +685,7 @@
 				93649ED127ACDF0200311174 /* path.cpp in Sources */,
 				93649EDF27ACDF5E00311174 /* hierarchy.cpp in Sources */,
 				93649ED427ACDF0A00311174 /* observable.cpp in Sources */,
+				93AA62A427AEB25A0066041E /* _embinds.cpp in Sources */,
 				93649ECA27ACDEF800311174 /* object.cpp in Sources */,
 				93649ED827ACDF1800311174 /* version.cpp in Sources */,
 				93649ED027ACDF0200311174 /* filesource.cpp in Sources */,
@@ -692,8 +698,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				93AA461427AD5CE80066041E /* nodeidx.spec.m in Sources */,
-				93AA461727AE22F60066041E /* node.spec.m in Sources */,
+				93AA62A127AEB1240066041E /* nodeidx.spec.m in Sources */,
+				93AA62A227AEB1270066041E /* node.spec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

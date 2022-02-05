@@ -62,6 +62,9 @@ include_directories(${MODULE_CORE_DIR}/include)
 # Получаем пути ко всем хедерам и исходникам библиотеки
 file(GLOB_RECURSE MODULE_CORE_HEADERS ${MODULE_CORE_DIR}/include/*.*)
 file(GLOB_RECURSE MODULE_CORE_SOURCE ${MODULE_CORE_DIR}/src/*.*)
+list(FILTER MODULE_CORE_SOURCE EXCLUDE REGEX ".*\\.spec\\.m$")
+
+message(${MODULE_CORE_SOURCE})
 
 if(MODULE_CORE_EMSCRIPTEN)
 	add_executable(${META_CORE_LIBNAME} ${MODULE_CORE_SOURCE})
