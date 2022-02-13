@@ -1,12 +1,13 @@
-#ifndef _SWAY_CORE_FOUNDATION_OBJECT_HPP
-#define _SWAY_CORE_FOUNDATION_OBJECT_HPP
+#ifndef SWAY_CORE_FOUNDATION_OBJECT_HPP
+#define SWAY_CORE_FOUNDATION_OBJECT_HPP
 
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
+
+#include <algorithm>  // std::remove_if
 #include <vector>
-#include <algorithm> // std::remove_if
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -14,72 +15,35 @@ NAMESPACE_BEGIN(foundation)
 
 class Context;
 class Object {
-public:
+  public:
+    static void registerEmsClass();
 
-#pragma region "Static methods"
+    Object(Context *context);
 
-	static void registerEmsClass();
+    ~Object() = default;
 
-#pragma endregion
+    void subscribe(Object *sender, const std::string &eventname, AEventHandler *handler);
 
-	/*!
-	 * \brief
-	 *    Конструктор класса.
-	 *    Выполняет инициализацию нового экземпляра класса.
-	 *
-	 * \param[in] context
-	 *    Контекст.
-	 */
-	Object(Context * context);
+    void unsubscribe(const std::string &eventname);
 
-	/*!
-	 * \brief
-	 *    Деструктор класса.
-	 *    Освобождает захваченные ресурсы.
-	 */
-	~Object();
+    void emit(const std::string &eventname, EventBase *event);
 
-	void subscribe(Object * sender, const std::string & eventname, AEventHandler * handler);
+    AEventHandler *findEventHandler(const std::string &eventname);
 
-	void unsubscribe(const std::string & eventname);
+    [[nodiscard]] auto getUid() { return uniqueid_; }
 
-	/*!
-	 * \brief
-	 *    Испускает построенное событие.
-	 * 
-	 * \param[in] eventname
-	 *    Имя события.
-	 * 
-	 * \param[in] event
-	 *    Данные события.
-	 */
-	void emit(const std::string & eventname, IEvent * event);
+    void setUid(const std::string &id);
 
-	AEventHandler * findEventHandler(const std::string & eventname);
+  protected:
+    Context *context_; /*!< Контекст. */
+    std::vector<AEventHandler *> eventHandlers_; /*!< Обработчики событий. */
 
-	/*!
-	 * \brief
-	 *    Возвращает идентификатор объекта.
-	 */
-	std::string getUid() const;
-
-	/*!
-	 * \brief
-	 *    Устанавливает идентификатор для текущего объекта.
-	 * 
-	 * \param[in] id
-	 *    Уникальный идентификатор.
-	 */
-	void setUid(const std::string & id);
-
-protected:
-	Context * context_; /*!< Контекст. */
-	std::vector<AEventHandler *> eventHandlers_; /*!< Обработчики событий. */
-	std::string uniqueid_; /*!< Уникальный идентификатор текущего объекта. */
+  private:
+    std::string uniqueid_; /*!< Уникальный идентификатор текущего объекта. */
 };
 
 NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_FOUNDATION_OBJECT_HPP
+#endif

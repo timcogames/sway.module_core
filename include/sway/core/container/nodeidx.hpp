@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_CONTAINER_NODEIDX_HPP
-#define _SWAY_CORE_CONTAINER_NODEIDX_HPP
+#ifndef SWAY_CORE_CONTAINER_NODEIDX_HPP
+#define SWAY_CORE_CONTAINER_NODEIDX_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -11,47 +11,51 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-#define NODEIDX_NEGATIVE (-1)
-#define NODEIDX_ROOT NODEIDX_NEGATIVE
-#define NODEIDX_CHAIN_INITIALROOT std::vector<int>({ NODEIDX_ROOT })
+constexpr s32_t NODEIDX_NEGATIVE = (-1);
+constexpr s32_t NODEIDX_ROOT = NODEIDX_NEGATIVE;
+constexpr s32_t NODEIDX_ROOT_DEPTH = 1;
+
+#define NODEIDX_CHAIN_INITIALROOT std::vector<int>({NODEIDX_ROOT})
 
 class NodeIdx {
-public:
-	using index_t = s32_t;
-	using chain_t = std::vector<NodeIdx::index_t>;
+  public:
+    using index_t = s32_t;
+    using chain_t = std::vector<NodeIdx::index_t>;
 
-	static void registerEmClass();
+    static void registerEmClass();
 
-	NodeIdx();
-	NodeIdx(const NodeIdx::chain_t & chain);
-	NodeIdx(NodeIdx parent, NodeIdx::index_t idx);
+    NodeIdx();
 
-	~NodeIdx() = default;
+    explicit NodeIdx(const NodeIdx::chain_t &chain);
 
-	void setAsRoot();
+    explicit NodeIdx(NodeIdx parent, NodeIdx::index_t idx);
 
-	void setChain(const NodeIdx::chain_t & chain, NodeIdx::index_t idx);
+    ~NodeIdx() = default;
 
-	NodeIdx::chain_t getChain() const;
+    void setAsRoot();
 
-	NodeIdx::chain_t getParent();
+    void setChain(const NodeIdx::chain_t &chain, NodeIdx::index_t idx);
 
-	int getDepth() const;
+    NodeIdx::chain_t getChain() const;
 
-	NodeIdx::index_t getIdxAt(int idx) const;
+    NodeIdx::chain_t getParent();
 
-	bool equals(const NodeIdx & other);
+    int getDepth() const;
 
-	bool chainEquals(const NodeIdx::chain_t & other);
+    NodeIdx::index_t getIdxAt(int idx) const;
 
-	std::string toStr();
+    bool equal(const NodeIdx &other);
 
-private:
-	NodeIdx::chain_t chainLinks_;
+    bool chainEqual(const NodeIdx::chain_t &other);
+
+    std::string toStr();
+
+  private:
+    NodeIdx::chain_t chainLinks_;
 };
 
 NAMESPACE_END(container)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_CONTAINER_NODEIDX_HPP
+#endif

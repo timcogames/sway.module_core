@@ -1,0 +1,20 @@
+---
+Checks: >
+  *,
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  cppcoreguildelines-*,
+  -cppcoreguidelines-special-member-functions,
+  -cppcoreguidelines-macro-usage,
+  -llvmlibc-callee-namespace,
+  misc-*,
+  modernize-*,
+  readability-*
+CheckOptions:
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+  - key: readability-identifier-naming.FunctionCase
+    value: camelBack
+...

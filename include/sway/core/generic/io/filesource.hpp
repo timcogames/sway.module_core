@@ -1,9 +1,10 @@
-#ifndef _SWAY_CORE_GENERIC_IO_FILESOURCE_HPP
-#define _SWAY_CORE_GENERIC_IO_FILESOURCE_HPP
+#ifndef SWAY_CORE_GENERIC_IO_FILESOURCE_HPP
+#define SWAY_CORE_GENERIC_IO_FILESOURCE_HPP
 
-#include <sway/namespacemacros.hpp>
 #include <sway/keywords.hpp>
-#include <fstream> // std::ifstream
+#include <sway/namespacemacros.hpp>
+
+#include <fstream>  // std::ifstream
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -11,36 +12,17 @@ NAMESPACE_BEGIN(generic)
 NAMESPACE_BEGIN(io)
 
 class FileSource {
-public:
-	/*!
-	 * \brief
-	 *    Конструктор класса по умолчанию.
-	 */
-	FileSource();
+  public:
+    FileSource();
 
-	/*!
-	 * \brief
-	 *    Виртуальный деструктор класса.
-	 */
-	virtual ~FileSource() = default;
+    virtual ~FileSource() = default;
 
-	/*!
-	 * \brief
-	 *    Последовательное чтение файла.
-	 * 
-	 * \param[in] source
-	 *    Ссылка на поток.
-	 */
-	PURE_VIRTUAL(void * loadFromStream(std::ifstream & source));
+    PURE_VIRTUAL(void *loadFromStream(std::ifstream &source));
 
-	/*!
-	 * \brief
-	 *    Возвращает, открыт ли файл.
-	 */
-	bool isFileOpened() const;
+    bool isFileOpened() const;
 
-protected:
-	bool _fileOpened; /*!< Открыт ли файл в данный момент. */
+  protected:
+    bool _fileOpened; /*!< Открыт ли файл в данный момент. */
 };
 
 NAMESPACE_END(io)
@@ -48,4 +30,4 @@ NAMESPACE_END(generic)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_GENERIC_IO_FILESOURCE_HPP
+#endif

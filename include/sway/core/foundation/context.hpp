@@ -1,5 +1,5 @@
-#ifndef _SWAY_CORE_FOUNDATION_CONTEXT_HPP
-#define _SWAY_CORE_FOUNDATION_CONTEXT_HPP
+#ifndef SWAY_CORE_FOUNDATION_CONTEXT_HPP
+#define SWAY_CORE_FOUNDATION_CONTEXT_HPP
 
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -9,26 +9,16 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 class Context {
-public:
-	static void registerEmsClass();
+  public:
+    static void registerEmsClass();
 
-	/*!
-	 * \brief
-	 *    Конструктор класса.
-	 *    Выполняет инициализацию нового экземпляра класса.
-	 */
-	Context();
+    Context();
 
-	/*!
-	 * \brief
-	 *    Деструктор класса.
-	 *    Освобождает захваченные ресурсы.
-	 */
-	~Context() = default;
+    ~Context() = default;
 };
 
 NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif // _SWAY_CORE_FOUNDATION_CONTEXT_HPP
+#endif
