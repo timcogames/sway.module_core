@@ -42,9 +42,9 @@ class EventBase {
 
     virtual ~EventBase() = default;
 
-    virtual auto getType() const -> u32_t = 0;
+    PURE_VIRTUAL(u32_t getType() const);
 
-    virtual auto getUserData() const -> EventData_t = 0;
+    PURE_VIRTUAL(EventData_t getUserData() const);
 };
 
 #ifdef _EMSCRIPTEN
@@ -52,9 +52,9 @@ class EventWrapper : public emscripten::wrapper<EventBase> {
   public:
     EMSCRIPTEN_WRAPPER(EventWrapper);
 
-    virtual auto getType() const -> u32_t override { return call<u32_t>("getType"); }
+    MTHD_OVERRIDE(u32_t getType() const) { return call<u32_t>("getType"); }
 
-    virtual auto getUserData() const -> EventData_t override { return call<EventData_t>("getUserData"); }
+    MTHD_OVERRIDE(EventData_t getUserData() const) { return call<EventData_t>("getUserData"); }
 };
 #endif
 

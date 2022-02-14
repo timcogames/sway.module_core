@@ -36,7 +36,7 @@ std::optional<std::shared_ptr<Node>> Hierarchy::findNode(std::shared_ptr<Node> r
     return retrieved;
 }
 
-auto Hierarchy::getRootNode() { return root_; }
+std::shared_ptr<Node> Hierarchy::getRootNode() { return root_; }
 
 void Hierarchy::setRootNode(std::shared_ptr<Node> root) { root_ = root; }
 

@@ -1,7 +1,7 @@
 'use strict';
 
-import { BridgeCoreSubmodule } from '../../../include/sway/_index';
+import { ICoreSubmodule } from '../../../include/sway/core';
 
-export interface BridgeModule extends BridgeCoreSubmodule {
+export interface BridgeModule extends ICoreSubmodule {
 	[name: string]: any;
 };

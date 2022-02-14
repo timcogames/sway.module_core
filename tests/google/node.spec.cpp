@@ -1,4 +1,5 @@
 #include <sway/core/container/node.hpp>
+#include <sway/keywords.hpp>
 
 #include <gtest/gtest.h>
 
@@ -16,15 +17,15 @@ class NodeTest : public ::testing::Test {
   public:
     NodeTest() {}
 
-    ~NodeTest() override = default;
+    ~NodeTest() = default;
 
-    void SetUp() override {
+    MTHD_OVERRIDE(void SetUp()) {
         srand(static_cast<unsigned int>(time(nullptr)));
 
         root_ = std::make_shared<Node>();
     }
 
-    void TearDown() override {}
+    MTHD_OVERRIDE(void TearDown()) {}
 
     void addSupervisor() {
         supervisor_ = std::make_shared<Node>();

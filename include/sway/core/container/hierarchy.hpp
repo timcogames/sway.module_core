@@ -23,7 +23,7 @@ class Hierarchy {
 
     ~Hierarchy() = default;
 
-    auto getRootNode();
+    std::shared_ptr<Node> getRootNode();
 
     void setRootNode(std::shared_ptr<Node> root);
 

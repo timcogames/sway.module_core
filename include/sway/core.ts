@@ -6,7 +6,7 @@ import { Node } from './core/container/node';
 export type INodeIdx = NodeIdx.BaseIface;
 export type INode = Node.BaseIface<{}>;
 
-export interface BridgeCoreSubmodule {
-  NodeIdx: NodeIdx.EmscriptenClass;
-  Node: Node.EmscriptenClass;
+export interface ICoreSubmodule {
+    NodeIdx: NodeIdx.EmscriptenClass;
+    Node: Node.EmscriptenClass;
 };

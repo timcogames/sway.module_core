@@ -22,7 +22,7 @@ class TEventHandlerImpl : public AEventHandler {
 
     virtual ~TEventHandlerImpl() = default;
 
-    void invoke(EventBase *event) override {
+    MTHD_OVERRIDE(void invoke(EventBase *event)) {
         TYPE *receiver = static_cast<TYPE *>(receiver_);
         (receiver->*function_)(event);
     }
@@ -46,7 +46,7 @@ class EventHandlerImpl : public AEventHandler {
 
     virtual ~EventHandlerImpl() = default;
 
-    void invoke(EventBase *event) override {
+    MTHD_OVERRIDE(void invoke(EventBase *event)) {
         if (function_.typeOf().as<std::string>() == "function") {
             function_(event);
         } else {

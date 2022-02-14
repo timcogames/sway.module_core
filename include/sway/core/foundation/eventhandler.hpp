@@ -56,7 +56,7 @@ class AEventHandlerWrapper : public emscripten::wrapper<AEventHandler> {
   public:
     EMSCRIPTEN_WRAPPER(AEventHandlerWrapper);
 
-    virtual void invoke(EventBase *event) override { return call<void>("invoke", event); }
+    MTHD_OVERRIDE(void invoke(EventBase *event)) { return call<void>("invoke", event); }
 };
 #endif
 
