@@ -2,12 +2,18 @@
 
 import { NodeIdx } from './nodeidx';
 
-export interface Node<T> {
-	addChildNode(child: T): void;
+export namespace Node {
+	export interface BaseIface<T> {
+		addChildNode(child: T): void;
 
-	removeChildNode(child: T): void;
+		removeChildNode(child: T): void;
 
-	getNumOfChildNodes(): number;
+		getNumOfChildNodes(): number;
 
-	getNodeIdx(): NodeIdx;
-};
+		getNodeIdx(): NodeIdx.BaseIface;
+	};
+
+	export interface EmscriptenClass extends BaseIface<EmscriptenClass> {
+		new(): EmscriptenClass;
+	};
+}

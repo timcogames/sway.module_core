@@ -1,13 +1,21 @@
 'use strict';
 
-export interface NodeIdx {
-	getChain(): any;
+export namespace NodeIdx {
+	export interface BaseIface {
+		getChain(): any;
 
-	getParent(): any;
+		getParent(): any;
 
-	getDepth(): number;
+		getDepth(): number;
 
-	getIdxAt(idx: number): number;
+		getIdxAt(idx: number): number;
 
-	toStr(): string;
-};
+		toStr(): string;
+	};
+
+	export interface EmscriptenClass extends BaseIface {
+		new(): EmscriptenClass;
+		new(chain: any): EmscriptenClass;
+		new(parent: any, idx: number): EmscriptenClass;
+	};
+}

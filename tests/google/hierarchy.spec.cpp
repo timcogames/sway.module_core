@@ -7,7 +7,9 @@ using namespace sway::core;
 
 class HierarchyChildTraverser : public utils::Traverser {
   public:
-    OVERRIDE(u32_t visit(utils::Visitable *node)) { return detail::toUnderlying(utils::Traverser::Action::CONTINUE); }
+    MTHD_OVERRIDE(u32_t visit(utils::Visitable *node)) {
+        return detail::toUnderlying(utils::Traverser::Action::CONTINUE);
+    }
 };
 
 TEST(HierarchyTest, Base) {

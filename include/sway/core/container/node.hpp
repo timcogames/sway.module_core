@@ -21,20 +21,20 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-#define DECLARE_EVENT(EventId, EventName)                               \
-  public:                                                               \
-    static inline const std::string EventId = #EventName;               \
-    class Evt##EventName final : public foundation::EventBase {         \
-      public:                                                           \
-        Evt##EventName(u32_t type, EventData_t data)                    \
-            : type_(type)                                               \
-            , userdata_(std::move(data)) {}                             \
-        OVERRIDE(u32_t getType() const) { return type_; }               \
-        OVERRIDE(EventData_t getUserData() const) { return userdata_; } \
-                                                                        \
-      private:                                                          \
-        u32_t type_;                                                    \
-        EventData_t userdata_;                                          \
+#define DECLARE_EVENT(EventId, EventName)                                    \
+  public:                                                                    \
+    static inline const std::string EventId = #EventName;                    \
+    class Evt##EventName final : public foundation::EventBase {              \
+      public:                                                                \
+        Evt##EventName(u32_t type, EventData_t data)                         \
+            : type_(type)                                                    \
+            , userdata_(std::move(data)) {}                                  \
+        MTHD_OVERRIDE(u32_t getType() const) { return type_; }               \
+        MTHD_OVERRIDE(EventData_t getUserData() const) { return userdata_; } \
+                                                                             \
+      private:                                                               \
+        u32_t type_;                                                         \
+        EventData_t userdata_;                                               \
     };
 
 class Node : public std::enable_shared_from_this<Node>, public utils::Visitable {
@@ -47,7 +47,7 @@ class Node : public std::enable_shared_from_this<Node>, public utils::Visitable 
     Node();
     virtual ~Node();
 
-    OVERRIDE(u32_t traverse(utils::Traverser *traverser));
+    MTHD_OVERRIDE(u32_t traverse(utils::Traverser *traverser));
 
     void addChildNode(std::shared_ptr<Node> child);
 

@@ -1,6 +1,7 @@
 'use strict';
 
 import { useBridge } from '../../tests/jest/src/bridge';
+import { INodeIdx } from '../../include/sway/_index';
 
 describe('NodeIdx', () => {
 	beforeEach(() => { });
@@ -13,7 +14,7 @@ describe('NodeIdx', () => {
 		integerList.push_back(1);
 		integerList.push_back(2);
 
-		let nodeidx = new module.NodeIdx(integerList);
+		let nodeidx: INodeIdx = new module.NodeIdx(integerList);
 		expect(nodeidx.toStr()).toEqual('[0, 1, 2]');
 	});
 
