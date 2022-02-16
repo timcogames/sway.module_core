@@ -6,7 +6,7 @@ import { Node } from './core/container/node';
 export type INodeIdx = NodeIdx.BaseIface;
 export type INode = Node.BaseIface<{}>;
 
-interface IObjectWrap {
+export interface IObjectWrap {
     __parent: any;
     __construct(args?: any): void;
     __destruct(): void;
