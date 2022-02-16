@@ -13,14 +13,14 @@ set(META_CORE_VERSION ${META_CORE_VERSION_MAJOR}.${META_CORE_VERSION_MINOR}.${ME
 
 # Опции сборки
 option(MODULE_CORE_SHARED_LIB "Build shared library (.so)" OFF)
-option(MODULE_CORE_USE_EMSCRIPTEN "Using emscripten compiler" OFF)
 option(MODULE_CORE_ENABLE_COVERAGE "Enable coverage builds" OFF)
 option(MODULE_CORE_ENABLE_TESTS "Enable test builds" OFF)
+option(MODULE_USE_EMSCRIPTEN "Using emscripten compiler" OFF)
 option(CUSTOM_EMSCRIPTEN_ROOT_DIR "Emscripten root directory" OFF)
 option(CUSTOM_BOOST_ROOT_DIR "Boost root directory" OFF)
 option(CUSTOM_GTEST_ROOT_DIR "GTest root directory" OFF)
 
-if (NOT DEFINED CMAKE_TOOLCHAIN_FILE AND MODULE_CORE_USE_EMSCRIPTEN)
+if (NOT DEFINED CMAKE_TOOLCHAIN_FILE AND MODULE_USE_EMSCRIPTEN)
     set(CMAKE_TOOLCHAIN_FILE "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cmake/Modules/Platform/Emscripten.cmake")
     include(${CMAKE_TOOLCHAIN_FILE})
 endif()
@@ -31,7 +31,7 @@ endif()
 
 project(${META_CORE_PRJNAME} VERSION ${META_CORE_VERSION} LANGUAGES CXX)
 
-if (MODULE_CORE_USE_EMSCRIPTEN)
+if (MODULE_USE_EMSCRIPTEN)
     set(CMAKE_CXX_COMPILER "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/em++")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --bind -Os")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_EMSCRIPTEN")
@@ -61,7 +61,7 @@ message("${META_CORE_PRJNAME} ${META_CORE_VERSION}
         boost dir | ${CUSTOM_BOOST_ROOT_DIR}
         gtest dir | ${CUSTOM_GTEST_ROOT_DIR}
 
-       emscripten | ${MODULE_CORE_USE_EMSCRIPTEN}
+       emscripten | ${MODULE_USE_EMSCRIPTEN}
          coverage | ${MODULE_CORE_ENABLE_COVERAGE}
             tests | ${MODULE_CORE_ENABLE_TESTS}
 ")
