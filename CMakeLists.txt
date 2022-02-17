@@ -23,11 +23,11 @@ option(CUSTOM_GTEST_ROOT_DIR "GTest root directory" OFF)
 if (NOT DEFINED CMAKE_TOOLCHAIN_FILE AND MODULE_USE_EMSCRIPTEN)
     set(CMAKE_TOOLCHAIN_FILE "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cmake/Modules/Platform/Emscripten.cmake")
     include(${CMAKE_TOOLCHAIN_FILE})
-endif()
+endif ()
 
 if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build" FORCE)
-endif()
+endif ()
 
 project(${META_CORE_PRJNAME} VERSION ${META_CORE_VERSION} LANGUAGES CXX)
 
@@ -38,7 +38,7 @@ if (MODULE_USE_EMSCRIPTEN)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-unicode-whitespace \
         -Wno-unused-local-typedef -Wno-invalid-noreturn -Wno-unused-command-line-argument")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s WASM=1 -s MODULARIZE=1")
-endif()
+endif ()
 
 if (MODULE_CORE_ENABLE_COVERAGE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g ")
@@ -46,9 +46,9 @@ if (MODULE_CORE_ENABLE_COVERAGE)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
-endif()
+endif ()
 
-message("${META_CORE_PRJNAME} ${META_CORE_VERSION}
+message("[${META_CORE_PRJNAME}]: ${META_CORE_VERSION}
          compiler | ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
        build type | ${CMAKE_BUILD_TYPE}
        shared lib | ${MODULE_CORE_SHARED_LIB}
@@ -70,10 +70,10 @@ message("${META_CORE_PRJNAME} ${META_CORE_VERSION}
 if (CMAKE_BUILD_TYPE MATCHES Debug)
     set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/dbg)
     set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/dbg)
-else()
+else ()
     set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
     set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
-endif()
+endif ()
 
 set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
@@ -88,17 +88,21 @@ if (MODULE_CORE_SHARED_LIB)
     add_executable(${META_CORE_LIBNAME} ${MODULE_CORE_SOURCE})
     set_target_properties(${META_CORE_LIBNAME} PROPERTIES OUTPUT_NAME ${META_CORE_PRJNAME})
     set_target_properties(${META_CORE_LIBNAME} PROPERTIES SUFFIX ".${META_CORE_VERSION}.js")
-else()
+else ()
     add_library(${META_CORE_LIBNAME} STATIC ${MODULE_CORE_SOURCE})
     set_target_properties(${META_CORE_LIBNAME} PROPERTIES OUTPUT_NAME ${META_CORE_PRJNAME})
     set_target_properties(${META_CORE_LIBNAME} PROPERTIES SUFFIX ".a.${META_CORE_VERSION}")
-endif()
+endif ()
 
 custom_enable_cxx17(${META_CORE_LIBNAME})
 target_link_libraries(${META_CORE_LIBNAME})
 
 # Добавляем построение тестов
 if (MODULE_CORE_ENABLE_TESTS)
-    message(STATUS "Tests have been enabled")
-    add_subdirectory(tests/google)
-endif()
+    if (MODULE_CORE_SHARED_LIB)
+        message(STATUS "[${META_CORE_PRJNAME}]: Tests are only allowed with a static lib")
+    else ()
+        message(STATUS "[${META_CORE_PRJNAME}]:Tests have been enabled")
+        add_subdirectory(tests/google)
+    endif ()
+endif ()
