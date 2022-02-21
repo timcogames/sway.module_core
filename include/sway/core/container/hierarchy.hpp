@@ -17,10 +17,9 @@ class Hierarchy {
   public:
     static void registerEmClass();
 
-    static std::optional<std::shared_ptr<Node>> findNode(std::shared_ptr<Node> root, const NodeIdx &nodeIdx);
+    static std::optional<std::shared_ptr<Node>> findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx);
 
     Hierarchy();
-
     ~Hierarchy() = default;
 
     std::shared_ptr<Node> getRootNode();

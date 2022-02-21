@@ -1,3 +1,4 @@
+#include <sway/core/container/hierarchy.hpp>
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeidx.hpp>
 
@@ -18,5 +19,6 @@ using namespace sway::core::container;
 EMSCRIPTEN_BINDINGS(sway_core_container) {
     NodeIdx::registerEmClass();
     Node::registerEmClass();
+    Hierarchy::registerEmClass();
 }
 #endif

@@ -1,7 +1,7 @@
 'use strict';
 
-import { useBridge } from '../../tests/jest/src/bridge';
-import { INodeIdx } from '../../include/sway/core';
+import { useBridge } from './bridge';
+import { INodeIdx } from '../../../include/sway/core';
 
 describe('NodeIdx', () => {
 	beforeEach(() => { });

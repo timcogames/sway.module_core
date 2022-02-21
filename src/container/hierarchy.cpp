@@ -20,11 +20,10 @@ void Hierarchy::registerEmClass() {
 #endif
 }
 
-Hierarchy::Hierarchy()
-    : root_(nullptr) {}
+Hierarchy::Hierarchy() { root_ = std::make_shared<Node>(); }
 
-std::optional<std::shared_ptr<Node>> Hierarchy::findNode(std::shared_ptr<Node> root, const NodeIdx &nodeIdx) {
-    std::optional<std::shared_ptr<Node>> retrieved = root;
+std::optional<std::shared_ptr<Node>> Hierarchy::findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx) {
+    std::optional<std::shared_ptr<Node>> retrieved = parent;
     for (int i = NODEIDX_ROOT_DEPTH; i < nodeIdx.getDepth(); ++i) {
         if (nodeIdx.getIdxAt(i) >= retrieved->get()->getNumOfChildNodes()) {
             return std::nullopt;

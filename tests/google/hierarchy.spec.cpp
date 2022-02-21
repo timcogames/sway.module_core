@@ -7,28 +7,27 @@ using namespace sway::core;
 
 class HierarchyChildTraverser : public utils::Traverser {
   public:
-    MTHD_OVERRIDE(u32_t visit(utils::Visitable *node)) {
+    MTHD_OVERRIDE(u32_t visit([[maybe_unused]] utils::Visitable *node)) {
         return detail::toUnderlying(utils::Traverser::Action::CONTINUE);
     }
 };
 
 TEST(HierarchyTest, Base) {
-    foundation::Context *ctx = new foundation::Context();
-    container::Hierarchy *tree = new container::Hierarchy();
-    std::shared_ptr<container::Node> root = std::make_shared<container::Node>();
+    auto *tree = new container::Hierarchy();
 
-    tree->setRootNode(root);
+    // auto root = std::make_shared<container::Node>();
+    // tree->setRootNode(root);
 
-    std::shared_ptr<container::Node> child1 = std::make_shared<container::Node>();
-    root->addChildNode(child1);
+    auto child1 = std::make_shared<container::Node>();
+    tree->getRootNode()->addChildNode(child1);
     ASSERT_STREQ(child1->getNodeIdx().toStr().c_str(), "[-1, 0]");
 
-    std::shared_ptr<container::Node> child2 = std::make_shared<container::Node>();
-    root->addChildNode(child2);
+    auto child2 = std::make_shared<container::Node>();
+    tree->getRootNode()->addChildNode(child2);
     ASSERT_STREQ(child2->getNodeIdx().toStr().c_str(), "[-1, 1]");
 
     HierarchyChildTraverser traverser;
-    root->traverse(&traverser);
+    tree->getRootNode()->traverse(&traverser);
 
     SAFE_DELETE(tree);
 }
