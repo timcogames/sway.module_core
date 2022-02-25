@@ -11,10 +11,7 @@ using namespace sway::core::container;
 
 class NodeIdxTest : public ::testing::Test {
   public:
-    NodeIdxTest() {}
-    ~NodeIdxTest() = default;
-
-    void SetUp() {
+    MTHD_OVERRIDE(void SetUp()) {
         /*!
          *    ROOT (-1)
          *    └── SUPERVISOR (0)
@@ -24,7 +21,7 @@ class NodeIdxTest : public ::testing::Test {
         supervisor_ = NodeIdx(root_, NODE_IDX_SUPERVISOR);
         worker_ = NodeIdx(supervisor_, NODE_IDX_WORKER);
     }
-    void TearDown() {}
+    MTHD_OVERRIDE(void TearDown()) {}
 
     NodeIdx root_;
     NodeIdx supervisor_;
