@@ -6,15 +6,16 @@ import { INodeIdx } from '../../../include/sway/core';
 describe('NodeIdx', () => {
 	beforeEach(() => { });
 
-	it('Added node idx', async () => {
+	it('added node idx', async () => {
 		const { module } = await useBridge();
 
-		let integerList = new module.IntegerList();
-		integerList.push_back(0);
-		integerList.push_back(1);
-		integerList.push_back(2);
+		let integerVec = new module.IntegerVec();
+		integerVec.push_back(0);
+		integerVec.push_back(1);
+		integerVec.push_back(2);
 
-		let nodeidx: INodeIdx = new module.NodeIdx(integerList);
+		let nodeidx: INodeIdx = new module.NodeIdx(integerVec);
+		//let nodeidx: INodeIdx = new module.NodeIdx(module.toIntegerVec([0, 1, 2]));
 		expect(nodeidx.toStr()).toEqual('[0, 1, 2]');
 	});
 

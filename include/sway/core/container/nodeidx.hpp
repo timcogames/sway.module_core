@@ -25,30 +25,27 @@ class NodeIdx {
     static void registerEmClass();
 
     NodeIdx();
-
-    explicit NodeIdx(const NodeIdx::chain_t &chain);
-
+    explicit NodeIdx(const NodeIdx::chain_t &data);
     explicit NodeIdx(NodeIdx parent, NodeIdx::index_t idx);
-
     ~NodeIdx() = default;
 
     void setAsRoot();
 
     void setChain(const NodeIdx::chain_t &chain, NodeIdx::index_t idx);
 
-    NodeIdx::chain_t getChain() const;
+    [[nodiscard]] NodeIdx::chain_t getChain() const;
 
-    NodeIdx::chain_t getParent();
+    [[nodiscard]] NodeIdx::chain_t getParent() const;
 
-    int getDepth() const;
+    [[nodiscard]] int getDepth() const;
 
-    NodeIdx::index_t getIdxAt(int idx) const;
+    [[nodiscard]] NodeIdx::index_t getIdxAt(int idx) const;
 
     bool equal(const NodeIdx &other);
 
     bool chainEqual(const NodeIdx::chain_t &other);
 
-    std::string toStr();
+    [[nodiscard]] std::string toStr() const;
 
   private:
     NodeIdx::chain_t chainLinks_;

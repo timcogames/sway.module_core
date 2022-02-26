@@ -26,7 +26,7 @@ void NodeIdx::registerEmClass() {
 
 NodeIdx::NodeIdx() { setAsRoot(); }
 
-NodeIdx::NodeIdx(const NodeIdx::chain_t &chain) { setChain(chain, NODEIDX_NEGATIVE); }
+NodeIdx::NodeIdx(const NodeIdx::chain_t &data) { setChain(data, NODEIDX_NEGATIVE); }
 
 NodeIdx::NodeIdx(NodeIdx parent, NodeIdx::index_t idx) { setChain(parent.getChain(), idx); }
 
@@ -38,13 +38,14 @@ void NodeIdx::setAsRoot() {
 void NodeIdx::setChain(const NodeIdx::chain_t &chain, NodeIdx::index_t idx) {
     chainLinks_ = chain;
 
-    if (idx != NODEIDX_NEGATIVE)
+    if (idx != NODEIDX_NEGATIVE) {
         chainLinks_.push_back(idx);
+    }
 }
 
 NodeIdx::chain_t NodeIdx::getChain() const { return chainLinks_; }
 
-NodeIdx::chain_t NodeIdx::getParent() {
+NodeIdx::chain_t NodeIdx::getParent() const {
     NodeIdx::chain_t parent = getChain();
     parent.pop_back();
 
@@ -61,7 +62,7 @@ bool NodeIdx::chainEqual(const NodeIdx::chain_t &other) {
     return chainLinks_.size() == other.size() && std::equal(chainLinks_.begin(), chainLinks_.end(), other.begin());
 }
 
-std::string NodeIdx::toStr() {
+std::string NodeIdx::toStr() const {
     std::string str = "[";
     for (int i = 0; i < getDepth(); ++i) {
         str += std::to_string(getIdxAt(i));

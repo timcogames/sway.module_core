@@ -18,13 +18,9 @@ describe('Hierarchy', () => {
 
 		let hierarchy = new module.Hierarchy();
 
-		let integerList = new module.IntegerList();
-		integerList.push_back(-1);
-		integerList.push_back(0);
-
 		let child = new module.Node();
 		hierarchy.getRootNode().addChildNode(child);
-		expect(module.Hierarchy.findNode(hierarchy.getRootNode(), new module.NodeIdx(integerList))).toBeTruthy();
+		expect(module.Hierarchy.findNode(hierarchy.getRootNode(), new module.NodeIdx(module.toIntegerVec([-1, 0])))).toBeTruthy();
 	});
 
 	afterEach(() => { });

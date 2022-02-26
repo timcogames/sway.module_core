@@ -11,12 +11,18 @@ using namespace sway::core::container;
 #ifdef _EMSCRIPTEN
 #    include <emscripten/bind.h>
 
-EMSCRIPTEN_BINDINGS(sway_core) {
-    emscripten::register_vector<int>("IntegerList");
-    emscripten::register_vector<double>("DoubleList");
-    emscripten::register_vector<std::string>("StringList");
+std::vector<s32_t> toIntegerVec(const emscripten::val &data) {
+    return emscripten::convertJSArrayToNumberVector<s32_t>(data);
+}
 
-    register_optional<std::shared_ptr<Node>>("std::optional<Node>");
+EMSCRIPTEN_BINDINGS(sway_core) {
+    emscripten::register_vector<int>("IntegerVec");
+    emscripten::function("toIntegerVec", &toIntegerVec);
+
+    emscripten::register_vector<double>("DoubleVec");
+    emscripten::register_vector<std::string>("StringVec");
+
+    register_optional<std::shared_ptr<Node>>("NodeOptSmartPtr");
 }
 
 EMSCRIPTEN_BINDINGS(sway_core_container) {
