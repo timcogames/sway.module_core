@@ -12,3 +12,4 @@ profile
 # xcode noise
 *.pbxuser
 *.mode1v3
+*.xcbkptlist
