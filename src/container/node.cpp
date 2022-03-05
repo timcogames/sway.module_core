@@ -21,6 +21,8 @@ void Node::registerEmClass() {
         .function("addChildNode", &Node::addChildNode, emscripten::allow_raw_pointers())
         .function("removeChildNode", &Node::removeChildNode, emscripten::allow_raw_pointers())
         .function("getNumOfChildNodes", &Node::getNumOfChildNodes)
+        .function("getParentNode", &Node::getParentNode, emscripten::allow_raw_pointers())
+        .function("getChildAt", &Node::getChildAt, emscripten::allow_raw_pointers())
         .function("getNodeIdx", &Node::getNodeIdx);
 #endif
 }

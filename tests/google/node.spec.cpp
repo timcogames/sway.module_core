@@ -103,30 +103,3 @@ TEST_F(NodeTest, GetChildNode_NonExistent) {
     auto intern = doctor_->getChildNode(internIdx);
     EXPECT_TRUE(internIdx.equal(intern->getNodeIdx()));
 }
-
-TEST_F(NodeTest, getMatchDepth) {
-    std::vector<int> v1 = {-1, 0, 2};
-    std::vector<int> v2 = {-1, 0, 2, 1};
-
-    auto result = Node::getMatchDepth(v1, v2);
-    ASSERT_EQ(result, 3);
-}
-
-TEST_F(NodeTest, parse) {
-    std::vector<LinearTestData> dataItems = {
-        {{-1, 1, 2, 0}, "test_0"}, {{-1, 0, 1}, "test_1"}, {{-1, 0, 0}, "test_0_0"}, {{-1, 0, 0, 2}, "test_0_1"}};
-    Node::parse(root_, dataItems);
-
-    printf("[ROOT   ]: childnodes (%i)\n", root_->getNumOfChildNodes());
-
-    auto child_0 = root_->getChildAt(0).value();
-    printf("[ROOT, 0]:    childnodes (%i)\t%s\n", child_0->getNumOfChildNodes(), child_0->getNodeIdx().toStr().c_str());
-
-    auto child_0_0 = child_0->getChildAt(0).value();
-    printf("[ROOT, 0, 0]: childnodes (%i)\t%s\n", child_0_0->getNumOfChildNodes(),
-        child_0_0->getNodeIdx().toStr().c_str());
-
-    auto child_0_1 = child_0->getChildAt(1).value();
-    printf("[ROOT, 0, 1]: childnodes (%i)\t%s\n", child_0_1->getNumOfChildNodes(),
-        child_0_1->getNodeIdx().toStr().c_str());
-}

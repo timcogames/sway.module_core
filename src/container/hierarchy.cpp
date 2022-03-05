@@ -12,9 +12,14 @@ NAMESPACE_BEGIN(container)
 
 void Hierarchy::registerEmClass() {
 #ifdef _EMSCRIPTEN
+    emscripten::class_<NodeData>("NodeData").property("nodeidx", &NodeData::nodeidx);
+
+    emscripten::register_vector<NodeData>("NodeDataVec");
+
     emscripten::class_<Hierarchy>("Hierarchy")
         .constructor()
         .class_function("findNode", &Hierarchy::findNode, emscripten::allow_raw_pointers())
+        .class_function("parse", &Hierarchy::parse, emscripten::allow_raw_pointers())
         .function("getRootNode", &Hierarchy::getRootNode, emscripten::allow_raw_pointers())
         .function("setRootNode", &Hierarchy::setRootNode, emscripten::allow_raw_pointers());
 #endif

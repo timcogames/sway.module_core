@@ -8,9 +8,13 @@ export namespace Node {
 
         removeChildNode(child: T): void;
 
+        getChildAt(idx: number): any;
+
         getNumOfChildNodes(): number;
 
         getNodeIdx(): NodeIdx.BaseIface;
+
+        getParentNode(): any;
     };
 
     export interface EmscriptenClass extends Node.BaseIface<Node.EmscriptenClass> {

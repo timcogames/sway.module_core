@@ -44,3 +44,19 @@ TEST_F(HierarchyTest, findNode) {
     auto found = hierarchy_->findNode(hierarchy_->getRootNode(), container::NodeIdx(std::vector<int>({-1, 0})));
     ASSERT_STREQ(found->get()->getNodeIdx().toStr().c_str(), "[-1, 0]");
 }
+
+TEST_F(HierarchyTest, getMatchDepth) {
+    std::vector<int> v1 = {-1, 0, 2};
+    std::vector<int> v2 = {-1, 0, 2, 1};
+
+    auto result = container::Hierarchy::getMatchDepth(v1, v2);
+    ASSERT_EQ(result, 3);
+}
+
+TEST_F(HierarchyTest, parse) {
+    container::NodeDataList dataItems = {
+        {{-1, 1}, "test_0"}, {{-1, 0, 1}, "test_1"}, {{-1, 0, 0}, "test_0_0"}, {{-1, 0, 0, 2}, "test_0_1"}};
+    container::Hierarchy::parse(hierarchy_->getRootNode(), dataItems);
+
+    printf("[ROOT   ]: childnodes (%i)\n", hierarchy_->getRootNode()->getNumOfChildNodes());
+}
