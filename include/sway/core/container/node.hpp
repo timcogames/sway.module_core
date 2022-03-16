@@ -81,6 +81,10 @@ class Node : public std::enable_shared_from_this<Node>, public utils::Visitable,
 
     void setAsRoot();
 
+    void setVisible(bool value) { visible_ = value; }
+
+    bool isVisible() const { return visible_; }
+
   protected:
     template <typename T>
     std::shared_ptr<T> sharedFrom(T *ptr) {
@@ -95,6 +99,7 @@ class Node : public std::enable_shared_from_this<Node>, public utils::Visitable,
     NodeIdx idx_;
     std::weak_ptr<Node> parent_;
     std::vector<std::shared_ptr<Node>> children_;
+    bool visible_;
 };
 
 NAMESPACE_END(container)

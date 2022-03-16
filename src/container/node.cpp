@@ -24,13 +24,15 @@ void Node::registerEmClass() {
         .function("getNumOfChildNodes", &Node::getNumOfChildNodes)
         .function("getParentNode", &Node::getParentNode, emscripten::allow_raw_pointers())
         .function("getChildAt", &Node::getChildAt, emscripten::allow_raw_pointers())
-        .function("getNodeIdx", &Node::getNodeIdx);
+        .function("getNodeIdx", &Node::getNodeIdx)
+        .property("visible", &Node::isVisible, &Node::setVisible);
 #endif
 }
 
 Node::Node()
     : idx_(NodeIdx())
-    , parent_({}) {}
+    , parent_({})
+    , visible_(true) {}
 
 Node::~Node() { children_.clear(); }
 
