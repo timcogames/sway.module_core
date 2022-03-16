@@ -3,7 +3,7 @@
 
 #include <sway/core/container/nodeidx.hpp>
 #include <sway/core/foundation/event.hpp>
-#include <sway/core/foundation/object.hpp>
+#include <sway/core/foundation/eventable.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/utils/traverser.hpp>
@@ -42,7 +42,7 @@ NAMESPACE_BEGIN(container)
         EventData_t userdata_;                                               \
     };
 
-class Node : public std::enable_shared_from_this<Node>, public utils::Visitable {
+class Node : public std::enable_shared_from_this<Node>, public utils::Visitable, public foundation::Eventable {
     DECLARE_EVENT(EVT_ADDED, NodeAdded)
     DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
 
@@ -66,13 +66,14 @@ class Node : public std::enable_shared_from_this<Node>, public utils::Visitable 
 
     int getNumOfChildNodes() const;
 
-    void setNodeIdx(NodeIdx::chain_t chain, int idx);
+    void setNodeIdx(const NodeIdx::chain_t &chain, int last);
 
     NodeIdx getNodeIdx();
 
     void setParentNode(std::weak_ptr<Node> parent);
 
     std::optional<std::shared_ptr<Node>> getParentNode();
+    std::shared_ptr<Node> getParentNodeByDepth(int depth);
 
     bool equal(std::shared_ptr<Node> other);
 

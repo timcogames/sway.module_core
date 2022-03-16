@@ -1,5 +1,5 @@
+#include <sway/core/foundation/eventable.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
-#include <sway/core/foundation/object.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -16,14 +16,14 @@ void AEventHandler::registerEmsClass() {
 #endif
 }
 
-AEventHandler::AEventHandler(Object *receiver)
+AEventHandler::AEventHandler(Eventable *receiver)
     : receiver_(receiver) {}
 
-Object *AEventHandler::getSender() const { return sender_; }
+Eventable *AEventHandler::getSender() const { return sender_; }
 
-void AEventHandler::setSender(Object *sender) { sender_ = sender; }
+void AEventHandler::setSender(Eventable *sender) { sender_ = sender; }
 
-Object *AEventHandler::getReceiver() const { return receiver_; }
+Eventable *AEventHandler::getReceiver() const { return receiver_; }
 
 NAMESPACE_END(foundation)
 NAMESPACE_END(core)

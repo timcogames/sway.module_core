@@ -1,4 +1,5 @@
 #include <sway/core/container/node.hpp>
+#include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/keywords.hpp>
 
 #include <gtest/gtest.h>
@@ -11,11 +12,12 @@
 
 const std::initializer_list<std::string> InternNameList = {"intern_a", "intern_b", "intern_c"};
 
+using namespace sway;
 using namespace sway::core::container;
 
-class NodeTest : public ::testing::Test {
+class NodeTest : public ::testing::Test, public core::foundation::Eventable {
   public:
-    NodeTest() {}
+    NodeTest() = default;
 
     ~NodeTest() = default;
 
@@ -29,8 +31,13 @@ class NodeTest : public ::testing::Test {
 
     void addSupervisor() {
         supervisor_ = std::make_shared<Node>();
+        supervisor_->subscribe(supervisor_.get(), "NodeAdded", EVENT_HANDLER(NodeTest, handleAddNode));
+        supervisor_->subscribe(supervisor_.get(), "NodeRemoved", EVENT_HANDLER(NodeTest, handleRemoveNode));
         root_->addChildNode(supervisor_);
     }
+
+    void handleAddNode([[maybe_unused]] core::foundation::EventBase *evt) {}
+    void handleRemoveNode([[maybe_unused]] core::foundation::EventBase *evt) {}
 
     void addDoctorToSupervisor() {
         doctor_ = std::make_shared<Node>();
@@ -43,7 +50,7 @@ class NodeTest : public ::testing::Test {
         }
     }
 
-    std::shared_ptr<Node> addInternToDoctor() {
+    [[nodiscard]] std::shared_ptr<Node> addInternToDoctor() const {
         std::shared_ptr<Node> intern = std::make_shared<Node>();
         doctor_->addChildNode(intern);
         return intern;

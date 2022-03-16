@@ -36,11 +36,11 @@ class EventHandlerImpl : public AEventHandler {
   public:
     static void registerEmsClass() {
         emscripten::class_<EventHandlerImpl, emscripten::base<AEventHandler>>("EventHandlerImpl")
-            .constructor<Object *, emscripten::val>()
+            .constructor<Eventable *, emscripten::val>()
             .function("invoke", &EventHandlerImpl::invoke, emscripten::allow_raw_pointers());
     }
 
-    EventHandlerImpl(Object *receiver, emscripten::val function)
+    EventHandlerImpl(Eventable *receiver, emscripten::val function)
         : AEventHandler(receiver)
         , function_(function) {}
 

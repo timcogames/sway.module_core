@@ -37,3 +37,11 @@ TEST_F(NodeIdxTest, ToStr) {
     stream << "[" << NODEIDX_ROOT << ", " << NODE_IDX_SUPERVISOR << ", " << NODE_IDX_WORKER << "]";
     ASSERT_STREQ(worker_.toStr().c_str(), stream.str().c_str());
 }
+
+TEST_F(NodeIdxTest, getMatchDepth) {
+    std::vector<int> v1 = {-1, 0, 2};
+    std::vector<int> v2 = {-1, 0, 2, 1};
+
+    auto result = NodeIdx::getMatchDepth(v1, v2);
+    ASSERT_EQ(result, 3);
+}

@@ -1,5 +1,7 @@
 #include <sway/core/container/nodeidx.hpp>
 
+#include <sstream>
+
 #ifdef _EMSCRIPTEN
 #    include <emscripten/bind.h>
 #    include <emscripten/emscripten.h>
@@ -22,6 +24,30 @@ void NodeIdx::registerEmClass() {
         .function("getIdxAt", &NodeIdx::getIdxAt)
         .function("toStr", &NodeIdx::toStr);
 #endif
+}
+
+std::string NodeIdx::toStr(const NodeIdx::chain_t &chain) {
+    std::ostringstream oss;
+    std::copy(chain.begin(), chain.end() - 1, std::ostream_iterator<int>(oss, ", "));
+    oss << "[" << chain.back() << "]";
+    return oss.str();
+}
+
+int NodeIdx::getMatchDepth(const NodeIdx::chain_t &lhs, const NodeIdx::chain_t &rhs) {
+    auto lhs_temp = lhs;
+    auto rhs_temp = rhs;
+    auto rhs_size = (int)rhs_temp.size();
+
+    int current = -1 /*CHECK_NODE_NA*/;
+    for (int i = 0; i < rhs_size; i++) {
+        if (lhs.size() <= i || lhs_temp[i] != rhs_temp[i]) {
+            return i;
+        }
+
+        current = i;
+    }
+
+    return current;
 }
 
 NodeIdx::NodeIdx() { setAsRoot(); }

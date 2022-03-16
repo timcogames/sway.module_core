@@ -20,8 +20,8 @@ void Observable::removeObserver(IObserver *observer) {
 }
 
 void Observable::notify() {
-    for (s32_t i = 0; i < observers_.size(); ++i) {
-        observers_[i]->update();
+    for (auto &observer : observers_) {
+        observer->update();
     }
 }
 

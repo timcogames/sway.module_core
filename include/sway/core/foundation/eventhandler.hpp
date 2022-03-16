@@ -18,7 +18,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-class Object;
+class Eventable;
 
 /*!
  * \class AEventHandler
@@ -28,25 +28,25 @@ class AEventHandler {
   public:
     static void registerEmsClass();
 
-    explicit AEventHandler(Object *receiver);
+    explicit AEventHandler(Eventable *receiver);
 
     virtual ~AEventHandler() = default;
 
     PURE_VIRTUAL(void invoke(EventBase *event));
 
-    Object *getSender() const;
+    [[nodiscard]] Eventable *getSender() const;
 
-    void setSender(Object *sender);
+    void setSender(Eventable *sender);
 
-    Object *getReceiver() const;
+    [[nodiscard]] Eventable *getReceiver() const;
 
-    std::string getEventName() const { return eventname_; }
+    [[nodiscard]] std::string getEventName() const { return eventname_; }
 
     void setEventName(const std::string &name) { eventname_ = name; }
 
   protected:
-    Object *sender_ = nullptr; /*!< Отправитель события. */
-    Object *receiver_; /*!< Слушатель события. */
+    Eventable *sender_ = nullptr; /*!< Отправитель события. */
+    Eventable *receiver_; /*!< Слушатель события. */
     std::string uniqueid_; /*!< Уникальный идентификатор, который будет связан с функцией обработчика событий. */
     std::string eventname_; /*!< Название события. */
 };

@@ -3,6 +3,7 @@
 #include <sway/core/foundation/context.hpp>
 
 #include <algorithm>  // std::remove_if
+#include <functional>
 
 #ifdef _EMSCRIPTEN
 #    include <emscripten/bind.h>
@@ -76,7 +77,9 @@ void Node::addChildNode(std::shared_ptr<Node> child) {
     eventdata["node_idx"] = child->getNodeIdx();
 #endif
 
-    // emit(EVT_ADDED, new EvtNodeAdded(0, eventdata));
+    emit(EVT_ADDED, new EvtNodeAdded(0, eventdata), [&](foundation::AEventHandler *handler) {
+        return static_cast<Node *>(handler->getSender())->getNodeIdx().equal(getNodeIdx());
+    });
 }
 
 void Node::recursiveAddChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx) {
@@ -106,6 +109,16 @@ void Node::removeChildNode(std::shared_ptr<Node> child) {
                             return result;
                         }),
         children_.end());
+
+#ifdef _EMSCRIPTEN
+    EventData_t eventdata = emscripten::val::object();
+    eventdata.set("node_idx", emscripten::val(child->getNodeIdx()));
+#else
+    EventData_t eventdata;
+    eventdata["node_idx"] = child->getNodeIdx();
+#endif
+
+    emit(EVT_REMOVED, new EvtNodeRemoved(0, eventdata), [&](foundation::AEventHandler *) { return true; });
 }
 
 void Node::recursiveRemoveChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx) {
@@ -149,7 +162,7 @@ std::optional<std::shared_ptr<Node>> Node::getChildAt(int targetIdx) const {
 
 int Node::getNumOfChildNodes() const { return static_cast<int>(children_.size()); }
 
-void Node::setNodeIdx(NodeIdx::chain_t chain, int last) { idx_.setChain(chain, last); }
+void Node::setNodeIdx(const NodeIdx::chain_t &chain, int last) { idx_.setChain(chain, last); }
 
 NodeIdx Node::getNodeIdx() { return idx_; }
 
@@ -162,6 +175,15 @@ std::optional<std::shared_ptr<Node>> Node::getParentNode() {
     }
 
     return ptr;
+}
+
+std::shared_ptr<Node> Node::getParentNodeByDepth(int depth) {
+    auto node = shared_from_this();
+    while (depth != 0 && node->getNodeIdx().getDepth() > depth) {
+        node = getParentNode().value();
+    }
+
+    return node;
 }
 
 void Node::setAsRoot() { idx_.setAsRoot(); }
