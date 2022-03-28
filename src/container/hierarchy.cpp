@@ -19,7 +19,6 @@ void Hierarchy::registerEmClass() {
     emscripten::class_<Hierarchy>("Hierarchy")
         .constructor()
         .class_function("findNode", &Hierarchy::findNode, emscripten::allow_raw_pointers())
-        .class_function("parse", &Hierarchy::parse, emscripten::allow_raw_pointers())
         .function("getRootNode", &Hierarchy::getRootNode, emscripten::allow_raw_pointers())
         .function("setRootNode", &Hierarchy::setRootNode, emscripten::allow_raw_pointers());
 #endif

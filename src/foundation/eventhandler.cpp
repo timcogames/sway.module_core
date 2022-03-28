@@ -8,7 +8,7 @@ NAMESPACE_BEGIN(foundation)
 void AEventHandler::registerEmsClass() {
 #ifdef _EMSCRIPTEN
     emscripten::class_<AEventHandler>("AEventHandler")
-        .allow_subclass<AEventHandlerWrapper>("AEventHandlerWrapper", emscripten::constructor<Object *>())
+        .allow_subclass<AEventHandlerWrapper>("AEventHandlerWrapper", emscripten::constructor<Eventable *>())
         .function("invoke", &AEventHandler::invoke, emscripten::allow_raw_pointers(), emscripten::pure_virtual())
         .function("getSender", &AEventHandler::getSender, emscripten::allow_raw_pointers())
         .function("setSender", &AEventHandler::setSender, emscripten::allow_raw_pointers())

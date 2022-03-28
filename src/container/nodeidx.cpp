@@ -26,7 +26,7 @@ void NodeIdx::registerEmClass() {
 #endif
 }
 
-std::string NodeIdx::toStr(const NodeIdx::chain_t &chain) {
+std::string NodeIdx::chainToStr(const NodeIdx::chain_t &chain) {
     std::ostringstream oss;
     std::copy(chain.begin(), chain.end() - 1, std::ostream_iterator<int>(oss, ", "));
     oss << "[" << chain.back() << "]";

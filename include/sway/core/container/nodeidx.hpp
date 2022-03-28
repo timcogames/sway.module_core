@@ -23,7 +23,7 @@ class NodeIdx {
     using chain_t = std::vector<NodeIdx::index_t>;
 
     static void registerEmClass();
-    static std::string toStr(const NodeIdx::chain_t &chain);
+    static std::string chainToStr(const NodeIdx::chain_t &chain);
     static int getMatchDepth(const NodeIdx::chain_t &lhs, const NodeIdx::chain_t &rhs);
 
     NodeIdx();
