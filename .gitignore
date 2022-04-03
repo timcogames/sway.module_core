@@ -3,7 +3,7 @@
 /bin
 
 # tests
-/tests/jest/node_modules
+/tsapi/node_modules
 
 # osx noise
 .DS_Store

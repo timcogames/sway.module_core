@@ -1,0 +1,52 @@
+{
+	"name": "sway.module_core",
+	"version": "0.1.0",
+	"description": "",
+	"license": "MIT",
+	"author": {
+		"name": "Victor Timoshin",
+		"email": "victor-timoshin@hotmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/timcogames/sway.module_core.git"
+	},
+	"bugs": {
+		"url": "https://github.com/timcogames/sway.module_core/issues"
+	},
+	"keywords": [
+		"typescript"
+	],
+	"jest": {
+		"modulePaths": [
+			"<rootDir>/src",
+			"<rootDir>/node_modules"
+		],
+		"testEnvironment": "node",
+		"testMatch": [
+			"**/tests/jest/*.spec.+(ts|js)"
+		],
+		"transform": {
+			"^.+\\.ts$": "ts-jest"
+		},
+		"transformIgnorePatterns": [],
+		"globals": {
+			"ts-jest": {
+				"tsconfig": "tsconfig.json"
+			}
+		}
+	},
+	"scripts": {
+		"lint": "eslint './' --ext .ts",
+		"jest": "jest --no-cache"
+	},
+	"devDependencies": {
+		"@types/jest": "^27.4.0",
+		"@types/node": "^17.0.15",
+		"@typescript-eslint/eslint-plugin": "^5.17.0",
+		"chai": "^4.3.6",
+		"jest": "^27.5.0",
+		"ts-jest": "^27.1.3",
+		"typescript": "^4.5.5"
+	}
+}

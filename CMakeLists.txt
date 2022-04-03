@@ -21,31 +21,31 @@ option(CUSTOM_BOOST_ROOT_DIR "Boost root directory" OFF)
 option(CUSTOM_GTEST_ROOT_DIR "GTest root directory" OFF)
 
 if (NOT DEFINED CMAKE_TOOLCHAIN_FILE AND MODULE_USE_EMSCRIPTEN)
-    set(CMAKE_TOOLCHAIN_FILE "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cmake/Modules/Platform/Emscripten.cmake")
-    include(${CMAKE_TOOLCHAIN_FILE})
+  set(CMAKE_TOOLCHAIN_FILE "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cmake/Modules/Platform/Emscripten.cmake")
+  include(${CMAKE_TOOLCHAIN_FILE})
 endif ()
 
 if (NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build" FORCE)
+  set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build" FORCE)
 endif ()
 
 project(${META_CORE_PRJNAME} VERSION ${META_CORE_VERSION} LANGUAGES CXX)
 
 if (MODULE_USE_EMSCRIPTEN)
-    set(CMAKE_CXX_COMPILER "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/em++")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --bind -Os")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_EMSCRIPTEN")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-unicode-whitespace \
-        -Wno-unused-local-typedef -Wno-invalid-noreturn -Wno-unused-command-line-argument")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s WASM=1 -s MODULARIZE=1")
+  set(CMAKE_CXX_COMPILER "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/em++")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --bind -Os")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_EMSCRIPTEN")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-unicode-whitespace \
+      -Wno-unused-local-typedef -Wno-invalid-noreturn -Wno-unused-command-line-argument")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s WASM=1 -s MODULARIZE=1")
 endif ()
 
 if (MODULE_CORE_ENABLE_COVERAGE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g ")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g ")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage")
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
 endif ()
 
 message("[${META_CORE_PRJNAME}]: ${META_CORE_VERSION}
@@ -68,21 +68,21 @@ message("[${META_CORE_PRJNAME}]: ${META_CORE_VERSION}
 
 # Определяем каталог вывода по умолчанию
 if (CMAKE_BUILD_TYPE MATCHES Debug)
-    set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/dbg)
-    set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin/dbg)
+  set(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin/dbg")
+  set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin/dbg")
 else ()
-    set(LIBRARY_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
-    set(EXECUTABLE_OUTPUT_PATH ${CMAKE_SOURCE_DIR}/bin)
+  set(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin")
+  set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin")
 endif ()
 
 set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
-include_directories(${MODULE_CORE_DIR}/include)
+include_directories("${MODULE_CORE_DIR}/lib/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
-file(GLOB_RECURSE MODULE_CORE_HEADERS ${MODULE_CORE_DIR}/include/*.*)
-file(GLOB_RECURSE MODULE_CORE_SOURCE ${MODULE_CORE_DIR}/src/*.*)
+file(GLOB_RECURSE MODULE_CORE_HEADERS "${MODULE_CORE_DIR}/lib/include/*.*")
+file(GLOB_RECURSE MODULE_CORE_SOURCE "${MODULE_CORE_DIR}/lib/src/*.*")
 
 if (MODULE_CORE_SHARED_LIB)
     add_executable(${META_CORE_LIBNAME} ${MODULE_CORE_SOURCE})
@@ -99,10 +99,10 @@ target_link_libraries(${META_CORE_LIBNAME})
 
 # Добавляем построение тестов
 if (MODULE_CORE_ENABLE_TESTS)
-    if (MODULE_CORE_SHARED_LIB)
-        message(STATUS "[${META_CORE_PRJNAME}]: Tests are only allowed with a static lib")
-    else ()
-        message(STATUS "[${META_CORE_PRJNAME}]:Tests have been enabled")
-        add_subdirectory(tests/google)
-    endif ()
+  if (MODULE_CORE_SHARED_LIB)
+    message(STATUS "[${META_CORE_PRJNAME}]: Tests are only allowed with a static lib")
+  else ()
+    message(STATUS "[${META_CORE_PRJNAME}]:Tests have been enabled")
+    add_subdirectory(lib/tests/google)
+  endif ()
 endif ()

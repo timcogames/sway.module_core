@@ -1,22 +1,22 @@
 {
-    "version":"2.0.0",
-    "tasks": [{
-        "label": "clean",
-        "type": "shell",
-        "command": "make",
-        "args": ["clean"]
-    }, {
-        "label": "config-debug",
-        "type": "shell",
-        "command": "cmake",
-        "args": ["-B ./build", "-DCUSTOM_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest", "-DMODULE_CORE_ENABLE_TESTS=ON"]
-    }, {
-        "label": "build-debug",
-        "type": "shell",
-        "command": "cmake --build ./build",
-        "dependsOn": ["config-debug"]
-    }, {
-        "label": "build-all",
-        "dependsOn": ["clean", "build-debug"]
-    }]
+  "version":"2.0.0",
+  "tasks": [{
+    "label": "clean",
+    "type": "shell",
+    "command": "make",
+    "args": ["clean"]
+  }, {
+    "label": "config-debug",
+    "type": "shell",
+    "command": "cmake",
+    "args": ["-B ./build", "-DCUSTOM_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest", "-DMODULE_CORE_ENABLE_TESTS=ON"]
+  }, {
+    "label": "build-debug",
+    "type": "shell",
+    "command": "cmake --build ./build",
+    "dependsOn": ["config-debug"]
+  }, {
+    "label": "build-all",
+    "dependsOn": ["clean", "build-debug"]
+  }]
 }
