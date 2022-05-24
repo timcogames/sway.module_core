@@ -40,7 +40,7 @@ int NodeIdx::getMatchDepth(const NodeIdx::chain_t &lhs, const NodeIdx::chain_t &
 
   int current = -1 /*CHECK_NODE_NA*/;
   for (int i = 0; i < rhs_size; i++) {
-    if (lhs.size() <= i || lhs_temp[i] != rhs_temp[i]) {
+    if ((int)lhs.size() <= i || lhs_temp[i] != rhs_temp[i]) {
       return i;
     }
 
