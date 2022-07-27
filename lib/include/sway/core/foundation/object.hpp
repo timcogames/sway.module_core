@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_FOUNDATION_OBJECT_HPP
 #define SWAY_CORE_FOUNDATION_OBJECT_HPP
 
+#include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
@@ -15,7 +16,7 @@ NAMESPACE_BEGIN(foundation)
 class Context;
 class Object {
 public:
-  static void registerEmsClass();
+  DECLARE_EMSCRIPTEN_BINDING()
 
   Object(Context *context);
 

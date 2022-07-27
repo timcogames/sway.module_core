@@ -1,14 +1,10 @@
-'use strict';
+"use strict";
 
-import { useBridge } from '../../src/bridge';
-import { INodeIdx } from '../../src/core';
+import { useBridge } from "../../src/bridge";
+import { INodeIdx } from "../../src/core";
 
-describe('NodeIdx', () => {
-  beforeEach(() => {
-    // Empty
-  });
-
-  it('added node idx', async () => {
+describe("NodeIdx", () => {
+  it("added node idx", async () => {
     const { module } = await useBridge();
 
     const integerVec = new module.IntegerVec();
@@ -19,10 +15,6 @@ describe('NodeIdx', () => {
     const nodeidx: INodeIdx = new module.NodeIdx(integerVec);
     // or
     // const nodeidx: INodeIdx = new module.NodeIdx(module.toIntegerVec([0, 1, 2]));
-    expect(nodeidx.toStr()).toEqual('[0, 1, 2]');
-  });
-
-  afterEach(() => {
-    // Empty
+    expect(nodeidx.toStr()).toEqual("[0, 1, 2]");
   });
 });

@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-import * as NodeIdx from './nodeidx.p';
+import * as NodeIdx from "./nodeidx.p";
 export {
   NodeIdx
 }

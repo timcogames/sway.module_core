@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
-import { Optional } from './misc/optional';
-import { NodeIdx } from './nodeidx';
+import { Optional } from "./misc/optional";
+import { NodeIdx } from "./nodeidx";
 
 export interface BaseIface<T> {
   addChildNode(child: T): void;

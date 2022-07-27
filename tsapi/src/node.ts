@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-import * as Node from './node.p';
+import * as Node from "./node.p";
 export {
   Node
 }

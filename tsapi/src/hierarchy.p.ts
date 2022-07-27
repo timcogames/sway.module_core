@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-import { Optional } from './misc/optional';
-import { NodeIdx } from './nodeidx';
-import { Node } from './node';
+import { Optional } from "./misc/optional";
+import { NodeIdx } from "./nodeidx";
+import { Node } from "./node";
 
 export interface BaseIface {
   findNode(parent:  Node.EmscriptenClass, nodeIdx: NodeIdx.EmscriptenClass): Optional<Node.EmscriptenClass>;

@@ -13,6 +13,7 @@
 #include <sway/core/foundation/eventhandler.hpp>
 #include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/core/foundation/object.hpp>
+#include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/core/generic/io/filesource.hpp>
 #include <sway/core/generic/io/path.hpp>
 #include <sway/core/intrusive/priorities.hpp>
@@ -31,6 +32,7 @@
 #include <sway/core/utils/visitable.hpp>
 #include <sway/core/version.hpp>
 #include <sway/defines.hpp>
+#include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>

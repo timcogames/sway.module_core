@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 export interface List<T = number | string> {
   get(val: number): number | string;

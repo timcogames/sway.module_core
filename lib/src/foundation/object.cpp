@@ -12,7 +12,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-void Object::registerEmsClass() {
+void Object::bindEmscriptenClass() {
 #ifdef _EMSCRIPTEN
   emscripten::class_<Object>("Object")
       .constructor<Context *>()

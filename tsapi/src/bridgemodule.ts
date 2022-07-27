@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-import { ICoreSubmodule } from './core';
+import { ICoreSubmodule } from "./core";
 
 export interface BridgeModule extends ICoreSubmodule {
   [name: string]: any;

@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-import { List } from './misc/list';
+import { List } from "./misc/list";
 
 export interface BaseIface {
   getChain(): List;
