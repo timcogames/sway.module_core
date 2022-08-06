@@ -10,19 +10,19 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-void Hierarchy::registerEmClass() {
+EMSCRIPTEN_BINDING_BEGIN(Hierarchy)
 #ifdef _EMSCRIPTEN
-  emscripten::class_<NodeData>("NodeData").property("nodeidx", &NodeData::nodeidx);
+emscripten::class_<NodeData>("NodeData").property("nodeidx", &NodeData::nodeidx);
 
-  emscripten::register_vector<NodeData>("NodeDataVec");
+emscripten::register_vector<NodeData>("NodeDataVec");
 
-  emscripten::class_<Hierarchy>("Hierarchy")
-      .constructor()
-      .class_function("findNode", &Hierarchy::findNode, emscripten::allow_raw_pointers())
-      .function("getRootNode", &Hierarchy::getRootNode, emscripten::allow_raw_pointers())
-      .function("setRootNode", &Hierarchy::setRootNode, emscripten::allow_raw_pointers());
+emscripten::class_<Hierarchy>("Hierarchy")
+    .constructor()
+    .class_function("findNode", &Hierarchy::findNode, emscripten::allow_raw_pointers())
+    .function("getRootNode", &Hierarchy::getRootNode, emscripten::allow_raw_pointers())
+    .function("setRootNode", &Hierarchy::setRootNode, emscripten::allow_raw_pointers());
 #endif
-}
+EMSCRIPTEN_BINDING_END()
 
 Hierarchy::Hierarchy() { root_ = std::make_shared<Node>(); }
 

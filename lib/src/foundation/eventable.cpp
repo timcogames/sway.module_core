@@ -11,16 +11,16 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-void Eventable::registerEmsClass() {
+EMSCRIPTEN_BINDING_BEGIN(Eventable)
 #ifdef _EMSCRIPTEN
-  emscripten::class_<Eventable>("Eventable")
-      .constructor<>()
-      .function("subscribe", &Eventable::subscribe, emscripten::allow_raw_pointers())
-      .function("unsubscribe", &Eventable::unsubscribe)
-      .function("emit", &Eventable::emit, emscripten::allow_raw_pointers())
-      .function("findEventHandler", &Eventable::findEventHandler, emscripten::allow_raw_pointers());
+emscripten::class_<Eventable>("Eventable")
+    .constructor<>()
+    .function("subscribe", &Eventable::subscribe, emscripten::allow_raw_pointers())
+    .function("unsubscribe", &Eventable::unsubscribe)
+    .function("emit", &Eventable::emit, emscripten::allow_raw_pointers())
+    .function("findEventHandler", &Eventable::findEventHandler, emscripten::allow_raw_pointers());
 #endif
-}
+EMSCRIPTEN_BINDING_END()
 
 void Eventable::subscribe(Eventable *sender, const std::string &eventname, AEventHandler *handler) {
   handler->setSender(sender);

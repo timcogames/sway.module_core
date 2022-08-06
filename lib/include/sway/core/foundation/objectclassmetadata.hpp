@@ -1,8 +1,15 @@
 #ifndef SWAY_CORE_FOUNDATION_OBJECTCLASSMETADATA_HPP
 #define SWAY_CORE_FOUNDATION_OBJECTCLASSMETADATA_HPP
 
+#include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
+
+#ifdef _EMSCRIPTEN
+#  include <emscripten/bind.h>
+#  include <emscripten/emscripten.h>
+#  include <emscripten/val.h>
+#endif
 
 #include <cxxabi.h>
 #include <string>
@@ -31,6 +38,8 @@ public:
 
 class ObjectClassMetadata {
 public:
+  DECLARE_EMSCRIPTEN_BINDING()
+
   ObjectClassMetadata(lpcstr_t classname, const ObjectClassMetadata *superclass)
       : superclass_(superclass)
       , classname_(classname) {}

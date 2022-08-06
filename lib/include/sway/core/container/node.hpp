@@ -8,6 +8,7 @@
 #include <sway/core/misc/format.hpp>
 #include <sway/core/utils/traverser.hpp>
 #include <sway/core/utils/visitable.hpp>
+#include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -47,7 +48,7 @@ class Node : public std::enable_shared_from_this<Node>, public utils::Visitable,
   DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
 
 public:
-  static void registerEmClass();
+  DECLARE_EMSCRIPTEN_BINDING()
 
   Node();
   virtual ~Node();

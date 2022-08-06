@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_CONTAINER_NODEIDX_HPP
 #define SWAY_CORE_CONTAINER_NODEIDX_HPP
 
+#include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
@@ -19,10 +20,11 @@ constexpr s32_t NODEIDX_ROOT_DEPTH = 1;
 
 class NodeIdx {
 public:
+  DECLARE_EMSCRIPTEN_BINDING()
+
   using index_t = s32_t;
   using chain_t = std::vector<NodeIdx::index_t>;
 
-  static void registerEmClass();
   static std::string chainToStr(const NodeIdx::chain_t &chain);
   static int getMatchDepth(const NodeIdx::chain_t &lhs, const NodeIdx::chain_t &rhs);
 

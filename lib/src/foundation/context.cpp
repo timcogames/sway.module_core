@@ -10,11 +10,11 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-void Context::registerEmsClass() {
+EMSCRIPTEN_BINDING_BEGIN(Context)
 #ifdef _EMSCRIPTEN
-  emscripten::class_<Context>("Context").constructor<>();
+emscripten::class_<Context>("Context").constructor<>();
 #endif
-}
+EMSCRIPTEN_BINDING_END()
 
 Context::Context() {}
 

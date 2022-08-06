@@ -4,6 +4,7 @@
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeidx.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
+#include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
@@ -40,7 +41,7 @@ using NodeDataList = std::vector<NodeData>;
 
 class Hierarchy {
 public:
-  static void registerEmClass();
+  DECLARE_EMSCRIPTEN_BINDING()
 
   static std::optional<std::shared_ptr<Node>> findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx);
 

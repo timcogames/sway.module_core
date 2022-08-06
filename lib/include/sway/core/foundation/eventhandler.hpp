@@ -2,6 +2,7 @@
 #define SWAY_CORE_FOUNDATION_EVENTHANDLER_HPP
 
 #include <sway/core/foundation/event.hpp>
+#include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -26,7 +27,7 @@ class Eventable;
  */
 class AEventHandler {
 public:
-  static void registerEmsClass();
+  DECLARE_EMSCRIPTEN_BINDING()
 
   explicit AEventHandler(Eventable *receiver);
 

@@ -1,11 +1,13 @@
 #include <sway/core/container/hierarchy.hpp>
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeidx.hpp>
+#include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/optional.hpp>
 
 #include <string>
 
 using namespace sway;
+using namespace sway::core::foundation;
 using namespace sway::core::container;
 
 #ifdef _EMSCRIPTEN
@@ -26,8 +28,9 @@ EMSCRIPTEN_BINDINGS(sway_core) {
 }
 
 EMSCRIPTEN_BINDINGS(sway_core_container) {
-  NodeIdx::registerEmClass();
-  Node::registerEmClass();
-  Hierarchy::registerEmClass();
+  ObjectClassMetadata::bindEmscriptenClass();
+  NodeIdx::bindEmscriptenClass();
+  Node::bindEmscriptenClass();
+  Hierarchy::bindEmscriptenClass();
 }
 #endif

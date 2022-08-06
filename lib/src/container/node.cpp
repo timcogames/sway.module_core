@@ -15,19 +15,19 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-void Node::registerEmClass() {
+EMSCRIPTEN_BINDING_BEGIN(Node)
 #ifdef _EMSCRIPTEN
-  emscripten::class_<Node>("Node")
-      .smart_ptr_constructor("Node", &std::make_shared<Node>)
-      .function("addChildNode", &Node::addChildNode, emscripten::allow_raw_pointers())
-      .function("removeChildNode", &Node::removeChildNode, emscripten::allow_raw_pointers())
-      .function("getNumOfChildNodes", &Node::getNumOfChildNodes)
-      .function("getParentNode", &Node::getParentNode, emscripten::allow_raw_pointers())
-      .function("getChildAt", &Node::getChildAt, emscripten::allow_raw_pointers())
-      .function("getNodeIdx", &Node::getNodeIdx)
-      .property("visible", &Node::isVisible, &Node::setVisible);
+emscripten::class_<Node>("Node")
+    .smart_ptr_constructor("Node", &std::make_shared<Node>)
+    .function("addChildNode", &Node::addChildNode, emscripten::allow_raw_pointers())
+    .function("removeChildNode", &Node::removeChildNode, emscripten::allow_raw_pointers())
+    .function("getNumOfChildNodes", &Node::getNumOfChildNodes)
+    .function("getParentNode", &Node::getParentNode, emscripten::allow_raw_pointers())
+    .function("getChildAt", &Node::getChildAt, emscripten::allow_raw_pointers())
+    .function("getNodeIdx", &Node::getNodeIdx)
+    .property("visible", &Node::isVisible, &Node::setVisible);
 #endif
-}
+EMSCRIPTEN_BINDING_END()
 
 Node::Node()
     : idx_(NodeIdx())

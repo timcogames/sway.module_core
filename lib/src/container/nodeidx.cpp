@@ -12,19 +12,19 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-void NodeIdx::registerEmClass() {
+EMSCRIPTEN_BINDING_BEGIN(NodeIdx)
 #ifdef _EMSCRIPTEN
-  emscripten::class_<NodeIdx>("NodeIdx")
-      .constructor<>()
-      .constructor<std::vector<s32_t>>()
-      .constructor<NodeIdx, s32_t>()
-      .function("getChain", &NodeIdx::getChain)
-      .function("getParent", &NodeIdx::getParent, emscripten::allow_raw_pointers())
-      .function("getDepth", &NodeIdx::getDepth)
-      .function("getIdxAt", &NodeIdx::getIdxAt)
-      .function("toStr", &NodeIdx::toStr);
+emscripten::class_<NodeIdx>("NodeIdx")
+    .constructor<>()
+    .constructor<std::vector<s32_t>>()
+    .constructor<NodeIdx, s32_t>()
+    .function("getChain", &NodeIdx::getChain)
+    .function("getParent", &NodeIdx::getParent, emscripten::allow_raw_pointers())
+    .function("getDepth", &NodeIdx::getDepth)
+    .function("getIdxAt", &NodeIdx::getIdxAt)
+    .function("toStr", &NodeIdx::toStr);
 #endif
-}
+EMSCRIPTEN_BINDING_END()
 
 std::string NodeIdx::chainToStr(const NodeIdx::chain_t &chain) {
   std::ostringstream oss;
