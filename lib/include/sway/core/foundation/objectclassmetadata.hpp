@@ -29,7 +29,7 @@ public:
 
   template <typename T>
   static std::string toStr() {
-    std::string classname = core::foundation::ObjectClassUtil::demangle(typeid(T).name());
+    std::string classname = core::foundation::ObjectClassname::demangle(typeid(T).name());
     std::string delimiter = "::";
 
     return classname.substr(classname.rfind(delimiter) + 2);
