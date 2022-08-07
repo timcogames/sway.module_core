@@ -18,7 +18,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-class ObjectClassUtil {
+class ObjectClassname {
 public:
   static std::string demangle(lpcstr_t name) {
     int status;
@@ -28,11 +28,11 @@ public:
   }
 
   template <typename T>
-  static std::string getTypename() {
-    std::string commandTypename = core::foundation::ObjectClassUtil::demangle(typeid(T).name());
+  static std::string toStr() {
+    std::string classname = core::foundation::ObjectClassUtil::demangle(typeid(T).name());
     std::string delimiter = "::";
 
-    return commandTypename.substr(commandTypename.rfind(delimiter) + 2);
+    return classname.substr(classname.rfind(delimiter) + 2);
   }
 };
 
