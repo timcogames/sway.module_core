@@ -60,15 +60,15 @@ NAMESPACE_END(sway)
   PURE_VIRTUAL(const sway::core::foundation::ObjectClassMetadata *getSuperclass() const);          \
   PURE_VIRTUAL(const std::string &getClassname() const);
 
-#define DECLARE_CLASS_METADATA(CLASS, SUPERCLASS)                                                                 \
-  typedef SUPERCLASS super_t;                                                                                     \
-  static const sway::core::foundation::ObjectClassMetadata *getObjectClassMetadata() {                            \
-    static const sway::core::foundation::ObjectClassMetadata metadata(#CLASS, super_t::getObjectClassMetadata()); \
-    return &metadata;                                                                                             \
-  }                                                                                                               \
-  MTHD_OVERRIDE(const sway::core::foundation::ObjectClassMetadata *getSuperclass() const) {                       \
-    return getObjectClassMetadata()->getSuperclass();                                                             \
-  }                                                                                                               \
+#define DECLARE_CLASS_METADATA(objclass, superclass)                                                                 \
+  typedef superclass super_t;                                                                                        \
+  static const sway::core::foundation::ObjectClassMetadata *getObjectClassMetadata() {                               \
+    static const sway::core::foundation::ObjectClassMetadata metadata(#objclass, super_t::getObjectClassMetadata()); \
+    return &metadata;                                                                                                \
+  }                                                                                                                  \
+  MTHD_OVERRIDE(const sway::core::foundation::ObjectClassMetadata *getSuperclass() const) {                          \
+    return getObjectClassMetadata()->getSuperclass();                                                                \
+  }                                                                                                                  \
   MTHD_OVERRIDE(const std::string &getClassname() const) { return getObjectClassMetadata()->getClassname(); }
 
 #endif
