@@ -5,6 +5,7 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
+#include <iterator>
 #include <string>
 #include <vector>
 

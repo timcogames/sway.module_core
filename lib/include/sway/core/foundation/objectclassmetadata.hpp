@@ -11,7 +11,9 @@
 #  include <emscripten/val.h>
 #endif
 
+#include <cstdlib>  // std::free
 #include <cxxabi.h>
+#include <memory>
 #include <string>
 
 NAMESPACE_BEGIN(sway)
