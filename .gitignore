@@ -11,5 +11,9 @@ profile
 
 # xcode noise
 *.pbxuser
+*.pbxproj
+*.plist
 *.mode1v3
 *.xcbkptlist
+*.xcworkspacedata
+*.xcuserstate
