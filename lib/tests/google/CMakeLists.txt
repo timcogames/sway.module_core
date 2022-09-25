@@ -7,13 +7,13 @@ project(${META_CORE_PRJNAME_TESTS} CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
 
-set(GTest_ROOT "/Users/apriori85/Documents/Third-party/googletest")
+set(GTest_ROOT "${CUSTOM_GTEST_ROOT_DIR}")
 set(GTEST_INCLUDE_DIR "${GTest_ROOT}/googletest/include")
 set(GTEST_LIBRARY_DIR "${GTest_ROOT}/build/lib")
 
-set(GTEST_MAIN_LIBRARY "${GTEST_LIBRARY_DIR}/gtest_main.lib")
+# set(GTEST_MAIN_LIBRARY "${GTEST_LIBRARY_DIR}/gtest_main.lib")
 
-find_package(GTest REQUIRED)
+# find_package(GTest REQUIRED)
 find_package(Threads REQUIRED)
 
 include_directories(${GTEST_INCLUDE_DIR})
