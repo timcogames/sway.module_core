@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_MISC_UID_HPP
-#define SWAY_CORE_MISC_UID_HPP
+#ifndef SWAY_CORE_MISC_GUID_HPP
+#define SWAY_CORE_MISC_GUID_HPP
 
 #include <sway/core/misc/format.hpp>
 #include <sway/namespacemacros.hpp>
@@ -18,7 +18,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(misc)
 
 template <std::size_t NBR>
-inline auto randomUid(const std::array<int, NBR> &format) {
+inline auto newGuid(const std::array<int, NBR> &format) {
   static const std::string bucket = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   std::string result;

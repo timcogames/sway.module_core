@@ -1,6 +1,6 @@
 #include <sway/core/foundation/context.hpp>
 #include <sway/core/foundation/object.hpp>
-#include <sway/core/misc/uid.hpp>
+#include <sway/core/misc/guid.hpp>
 
 #ifdef _EMSCRIPTEN
 #  include <emscripten/bind.h>
@@ -23,7 +23,7 @@ void Object::bindEmscriptenClass() {
 
 Object::Object(Context *context)
     : context_(context)
-    , uniqueid_(misc::randomUuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC)) {}
+    , uniqueid_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC)) {}
 
 void Object::setUid(const std::string &uid) { uniqueid_ = uid; }
 
