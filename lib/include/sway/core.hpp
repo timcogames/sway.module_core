@@ -19,7 +19,7 @@
 #include <sway/core/intrusive/priorities.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/core/misc/format.hpp>
-#include <sway/core/misc/guid.hpp>
+#include <sway/core/misc/uid.hpp>
 #include <sway/core/plugin.hpp>
 #include <sway/core/plugininfo.hpp>
 #include <sway/core/runtime/exception.hpp>

@@ -1,5 +1,5 @@
 #include <sway/core/foundation/eventable.hpp>
-#include <sway/core/misc/guid.hpp>
+#include <sway/core/misc/uid.hpp>
 
 #ifdef _EMSCRIPTEN
 #  include <emscripten/bind.h>

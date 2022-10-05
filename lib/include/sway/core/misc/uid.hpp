@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_MISC_GUID_HPP
-#define SWAY_CORE_MISC_GUID_HPP
+#ifndef SWAY_CORE_MISC_UID_HPP
+#define SWAY_CORE_MISC_UID_HPP
 
 #include <sway/core/misc/format.hpp>
 #include <sway/namespacemacros.hpp>
