@@ -34,7 +34,7 @@ void Eventable::unsubscribe(const std::string &eventname) {
       eventHandlers_.end());
 }
 
-void Eventable::emit(const std::string &eventname, EventBase *event, EmitPredicate_t predicate) {
+void Eventable::emit(const std::string &eventname, Event *event, EmitPredicate_t predicate) {
   for (AEventHandler *handler : eventHandlers_) {
     if (handler->getEventName().compare(eventname) == 0 && predicate(handler)) {
       handler->invoke(event);

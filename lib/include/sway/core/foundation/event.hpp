@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENT_HPP
 #define SWAY_CORE_FOUNDATION_EVENT_HPP
 
+#include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -15,9 +16,9 @@
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
 
-using EventData_t = emscripten::val;
+using EventUserData_t = emscripten::val;
 #else
-using EventData_t = std::map<std::string, std::any>;
+using EventUserData_t = std::map<std::string, std::any>;
 #endif
 
 NAMESPACE_BEGIN(sway)
@@ -29,32 +30,39 @@ class EventWrapper;
 /*!
  * \brief Базовый интерфейс для описания всех типов событий.
  */
-class EventBase {
+class Event {
 public:
+  DECLARE_SUPERCLASS()
+
   static void registerEmsClass() {
 #ifdef _EMSCRIPTEN
-    emscripten::class_<EventBase>("EventBase")
+    emscripten::class_<Event>("Event")
         .allow_subclass<EventWrapper>("EventWrapper")
-        .function("getType", &EventBase::getType, emscripten::pure_virtual())
-        .function("getUserData", &EventBase::getUserData, emscripten::pure_virtual());
+        .function("getId", &Event::getId, emscripten::pure_virtual())
+        .function("getType", &Event::getType, emscripten::pure_virtual())
+        .function("getUserData", &Event::getUserData, emscripten::pure_virtual());
 #endif
   }
 
-  virtual ~EventBase() = default;
+  DFLT_DTOR_VIRTUAL(Event);
+
+  PURE_VIRTUAL(std::string getId() const);
 
   PURE_VIRTUAL(u32_t getType() const);
 
-  PURE_VIRTUAL(EventData_t getUserData() const);
+  PURE_VIRTUAL(EventUserData_t getUserData() const);
 };
 
 #ifdef _EMSCRIPTEN
-class EventWrapper : public emscripten::wrapper<EventBase> {
+class EventWrapper : public emscripten::wrapper<Event> {
 public:
   EMSCRIPTEN_WRAPPER(EventWrapper);
 
+  MTHD_OVERRIDE(std::string getId() const) { return call<u32_t>("getId"); }
+
   MTHD_OVERRIDE(u32_t getType() const) { return call<u32_t>("getType"); }
 
-  MTHD_OVERRIDE(EventData_t getUserData() const) { return call<EventData_t>("getUserData"); }
+  MTHD_OVERRIDE(EventUserData_t getUserData() const) { return call<EventUserData_t>("getUserData"); }
 };
 #endif
 

@@ -72,10 +72,10 @@ void Node::addChildNode(std::shared_ptr<Node> child) {
   children_.push_back(child);
 
 #ifdef _EMSCRIPTEN
-  EventData_t eventdata = emscripten::val::object();
+  EventUserData_t eventdata = emscripten::val::object();
   eventdata.set("node_idx", emscripten::val(child->getNodeIdx()));
 #else
-  EventData_t eventdata;
+  EventUserData_t eventdata;
   eventdata["node_idx"] = child->getNodeIdx();
 #endif
 
@@ -113,10 +113,10 @@ void Node::removeChildNode(std::shared_ptr<Node> child) {
       children_.end());
 
 #ifdef _EMSCRIPTEN
-  EventData_t eventdata = emscripten::val::object();
+  EventUserData_t eventdata = emscripten::val::object();
   eventdata.set("node_idx", emscripten::val(child->getNodeIdx()));
 #else
-  EventData_t eventdata;
+  EventUserData_t eventdata;
   eventdata["node_idx"] = child->getNodeIdx();
 #endif
 

@@ -14,7 +14,7 @@ NAMESPACE_BEGIN(foundation)
 template <class TYPE>
 class TEventHandlerImpl : public AEventHandler {
 public:
-  using HandlerFunction_t = void (TYPE::*)(EventBase *);
+  using HandlerFunction_t = void (TYPE::*)(Event *);
 
   TEventHandlerImpl(TYPE *receiver, HandlerFunction_t function)
       : AEventHandler(receiver)
@@ -22,7 +22,7 @@ public:
 
   virtual ~TEventHandlerImpl() = default;
 
-  MTHD_OVERRIDE(void invoke(EventBase *event)) {
+  MTHD_OVERRIDE(void invoke(Event *event)) {
     TYPE *receiver = static_cast<TYPE *>(receiver_);
     (receiver->*function_)(event);
   }
@@ -46,7 +46,7 @@ public:
 
   virtual ~EventHandlerImpl() = default;
 
-  MTHD_OVERRIDE(void invoke(EventBase *event)) {
+  MTHD_OVERRIDE(void invoke(Event *event)) {
     if (function_.typeOf().as<std::string>() == "function") {
       function_(event);
     } else {

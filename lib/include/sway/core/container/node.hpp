@@ -6,6 +6,7 @@
 #include <sway/core/foundation/eventable.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/core/misc/format.hpp>
+#include <sway/core/misc/guid.hpp>
 #include <sway/core/utils/traverser.hpp>
 #include <sway/core/utils/visitable.hpp>
 #include <sway/emscriptenmacros.hpp>
@@ -27,20 +28,24 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-#define DECLARE_EVENT(EventId, EventName)                                \
-public:                                                                  \
-  static inline const std::string EventId = #EventName;                  \
-  class Evt##EventName final : public foundation::EventBase {            \
-  public:                                                                \
-    Evt##EventName(u32_t type, EventData_t data)                         \
-        : type_(type)                                                    \
-        , userdata_(std::move(data)) {}                                  \
-    MTHD_OVERRIDE(u32_t getType() const) { return type_; }               \
-    MTHD_OVERRIDE(EventData_t getUserData() const) { return userdata_; } \
-                                                                         \
-  private:                                                               \
-    u32_t type_;                                                         \
-    EventData_t userdata_;                                               \
+#define DECLARE_EVENT(EventId, EventName)                                    \
+public:                                                                      \
+  static inline const std::string EventId = #EventName;                      \
+  class Evt##EventName final : public foundation::Event {                    \
+  public:                                                                    \
+    DECLARE_CLASS_METADATA(Evt##EventName, foundation::Event)                \
+    Evt##EventName(u32_t type, EventUserData_t data)                         \
+        : id_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))                 \
+        , type_(type)                                                        \
+        , userdata_(std::move(data)) {}                                      \
+    MTHD_OVERRIDE(std::string getId() const) { return id_; }                 \
+    MTHD_OVERRIDE(u32_t getType() const) { return type_; }                   \
+    MTHD_OVERRIDE(EventUserData_t getUserData() const) { return userdata_; } \
+                                                                             \
+  private:                                                                   \
+    std::string id_;                                                         \
+    u32_t type_;                                                             \
+    EventUserData_t userdata_;                                               \
   };
 
 class Node : public std::enable_shared_from_this<Node>, public utils::Visitable, public foundation::Eventable {
@@ -51,6 +56,7 @@ public:
   DECLARE_EMSCRIPTEN_BINDING()
 
   Node();
+
   virtual ~Node();
 
   MTHD_OVERRIDE(u32_t traverse(utils::Traverser *traverser));
@@ -74,6 +80,7 @@ public:
   void setParentNode(std::weak_ptr<Node> parent);
 
   std::optional<std::shared_ptr<Node>> getParentNode();
+
   std::shared_ptr<Node> getParentNodeByDepth(int depth);
 
   bool equal(std::shared_ptr<Node> other);

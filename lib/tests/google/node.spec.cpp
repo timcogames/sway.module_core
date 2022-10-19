@@ -36,8 +36,8 @@ public:
     root_->addChildNode(supervisor_);
   }
 
-  void handleAddNode([[maybe_unused]] core::foundation::EventBase *evt) {}
-  void handleRemoveNode([[maybe_unused]] core::foundation::EventBase *evt) {}
+  void handleAddNode([[maybe_unused]] core::foundation::Event *evt) {}
+  void handleRemoveNode([[maybe_unused]] core::foundation::Event *evt) {}
 
   void addDoctorToSupervisor() {
     doctor_ = std::make_shared<Node>();

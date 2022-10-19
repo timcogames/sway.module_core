@@ -33,7 +33,7 @@ public:
 
   virtual ~AEventHandler() = default;
 
-  PURE_VIRTUAL(void invoke(EventBase *event));
+  PURE_VIRTUAL(void invoke(Event *event));
 
   [[nodiscard]] Eventable *getSender() const;
 
@@ -57,7 +57,7 @@ class AEventHandlerWrapper : public emscripten::wrapper<AEventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(AEventHandlerWrapper);
 
-  MTHD_OVERRIDE(void invoke(EventBase *event)) { return call<void>("invoke", event); }
+  MTHD_OVERRIDE(void invoke(Event *event)) { return call<void>("invoke", event); }
 };
 #endif
 

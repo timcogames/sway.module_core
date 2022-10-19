@@ -28,7 +28,7 @@ public:
 
   void unsubscribe(const std::string &eventname);
 
-  void emit(const std::string &eventname, EventBase *event, EmitPredicate_t predicate);
+  void emit(const std::string &eventname, Event *event, EmitPredicate_t predicate);
 
   AEventHandler *findEventHandler(const std::string &eventname);
 
