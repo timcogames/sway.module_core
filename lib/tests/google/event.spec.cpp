@@ -76,9 +76,7 @@ public:
 
   ~MyModel() = default;
 
-  void raiseEvent(std::shared_ptr<foundation::Event> evt, bool &applied) {
-    applier_->applyEvent(evt, applied, nullptr);
-  }
+  void raiseEvent(std::shared_ptr<foundation::Event> evt, bool &applied) { applier_->applyEvent(evt, applied); }
 
   std::shared_ptr<MyModelState> getState() { return state_; }
 

@@ -12,14 +12,19 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
+class ActionMapper {
+public:
+  PURE_VIRTUAL(void initialize(EventApplier *applier));
+};
+
 template <typename... TEventArgs>
-class EventActionMapper : public TEventArgs... {
+class EventActionMapper : public ActionMapper, public TEventArgs... {
 public:
   EventActionMapper() = default;
 
   ~EventActionMapper() = default;
 
-  void initialize(foundation::EventApplier *applier) {
+  MTHD_OVERRIDE(void initialize(EventApplier *applier)) {
     auto self = this;
     doForEachEvent(self, [&](auto *base) {
       using ConcreteEventType_t = typename std::decay_t<decltype(*base)>::EventType_t;
