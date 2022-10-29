@@ -7,6 +7,7 @@
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 
+#include <functional>
 #include <map>
 #include <memory>
 #include <string>

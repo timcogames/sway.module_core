@@ -14,17 +14,15 @@ NAMESPACE_BEGIN(foundation)
 
 class ActionMapper {
 public:
-  PURE_VIRTUAL(void initialize(EventApplier *applier));
+  PURE_VIRTUAL(void registerEvents(EventApplier *applier));
 };
 
 template <typename... TEventArgs>
 class EventActionMapper : public ActionMapper, public TEventArgs... {
 public:
-  EventActionMapper() = default;
+  virtual ~EventActionMapper() = default;
 
-  ~EventActionMapper() = default;
-
-  MTHD_OVERRIDE(void initialize(EventApplier *applier)) {
+  MTHD_OVERRIDE(void registerEvents(EventApplier *applier)) {
     auto self = this;
     doForEachEvent(self, [&](auto *base) {
       using ConcreteEventType_t = typename std::decay_t<decltype(*base)>::EventType_t;

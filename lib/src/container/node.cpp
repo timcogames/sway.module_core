@@ -29,6 +29,12 @@ emscripten::class_<Node>("Node")
 #endif
 EMSCRIPTEN_BINDING_END()
 
+struct NodeEventUserData : public foundation::EventUserData {
+  NodeIdx node_idx;
+
+  MTHD_OVERRIDE(std::string serialize() const) { return ""; }
+};
+
 Node::Node()
     : idx_(NodeIdx())
     , parent_({})
@@ -71,15 +77,9 @@ void Node::addChildNode(std::shared_ptr<Node> child) {
 
   children_.push_back(child);
 
-#ifdef _EMSCRIPTEN
-  EventUserData_t eventdata = emscripten::val::object();
-  eventdata.set("node_idx", emscripten::val(child->getNodeIdx()));
-#else
-  EventUserData_t eventdata;
-  eventdata["node_idx"] = child->getNodeIdx();
-#endif
-
-  emit(EVT_ADDED, new EvtNodeAdded(0, eventdata), [&](foundation::AEventHandler *handler) {
+  NodeEventUserData eventdata;
+  eventdata.node_idx = child->getNodeIdx();
+  emit(EVT_ADDED, new EvtNodeAdded(0, &eventdata), [&](foundation::AEventHandler *handler) {
     return static_cast<Node *>(handler->getSender())->getNodeIdx().equal(getNodeIdx());
   });
 }
@@ -112,15 +112,9 @@ void Node::removeChildNode(std::shared_ptr<Node> child) {
                       }),
       children_.end());
 
-#ifdef _EMSCRIPTEN
-  EventUserData_t eventdata = emscripten::val::object();
-  eventdata.set("node_idx", emscripten::val(child->getNodeIdx()));
-#else
-  EventUserData_t eventdata;
-  eventdata["node_idx"] = child->getNodeIdx();
-#endif
-
-  emit(EVT_REMOVED, new EvtNodeRemoved(0, eventdata), [&](foundation::AEventHandler *) { return true; });
+  NodeEventUserData eventdata;
+  eventdata.node_idx = child->getNodeIdx();
+  emit(EVT_REMOVED, new EvtNodeRemoved(0, &eventdata), [&](foundation::AEventHandler *) { return true; });
 }
 
 void Node::recursiveRemoveChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx) {

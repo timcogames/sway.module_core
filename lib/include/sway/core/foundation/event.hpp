@@ -15,10 +15,6 @@
 #  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
-
-using EventUserData_t = emscripten::val;
-#else
-using EventUserData_t = std::map<std::string, std::any>;
 #endif
 
 NAMESPACE_BEGIN(sway)
@@ -26,6 +22,10 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 class EventWrapper;
+
+struct EventUserData {
+  PURE_VIRTUAL(std::string serialize() const);
+};
 
 /*!
  * \brief Базовый интерфейс для описания всех типов событий.
@@ -50,7 +50,12 @@ public:
 
   PURE_VIRTUAL(u32_t getType() const);
 
-  PURE_VIRTUAL(EventUserData_t getUserData() const);
+  PURE_VIRTUAL(void *getUserData() const);
+
+  template <typename TResult>
+  auto getConcreteUserData() {
+    return *static_cast<TResult *>(getUserData());
+  }
 };
 
 #ifdef _EMSCRIPTEN
@@ -62,7 +67,7 @@ public:
 
   MTHD_OVERRIDE(u32_t getType() const) { return call<u32_t>("getType"); }
 
-  MTHD_OVERRIDE(EventUserData_t getUserData() const) { return call<EventUserData_t>("getUserData"); }
+  MTHD_OVERRIDE(void *getUserData() const) { return call<void *>("getUserData"); }
 };
 #endif
 
