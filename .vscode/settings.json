@@ -8,6 +8,5 @@
   "editor.defaultFormatter": "ms-vscode.cpptools",
   "editor.renderWhitespace": "all",
   "editor.insertSpaces": true,
-  "editor.tabSize": 2,
-  "testMate.cpp.test.executables": "./bin/dbg/*"
+  "editor.tabSize": 2
 }

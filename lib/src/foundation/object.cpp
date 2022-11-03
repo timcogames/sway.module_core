@@ -1,6 +1,4 @@
-#include <sway/core/foundation/context.hpp>
 #include <sway/core/foundation/object.hpp>
-#include <sway/core/misc/guid.hpp>
 
 #ifdef _EMSCRIPTEN
 #  include <emscripten/bind.h>
@@ -12,20 +10,11 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-void Object::bindEmscriptenClass() {
+EMSCRIPTEN_BINDING_BEGIN(Object)
 #ifdef _EMSCRIPTEN
-  emscripten::class_<Object>("Object")
-      .constructor<Context *>()
-      .function("getUid", &Object::getUid)
-      .function("setUid", &Object::setUid);
+emscripten::class_<Object>("Object");
 #endif
-}
-
-Object::Object(Context *context)
-    : context_(context)
-    , uniqueid_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC)) {}
-
-void Object::setUid(const std::string &uid) { uniqueid_ = uid; }
+EMSCRIPTEN_BINDING_END()
 
 NAMESPACE_END(foundation)
 NAMESPACE_END(core)

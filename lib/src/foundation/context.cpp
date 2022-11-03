@@ -16,8 +16,6 @@ emscripten::class_<Context>("Context").constructor<>();
 #endif
 EMSCRIPTEN_BINDING_END()
 
-Context::Context() {}
-
 NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)

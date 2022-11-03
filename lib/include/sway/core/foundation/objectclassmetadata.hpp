@@ -2,6 +2,7 @@
 #define SWAY_CORE_FOUNDATION_OBJECTCLASSMETADATA_HPP
 
 #include <sway/emscriptenmacros.hpp>
+#include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 

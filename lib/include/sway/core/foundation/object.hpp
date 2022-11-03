@@ -1,13 +1,9 @@
 #ifndef SWAY_CORE_FOUNDATION_OBJECT_HPP
 #define SWAY_CORE_FOUNDATION_OBJECT_HPP
 
+#include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
-#include <sway/types.hpp>
-
-#include <algorithm>  // std::remove_if
-#include <string>
-#include <vector>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
@@ -16,21 +12,22 @@ NAMESPACE_BEGIN(foundation)
 class Context;
 class Object {
 public:
+  DECLARE_SUPERCLASS()
   DECLARE_EMSCRIPTEN_BINDING()
 
-  Object(Context *context);
+  Object()
+      : context_(nullptr) {}
 
-  ~Object() = default;
+  explicit Object(Context *ctx)
+      : context_(ctx) {}
 
-  [[nodiscard]] auto getUid() { return uniqueid_; }
-
-  void setUid(const std::string &id);
-
-protected:
-  Context *context_; /*!< Контекст. */
+  template <class TConcreteContext>
+  auto getContext() -> TConcreteContext * {
+    return static_cast<TConcreteContext *>(context_);
+  }
 
 private:
-  std::string uniqueid_; /*!< Уникальный идентификатор текущего объекта. */
+  Context *context_;
 };
 
 NAMESPACE_END(foundation)

@@ -37,5 +37,5 @@ cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/D
 ### Запуск сборки
 
 ```console
-cmake --build .
+cmake --build ./
 ```

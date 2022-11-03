@@ -4,8 +4,9 @@
 
 using namespace sway;
 
-/*!
- * \brief Убеждаемся, что конструктор по умолчанию приводит все компоненты к нулю.
+/**
+ * @brief Убеждаемся, что конструктор по умолчанию приводит все компоненты к нулю.
+ *
  */
 TEST(VersionTest, DefaultConstructor) {
   const core::Version version;
@@ -16,9 +17,10 @@ TEST(VersionTest, DefaultConstructor) {
   ASSERT_TRUE(version.getExtra().empty());
 }
 
-/*!
- * \brief Убеждаемся, что конструктор устанавливает все значения компонентов в те,
- * которые были заданы.
+/**
+ * @brief Убеждаемся, что конструктор устанавливает все значения компонентов в те,
+ *        которые были заданы.
+ *
  */
 TEST(VersionTest, ComponentConstructor) {
   const s32_t major = 1, minor = 2, patch = 3;
@@ -30,8 +32,9 @@ TEST(VersionTest, ComponentConstructor) {
   ASSERT_STREQ(version.getExtra().c_str(), "tmp");
 }
 
-/*!
- * \brief Убеждаемся, что установка всех компонентов версии проходит правильно.
+/**
+ * @brief Убеждаемся, что установка всех компонентов версии проходит правильно.
+ *
  */
 TEST(VersionTest, Setters) {
   const s32_t major = 1, minor = 2, patch = 3;
@@ -50,8 +53,9 @@ TEST(VersionTest, Setters) {
   ASSERT_STREQ(version.getExtra().c_str(), "tmp");
 }
 
-/*!
- * \brief Тест для оператора равенства
+/**
+ * @brief Тест для оператора равенства.
+ *
  */
 TEST(VersionTest, EqualityOperator) {
   const core::Version version(1, 2, 3);
@@ -59,8 +63,9 @@ TEST(VersionTest, EqualityOperator) {
   ASSERT_TRUE(version == core::Version(1, 2, 3));
 }
 
-/*!
- * \brief Тест для оператора неравенства.
+/**
+ * @brief Тест для оператора неравенства.
+ *
  */
 TEST(VersionTest, NonEqualityOperator) {
   const core::Version version(1, 2, 3);
@@ -69,8 +74,9 @@ TEST(VersionTest, NonEqualityOperator) {
   ASSERT_NE(version, core::Version(1, 2));
 }
 
-/*!
- * \brief Убеждаемся, что сравнение номеров версий происходит правильно
+/**
+ * @brief Убеждаемся, что сравнение номеров версий происходит правильно.
+ *
  */
 TEST(VersionTest, ComparisonOperation) {
   const core::Version version(5, 2, 3);
