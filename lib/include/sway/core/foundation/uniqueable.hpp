@@ -7,6 +7,7 @@
 #include <sway/types.hpp>
 
 #include <algorithm>  // std::remove_if
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -19,7 +20,7 @@ public:
   Uniqueable()
       : uid_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC)) {}
 
-  explicit Uniqueable(const std::string &uid)
+  explicit Uniqueable(const std::optional<std::string> &uid)
       : uid_(uid) {}
 
   ~Uniqueable() = default;
@@ -31,7 +32,7 @@ public:
   bool isEqual(const Uniqueable *other) const { return uid_ == other->getUid(); }
 
 private:
-  std::string uid_; /*!< Уникальный идентификатор. */
+  std::optional<std::string> uid_; /*!< Уникальный идентификатор. */
 };
 
 NAMESPACE_END(foundation)

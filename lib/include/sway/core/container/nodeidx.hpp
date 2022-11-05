@@ -30,8 +30,11 @@ public:
   static int getMatchDepth(const NodeIdx::chain_t &lhs, const NodeIdx::chain_t &rhs);
 
   NodeIdx();
+
   explicit NodeIdx(const NodeIdx::chain_t &data);
-  explicit NodeIdx(NodeIdx parent, NodeIdx::index_t idx);
+
+  NodeIdx(NodeIdx parent, NodeIdx::index_t idx);
+
   ~NodeIdx() = default;
 
   void setAsRoot();

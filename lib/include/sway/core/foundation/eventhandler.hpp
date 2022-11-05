@@ -29,7 +29,7 @@ class AEventHandler {
 public:
   DECLARE_EMSCRIPTEN_BINDING()
 
-  explicit AEventHandler(Eventable *receiver);
+  AEventHandler(Eventable *receiver);
 
   virtual ~AEventHandler() = default;
 
