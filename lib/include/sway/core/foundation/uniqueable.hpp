@@ -29,8 +29,6 @@ public:
 
   void setUid(const std::string &uid) { uid_ = uid; }
 
-  bool isEqual(const Uniqueable *other) const { return uid_ == other->getUid(); }
-
 private:
   std::optional<std::string> uid_; /*!< Уникальный идентификатор. */
 };
