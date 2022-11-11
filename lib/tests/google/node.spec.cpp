@@ -1,4 +1,5 @@
 #include <sway/core/container/node.hpp>
+#include <sway/core/container/nodeeventuserdata.hpp>
 #include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/keywords.hpp>
 
@@ -36,8 +37,9 @@ public:
     root_->addChildNode(supervisor_);
   }
 
-  void handleAddNode([[maybe_unused]] core::foundation::Event *evt) {}
-  void handleRemoveNode([[maybe_unused]] core::foundation::Event *evt) {}
+  void handleAddNode(core::foundation::Event *evt) {}
+
+  void handleRemoveNode(core::foundation::Event *evt) {}
 
   void addDoctorToSupervisor() {
     doctor_ = std::make_shared<Node>();

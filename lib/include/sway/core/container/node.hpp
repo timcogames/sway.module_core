@@ -2,6 +2,7 @@
 #define SWAY_CORE_CONTAINER_NODE_HPP
 
 #include <sway/core/container/nodeidx.hpp>
+#include <sway/core/foundation/declareeventmacros.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventable.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
@@ -27,26 +28,6 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
-
-#define DECLARE_EVENT(EventId, EventName)                          \
-public:                                                            \
-  static inline const std::string EventId = #EventName;            \
-  class Evt##EventName final : public foundation::Event {          \
-  public:                                                          \
-    DECLARE_CLASS_METADATA(Evt##EventName, foundation::Event)      \
-    Evt##EventName(u32_t type, void *userdata)                     \
-        : id_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))       \
-        , type_(type)                                              \
-        , userdata_(userdata) {}                                   \
-    MTHD_OVERRIDE(std::string getId() const) { return id_; }       \
-    MTHD_OVERRIDE(u32_t getType() const) { return type_; }         \
-    MTHD_OVERRIDE(void *getUserData() const) { return userdata_; } \
-                                                                   \
-  private:                                                         \
-    std::string id_;                                               \
-    u32_t type_;                                                   \
-    void *userdata_;                                               \
-  };
 
 class Node : public std::enable_shared_from_this<Node>, public utils::Visitable, public foundation::Eventable {
   DECLARE_EVENT(EVT_ADDED, NodeAdded)

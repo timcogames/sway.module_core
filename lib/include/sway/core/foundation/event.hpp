@@ -38,23 +38,23 @@ public:
 #ifdef _EMSCRIPTEN
     emscripten::class_<Event>("Event")
         .allow_subclass<EventWrapper>("EventWrapper")
-        .function("getId", &Event::getId, emscripten::pure_virtual())
-        .function("getType", &Event::getType, emscripten::pure_virtual())
-        .function("getUserData", &Event::getUserData, emscripten::pure_virtual());
+        .function("id", &Event::id, emscripten::pure_virtual())
+        .function("type", &Event::type, emscripten::pure_virtual())
+        .function("data", &Event::data, emscripten::pure_virtual());
 #endif
   }
 
   DFLT_DTOR_VIRTUAL(Event);
 
-  PURE_VIRTUAL(std::string getId() const);
+  PURE_VIRTUAL(std::string id() const);
 
-  PURE_VIRTUAL(u32_t getType() const);
+  PURE_VIRTUAL(u32_t type() const);
 
-  PURE_VIRTUAL(void *getUserData() const);
+  PURE_VIRTUAL(void *data() const);
 
   template <typename TResult>
-  auto getConcreteUserData() {
-    return *static_cast<TResult *>(getUserData());
+  auto getConcreteData() {
+    return *static_cast<TResult *>(data());
   }
 };
 
@@ -63,11 +63,11 @@ class EventWrapper : public emscripten::wrapper<Event> {
 public:
   EMSCRIPTEN_WRAPPER(EventWrapper);
 
-  MTHD_OVERRIDE(std::string getId() const) { return call<u32_t>("getId"); }
+  MTHD_OVERRIDE(std::string id() const) { return call<u32_t>("id"); }
 
-  MTHD_OVERRIDE(u32_t getType() const) { return call<u32_t>("getType"); }
+  MTHD_OVERRIDE(u32_t type() const) { return call<u32_t>("type"); }
 
-  MTHD_OVERRIDE(void *getUserData() const) { return call<void *>("getUserData"); }
+  MTHD_OVERRIDE(void *data() const) { return call<void *>("data"); }
 };
 #endif
 

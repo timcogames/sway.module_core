@@ -20,23 +20,23 @@ class BaseEvent : public foundation::Event {
 public:
   DECLARE_CLASS_METADATA(BaseEvent, foundation::Event)
 
-  BaseEvent(u32_t type, void *userdata)
+  BaseEvent(u32_t type, void *data)
       : id_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))
       , type_(type)
-      , userdata_(userdata) {}
+      , data_(data) {}
 
   virtual ~BaseEvent() = default;
 
-  MTHD_OVERRIDE(std::string getId() const) { return id_; }
+  MTHD_OVERRIDE(std::string id() const) { return id_; }
 
-  MTHD_OVERRIDE(u32_t getType() const) { return type_; }
+  MTHD_OVERRIDE(u32_t type() const) { return type_; }
 
-  MTHD_OVERRIDE(void *getUserData() const) { return userdata_; }
+  MTHD_OVERRIDE(void *data() const) { return data_; }
 
 private:
   std::string id_;
   u32_t type_;
-  void *userdata_;
+  void *data_;
 };
 
 struct MyEventUserData : public foundation::EventUserData {
@@ -63,7 +63,7 @@ public:
   virtual ~MyModelState() = default;
 
   MTHD_OVERRIDE(void apply(std::shared_ptr<MyCreatedEvent> vent)) {
-    myvalue_ = vent->getConcreteUserData<MyEventUserData>().value;
+    myvalue_ = vent->getConcreteData<MyEventUserData>().value;
   }
 
   [[nodiscard]] std::string getMyValue() const { return myvalue_; }

@@ -1,4 +1,5 @@
 #include <sway/core/container/node.hpp>
+#include <sway/core/container/nodeeventuserdata.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/foundation/context.hpp>
 
@@ -28,12 +29,6 @@ emscripten::class_<Node>("Node")
     .property("visible", &Node::isVisible, &Node::setVisible);
 #endif
 EMSCRIPTEN_BINDING_END()
-
-struct NodeEventUserData : public foundation::EventUserData {
-  NodeIdx node_idx;
-
-  MTHD_OVERRIDE(std::string serialize() const) { return ""; }
-};
 
 Node::Node()
     : idx_(NodeIdx())
@@ -78,8 +73,8 @@ void Node::addChildNode(std::shared_ptr<Node> child) {
   children_.push_back(child);
 
   NodeEventUserData eventdata;
-  eventdata.node_idx = child->getNodeIdx();
-  emit(EVT_ADDED, new EvtNodeAdded(0, &eventdata), [&](foundation::AEventHandler *handler) {
+  eventdata.nodeidx = child->getNodeIdx();
+  emit(EVT_ADDED, new NodeAddedEvent(0, &eventdata), [&](foundation::AEventHandler *handler) {
     return static_cast<Node *>(handler->getSender())->getNodeIdx().equal(getNodeIdx());
   });
 }
@@ -113,8 +108,8 @@ void Node::removeChildNode(std::shared_ptr<Node> child) {
       children_.end());
 
   NodeEventUserData eventdata;
-  eventdata.node_idx = child->getNodeIdx();
-  emit(EVT_REMOVED, new EvtNodeRemoved(0, &eventdata), [&](foundation::AEventHandler *) { return true; });
+  eventdata.nodeidx = child->getNodeIdx();
+  emit(EVT_REMOVED, new NodeRemovedEvent(0, &eventdata), [&](foundation::AEventHandler *) { return true; });
 }
 
 void Node::recursiveRemoveChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx) {

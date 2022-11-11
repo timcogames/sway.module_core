@@ -17,11 +17,8 @@ NAMESPACE_BEGIN(foundation)
 
 class Uniqueable {
 public:
-  Uniqueable()
-      : uid_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC)) {}
-
   explicit Uniqueable(const std::optional<std::string> &uid)
-      : uid_(uid) {}
+      : uid_((uid != std::nullopt) ? uid : misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC)) {}
 
   ~Uniqueable() = default;
 
