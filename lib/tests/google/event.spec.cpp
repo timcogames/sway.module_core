@@ -108,3 +108,47 @@ TEST_F(ModelTest, Event) {
   model->raiseEvent(std::make_shared<MyCreatedEvent>(&userdata), applied);
   ASSERT_TRUE(applied);
 }
+
+//-------------------------------------------
+
+class TestSender : public core::foundation::Eventable {
+public:
+  DECLARE_EVENT(VALUE_CHANGED, ValueChanged)
+
+  TestSender() = default;
+
+  void setValue() {
+    AttributeEventData eventdata;
+    eventdata.prev = 2;
+    eventdata.next = 5;
+    emit(VALUE_CHANGED, new ValueChangedEvent(0, &eventdata), [&](core::foundation::AEventHandler *handler) {
+      std::cout << "EXRCUTE:" << std::endl;
+      return true;
+    });
+  }
+
+  void handleValueChanged(core::foundation::Event *evt) {
+    std::cout << "TestReceiver handleValueChanged:" << std::endl;
+  }
+};
+
+class TestReceiver : public core::foundation::Eventable {
+public:
+  DECLARE_EVENT(VALUE_CHANGED, ValueChanged)
+  void handleValueChanged(core::foundation::Event *evt) {
+    std::cout << "TestReceiver handleValueChanged:" << std::endl;
+  }
+};
+
+TEST(AttributeTest, Consumdfde) {
+  auto *testReceiver = new TestReceiver();
+  auto *testSender = new TestSender();
+
+  testSender->subscribe(testReceiver, "ValueChanged",
+      (new core::foundation::TEventHandlerImpl<TestReceiver>(testReceiver, &TestReceiver::handleValueChanged)));
+
+  testSender->subscribe(testSender, "ValueChanged",
+      (new core::foundation::TEventHandlerImpl<TestSender>(testSender, &TestSender::handleValueChanged)));
+
+  testSender->setValue();
+}
