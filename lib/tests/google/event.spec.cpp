@@ -1,6 +1,9 @@
+#include <sway/core/foundation/declareeventmacros.hpp>
 #include <sway/core/foundation/event.hpp>
+#include <sway/core/foundation/eventable.hpp>
 #include <sway/core/foundation/eventaction.hpp>
 #include <sway/core/foundation/eventactionmapper.hpp>
+#include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/core/misc/guid.hpp>
 #include <sway/keywords.hpp>
 #include <sway/types.hpp>
@@ -111,6 +114,13 @@ TEST_F(ModelTest, Event) {
 
 //-------------------------------------------
 
+struct TestEventData : public foundation::EventUserData {
+  s32_t prev;
+  s32_t next;
+
+  MTHD_OVERRIDE(std::string serialize() const) { return ""; }
+};
+
 class TestSender : public core::foundation::Eventable {
 public:
   DECLARE_EVENT(VALUE_CHANGED, ValueChanged)
@@ -118,7 +128,7 @@ public:
   TestSender() = default;
 
   void setValue() {
-    AttributeEventData eventdata;
+    TestEventData eventdata;
     eventdata.prev = 2;
     eventdata.next = 5;
     emit(VALUE_CHANGED, new ValueChangedEvent(0, &eventdata), [&](core::foundation::AEventHandler *handler) {

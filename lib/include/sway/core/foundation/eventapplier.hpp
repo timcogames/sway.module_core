@@ -26,13 +26,21 @@ public:
   }
 
   void applyEvent(std::shared_ptr<Event> evt, bool &applied) {
-    auto callbackFn = appliers_[evt->getClassname()];
-    if (!callbackFn) {
+    auto userdata = evt->data();
+    if (!userdata) {
+      printf("ERROR: [EventApplier::applyEvent -> %s]\n\t- data is not valid\n", evt->getClassname().c_str());
       applied = false;
       return;
     }
 
-    callbackFn(evt);
+    auto callbackFunc = appliers_[evt->getClassname()];
+    if (!callbackFunc) {
+      printf("ERROR: [EventApplier::applyEvent -> %s]\n\t- callbackFunc is not valid\n", evt->getClassname().c_str());
+      applied = false;
+      return;
+    }
+
+    callbackFunc(evt);
     applied = true;
   }
 
