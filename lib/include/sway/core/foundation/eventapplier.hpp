@@ -44,6 +44,8 @@ public:
     applied = true;
   }
 
+  auto eventset() -> std::map<std::string, std::function<void(std::shared_ptr<Event>)>> { return appliers_; }
+
 private:
   std::map<std::string, std::function<void(std::shared_ptr<Event>)>> appliers_;
 };

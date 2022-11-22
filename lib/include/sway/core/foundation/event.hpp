@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENT_HPP
 #define SWAY_CORE_FOUNDATION_EVENT_HPP
 
+#include <sway/core/foundation/eventdata.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
@@ -23,10 +24,6 @@ NAMESPACE_BEGIN(foundation)
 
 class EventWrapper;
 
-struct EventUserData {
-  PURE_VIRTUAL(std::string serialize() const);
-};
-
 /*!
  * \brief Базовый интерфейс для описания всех типов событий.
  */
@@ -46,11 +43,14 @@ public:
 
   DFLT_DTOR_VIRTUAL(Event);
 
-  PURE_VIRTUAL(std::string id() const);
+  // clang-format off
+  PURE_VIRTUAL(auto id() const -> std::string);  // clang-format on
 
-  PURE_VIRTUAL(u32_t type() const);
+  // clang-format off
+  PURE_VIRTUAL(auto type() const -> u32_t);  // clang-format on
 
-  PURE_VIRTUAL(void *data() const);
+  // clang-format off
+  PURE_VIRTUAL(auto data() const -> void *);  // clang-format on
 
   template <typename TResult>
   auto getConcreteData() {
@@ -63,11 +63,20 @@ class EventWrapper : public emscripten::wrapper<Event> {
 public:
   EMSCRIPTEN_WRAPPER(EventWrapper);
 
-  MTHD_OVERRIDE(std::string id() const) { return call<u32_t>("id"); }
+  // clang-format off
+  MTHD_OVERRIDE(auto id() const -> std::string) {  // clang-format on
+    return call<u32_t>("id");
+  }
 
-  MTHD_OVERRIDE(u32_t type() const) { return call<u32_t>("type"); }
+  // clang-format off
+  MTHD_OVERRIDE(auto type() const -> u32_t) {  // clang-format on
+    return call<u32_t>("type");
+  }
 
-  MTHD_OVERRIDE(void *data() const) { return call<void *>("data"); }
+  // clang-format off
+  MTHD_OVERRIDE(auto data() const -> void *) {  // clang-format on
+    return call<void *>("data");
+  }
 };
 #endif
 

@@ -1,5 +1,5 @@
 #include <sway/core/container/node.hpp>
-#include <sway/core/container/nodeeventuserdata.hpp>
+#include <sway/core/container/nodeeventdata.hpp>
 #include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/keywords.hpp>
 

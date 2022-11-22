@@ -42,10 +42,12 @@ private:
   void *data_;
 };
 
-struct MyEventUserData : public foundation::EventUserData {
+struct MyEventData : public foundation::EventData {
   std::string value;
 
   MTHD_OVERRIDE(std::string serialize() const) { return ""; }
+
+  MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
 };
 
 class MyCreatedEvent : public BaseEvent {
@@ -66,7 +68,7 @@ public:
   virtual ~MyModelState() = default;
 
   MTHD_OVERRIDE(void apply(std::shared_ptr<MyCreatedEvent> vent)) {
-    myvalue_ = vent->getConcreteData<MyEventUserData>().value;
+    myvalue_ = vent->getConcreteData<MyEventData>().value;
   }
 
   [[nodiscard]] std::string getMyValue() const { return myvalue_; }
@@ -106,7 +108,7 @@ protected:
 TEST_F(ModelTest, Event) {
   bool applied;
 
-  MyEventUserData userdata;
+  MyEventData userdata;
   userdata.value = std::string("test");
   model->raiseEvent(std::make_shared<MyCreatedEvent>(&userdata), applied);
   ASSERT_TRUE(applied);
@@ -114,11 +116,13 @@ TEST_F(ModelTest, Event) {
 
 //-------------------------------------------
 
-struct TestEventData : public foundation::EventUserData {
+struct TestEventData : public foundation::EventData {
   s32_t prev;
   s32_t next;
 
   MTHD_OVERRIDE(std::string serialize() const) { return ""; }
+
+  MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
 };
 
 class TestSender : public core::foundation::Eventable {
