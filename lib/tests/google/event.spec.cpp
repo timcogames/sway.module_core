@@ -30,16 +30,31 @@ public:
 
   virtual ~BaseEvent() = default;
 
-  MTHD_OVERRIDE(std::string id() const) { return id_; }
+  // clang-format off
+  MTHD_OVERRIDE(auto id() const -> std::string) {  // clang-format on
+    return id_;
+  }
 
-  MTHD_OVERRIDE(u32_t type() const) { return type_; }
+  // clang-format off
+  MTHD_OVERRIDE(auto type() const -> u32_t) {  // clang-format on
+    return type_;
+  }
 
-  MTHD_OVERRIDE(void *data() const) { return data_; }
+  // clang-format off
+  MTHD_OVERRIDE(auto data() const -> void *) {  // clang-format on
+    return data_;
+  }
+
+  // clang-format off
+  MTHD_OVERRIDE(auto datamap() -> std::map<std::string, std::shared_ptr<foundation::Prop>>) {  // clang-format on
+    return datamap_;
+  }
 
 private:
   std::string id_;
   u32_t type_;
   void *data_;
+  std::map<std::string, std::shared_ptr<foundation::Prop>> datamap_;
 };
 
 struct MyEventData : public foundation::EventData {

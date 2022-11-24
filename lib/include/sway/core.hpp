@@ -6,9 +6,9 @@
 #include <sway/core/container/hierarchy.hpp>
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeidx.hpp>
-#include <sway/core/detail/datatypes.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/detail/rawtype.hpp>
+#include <sway/core/detail/valuedatatypes.hpp>
 #include <sway/core/foundation/context.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
 #include <sway/core/foundation/eventhandlerimpl.hpp>
