@@ -46,15 +46,15 @@ public:
   }
 
   // clang-format off
-  MTHD_OVERRIDE(auto datamap() -> std::map<std::string, std::shared_ptr<foundation::Prop>>) {  // clang-format on
-    return datamap_;
+  MTHD_OVERRIDE(auto dataset() -> std::map<std::string, std::shared_ptr<ValueData>>) {  // clang-format on
+    return dataset_;
   }
 
 private:
   std::string id_;
   u32_t type_;
   void *data_;
-  std::map<std::string, std::shared_ptr<foundation::Prop>> datamap_;
+  std::map<std::string, std::shared_ptr<ValueData>> dataset_;
 };
 
 struct MyEventData : public foundation::EventData {

@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENT_HPP
 #define SWAY_CORE_FOUNDATION_EVENT_HPP
 
+#include <sway/core/detail/valuedata.hpp>
 #include <sway/core/foundation/eventdata.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/keywords.hpp>
@@ -51,6 +52,9 @@ public:
 
   // clang-format off
   PURE_VIRTUAL(auto data() const -> void *);  // clang-format on
+
+  // clang-format off
+  PURE_VIRTUAL(auto dataset() -> std::map<std::string, std::shared_ptr<ValueData>>);  // clang-format on
 
   template <typename TResult>
   auto getConcreteData() {

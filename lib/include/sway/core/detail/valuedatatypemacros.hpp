@@ -9,7 +9,7 @@
                                                        \
   template <>                                          \
   struct ValueDataTypeToEnum<valuetype> {              \
-    static constexpr ValueDataType_t value = key;      \
+    static constexpr ValueDataType value = key;        \
   };
 
 #endif
