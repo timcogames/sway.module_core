@@ -7,8 +7,9 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(intrusive)
 
-/*!
- * \brief Перечисление приоритетов.
+/**
+ * @brief Перечисление приоритетов.
+ *
  */
 enum Priorities {
   kPriority_VeryLow = 0, /*!< Очень низкий приоритет. */

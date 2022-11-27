@@ -43,12 +43,13 @@ class Hierarchy {
 public:
   DECLARE_EMSCRIPTEN_BINDING()
 
-  static std::optional<std::shared_ptr<Node>> findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx);
+  static auto findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx) -> std::optional<std::shared_ptr<Node>>;
 
   Hierarchy();
+
   ~Hierarchy() = default;
 
-  std::shared_ptr<Node> getRootNode();
+  auto getRootNode() -> std::shared_ptr<Node>;
 
   void setRootNode(std::shared_ptr<Node> root);
 

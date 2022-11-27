@@ -13,9 +13,10 @@ NAMESPACE_BEGIN(utils)
 using ObserverArray_t = std::vector<class IObserver *>;
 using ObserverArrayIterator_t = ObserverArray_t::const_iterator;
 
-/*!
- * \class IObserver
- * \brief Интерфейс наблюдателя.
+/**
+ * @class IObserver
+ * @brief Интерфейс наблюдателя.
+ *
  */
 class IObserver {
 public:

@@ -40,29 +40,30 @@ public:
 
   virtual ~Node();
 
-  MTHD_OVERRIDE(u32_t traverse(utils::Traverser *traverser));
+  // clang-format off
+  MTHD_OVERRIDE(auto traverse(utils::Traverser *traverser) -> u32_t);  // clang-format on
 
   void addChildNode(std::shared_ptr<Node> child);
 
   void removeChildNode(std::shared_ptr<Node> child);
 
-  std::vector<std::shared_ptr<Node>> getChildNodes();
+  auto getChildNodes() -> std::vector<std::shared_ptr<Node>>;
 
-  std::shared_ptr<Node> getChildNode(const NodeIdx &idx) const;
+  auto getChildNode(const NodeIdx &idx) const -> std::shared_ptr<Node>;
 
-  std::optional<std::shared_ptr<Node>> getChildAt(int targetIdx) const;
+  auto getChildAt(int targetIdx) const -> std::optional<std::shared_ptr<Node>>;
 
-  int getNumOfChildNodes() const;
+  auto getNumOfChildNodes() const -> int;
 
   void setNodeIdx(const NodeIdx::chain_t &chain, int last);
 
-  NodeIdx getNodeIdx();
+  auto getNodeIdx() -> NodeIdx;
 
   void setParentNode(std::weak_ptr<Node> parent);
 
-  std::optional<std::shared_ptr<Node>> getParentNode();
+  auto getParentNode() -> std::optional<std::shared_ptr<Node>>;
 
-  std::shared_ptr<Node> getParentNodeByDepth(int depth);
+  auto getParentNodeByDepth(int depth) -> std::shared_ptr<Node>;
 
   bool equal(std::shared_ptr<Node> other);
 
@@ -76,7 +77,7 @@ public:
 
 protected:
   template <typename T>
-  std::shared_ptr<T> sharedFrom(T *ptr) {
+  auto sharedFrom(T *ptr) -> std::shared_ptr<T> {
     return std::static_pointer_cast<T>(static_cast<Node *>(ptr)->shared_from_this());
   }
 

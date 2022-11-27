@@ -26,8 +26,8 @@ public:
   }
 
   void applyEvent(std::shared_ptr<Event> evt, bool &applied) {
-    auto userdata = evt->data();
-    if (!userdata) {
+    auto *data = evt->data();
+    if (data == nullptr) {
       printf("ERROR: [EventApplier::applyEvent -> %s]\n\t- data is not valid\n", evt->getClassname().c_str());
       applied = false;
       return;

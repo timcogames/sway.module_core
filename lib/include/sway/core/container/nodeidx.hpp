@@ -26,8 +26,9 @@ public:
   using index_t = s32_t;
   using chain_t = std::vector<NodeIdx::index_t>;
 
-  static std::string chainToStr(const NodeIdx::chain_t &chain);
-  static int getMatchDepth(const NodeIdx::chain_t &lhs, const NodeIdx::chain_t &rhs);
+  static auto chainToStr(const NodeIdx::chain_t &chain) -> std::string;
+
+  static auto getMatchDepth(const NodeIdx::chain_t &lhs, const NodeIdx::chain_t &rhs) -> int;
 
   NodeIdx();
 
@@ -41,19 +42,19 @@ public:
 
   void setChain(const NodeIdx::chain_t &chain, NodeIdx::index_t idx);
 
-  [[nodiscard]] NodeIdx::chain_t getChain() const;
+  [[nodiscard]] auto getChain() const -> NodeIdx::chain_t;
 
-  [[nodiscard]] NodeIdx::chain_t getParent() const;
+  [[nodiscard]] auto getParent() const -> NodeIdx::chain_t;
 
-  [[nodiscard]] int getDepth() const;
+  [[nodiscard]] auto getDepth() const -> int;
 
-  [[nodiscard]] NodeIdx::index_t getIdxAt(int idx) const;
+  [[nodiscard]] auto getIdxAt(int idx) const -> NodeIdx::index_t;
 
   bool equal(const NodeIdx &other);
 
   bool chainEqual(const NodeIdx::chain_t &other);
 
-  [[nodiscard]] std::string toStr() const;
+  [[nodiscard]] auto toStr() const -> std::string;
 
 private:
   NodeIdx::chain_t chainLinks_;

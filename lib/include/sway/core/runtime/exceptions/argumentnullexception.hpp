@@ -18,7 +18,7 @@ public:
       }())
       , argname_(argumentName) {}
 
-  std::string getArgumentName() const { return argname_; }
+  auto getArgumentName() const -> std::string { return argname_; }
 
 private:
   std::string argname_;

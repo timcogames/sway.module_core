@@ -13,7 +13,8 @@ class Visitable {
 public:
   virtual ~Visitable() = default;
 
-  PURE_VIRTUAL(u32_t traverse(Traverser *traverser));
+  // clang-format off
+  PURE_VIRTUAL(auto traverse(Traverser *traverser) -> u32_t);  // clang-format on
 };
 
 NAMESPACE_END(utils)

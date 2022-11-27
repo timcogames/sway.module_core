@@ -30,7 +30,7 @@ public:
 
   void emit(const std::string &eventname, Event *event, EmitPredicate_t predicate);
 
-  AEventHandler *findEventHandler(const std::string &eventname);
+  auto findEventHandler(const std::string &eventname) -> AEventHandler *;
 
 protected:
   std::vector<AEventHandler *> eventHandlers_; /*!< Обработчики событий. */

@@ -17,7 +17,8 @@ public:
     ABORT /*!< Прервать обход. */
   };
 
-  PURE_VIRTUAL(u32_t visit(Visitable *node));
+  // clang-format off
+  PURE_VIRTUAL(auto visit(Visitable *node) -> u32_t);  // clang-format on
 };
 
 NAMESPACE_END(utils)

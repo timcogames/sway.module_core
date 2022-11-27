@@ -25,7 +25,7 @@ public:
 
   bool isLoaded() const;
 
-  PluginInfo getInfo() const;
+  auto getInfo() const -> PluginInfo;
 
   void initialize(PluginFunctionSet *functions);
 

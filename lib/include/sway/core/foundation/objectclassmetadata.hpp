@@ -23,7 +23,7 @@ NAMESPACE_BEGIN(foundation)
 
 class ObjectClassname {
 public:
-  static std::string demangle(lpcstr_t name) {
+  static auto demangle(lpcstr_t name) -> std::string {
     int status;
     std::unique_ptr<s8_t, void (*)(void *)> result{abi::__cxa_demangle(name, 0, 0, &status), std::free};
 
@@ -31,7 +31,7 @@ public:
   }
 
   template <typename T>
-  static std::string toStr() {
+  static auto toStr() -> std::string {
     std::string classname = core::foundation::ObjectClassname::demangle(typeid(T).name());
     std::string delimiter = "::";
 

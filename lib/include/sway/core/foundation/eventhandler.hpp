@@ -35,13 +35,13 @@ public:
 
   PURE_VIRTUAL(void invoke(Event *event));
 
-  [[nodiscard]] Eventable *getSender() const;
+  [[nodiscard]] auto getSender() const -> Eventable *;
 
   void setSender(Eventable *sender);
 
-  [[nodiscard]] Eventable *getReceiver() const;
+  [[nodiscard]] auto getReceiver() const -> Eventable *;
 
-  [[nodiscard]] std::string getEventName() const { return eventname_; }
+  [[nodiscard]] auto getEventName() const -> std::string { return eventname_; }
 
   void setEventName(const std::string &name) { eventname_ = name; }
 

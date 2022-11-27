@@ -17,9 +17,9 @@ public:
       , symbolName_(symbolName)
       , dlError_(dlerror) {}
 
-  std::string getSymbolName() const { return symbolName_; }
+  auto getSymbolName() const -> std::string { return symbolName_; }
 
-  std::string getDlerror() const { return dlError_; }
+  auto getDlerror() const -> std::string { return dlError_; }
 
 private:
   std::string symbolName_; /*!< Имя символа. */

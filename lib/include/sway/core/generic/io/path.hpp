@@ -18,15 +18,15 @@ public:
 
   ~Path() = default;
 
-  std::string getFilename() const;
+  auto getFilename() const -> std::string;
 
-  std::string getExt() const;
+  auto getExt() const -> std::string;
 
   bool isExists(const std::string &filename);
 
   bool isEmpty() const;
 
-  std::string toString() const;
+  auto toString() const -> std::string;
 
 private:
   std::string _path; /*!< Путь к файлу или каталогу. */

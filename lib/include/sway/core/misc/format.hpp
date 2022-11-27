@@ -13,7 +13,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(misc)
 
-inline std::string format(lpcstr_t const fmt, ...) {
+inline auto format(lpcstr_t const fmt, ...) -> std::string {
   auto temp = std::vector<s8_t>();
   auto size = std::size_t(100);
   std::va_list args;
