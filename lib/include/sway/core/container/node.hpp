@@ -96,4 +96,4 @@ NAMESPACE_END(container)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_CONTAINER_NODE_HPP

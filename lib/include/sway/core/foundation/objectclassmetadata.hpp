@@ -74,4 +74,4 @@ NAMESPACE_END(sway)
   }                                                                                                                  \
   MTHD_OVERRIDE(const std::string &getClassname() const) { return getObjectClassMetadata()->getClassname(); }
 
-#endif
+#endif  // SWAY_CORE_FOUNDATION_OBJECTCLASSMETADATA_HPP

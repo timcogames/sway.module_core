@@ -66,4 +66,4 @@ NAMESPACE_END(sway)
 #define EVENT_HANDLER(classname, function) \
   (new sway::core::foundation::TEventHandlerImpl<classname>(this, &classname::function))
 
-#endif
+#endif  // SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_HPP

@@ -53,9 +53,6 @@ public:
   // clang-format off
   PURE_VIRTUAL(auto data() const -> void *);  // clang-format on
 
-  // clang-format off
-  PURE_VIRTUAL(auto dataset() -> std::map<std::string, std::shared_ptr<ValueData>>);  // clang-format on
-
   template <typename TResult>
   auto getConcreteData() {
     return *static_cast<TResult *>(data());
@@ -88,4 +85,4 @@ NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_FOUNDATION_EVENT_HPP

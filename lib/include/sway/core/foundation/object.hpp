@@ -34,4 +34,4 @@ NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_FOUNDATION_OBJECT_HPP
