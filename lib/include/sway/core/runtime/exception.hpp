@@ -21,11 +21,11 @@ public:
   virtual lpcstr_t what() const throw() { return message_.c_str(); }
 
 private:
-  std::string message_; /*!< Сообщение об ошибке. */
+  std::string message_;  // Сообщение об ошибке.
 };
 
 NAMESPACE_END(runtime)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_RUNTIME_EXCEPTION_HPP

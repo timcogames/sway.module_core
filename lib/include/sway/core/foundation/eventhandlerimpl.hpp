@@ -28,7 +28,7 @@ public:
   }
 
 private:
-  HandlerFunction_t function_; /*!< Функцию обработчика событий. */
+  HandlerFunction_t function_;  // Функцию обработчика событий.
 };
 
 #ifdef _EMSCRIPTEN
@@ -55,7 +55,7 @@ public:
   }
 
 private:
-  emscripten::val function_; /*!< Функцию обработчика событий. */
+  emscripten::val function_;  // Функцию обработчика событий.
 };
 #endif
 

@@ -12,4 +12,4 @@
     static constexpr ValueDataType value = key;        \
   };
 
-#endif
+#endif  // SWAY_CORE_DETAIL_VALUEDATATYPEMACROS_HPP

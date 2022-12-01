@@ -22,4 +22,4 @@
 #  define DLLAPI_EXPORT
 #endif
 
-#endif
+#endif  // SWAY_VISIBILITYMACROS_HPP

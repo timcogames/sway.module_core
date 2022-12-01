@@ -22,8 +22,8 @@ public:
   auto getDlerror() const -> std::string { return dlError_; }
 
 private:
-  std::string symbolName_; /*!< Имя символа. */
-  std::string dlError_; /*!< Текст, подробно описывающий ошибку. */
+  std::string symbolName_;  // Имя символа.
+  std::string dlError_;  // Текст, подробно описывающий ошибку.
 };
 
 NAMESPACE_END(exceptions)
@@ -31,4 +31,4 @@ NAMESPACE_END(runtime)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_RUNTIME_EXCEPTIONS_SYMBOLNOTFOUNDEXCEPTION_HPP

@@ -37,4 +37,4 @@ NAMESPACE_END(misc)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_MISC_FORMAT_HPP

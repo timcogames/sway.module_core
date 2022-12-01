@@ -16,4 +16,4 @@ NAMESPACE_END(detail)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_DETAIL_RAWTYPE_HPP

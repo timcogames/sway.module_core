@@ -16,7 +16,6 @@ using ObserverArrayIterator_t = ObserverArray_t::const_iterator;
 /**
  * @class IObserver
  * @brief Интерфейс наблюдателя.
- *
  */
 class IObserver {
 public:
@@ -29,4 +28,4 @@ NAMESPACE_END(utils)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_UTILS_OBSERVER_HPP

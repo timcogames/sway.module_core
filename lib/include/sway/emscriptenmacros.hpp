@@ -9,4 +9,4 @@ public:                              \
 
 #define EMSCRIPTEN_BINDING_END() }
 
-#endif
+#endif  // SWAY_EMSCRIPTENMACROS_HPP

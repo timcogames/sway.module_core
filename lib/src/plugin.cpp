@@ -21,9 +21,9 @@ Plugin::Plugin(const generic::io::Path &filepath) {
 
 Plugin::~Plugin() { dlclose(_handle); }
 
-bool Plugin::isLoaded() const { return _handle != nullptr; }
+auto Plugin::isLoaded() const -> bool { return _handle != nullptr; }
 
-PluginInfo Plugin::getInfo() const {
+auto Plugin::getInfo() const -> PluginInfo {
   std::string functionName = std::string("pluginGetInfo");
   PluginGetInfoFunc_t pluginGetInfoFunc;
 

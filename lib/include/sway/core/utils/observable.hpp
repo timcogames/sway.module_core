@@ -22,11 +22,11 @@ public:
   void notify();
 
 private:
-  ObserverArray_t observers_; /*!< Массив наблюдателей, которые слушают этот наблюдаемый объект. */
+  ObserverArray_t observers_;  // Массив наблюдателей, которые слушают этот наблюдаемый объект.
 };
 
 NAMESPACE_END(utils)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_UTILS_OBSERVABLE_HPP

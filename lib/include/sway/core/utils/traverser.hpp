@@ -12,9 +12,9 @@ class Visitable;
 class Traverser {
 public:
   enum class Action : u32_t {
-    CONTINUE, /*!< Продолжать обходить. */
-    PRUNE, /*!< Не навещай дочерние узлы. */
-    ABORT /*!< Прервать обход. */
+    CONTINUE,  // Продолжать обходить.
+    PRUNE,  // Не навещай дочерние узлы.
+    ABORT  // Прервать обход.
   };
 
   // clang-format off
@@ -25,4 +25,4 @@ NAMESPACE_END(utils)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_UTILS_TRAVERSER_HPP

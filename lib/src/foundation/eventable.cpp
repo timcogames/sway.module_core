@@ -42,7 +42,7 @@ void Eventable::emit(const std::string &eventname, Event *event, EmitPredicate_t
   }
 }
 
-AEventHandler *Eventable::findEventHandler(const std::string &eventname) {
+auto Eventable::findEventHandler(const std::string &eventname) -> AEventHandler * {
   bool found = false;
   auto iter = eventHandlers_.begin();
   while (iter != eventHandlers_.end()) {

@@ -9,4 +9,4 @@
 
 #define MTHD_OVERRIDE(...) virtual __VA_ARGS__ override
 
-#endif
+#endif  // SWAY_KEYWORDS_HPP

@@ -33,7 +33,7 @@ public:
   auto findEventHandler(const std::string &eventname) -> AEventHandler *;
 
 protected:
-  std::vector<AEventHandler *> eventHandlers_; /*!< Обработчики событий. */
+  std::vector<AEventHandler *> eventHandlers_;  // Обработчики событий.
 };
 
 NAMESPACE_END(foundation)

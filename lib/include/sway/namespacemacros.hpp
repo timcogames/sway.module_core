@@ -5,4 +5,4 @@
 
 #define NAMESPACE_END(name) }
 
-#endif
+#endif  // SWAY_NAMESPACEMACROS_HPP

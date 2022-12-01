@@ -11,8 +11,8 @@
 #undef SAFE_DELETE_ARRAY
 #define SAFE_DELETE_ARRAY(ptr) \
   if ((ptr) != NULL) {         \
-    delete[](ptr);             \
+    delete[] (ptr);            \
     (ptr) = NULL;              \
   }
 
-#endif
+#endif  // SWAY_CORE_MEMORY_SAFEDELETEMACROS_HPP

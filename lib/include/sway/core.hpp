@@ -38,4 +38,4 @@
 #include <sway/types.hpp>
 #include <sway/visibilitymacros.hpp>
 
-#endif
+#endif  // SWAY_CORE_HPP

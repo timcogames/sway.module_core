@@ -35,4 +35,4 @@ emscripten::class_<std::optional<T>> register_optional(const char *name) {
 
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_OPTIONAL_HPP

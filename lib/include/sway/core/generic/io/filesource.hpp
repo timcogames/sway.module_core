@@ -22,7 +22,7 @@ public:
   bool isFileOpened() const;
 
 protected:
-  bool _fileOpened; /*!< Открыт ли файл в данный момент. */
+  bool _fileOpened;  // Открыт ли файл в данный момент.
 };
 
 NAMESPACE_END(io)
@@ -30,4 +30,4 @@ NAMESPACE_END(generic)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_GENERIC_IO_FILESOURCE_HPP

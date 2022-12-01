@@ -23,4 +23,4 @@ using lpcstr_t = const s8_t *;
 
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_TYPES_HPP

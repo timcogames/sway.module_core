@@ -26,14 +26,14 @@ emscripten::class_<NodeIdx>("NodeIdx")
 #endif
 EMSCRIPTEN_BINDING_END()
 
-std::string NodeIdx::chainToStr(const NodeIdx::chain_t &chain) {
+auto NodeIdx::chainToStr(const NodeIdx::chain_t &chain) -> std::string {
   std::ostringstream oss;
   std::copy(chain.begin(), chain.end() - 1, std::ostream_iterator<int>(oss, ", "));
   oss << "[" << chain.back() << "]";
   return oss.str();
 }
 
-int NodeIdx::getMatchDepth(const NodeIdx::chain_t &lhs, const NodeIdx::chain_t &rhs) {
+auto NodeIdx::getMatchDepth(const NodeIdx::chain_t &lhs, const NodeIdx::chain_t &rhs) -> int {
   auto lhs_temp = lhs;
   auto rhs_temp = rhs;
   auto rhs_size = (int)rhs_temp.size();
@@ -69,18 +69,18 @@ void NodeIdx::setChain(const NodeIdx::chain_t &chain, NodeIdx::index_t idx) {
   }
 }
 
-NodeIdx::chain_t NodeIdx::getChain() const { return chainLinks_; }
+auto NodeIdx::getChain() const -> NodeIdx::chain_t { return chainLinks_; }
 
-NodeIdx::chain_t NodeIdx::getParent() const {
+auto NodeIdx::getParent() const -> NodeIdx::chain_t {
   NodeIdx::chain_t parent = getChain();
   parent.pop_back();
 
   return parent;
 }
 
-int NodeIdx::getDepth() const { return (int)chainLinks_.size(); }
+auto NodeIdx::getDepth() const -> int { return (int)chainLinks_.size(); }
 
-NodeIdx::index_t NodeIdx::getIdxAt(int idx) const { return chainLinks_[idx]; }
+auto NodeIdx::getIdxAt(int idx) const -> NodeIdx::index_t { return chainLinks_[idx]; }
 
 bool NodeIdx::equal(const NodeIdx &other) { return chainEqual(other.getChain()); }
 
@@ -88,7 +88,7 @@ bool NodeIdx::chainEqual(const NodeIdx::chain_t &other) {
   return chainLinks_.size() == other.size() && std::equal(chainLinks_.begin(), chainLinks_.end(), other.begin());
 }
 
-std::string NodeIdx::toStr() const {
+auto NodeIdx::toStr() const -> std::string {
   std::string str = "[";
   for (int i = 0; i < getDepth(); ++i) {
     str += std::to_string(getIdxAt(i));

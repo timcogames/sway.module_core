@@ -11,8 +11,8 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
-/*!
- * \brief Класс для хранения информации о версии.
+/**
+ * @brief Класс для хранения информации о версии.
  */
 class Version {
 public:
@@ -64,13 +64,13 @@ public:
   inline bool operator<=(const Version &version) const { return *this < version || *this == version; }
 
 private:
-  s32_t major_; /*!< Главный номер версии. */
-  s32_t minor_; /*!< Вспомогательный номер версии. */
-  s32_t patch_; /*!< Уровень исправлений. */
-  std::string extra_; /*!< Дополнительные символы. */
+  s32_t major_;  // Главный номер версии.
+  s32_t minor_;  // Вспомогательный номер версии.
+  s32_t patch_;  // Уровень исправлений.
+  std::string extra_;  // Дополнительные символы.
 };
 
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_VERSION_HPP

@@ -33,4 +33,4 @@ struct GenericValueData : public ValueData {
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_DETAIL_VALUEDATA_HPP

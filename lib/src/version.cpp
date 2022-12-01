@@ -20,7 +20,7 @@ Version::Version(s32_t major, s32_t minor, s32_t patch, lpcstr_t extra)
     , patch_(patch)
     , extra_(extra) {}
 
-s32_t Version::compare(const Version &version) const {
+auto Version::compare(const Version &version) const -> s32_t {
   if (major_ < version.getMajor()) {
     return -1;
   }

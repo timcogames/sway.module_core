@@ -40,11 +40,11 @@ public:
   }
 
 protected:
-  ProcAddress_t invoker_; /*!< Указатель на функции. */
+  ProcAddress_t invoker_;  // Указатель на функции.
 };
 
 NAMESPACE_END(binding)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_BINDING_FUNCTION_HPP

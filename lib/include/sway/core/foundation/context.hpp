@@ -66,7 +66,7 @@ public:
   }
 
 private:
-  std::unordered_map<std::string, std::shared_ptr<Subsystem>> subsystems_; /*!< Контейнер объектов. */
+  std::unordered_map<std::string, std::shared_ptr<Subsystem>> subsystems_;  // Контейнер объектов.
 };
 
 NAMESPACE_END(foundation)

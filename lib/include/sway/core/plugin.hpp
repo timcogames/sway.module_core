@@ -36,4 +36,4 @@ private:
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_PLUGIN_HPP

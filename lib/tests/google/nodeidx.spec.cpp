@@ -12,7 +12,7 @@ using namespace sway::core::container;
 class NodeIdxTest : public ::testing::Test {
 public:
   MTHD_OVERRIDE(void SetUp()) {
-    /*!
+    /**
      *    ROOT (-1)
      *    └── SUPERVISOR (0)
      *         └── WORKER (1)

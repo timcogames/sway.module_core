@@ -19,11 +19,11 @@ EMSCRIPTEN_BINDING_END()
 AEventHandler::AEventHandler(Eventable *receiver)
     : receiver_(receiver) {}
 
-Eventable *AEventHandler::getSender() const { return sender_; }
+auto AEventHandler::getSender() const -> Eventable * { return sender_; }
 
 void AEventHandler::setSender(Eventable *sender) { sender_ = sender; }
 
-Eventable *AEventHandler::getReceiver() const { return receiver_; }
+auto AEventHandler::getReceiver() const -> Eventable * { return receiver_; }
 
 NAMESPACE_END(foundation)
 NAMESPACE_END(core)

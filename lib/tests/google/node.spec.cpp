@@ -76,7 +76,7 @@ TEST_F(NodeTest, AddRemove) {
   addDoctorToSupervisor();
   addInternCollectionToDoctor();
 
-  /*!
+  /**
    *    ROOT (-1)
    *    └── SUPERVISOR (0)
    *         └── DOCTOR (0)

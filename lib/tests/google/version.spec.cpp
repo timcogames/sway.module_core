@@ -6,7 +6,6 @@ using namespace sway;
 
 /**
  * @brief Убеждаемся, что конструктор по умолчанию приводит все компоненты к нулю.
- *
  */
 TEST(VersionTest, DefaultConstructor) {
   const core::Version version;
@@ -20,7 +19,6 @@ TEST(VersionTest, DefaultConstructor) {
 /**
  * @brief Убеждаемся, что конструктор устанавливает все значения компонентов в те,
  *        которые были заданы.
- *
  */
 TEST(VersionTest, ComponentConstructor) {
   const s32_t major = 1, minor = 2, patch = 3;
@@ -34,7 +32,6 @@ TEST(VersionTest, ComponentConstructor) {
 
 /**
  * @brief Убеждаемся, что установка всех компонентов версии проходит правильно.
- *
  */
 TEST(VersionTest, Setters) {
   const s32_t major = 1, minor = 2, patch = 3;
@@ -55,7 +52,6 @@ TEST(VersionTest, Setters) {
 
 /**
  * @brief Тест для оператора равенства.
- *
  */
 TEST(VersionTest, EqualityOperator) {
   const core::Version version(1, 2, 3);
@@ -65,7 +61,6 @@ TEST(VersionTest, EqualityOperator) {
 
 /**
  * @brief Тест для оператора неравенства.
- *
  */
 TEST(VersionTest, NonEqualityOperator) {
   const core::Version version(1, 2, 3);
@@ -76,7 +71,6 @@ TEST(VersionTest, NonEqualityOperator) {
 
 /**
  * @brief Убеждаемся, что сравнение номеров версий происходит правильно.
- *
  */
 TEST(VersionTest, ComparisonOperation) {
   const core::Version version(5, 2, 3);

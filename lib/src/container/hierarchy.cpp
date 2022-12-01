@@ -26,7 +26,7 @@ EMSCRIPTEN_BINDING_END()
 
 Hierarchy::Hierarchy() { root_ = std::make_shared<Node>(); }
 
-std::optional<std::shared_ptr<Node>> Hierarchy::findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx) {
+auto Hierarchy::findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx) -> std::optional<std::shared_ptr<Node>> {
   std::optional<std::shared_ptr<Node>> retrieved = parent;
   for (int i = NODEIDX_ROOT_DEPTH; i < nodeIdx.getDepth(); ++i) {
     if (nodeIdx.getIdxAt(i) >= retrieved->get()->getNumOfChildNodes()) {
@@ -39,7 +39,7 @@ std::optional<std::shared_ptr<Node>> Hierarchy::findNode(std::shared_ptr<Node> p
   return retrieved;
 }
 
-std::shared_ptr<Node> Hierarchy::getRootNode() { return root_; }
+auto Hierarchy::getRootNode() -> std::shared_ptr<Node> { return root_; }
 
 void Hierarchy::setRootNode(std::shared_ptr<Node> root) { root_ = root; }
 

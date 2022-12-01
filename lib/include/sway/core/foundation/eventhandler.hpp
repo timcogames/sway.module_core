@@ -21,9 +21,9 @@ NAMESPACE_BEGIN(foundation)
 
 class Eventable;
 
-/*!
- * \class AEventHandler
- * \brief Описывает обработчик для события.
+/**
+ * @class AEventHandler
+ * @brief Описывает обработчик для события.
  */
 class AEventHandler {
 public:
@@ -46,10 +46,10 @@ public:
   void setEventName(const std::string &name) { eventname_ = name; }
 
 protected:
-  Eventable *sender_ = nullptr; /*!< Отправитель события. */
-  Eventable *receiver_; /*!< Слушатель события. */
-  std::string uniqueid_; /*!< Уникальный идентификатор, который будет связан с функцией обработчика событий. */
-  std::string eventname_; /*!< Название события. */
+  Eventable *sender_ = nullptr;  // Отправитель события.
+  Eventable *receiver_;  // Слушатель события.
+  std::string uniqueid_;  // Уникальный идентификатор, который будет связан с функцией обработчика событий.
+  std::string eventname_;  // Название события.
 };
 
 #ifdef _EMSCRIPTEN

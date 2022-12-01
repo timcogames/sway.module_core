@@ -37,7 +37,7 @@ Node::Node()
 
 Node::~Node() { children_.clear(); }
 
-u32_t Node::traverse(utils::Traverser *traverser) {
+auto Node::traverse(utils::Traverser *traverser) -> u32_t {
   switch (static_cast<utils::Traverser::Action>(traverser->visit(this))) {
     case utils::Traverser::Action::CONTINUE:
       for (const auto &node : getChildNodes()) {
@@ -125,9 +125,9 @@ void Node::recursiveRemoveChainLinks(std::shared_ptr<Node> child, NodeIdx parent
   }
 }
 
-std::vector<std::shared_ptr<Node>> Node::getChildNodes() { return children_; }
+auto Node::getChildNodes() -> std::vector<std::shared_ptr<Node>> { return children_; }
 
-std::shared_ptr<Node> Node::getChildNode(const NodeIdx &idx) const {
+auto Node::getChildNode(const NodeIdx &idx) const -> std::shared_ptr<Node> {
   auto iter = children_.begin();
   while (iter != children_.end()) {
     if ((*iter)->chainEqual(idx.getChain())) {
@@ -143,7 +143,7 @@ std::shared_ptr<Node> Node::getChildNode(const NodeIdx &idx) const {
   return std::make_shared<Node>();
 }
 
-std::optional<std::shared_ptr<Node>> Node::getChildAt(int targetIdx) const {
+auto Node::getChildAt(int targetIdx) const -> std::optional<std::shared_ptr<Node>> {
   if (targetIdx >= 0 && targetIdx < getNumOfChildNodes()) {
     return children_[targetIdx];
   }
@@ -155,11 +155,11 @@ int Node::getNumOfChildNodes() const { return static_cast<int>(children_.size())
 
 void Node::setNodeIdx(const NodeIdx::chain_t &chain, int last) { idx_.setChain(chain, last); }
 
-NodeIdx Node::getNodeIdx() { return idx_; }
+auto Node::getNodeIdx() -> NodeIdx { return idx_; }
 
 void Node::setParentNode(std::weak_ptr<Node> parent) { parent_ = parent; }
 
-std::optional<std::shared_ptr<Node>> Node::getParentNode() {
+auto Node::getParentNode() -> std::optional<std::shared_ptr<Node>> {
   std::shared_ptr<Node> ptr = parent_.lock();
   if (!ptr) {
     return std::nullopt;
@@ -168,7 +168,7 @@ std::optional<std::shared_ptr<Node>> Node::getParentNode() {
   return ptr;
 }
 
-std::shared_ptr<Node> Node::getParentNodeByDepth(int depth) {
+auto Node::getParentNodeByDepth(int depth) -> std::shared_ptr<Node> {
   auto node = shared_from_this();
   while (depth != 0 && node->getNodeIdx().getDepth() > depth) {
     node = getParentNode().value();

@@ -9,18 +9,17 @@ NAMESPACE_BEGIN(intrusive)
 
 /**
  * @brief Перечисление приоритетов.
- *
  */
 enum Priorities {
-  kPriority_VeryLow = 0, /*!< Очень низкий приоритет. */
-  kPriority_Low = 1, /*!< Низкий приоритет. */
-  kPriority_Normal = 2, /*!< Средний приоритет. */
-  kPriority_High = 3, /*!< Высокий приоритет. */
-  kPriority_VeryHigh = 4 /*!< Очень высокий приоритет. */
+  kPriority_VeryLow = 0,  // Очень низкий приоритет.
+  kPriority_Low = 1,  // Низкий приоритет.
+  kPriority_Normal = 2,  // Средний приоритет.
+  kPriority_High = 3,  // Высокий приоритет.
+  kPriority_VeryHigh = 4  // Очень высокий приоритет.
 };
 
 NAMESPACE_END(intrusive)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_INTRUSIVE_PRIORITIES_HPP

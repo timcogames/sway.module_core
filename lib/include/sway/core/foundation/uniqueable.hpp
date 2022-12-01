@@ -27,7 +27,7 @@ public:
   void setUid(const std::string &uid) { uid_ = uid; }
 
 private:
-  std::optional<std::string> uid_; /*!< Уникальный идентификатор. */
+  std::optional<std::string> uid_;  // Уникальный идентификатор.
 };
 
 NAMESPACE_END(foundation)

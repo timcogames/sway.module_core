@@ -8,4 +8,4 @@
 
 #define ENUM_BITMASK(x) (1 << (x))
 
-#endif
+#endif  // SWAY_DEFINES_HPP

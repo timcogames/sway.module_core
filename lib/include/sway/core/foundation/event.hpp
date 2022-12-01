@@ -25,8 +25,8 @@ NAMESPACE_BEGIN(foundation)
 
 class EventWrapper;
 
-/*!
- * \brief Базовый интерфейс для описания всех типов событий.
+/**
+ * @brief Базовый интерфейс для описания всех типов событий.
  */
 class Event {
 public:

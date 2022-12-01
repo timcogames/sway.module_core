@@ -22,14 +22,14 @@ public:
 
   auto getExt() const -> std::string;
 
-  bool isExists(const std::string &filename);
+  auto isExists(const std::string &filename) -> bool;
 
-  bool isEmpty() const;
+  auto isEmpty() const -> bool;
 
   auto toString() const -> std::string;
 
 private:
-  std::string _path; /*!< Путь к файлу или каталогу. */
+  std::string _path;  // Путь к файлу или каталогу.
 };
 
 NAMESPACE_END(io)
@@ -37,4 +37,4 @@ NAMESPACE_END(generic)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif
+#endif  // SWAY_CORE_GENERIC_IO_PATH_HPP
