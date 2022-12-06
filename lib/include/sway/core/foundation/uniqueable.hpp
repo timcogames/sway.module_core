@@ -15,19 +15,20 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
+template <typename TValueType>
 class Uniqueable {
 public:
-  explicit Uniqueable(const std::optional<std::string> &uid)
-      : uid_((uid != std::nullopt) ? uid : misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC)) {}
+  Uniqueable(const std::optional<TValueType> &uid)
+      : uid_(uid) {}
 
   ~Uniqueable() = default;
 
-  [[nodiscard]] auto getUid() const { return uid_; }
+  [[nodiscard]] auto getUid() const -> std::optional<TValueType> { return uid_; }
 
-  void setUid(const std::string &uid) { uid_ = uid; }
+  void setUid(const std::optional<TValueType> &uid) { uid_ = uid; }
 
 private:
-  std::optional<std::string> uid_;  // Уникальный идентификатор.
+  std::optional<TValueType> uid_;  // Уникальный идентификатор.
 };
 
 NAMESPACE_END(foundation)

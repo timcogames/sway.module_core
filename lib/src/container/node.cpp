@@ -151,7 +151,7 @@ auto Node::getChildAt(int targetIdx) const -> std::optional<std::shared_ptr<Node
   return std::nullopt;
 }
 
-int Node::getNumOfChildNodes() const { return static_cast<int>(children_.size()); }
+auto Node::getNumOfChildNodes() const -> int { return static_cast<int>(children_.size()); }
 
 void Node::setNodeIdx(const NodeIdx::chain_t &chain, int last) { idx_.setChain(chain, last); }
 
@@ -179,9 +179,9 @@ auto Node::getParentNodeByDepth(int depth) -> std::shared_ptr<Node> {
 
 void Node::setAsRoot() { idx_.setAsRoot(); }
 
-bool Node::equal(std::shared_ptr<Node> other) { return other->chainEqual(idx_.getChain()); }
+auto Node::equal(std::shared_ptr<Node> other) -> bool { return other->chainEqual(idx_.getChain()); }
 
-bool Node::chainEqual(NodeIdx::chain_t other) { return idx_.chainEqual(other); }
+auto Node::chainEqual(NodeIdx::chain_t other) -> bool { return idx_.chainEqual(other); }
 
 NAMESPACE_END(container)
 NAMESPACE_END(core)

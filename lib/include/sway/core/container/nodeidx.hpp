@@ -50,9 +50,9 @@ public:
 
   [[nodiscard]] auto getIdxAt(int idx) const -> NodeIdx::index_t;
 
-  bool equal(const NodeIdx &other);
+  auto equal(const NodeIdx &other) -> bool;
 
-  bool chainEqual(const NodeIdx::chain_t &other);
+  auto chainEqual(const NodeIdx::chain_t &other) -> bool;
 
   [[nodiscard]] auto toStr() const -> std::string;
 

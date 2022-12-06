@@ -8,7 +8,7 @@ NAMESPACE_BEGIN(io)
 FileSource::FileSource()
     : _fileOpened(false) {}
 
-bool FileSource::isFileOpened() const { return _fileOpened; }
+auto FileSource::isFileOpened() const -> bool { return _fileOpened; }
 
 NAMESPACE_END(io)
 NAMESPACE_END(generic)

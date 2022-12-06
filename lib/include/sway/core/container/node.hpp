@@ -65,15 +65,15 @@ public:
 
   auto getParentNodeByDepth(int depth) -> std::shared_ptr<Node>;
 
-  bool equal(std::shared_ptr<Node> other);
+  auto equal(std::shared_ptr<Node> other) -> bool;
 
-  bool chainEqual(NodeIdx::chain_t other);
+  auto chainEqual(NodeIdx::chain_t other) -> bool;
 
   void setAsRoot();
 
   void setVisible(bool value) { visible_ = value; }
 
-  bool isVisible() const { return visible_; }
+  auto isVisible() const -> bool { return visible_; }
 
 protected:
   template <typename T>
