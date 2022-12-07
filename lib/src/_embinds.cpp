@@ -29,6 +29,7 @@ EMSCRIPTEN_BINDINGS(sway_core) {
 
 EMSCRIPTEN_BINDINGS(sway_core_container) {
   ObjectClassMetadata::bindEmscriptenClass();
+  Event::registerEmsClass();
   NodeIdx::bindEmscriptenClass();
   Node::bindEmscriptenClass();
   Hierarchy::bindEmscriptenClass();

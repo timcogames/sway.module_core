@@ -25,6 +25,8 @@ NAMESPACE_BEGIN(foundation)
 
 class EventWrapper;
 
+using EventDataType = void *;
+
 /**
  * @brief Базовый интерфейс для описания всех типов событий.
  */
@@ -53,7 +55,7 @@ public:
   PURE_VIRTUAL(auto type() const -> u32_t);  // clang-format on
 
   // clang-format off
-  PURE_VIRTUAL(auto data() const -> void *);  // clang-format on
+  PURE_VIRTUAL(auto data() const -> EventDataType);  // clang-format on
 
   template <typename TResult>
   auto getConcreteData() {
@@ -77,12 +79,12 @@ public:
   }
 
   // clang-format off
-  MTHD_OVERRIDE(auto data() const -> void *) {  // clang-format on
-    return call<void *>("data");
+  MTHD_OVERRIDE(auto data() const -> EventDataType) {  // clang-format on
+    return call<EventDataType const>("data");
   }
 
   MTHD_OVERRIDE(const ObjectClassMetadata *getSuperclass() const) {
-    return call<const ObjectClassMetadata *>("getSuperclass");
+    return call<const ObjectClassMetadata *const>("getSuperclass");
   }
 
   MTHD_OVERRIDE(const std::string &getClassname() const) { return call<const std::string &>("getClassname"); }
