@@ -30,11 +30,10 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 class Node : public std::enable_shared_from_this<Node>, public utils::Visitable, public foundation::Eventable {
-  DECLARE_EVENT(EVT_ADDED, NodeAdded)
-  DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
-
 public:
   DECLARE_EMSCRIPTEN_BINDING()
+  DECLARE_EVENT(EVT_ADDED, NodeAdded)
+  DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
 
   Node();
 

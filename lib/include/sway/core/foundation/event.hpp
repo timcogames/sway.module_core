@@ -38,7 +38,9 @@ public:
         .allow_subclass<EventWrapper>("EventWrapper")
         .function("id", &Event::id, emscripten::pure_virtual())
         .function("type", &Event::type, emscripten::pure_virtual())
-        .function("data", &Event::data, emscripten::pure_virtual());
+        .function("data", &Event::data, emscripten::allow_raw_pointers(), emscripten::pure_virtual())
+        .function("getSuperclass", &Event::getSuperclass, emscripten::allow_raw_pointers(), emscripten::pure_virtual())
+        .function("getClassname", &Event::getClassname, emscripten::pure_virtual());
 #endif
   }
 
@@ -66,7 +68,7 @@ public:
 
   // clang-format off
   MTHD_OVERRIDE(auto id() const -> std::string) {  // clang-format on
-    return call<u32_t>("id");
+    return call<std::string>("id");
   }
 
   // clang-format off
@@ -78,6 +80,12 @@ public:
   MTHD_OVERRIDE(auto data() const -> void *) {  // clang-format on
     return call<void *>("data");
   }
+
+  MTHD_OVERRIDE(const ObjectClassMetadata *getSuperclass() const) {
+    return call<const ObjectClassMetadata *>("getSuperclass");
+  }
+
+  MTHD_OVERRIDE(const std::string &getClassname() const) { return call<const std::string &>("getClassname"); }
 };
 #endif
 
