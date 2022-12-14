@@ -6,14 +6,12 @@
 
 cmake v3.13.0
 
-boost v1.78.0 (под тестирование)
-
 ## Contributing
 
 См. [CONTRIBUTING](./github/CONTRIBUTING.md)
 
-[travis-svg]: https://travis-ci.org/timcogames/sway.module_core.svg?branch=master
-[travis-url]: https://travis-ci.org/timcogames/sway.module_core
+<!-- [travis-svg]: https://travis-ci.org/timcogames/sway.module_core.svg?branch=master
+[travis-url]: https://travis-ci.org/timcogames/sway.module_core -->
 [coverage-svg]: https://coveralls.io/repos/github/timcogames/sway.module_core/badge.svg?branch=master
 [coverage-url]: https://coveralls.io/github/timcogames/sway.module_core?branch=master
 [bettercodehub-svg]: https://bettercodehub.com/edge/badge/timcogames/sway.module_core?branch=master

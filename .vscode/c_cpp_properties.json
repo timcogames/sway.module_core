@@ -11,7 +11,7 @@
         "/Users/apriori85/Documents/Third-party/boost_1_78_0",
         "/Users/apriori85/Documents/Third-party/googletest/googletest/include",
         "/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten/system/include",
-        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include"
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include"
       ],
       "browse": {
         "path": [
@@ -19,7 +19,7 @@
           "/Users/apriori85/Documents/Third-party/boost_1_78_0",
           "/Users/apriori85/Documents/Third-party/googletest/googletest/include",
           "/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten/system/include",
-          "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.1.sdk/usr/include"
+          "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include"
         ],
         "limitSymbolsToIncludedHeaders": true,
         "databaseFilename": ""

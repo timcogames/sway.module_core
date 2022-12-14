@@ -79,6 +79,8 @@ set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
 include_directories("${MODULE_CORE_DIR}/lib/include")
+# include_directories("/Library/Developer/CommandLineTools/usr/include/c++/v1")
+include_directories("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
 file(GLOB_RECURSE MODULE_CORE_HEADERS "${MODULE_CORE_DIR}/lib/include/*.*")
