@@ -20,6 +20,9 @@ option(CUSTOM_EMSCRIPTEN_ROOT_DIR "Emscripten root directory" OFF)
 option(CUSTOM_BOOST_ROOT_DIR "Boost root directory" OFF)
 option(CUSTOM_GTEST_ROOT_DIR "GTest root directory" OFF)
 
+# set(CMAKE_OSX_SYSROOT "/Library/Developer/CommandLineTools/")
+set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
+
 if (NOT DEFINED CMAKE_TOOLCHAIN_FILE AND MODULE_USE_EMSCRIPTEN)
   set(CMAKE_TOOLCHAIN_FILE "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cmake/Modules/Platform/Emscripten.cmake")
   include(${CMAKE_TOOLCHAIN_FILE})
@@ -79,8 +82,8 @@ set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
 include_directories("${MODULE_CORE_DIR}/lib/include")
+# include_directories("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include")
 # include_directories("/Library/Developer/CommandLineTools/usr/include/c++/v1")
-include_directories("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
 file(GLOB_RECURSE MODULE_CORE_HEADERS "${MODULE_CORE_DIR}/lib/include/*.*")
