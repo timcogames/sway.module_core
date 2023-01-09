@@ -4,8 +4,12 @@
 #include <sway/core/binding/function.hpp>
 #include <sway/core/generic/io/path.hpp>
 #include <sway/core/plugininfo.hpp>
+#include <sway/core/runtime/exceptions/argumentnullexception.hpp>
+#include <sway/core/runtime/exceptions/librarynotfoundexception.hpp>
+#include <sway/core/runtime/exceptions/symbolnotfoundexception.hpp>
 #include <sway/namespacemacros.hpp>
 
+#include <dlfcn.h>  // dlopen, dlclose, dlsym
 #include <string>
 
 NAMESPACE_BEGIN(sway)
@@ -23,14 +27,24 @@ public:
 
   ~Plugin();
 
-  bool isLoaded() const;
+  [[nodiscard]] bool isLoaded() const;
 
-  auto getInfo() const -> PluginInfo;
+  [[nodiscard]] auto getInfo() const -> PluginInfo;
 
   void initialize(PluginFunctionSet *functions);
 
+  template <typename TCallbackFunc>
+  auto getMethod(lpcstr_t name) const -> TCallbackFunc {
+    auto func = (core::binding::ProcAddress_t)dlsym(handle_, name);
+    if (!func) {
+      throw runtime::exceptions::SymbolNotFoundException(name, dlerror());
+    }
+
+    return static_cast<TCallbackFunc>(func);
+  }
+
 private:
-  DlibHandle_t _handle;
+  DlibHandle_t handle_;
 };
 
 NAMESPACE_END(core)
