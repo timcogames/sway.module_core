@@ -33,9 +33,11 @@ endif ()
 
 project(${META_CORE_PRJNAME} VERSION ${META_CORE_VERSION} LANGUAGES CXX)
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC" )
+
 if (MODULE_USE_EMSCRIPTEN)
   set(CMAKE_CXX_COMPILER "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/em++")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --bind -Os")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --bind -Os -std=c++17")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_EMSCRIPTEN")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-unicode-whitespace \
       -Wno-unused-local-typedef -Wno-invalid-noreturn -Wno-unused-command-line-argument")
@@ -80,6 +82,7 @@ endif ()
 set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
+include_directories("${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cache/sysroot/include")
 include_directories("${MODULE_CORE_DIR}/lib/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки

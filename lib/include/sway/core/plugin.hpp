@@ -23,7 +23,7 @@ using PluginInitializeFunc_t = binding::TFunction<void(PluginFunctionSet *)>;
 
 class Plugin {
 public:
-  Plugin(const generic::io::Path &filepath);
+  Plugin(const generic::io::Path &filepath, int flags);
 
   ~Plugin();
 

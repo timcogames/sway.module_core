@@ -3,12 +3,12 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
-Plugin::Plugin(const generic::io::Path &filepath) {
+Plugin::Plugin(const generic::io::Path &filepath, int flags) {
   if (filepath.isEmpty()) {
     throw runtime::exceptions::ArgumentNullException("filepath");
   }
 
-  handle_ = dlopen(filepath.toString().c_str(), RTLD_LAZY | RTLD_GLOBAL);
+  handle_ = dlopen(filepath.toString().c_str(), flags);
   if (!isLoaded()) {
     throw runtime::exceptions::LibraryNotFoundException(filepath.getFilename(), dlerror());
   }

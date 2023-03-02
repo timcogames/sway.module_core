@@ -9,7 +9,7 @@ mkdir build && cd ./build
 ### Конфигурация сборки
 
 ```console
-cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten  -DMODULE_USE_EMSCRIPTEN=ON ../
+cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten -DMODULE_USE_EMSCRIPTEN=ON ../
 ```
 
 #### для Google тестов
