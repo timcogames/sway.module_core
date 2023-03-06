@@ -10,7 +10,7 @@ using namespace sway;
 using namespace sway::core::foundation;
 using namespace sway::core::container;
 
-#ifdef _EMSCRIPTEN
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDING)
 #  include <emscripten/bind.h>
 
 std::vector<s32_t> toIntegerVec(const emscripten::val &data) {
@@ -34,4 +34,5 @@ EMSCRIPTEN_BINDINGS(sway_core_container) {
   Node::bindEmscriptenClass();
   Hierarchy::bindEmscriptenClass();
 }
+
 #endif

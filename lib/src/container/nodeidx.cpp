@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
@@ -13,7 +13,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(NodeIdx)
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 emscripten::class_<NodeIdx>("NodeIdx")
     .constructor<>()
     .constructor<std::vector<s32_t>>()

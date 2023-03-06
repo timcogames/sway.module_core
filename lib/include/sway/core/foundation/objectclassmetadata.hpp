@@ -6,7 +6,7 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>

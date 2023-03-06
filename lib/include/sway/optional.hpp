@@ -5,7 +5,7 @@
 
 #include <optional>
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
@@ -13,7 +13,8 @@
 
 NAMESPACE_BEGIN(sway)
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
+
 template <typename T>
 struct OptionalAccess {
   static emscripten::val value(const T &op) { return emscripten::val(op.value()); }
@@ -31,6 +32,7 @@ emscripten::class_<std::optional<T>> register_optional(const char *name) {
       .function("value", OptionalAccess<OptionalType>::value)
       .function("reset", OptionalAccess<OptionalType>::reset);
 }
+
 #endif
 
 NAMESPACE_END(sway)

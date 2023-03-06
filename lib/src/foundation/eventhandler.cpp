@@ -6,7 +6,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 EMSCRIPTEN_BINDING_BEGIN(AEventHandler)
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 emscripten::class_<AEventHandler>("AEventHandler")
     .allow_subclass<AEventHandlerWrapper>("AEventHandlerWrapper", emscripten::constructor<Eventable *>())
     .function("invoke", &AEventHandler::invoke, emscripten::allow_raw_pointers(), emscripten::pure_virtual())

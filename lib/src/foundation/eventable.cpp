@@ -1,7 +1,7 @@
 #include <sway/core/foundation/eventable.hpp>
 #include <sway/core/misc/guid.hpp>
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
@@ -12,7 +12,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 EMSCRIPTEN_BINDING_BEGIN(Eventable)
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 emscripten::class_<Eventable>("Eventable")
     .constructor<>()
     .function("subscribe", &Eventable::subscribe, emscripten::allow_raw_pointers())

@@ -31,7 +31,7 @@ private:
   HandlerFunction_t function_;  // Функцию обработчика событий.
 };
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 class EventHandlerImpl : public AEventHandler {
 public:
   static void registerEmsClass() {

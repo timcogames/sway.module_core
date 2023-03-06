@@ -13,7 +13,7 @@
 #include <memory>
 #include <string>
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
@@ -35,7 +35,7 @@ public:
   DECLARE_SUPERCLASS()
 
   static void registerEmsClass() {
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
     emscripten::class_<Event>("Event")
         .allow_subclass<EventWrapper>("EventWrapper")
         .function("id", &Event::id, emscripten::pure_virtual())
@@ -63,7 +63,7 @@ public:
   }
 };
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 class EventWrapper : public emscripten::wrapper<Event> {
 public:
   EMSCRIPTEN_WRAPPER(EventWrapper);

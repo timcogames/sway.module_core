@@ -6,7 +6,7 @@
 #include <algorithm>  // std::remove_if
 #include <functional>
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
@@ -17,7 +17,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(Node)
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 emscripten::class_<Node>("Node")
     .smart_ptr_constructor("Node", &std::make_shared<Node>)
     .function("addChildNode", &Node::addChildNode, emscripten::allow_raw_pointers())
@@ -94,7 +94,7 @@ void Node::recursiveAddChainLinks(std::shared_ptr<Node> child, NodeIdx parentNod
 void Node::removeChildNode(std::shared_ptr<Node> child) {
   children_.erase(std::remove_if(children_.begin(), children_.end(),
                       [&](std::shared_ptr<Node> node) {
-                        bool result = node->equal(child);
+                        bool const result = node->equal(child);
                         if (result) {
                           for (auto childNode : child->getChildNodes()) {
                             recursiveRemoveChainLinks(childNode, getNodeIdx());

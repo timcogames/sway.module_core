@@ -1,6 +1,6 @@
 #include <sway/core/container/hierarchy.hpp>
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
@@ -11,7 +11,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(Hierarchy)
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 emscripten::class_<NodeData>("NodeData").property("nodeidx", &NodeData::nodeidx);
 
 emscripten::register_vector<NodeData>("NodeDataVec");

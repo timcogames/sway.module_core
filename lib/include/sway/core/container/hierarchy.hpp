@@ -18,7 +18,7 @@
 #include <string>
 #include <vector>
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
@@ -33,7 +33,7 @@ struct NodeData {
   std::string name;
 };
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 using NodeDataList = emscripten::val;
 #else
 using NodeDataList = std::vector<NodeData>;

@@ -9,7 +9,7 @@
 
 #include <string>
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
@@ -52,7 +52,7 @@ protected:
   std::string eventname_;  // Название события.
 };
 
-#ifdef _EMSCRIPTEN
+#ifdef EMSCRIPTEN_PLATFORM
 class AEventHandlerWrapper : public emscripten::wrapper<AEventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(AEventHandlerWrapper);
