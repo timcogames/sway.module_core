@@ -12,8 +12,6 @@ cmake v3.13.0
 
 [coverage-svg]: https://coveralls.io/repos/github/timcogames/sway.module_core/badge.svg?branch=master
 [coverage-url]: https://coveralls.io/github/timcogames/sway.module_core?branch=master
-[bettercodehub-svg]: https://bettercodehub.com/edge/badge/timcogames/sway.module_core?branch=master
-[bettercodehub-url]: https://bettercodehub.com/
 [codecov-svg]: https://codecov.io/gh/timcogames/sway.module_core/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/timcogames/sway.module_core
 [codedocs-svg]: https://codedocs.xyz/timcogames/sway.module_core.svg
