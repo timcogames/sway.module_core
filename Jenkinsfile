@@ -5,7 +5,9 @@ node {
         dir('./build') {
             sh '/opt/homebrew/Cellar/cmake/3.22.1/bin/cmake -DCUSTOM_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest -DMODULE_CORE_ENABLE_TESTS=ON -DMODULE_CORE_ENABLE_COVERAGE=ON ../'
             sh '/opt/homebrew/bin/cmake --build ./'
-            sh '/opt/homebrew/opt/gcovr/bin/gcovr --branches --xml-pretty -r .'
+
+            sh '/opt/homebrew/opt/lcov/bin/lcov --directory ./build/ --capture --output-file ./code_coverage.info -rc lcov_branch_coverage=1'
+            sh '/opt/homebrew/opt/lcov/bin/genhtml code_coverage.info --branch-coverage --output-directory ./code_coverage_report/'
         }
     }
 }
