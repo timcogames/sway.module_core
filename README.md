@@ -1,6 +1,6 @@
 # sway.module_core
 
-[![codecov][codecov-svg]][codecov-url] [![Coverage Status][coverage-svg]][coverage-url] [![BCH compliance][bettercodehub-svg]][bettercodehub-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
+[![codecov][codecov-svg]][codecov-url] [![Coverage Status][coverage-svg]][coverage-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
 
 ## Зависимости
 
