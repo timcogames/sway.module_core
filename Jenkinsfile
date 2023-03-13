@@ -10,8 +10,8 @@ node {
         sh '/opt/homebrew/opt/lcov/bin/lcov --directory ./build/ --capture --output-file ./code_coverage.info -rc lcov_branch_coverage=1'
         sh '/opt/homebrew/opt/lcov/bin/genhtml code_coverage.info --branch-coverage --output-directory ./code_coverage_report/'
 
-        withCredentials([string(credentialsId: 'codecov-token-core', variable: 'CODECOV_TOKEN')]) {
-            sh 'curl -s https://codecov.io/bash | bash'
+        withCredentials([string(credentialsId: 'CODECOV_TOKEN', variable: 'CODECOV')]) {
+            sh 'curl -s https://codecov.io/bash | bash -s - -t $CODECOV || echo "Codecov failed to upload"'
         }
 
         // publishHTML(target: [
