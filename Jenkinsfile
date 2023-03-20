@@ -18,7 +18,7 @@ node {
             reportName: "LCov Report"
         ])
 
-        withCredentials([string(credentialsId: 'CODECOV_TOKEN', variable: 'CODECOV')]) {
+        withCredentials([string(credentialsId: 'MODULE_CORE_CODECOV_TOKEN', variable: 'CODECOV')]) {
             sh 'curl -s https://codecov.io/bash | bash -s - -t $CODECOV || echo "Codecov failed to upload"'
         }
     }
