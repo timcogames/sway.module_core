@@ -23,7 +23,7 @@ option(CUSTOM_GTEST_ROOT_DIR "GTest root directory" OFF)
 
 set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
 
-if (NOT DEFINED CMAKE_TOOLCHAIN_FILE AND GLOBAL_EMSCRIPTEN_PLATFORM)
+if (GLOBAL_EMSCRIPTEN_PLATFORM AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
   set(CMAKE_TOOLCHAIN_FILE "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cmake/Modules/Platform/Emscripten.cmake")
   include(${CMAKE_TOOLCHAIN_FILE})
 endif ()
@@ -86,7 +86,9 @@ endif ()
 set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
-include_directories("${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cache/sysroot/include")
+if (GLOBAL_EMSCRIPTEN_PLATFORM)
+  include_directories("${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cache/sysroot/include")
+endif ()
 include_directories("${MODULE_CORE_DIR}/lib/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
