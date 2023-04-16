@@ -10,9 +10,11 @@
 #include <string>
 
 #ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
+#  ifdef EMSCRIPTEN_PLATFORM_USE_BINDING
+#    include <emscripten/bind.h>
+#  endif
 #endif
 
 NAMESPACE_BEGIN(sway)
@@ -52,7 +54,7 @@ protected:
   std::string eventname_;  // Название события.
 };
 
-#ifdef EMSCRIPTEN_PLATFORM
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDING)
 class AEventHandlerWrapper : public emscripten::wrapper<AEventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(AEventHandlerWrapper);

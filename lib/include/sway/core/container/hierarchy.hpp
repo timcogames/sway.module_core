@@ -19,9 +19,11 @@
 #include <vector>
 
 #ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
+#  ifdef EMSCRIPTEN_PLATFORM_USE_BINDING
+#    include <emscripten/bind.h>
+#  endif
 #endif
 
 NAMESPACE_BEGIN(sway)

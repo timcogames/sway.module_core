@@ -3,9 +3,11 @@
 #include <sstream>
 
 #ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
+#  ifdef EMSCRIPTEN_PLATFORM_USE_BINDING
+#    include <emscripten/bind.h>
+#  endif
 #endif
 
 NAMESPACE_BEGIN(sway)
@@ -13,7 +15,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(NodeIdx)
-#ifdef EMSCRIPTEN_PLATFORM
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDING)
 emscripten::class_<NodeIdx>("NodeIdx")
     .constructor<>()
     .constructor<std::vector<s32_t>>()

@@ -6,14 +6,16 @@
 #include <optional>
 
 #ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
+#  ifdef EMSCRIPTEN_PLATFORM_USE_BINDING
+#    include <emscripten/bind.h>
+#  endif
 #endif
 
 NAMESPACE_BEGIN(sway)
 
-#ifdef EMSCRIPTEN_PLATFORM
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDING)
 
 template <typename T>
 struct OptionalAccess {

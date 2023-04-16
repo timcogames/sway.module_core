@@ -7,9 +7,11 @@
 #include <sway/types.hpp>
 
 #ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/bind.h>
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
+#  ifdef EMSCRIPTEN_PLATFORM_USE_BINDING
+#    include <emscripten/bind.h>
+#  endif
 #endif
 
 #include <cstdlib>  // std::free
