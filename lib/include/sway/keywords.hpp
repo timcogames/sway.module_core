@@ -7,6 +7,8 @@
 
 #define PURE_VIRTUAL(...) virtual __VA_ARGS__ = 0
 
-#define MTHD_OVERRIDE(...) virtual __VA_ARGS__ override
+#define MTHD_VIRTUAL(...) virtual __VA_ARGS__
+
+#define MTHD_OVERRIDE(...) MTHD_VIRTUAL(__VA_ARGS__ override)
 
 #endif  // SWAY_KEYWORDS_HPP
