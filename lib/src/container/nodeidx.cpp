@@ -15,7 +15,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(NodeIdx)
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
 emscripten::class_<NodeIdx>("NodeIdx")
     .constructor<>()
     .constructor<std::vector<s32_t>>()

@@ -21,7 +21,7 @@ cmake -DCUSTOM_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest 
 #### для Jest тестов
 
 ```console
-cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten -DGLOBAL_EMSCRIPTEN_PLATFORM=ON -DMODULE_CORE_SHARED_LIB=ON ../
+cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten -DGLOBAL_EMSCRIPTEN_PLATFORM=ON -DGLOBAL_EMSCRIPTEN_PLATFORM_USE_BINDING=ON -DMODULE_CORE_SHARED_LIB=ON ../
 ```
 
 Опция сборки | Тип | Описание | По умолчанию
@@ -30,7 +30,7 @@ cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/D
 `MODULE_CORE_ENABLE_COVERAGE` | BOOL | Включает поддержку сбора данных о покрытии кода тестами | `OFF`
 `MODULE_CORE_ENABLE_TESTS` | BOOL | Включает построение тестов | `OFF`
 `GLOBAL_EMSCRIPTEN_PLATFORM` | BOOL | Использует Emscripten компилятор | `OFF`
-`GLOBAL_EMSCRIPTEN_USE_BINDING` | BOOL | Использует Emscripten привязки для функций | `OFF`
+`GLOBAL_EMSCRIPTEN_PLATFORM_USE_BINDING` | BOOL | Использует Emscripten привязки для функций | `OFF`
 `CUSTOM_EMSCRIPTEN_ROOT_DIR` | PATH | Путь до корневой директории Emscripten библиотеки | `-`
 `CUSTOM_BOOST_ROOT_DIR` | PATH | Путь до корневой директории Boost библиотеки (Не используется) | `-`
 `CUSTOM_GTEST_ROOT_DIR` | PATH | Путь до корневой директории GTest библиотеки | `-`

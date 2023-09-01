@@ -35,7 +35,7 @@ private:
 class EventHandlerImpl : public AEventHandler {
 public:
   static void registerEmsClass() {
-#  ifdef EMSCRIPTEN_USE_BINDING
+#  ifdef EMSCRIPTEN_PLATFORM_USE_BINDING
     emscripten::class_<EventHandlerImpl, emscripten::base<AEventHandler>>("EventHandlerImpl")
         .constructor<Eventable *, emscripten::val>()
         .function("invoke", &EventHandlerImpl::invoke, emscripten::allow_raw_pointers());

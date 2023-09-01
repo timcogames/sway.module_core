@@ -19,7 +19,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(Node)
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
 emscripten::class_<Node>("Node")
     .smart_ptr_constructor("Node", &std::make_shared<Node>)
     .function("addChildNode", &Node::addChildNode, emscripten::allow_raw_pointers())

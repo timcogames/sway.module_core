@@ -10,7 +10,8 @@ using namespace sway;
 using namespace sway::core::foundation;
 using namespace sway::core::container;
 
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
+
 #  include <emscripten/bind.h>
 
 std::vector<s32_t> toIntegerVec(const emscripten::val &data) {

@@ -54,7 +54,7 @@ protected:
   std::string eventname_;  // Название события.
 };
 
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
 class AEventHandlerWrapper : public emscripten::wrapper<AEventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(AEventHandlerWrapper);
