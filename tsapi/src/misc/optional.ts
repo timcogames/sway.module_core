@@ -5,3 +5,7 @@ export interface Optional<T> {
   has_value(): boolean;
   reset(): void;
 }
+
+export interface StringOpt {
+  set(val: string): void;
+};

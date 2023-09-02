@@ -1,7 +1,9 @@
 #ifndef SWAY_OPTIONAL_HPP
 #define SWAY_OPTIONAL_HPP
 
+#include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 #include <optional>
 
@@ -19,13 +21,26 @@ NAMESPACE_BEGIN(sway)
 
 template <typename T>
 struct OptionalAccess {
-  static emscripten::val value(const T &op) { return emscripten::val(op.value()); }
-  static bool has_value(T &op) { return op.has_value(); }
+  static auto value(const T &op) -> emscripten::val { return emscripten::val(op.value()); }
+  static auto has_value(T &op) -> bool { return op.has_value(); }
   static void reset(T &op) { op.reset(); }
 };
 
+class StringOptional {
+public:
+  DECLARE_EMSCRIPTEN_BINDING()
+
+  static auto set(std::string val) -> std::optional<std::string> {
+    if (val.empty()) {
+      return std::nullopt;
+    } else {
+      return val;
+    }
+  }
+};
+
 template <typename T>
-emscripten::class_<std::optional<T>> register_optional(const char *name) {
+emscripten::class_<std::optional<T>> register_optional(lpcstr_t name) {
   using OptionalType = std::optional<T>;
 
   return emscripten::class_<OptionalType>(name)

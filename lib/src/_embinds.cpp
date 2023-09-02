@@ -25,7 +25,10 @@ EMSCRIPTEN_BINDINGS(sway_core) {
   emscripten::register_vector<double>("DoubleVec");
   emscripten::register_vector<std::string>("StringVec");
 
+  register_optional<std::string>("optional<string>");
   register_optional<std::shared_ptr<Node>>("NodeOptSmartPtr");
+
+  StringOptional::bindEmscriptenClass();
 }
 
 EMSCRIPTEN_BINDINGS(sway_core_container) {
