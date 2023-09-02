@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"baseUrl": ".",
 		"module": "commonjs",
 		"target": "esnext",
 		"allowJs": true,
@@ -14,7 +15,7 @@
 		"types": [ "jest", "node" ],
 		"lib": [ "es6" ],
 		"paths": {
-			"*" : [ "./src/*", "./typings/*" ]
+			"@core/*" : [ "./src/*" ]
 		}
 	}
 }

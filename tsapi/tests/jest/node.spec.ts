@@ -5,6 +5,8 @@ import { useBridge } from "../../src/bridge";
 describe("Node", () => {
   it("added node", async () => {
     const { module } = await useBridge();
+    console.log(module);
+    console.log(module.Node);
 
     const root = new module.Node();
     const node = new module.Node();
