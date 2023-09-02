@@ -6,6 +6,6 @@ export interface Optional<T> {
   reset(): void;
 }
 
-export interface StringOpt {
+export interface StringOptional {
   set(val: string): void;
 };
