@@ -1,6 +1,8 @@
-#include <sway/optional.hpp>
+#include <sway/core/misc/optional.hpp>
 
 NAMESPACE_BEGIN(sway)
+NAMESPACE_BEGIN(core)
+NAMESPACE_BEGIN(misc)
 
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
 template <typename T>
@@ -21,4 +23,6 @@ emscripten::class_<StringOptional>("StringOptional").constructor<>().class_funct
 #endif
 EMSCRIPTEN_BINDING_END()
 
+NAMESPACE_END(misc)
+NAMESPACE_END(core)
 NAMESPACE_END(sway)

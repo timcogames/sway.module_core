@@ -1,6 +1,6 @@
 "use strict";
 
-import { Optional } from "./misc/optional";
+import { Optional } from "../misc/optional";
 import { NodeIdx } from "./nodeidx";
 
 export interface BaseIface<T> {

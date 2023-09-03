@@ -93,14 +93,14 @@ include_directories("${MODULE_CORE_DIR}/lib/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
 file(GLOB_RECURSE MODULE_CORE_HEADERS "${MODULE_CORE_DIR}/lib/include/*.*")
-file(GLOB_RECURSE MODULE_CORE_SOURCE "${MODULE_CORE_DIR}/lib/src/*.*")
+file(GLOB_RECURSE MODULE_CORE_SOURCES "${MODULE_CORE_DIR}/lib/src/*.*")
 
 if (MODULE_CORE_SHARED_LIB)
-  add_executable(${META_CORE_LIBNAME} ${MODULE_CORE_SOURCE})
+  add_executable(${META_CORE_LIBNAME} ${MODULE_CORE_SOURCES})
   set_target_properties(${META_CORE_LIBNAME} PROPERTIES OUTPUT_NAME ${META_CORE_PRJNAME})
   set_target_properties(${META_CORE_LIBNAME} PROPERTIES SUFFIX ".${META_CORE_VERSION}.js")
 else ()
-  add_library(${META_CORE_LIBNAME} STATIC ${MODULE_CORE_SOURCE})
+  add_library(${META_CORE_LIBNAME} STATIC ${MODULE_CORE_SOURCES})
   set_target_properties(${META_CORE_LIBNAME} PROPERTIES OUTPUT_NAME ${META_CORE_PRJNAME})
   set_target_properties(${META_CORE_LIBNAME} PROPERTIES SUFFIX ".a.${META_CORE_VERSION}")
 endif ()

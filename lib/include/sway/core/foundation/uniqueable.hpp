@@ -18,6 +18,8 @@ NAMESPACE_BEGIN(foundation)
 template <typename TValueType>
 class Uniqueable {
 public:
+  DECLARE_EMSCRIPTEN_BINDING()
+
   Uniqueable(const std::optional<TValueType> &uid)
       : uid_(uid) {}
 

@@ -2,11 +2,13 @@
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeidx.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
-#include <sway/optional.hpp>
+#include <sway/core/foundation/uniqueable.hpp>
+#include <sway/core/misc/optional.hpp>
 
 #include <string>
 
 using namespace sway;
+using namespace sway::core::misc;
 using namespace sway::core::foundation;
 using namespace sway::core::container;
 
@@ -24,8 +26,10 @@ EMSCRIPTEN_BINDINGS(sway_core) {
 
   emscripten::register_vector<double>("DoubleVec");
   emscripten::register_vector<std::string>("StringVec");
+}
 
-  register_optional<std::string>("optional<string>");
+EMSCRIPTEN_BINDINGS(sway_core_misc) {
+  register_optional<std::string>("StringOpt");
   register_optional<std::shared_ptr<Node>>("NodeOptSmartPtr");
 
   StringOptional::bindEmscriptenClass();
@@ -38,5 +42,7 @@ EMSCRIPTEN_BINDINGS(sway_core_container) {
   Node::bindEmscriptenClass();
   Hierarchy::bindEmscriptenClass();
 }
+
+EMSCRIPTEN_BINDINGS(sway_core_foundation) { Uniqueable<std::string>::bindEmscriptenClass(); }
 
 #endif
