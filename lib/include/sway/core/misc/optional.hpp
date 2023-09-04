@@ -28,6 +28,19 @@ struct OptionalAccess {
   static void reset(T &opt) { opt.reset(); }
 };
 
+template <typename T>
+emscripten::class_<std::optional<T>> register_optional(lpcstr_t name) {
+  using OptionalType = std::optional<T>;
+
+  return emscripten::class_<OptionalType>(name)
+      .template constructor<>()
+      .function("has_value", OptionalAccess<OptionalType>::has_value)
+      .function("value", OptionalAccess<OptionalType>::value)
+      .function("reset", OptionalAccess<OptionalType>::reset);
+}
+
+#endif  // EMSCRIPTEN_PLATFORM && EMSCRIPTEN_PLATFORM_USE_BINDING
+
 class StringOptional {
 public:
   DECLARE_EMSCRIPTEN_BINDING()
@@ -40,19 +53,6 @@ public:
     }
   }
 };
-
-template <typename T>
-emscripten::class_<std::optional<T>> register_optional(lpcstr_t name) {
-  using OptionalType = std::optional<T>;
-
-  return emscripten::class_<OptionalType>(name)
-      .template constructor<>()
-      .function("has_value", OptionalAccess<OptionalType>::has_value)
-      .function("value", OptionalAccess<OptionalType>::value)
-      .function("reset", OptionalAccess<OptionalType>::reset);
-}
-
-#endif
 
 NAMESPACE_END(misc)
 NAMESPACE_END(core)
