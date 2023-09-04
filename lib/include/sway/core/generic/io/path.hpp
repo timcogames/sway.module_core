@@ -18,18 +18,18 @@ public:
 
   ~Path() = default;
 
-  auto getFilename() const -> std::string;
+  [[nodiscard]] auto getFilename() const -> std::string;
 
-  auto getExt() const -> std::string;
+  [[nodiscard]] auto getExt() const -> std::string;
 
-  auto isExists(const std::string &filename) -> bool;
+  [[nodiscard]] auto isExists(const std::string &filename) const -> bool;
 
-  auto isEmpty() const -> bool;
+  [[nodiscard]] auto isEmpty() const -> bool;
 
-  auto toString() const -> std::string;
+  [[nodiscard]] auto toString() const -> std::string;
 
 private:
-  std::string _path;  // Путь к файлу или каталогу.
+  std::string path_;  // Путь к файлу или каталогу.
 };
 
 NAMESPACE_END(io)

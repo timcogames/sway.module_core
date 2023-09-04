@@ -9,20 +9,20 @@ NAMESPACE_BEGIN(generic)
 NAMESPACE_BEGIN(io)
 
 Path::Path(const std::string &path)
-    : _path(path) {}
+    : path_(path) {}
 
 auto Path::getFilename() const -> std::string {
   std::string stem;
-  size_t position = _path.length() - 1;
+  size_t position = path_.length() - 1;
 
-  if (_path[position] != '/') {
-    stem += _path[position];
+  if (path_[position] != '/') {
+    stem += path_[position];
   }
 
   position--;
 
-  while (position >= 0 && _path[position] != '/') {
-    stem += _path[position--];
+  while (position >= 0 && path_[position] != '/') {
+    stem += path_[position--];
   }
 
   std::reverse(stem.begin(), stem.end());
@@ -40,7 +40,7 @@ auto Path::getExt() const -> std::string {
   return filename.substr(position + 1);
 }
 
-auto Path::isExists(const std::string &filename) -> bool {
+auto Path::isExists(const std::string &filename) const -> bool {
   bool existed = false;
   std::ifstream file(filename.c_str());
   if (file.good()) {
@@ -51,9 +51,9 @@ auto Path::isExists(const std::string &filename) -> bool {
   return existed;
 }
 
-auto Path::isEmpty() const -> bool { return _path.empty(); }
+auto Path::isEmpty() const -> bool { return path_.empty(); }
 
-auto Path::toString() const -> std::string { return _path; }
+auto Path::toString() const -> std::string { return path_; }
 
 NAMESPACE_END(io)
 NAMESPACE_END(generic)
