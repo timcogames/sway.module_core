@@ -6,6 +6,7 @@
 #include <sway/types.hpp>
 
 #include <optional>
+#include <string>
 
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
@@ -48,9 +49,9 @@ public:
   static auto set(std::string val) -> std::optional<std::string> {
     if (val.empty()) {
       return std::nullopt;
-    } else {
-      return val;
     }
+
+    return val;
   }
 };
 
