@@ -10,6 +10,6 @@ describe("Uniqueable", () => {
     const uniqueIdStr: Optional<string> = module.StringOptional.set("unique_id");
     const uniqueable = new module.Uniqueable(uniqueIdStr);
 
-     expect(uniqueable.getUid().value()).toEqual("unique_id");
+    expect(uniqueable.getUid().value()).toEqual("unique_id");
   });
 });

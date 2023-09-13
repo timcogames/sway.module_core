@@ -8,4 +8,4 @@ export interface Optional<T> {
 
 export interface StringOptional {
   set(val: string): void;
-};
+}

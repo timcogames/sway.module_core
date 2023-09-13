@@ -74,9 +74,9 @@ void Node::addChildNode(std::shared_ptr<Node> child) {
 
   children_.push_back(child);
 
-  NodeEventData eventdata;
-  eventdata.nodeidx = child->getNodeIdx();
-  emit(EVT_ADDED, new NodeAddedEvent(0, &eventdata), [&](foundation::AEventHandler *handler) {
+  NodeEventData *eventdata;
+  eventdata->nodeidx = child->getNodeIdx();
+  emit(EVT_ADDED, new NodeAddedEvent(0, eventdata), [&](foundation::AEventHandler *handler) {
     return static_cast<Node *>(handler->getSender())->getNodeIdx().equal(getNodeIdx());
   });
 }
@@ -109,9 +109,9 @@ void Node::removeChildNode(std::shared_ptr<Node> child) {
                       }),
       children_.end());
 
-  NodeEventData eventdata;
-  eventdata.nodeidx = child->getNodeIdx();
-  emit(EVT_REMOVED, new NodeRemovedEvent(0, &eventdata), [&](foundation::AEventHandler *) { return true; });
+  NodeEventData *eventdata;
+  eventdata->nodeidx = child->getNodeIdx();
+  emit(EVT_REMOVED, new NodeRemovedEvent(0, eventdata), [&](foundation::AEventHandler *) { return true; });
 }
 
 void Node::recursiveRemoveChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx) {

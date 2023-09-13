@@ -61,11 +61,13 @@ NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
 #define DECLARE_SUPERCLASS()                                                                       \
+public:                                                                                            \
   static const sway::core::foundation::ObjectClassMetadata *getObjectClassMetadata() { return 0; } \
   PURE_VIRTUAL(const sway::core::foundation::ObjectClassMetadata *getSuperclass() const);          \
   PURE_VIRTUAL(const std::string &getClassname() const);
 
 #define DECLARE_CLASS_METADATA(objclass, superclass)                                                                 \
+public:                                                                                                              \
   typedef superclass super_t;                                                                                        \
   static const sway::core::foundation::ObjectClassMetadata *getObjectClassMetadata() {                               \
     static const sway::core::foundation::ObjectClassMetadata metadata(#objclass, super_t::getObjectClassMetadata()); \
