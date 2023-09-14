@@ -16,11 +16,11 @@ EMSCRIPTEN_BINDING_BEGIN(Event)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
 emscripten::class_<Event>("Event")
     .allow_subclass<EventWrapper>("EventWrapper")
+    .function("getSuperclass", &Event::getSuperclass, emscripten::allow_raw_pointers(), emscripten::pure_virtual())
+    .function("getClassname", &Event::getClassname, emscripten::pure_virtual())
     .function("id", &Event::id, emscripten::pure_virtual())
     .function("type", &Event::type, emscripten::pure_virtual())
-    .function("data", &Event::data, emscripten::allow_raw_pointers(), emscripten::pure_virtual())
-    .function("getSuperclass", &Event::getSuperclass, emscripten::allow_raw_pointers(), emscripten::pure_virtual())
-    .function("getClassname", &Event::getClassname, emscripten::pure_virtual());
+    .function("data", &Event::data, emscripten::allow_raw_pointers(), emscripten::pure_virtual());
 #endif
 EMSCRIPTEN_BINDING_END()
 

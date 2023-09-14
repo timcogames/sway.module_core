@@ -4,9 +4,12 @@ import { NodeIdx } from "./container/nodeidx";
 import { Node } from "./container/node";
 import { Hierarchy } from "./container/hierarchy";
 
+export type PrimTypeSet = boolean | number | string;
+
 export interface IObjectWrap {
+  /* eslint-disable */
   __parent: any;
-  __construct(args?: any): void;
+  __construct(...args: Array<PrimTypeSet | {[prop: string]: PrimTypeSet}>): void;
   __destruct(): void;
 }
 
