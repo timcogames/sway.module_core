@@ -1,8 +1,8 @@
 "use strict";
 
-import { NodeIdx } from "./foundation/nodeidx";
-import { Node } from "./foundation/node";
-import { Hierarchy } from "./foundation/hierarchy";
+import { NodeIdx } from "./container/nodeidx";
+import { Node } from "./container/node";
+import { Hierarchy } from "./container/hierarchy";
 
 export interface IObjectWrap {
   __parent: any;
