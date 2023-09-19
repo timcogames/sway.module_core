@@ -14,6 +14,7 @@
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
+#include <sway/visibilitymacros.hpp>
 
 #include <algorithm>
 #include <any>
@@ -90,6 +91,20 @@ private:
   std::vector<std::shared_ptr<Node>> children_;
   bool visible_;
 };
+
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_PLATFORM_USE_BINDING)
+
+struct HierarchyNode;
+
+EXTERN_C EMSCRIPTEN_KEEPALIVE auto createNode() -> struct HierarchyNode *;
+
+EXTERN_C EMSCRIPTEN_KEEPALIVE void deleteNode(struct HierarchyNode *node);
+
+EXTERN_C EMSCRIPTEN_KEEPALIVE void addChildNode(struct HierarchyNode *root, struct HierarchyNode *node);
+
+EXTERN_C EMSCRIPTEN_KEEPALIVE auto getNodeIdx(struct HierarchyNode *node) -> lpcstr_t;
+
+#endif
 
 NAMESPACE_END(container)
 NAMESPACE_END(core)

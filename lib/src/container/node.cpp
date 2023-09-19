@@ -74,7 +74,7 @@ void Node::addChildNode(std::shared_ptr<Node> child) {
 
   children_.push_back(child);
 
-  NodeEventData *eventdata;
+  auto *eventdata = new NodeEventData();
   eventdata->nodeidx = child->getNodeIdx();
   emit(EVT_ADDED, new NodeAddedEvent(0, eventdata), [&](foundation::AEventHandler *handler) {
     return static_cast<Node *>(handler->getSender())->getNodeIdx().equal(getNodeIdx());
@@ -94,22 +94,22 @@ void Node::recursiveAddChainLinks(std::shared_ptr<Node> child, NodeIdx parentNod
 }
 
 void Node::removeChildNode(std::shared_ptr<Node> child) {
-  children_.erase(std::remove_if(children_.begin(), children_.end(),
-                      [&](std::shared_ptr<Node> node) {
-                        bool const result = node->equal(child);
-                        if (result) {
-                          for (auto childNode : child->getChildNodes()) {
-                            recursiveRemoveChainLinks(childNode, getNodeIdx());
-                          }
+  // clang-format off
+  children_.erase(std::remove_if(children_.begin(), children_.end(), [&](std::shared_ptr<Node> node) {
+    auto const result = node->equal(child);
+    if (result) {
+      for (auto childNode : child->getChildNodes()) {
+        recursiveRemoveChainLinks(childNode, getNodeIdx());
+      }
 
-                          child->setParentNode(std::weak_ptr<Node>());
-                          child->setAsRoot();
-                        }
-                        return result;
-                      }),
-      children_.end());
+      child->setParentNode(std::weak_ptr<Node>());
+      child->setAsRoot();
+    }
+    return result;
+  }), children_.end());
+  // clang-format on
 
-  NodeEventData *eventdata;
+  auto *eventdata = new NodeEventData();
   eventdata->nodeidx = child->getNodeIdx();
   emit(EVT_REMOVED, new NodeRemovedEvent(0, eventdata), [&](foundation::AEventHandler *) { return true; });
 }
@@ -135,6 +135,7 @@ auto Node::getChildNode(const NodeIdx &idx) const -> std::shared_ptr<Node> {
     if ((*iter)->chainEqual(idx.getChain())) {
       break;
     }
+
     iter++;
   }
 
@@ -184,6 +185,31 @@ void Node::setAsRoot() { idx_.setAsRoot(); }
 auto Node::equal(std::shared_ptr<Node> other) -> bool { return other->chainEqual(idx_.getChain()); }
 
 auto Node::chainEqual(NodeIdx::chain_t other) -> bool { return idx_.chainEqual(other); }
+
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_PLATFORM_USE_BINDING)
+
+auto createNode() -> struct HierarchyNode * {
+  auto *obj = new Node();
+  return (struct HierarchyNode *)obj;
+}
+
+void deleteNode(struct HierarchyNode *node) {
+  auto *obj = (Node *)node;
+  SAFE_DELETE_OBJECT(obj);
+}
+
+void addChildNode(struct HierarchyNode *root, struct HierarchyNode *node) {
+  auto *obj = (Node *)root;
+  return obj->addChildNode(std::shared_ptr<Node>((Node *)node));
+}
+
+auto getNodeIdx(struct HierarchyNode *node) -> lpcstr_t {
+  auto *obj = (Node *)node;
+
+  return obj->getNodeIdx().toStr().c_str();
+}
+
+#endif
 
 NAMESPACE_END(container)
 NAMESPACE_END(core)

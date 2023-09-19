@@ -21,7 +21,11 @@ cmake -DCUSTOM_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest 
 #### для Jest тестов
 
 ```console
-cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten -DGLOBAL_EMSCRIPTEN_PLATFORM=ON -DGLOBAL_EMSCRIPTEN_PLATFORM_USE_BINDING=ON -DMODULE_CORE_SHARED_LIB=ON ../
+cmake -DCMAKE_BUILD_TYPE=Release \
+      -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten \
+      -DGLOBAL_EMSCRIPTEN_PLATFORM=ON \
+      -DGLOBAL_EMSCRIPTEN_PLATFORM_USE_BINDING=ON \
+      -DMODULE_CORE_SHARED_LIB=ON ../
 ```
 
 Опция сборки | Тип | Описание | По умолчанию

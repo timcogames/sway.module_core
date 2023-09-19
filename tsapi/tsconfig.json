@@ -14,7 +14,7 @@
 		"skipDefaultLibCheck": true,
 		"typeRoots": [ "./node_modules/@types" ],
 		"types": [ "jest", "node" ],
-		"lib": [ "es6" ],
+		"lib": [ "es6", "dom" ],
 		"paths": {
 			"@core/*" : [ "./src/*" ]
 		}
