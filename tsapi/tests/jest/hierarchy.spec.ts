@@ -1,32 +1,20 @@
 "use strict";
 
-import { useBridge } from "./bridge";
+import { BridgeModule } from "@core/bridgemodule";
+import { useBridge } from "@core/bridge";
 
 describe("Hierarchy", () => {
-  it("getRootNode", async () => {
-    const { module } = await useBridge();
+  let module: BridgeModule;
 
-    if (process.env.EMSCRIPTEN_PLATFOTRM_USE_BINDING == "ON") {
-      const hierarchy = new module.Hierarchy();
-      expect(hierarchy.getRootNode().getNodeIdx().toStr()).toEqual("[-1]");
-    }
-    else {
-      // TODO
-    }
+  beforeAll(async () => {
+    module = (await useBridge("/../../bin/module_core.0.1.0.wasm")).module;
+  });
+
+  it("getRootNode", async () => {
+
   });
 
   it("findNode", async () => {
-    const { module } = await useBridge();
 
-    if (process.env.EMSCRIPTEN_PLATFOTRM_USE_BINDING == "ON") {
-      const hierarchy = new module.Hierarchy();
-      const child = new module.Node();
-
-      hierarchy.getRootNode().addChildNode(child);
-      expect(module.Hierarchy.findNode(hierarchy.getRootNode(), new module.NodeIdx(module.toIntegerVec([-1, 0])))).toBeTruthy();
-    }
-    else {
-      // TODO
-    }
   });
 });

@@ -1,31 +1,29 @@
 "use strict";
 
-import { useBridge } from "./bridge";
+import { BridgeModule } from "@core/bridgemodule";
+import { useBridge } from "@core/bridge";
 
 describe("Node", () => {
+  let module: BridgeModule;
+
+  beforeAll(async () => {
+    module = (await useBridge("/../../bin/module_core.0.1.0.wasm")).module;
+  });
+
   it("added node", async () => {
-    const { module } = await useBridge();
+    const root = module.createNode();
+    const node = module.createNode();
+    module.addChildNode(root, node);
 
-    if (process.env.EMSCRIPTEN_PLATFOTRM_USE_BINDING == "ON") {
-      const root = new module.Node();
-      const node = new module.Node();
-      root.addChildNode(node);
+    const charArr = new Int8Array(
+      module.memory.buffer, // WASM's memory
+      module.getNodeIdx(node), // char's pointer
+      7 // The string's length
+    );
 
-      expect(node.getNodeIdx().toStr()).toEqual("[-1, 0]");
-    }
-    else {
-      const root = module.createNode();
-      const node = module.createNode();
-      module.addChildNode(root, node);
+    const str = String.fromCharCode.apply(null, charArr as any);
+    expect(str).toEqual("[-1, 0]");
 
-      const charArr = new Int8Array(
-        module.memory.buffer, // WASM's memory
-        module.getNodeIdx(node), // char's pointer
-        7 // The string's length
-      );
-
-      const str = String.fromCharCode.apply(null, charArr as any);
-      expect(str).toEqual("[-1, 0]");
-    }
+    module.deleteNode(root);
   });
 });

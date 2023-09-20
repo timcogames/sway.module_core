@@ -14,7 +14,7 @@ export default (async () => {
       "^.+\\.ts$": ["ts-jest", {}]
     },
     testMatch: [
-      "<rootDir>/tests/jest/*.spec.+(js|ts)"
+      `<rootDir>/tests/jest${process.env.USE_BINDING == "ON" ? "-embind" : ""}/*.spec.+(js|ts)`
     ]
   };
 

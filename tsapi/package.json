@@ -19,8 +19,8 @@
 	],
 	"scripts": {
 		"lint": "eslint './' --ext .ts",
-		"jest": "cross-env EMSCRIPTEN_PLATFOTRM_USE_BINDING=OFF node --trace-warnings node_modules/.bin/jest --no-cache",
-		"jest:embind": "cross-env EMSCRIPTEN_PLATFOTRM_USE_BINDING=ON node --trace-warnings node_modules/.bin/jest --no-cache"
+		"jest": "node --trace-warnings node_modules/.bin/jest --no-cache",
+		"jest:embind": "cross-env USE_BINDING=ON npm run jest"
 	},
 	"devDependencies": {
 		"@types/jest": "^29.5.4",
