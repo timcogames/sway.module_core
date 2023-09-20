@@ -17,7 +17,7 @@ async function importModule(moduleName: string): Promise<any>{
 export const useBridge = <TBridgeModule>(moduleName: string): Promise<{ module: TBridgeModule }> => {
   return new Promise(async (resolve) => {
     if (process.env.USE_BINDING == "ON") {
-      importModule(join(__dirname, moduleName)).then((module: TBridgeModule) => {
+      importModule(moduleName).then((module: TBridgeModule) => {
         resolve({ module });
       });
     }
@@ -32,7 +32,7 @@ export const useBridge = <TBridgeModule>(moduleName: string): Promise<{ module: 
         wasi_snapshot_preview1: wasi.wasiImport
       };
 
-      const wasm = await WebAssembly.compile(await readFile(join(__dirname, moduleName)));
+      const wasm = await WebAssembly.compile(await readFile(moduleName));
       const instance = await WebAssembly.instantiate(wasm, importObject);
 
       wasi.initialize(instance);
