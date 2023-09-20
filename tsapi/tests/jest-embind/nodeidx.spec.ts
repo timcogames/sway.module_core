@@ -8,7 +8,7 @@ describe("NodeIdx", () => {
   let module: BridgeModule;
 
   beforeAll(async () => {
-    module = (await useBridge("/../../bin/module_core.0.1.0.js")).module;
+    module = (await useBridge<BridgeModule>("/../../bin/module_core.0.1.0.js")).module;
   });
 
   it("added node idx", async () => {

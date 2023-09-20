@@ -4,7 +4,6 @@ import { readFile } from "node:fs/promises";
 import { WASI } from "wasi";
 import { argv, env } from "node:process";
 import { join } from "node:path";
-import { BridgeModule } from "./bridgemodule";
 
 /**
  * @brief Динамический импорт.
@@ -15,10 +14,10 @@ async function importModule(moduleName: string): Promise<any>{
   return await import(moduleName);
 }
 
-export const useBridge = (moduleName: string): Promise<{ module: BridgeModule }> => {
+export const useBridge = <TBridgeModule>(moduleName: string): Promise<{ module: TBridgeModule }> => {
   return new Promise(async (resolve) => {
     if (process.env.USE_BINDING == "ON") {
-      importModule(join(__dirname, moduleName)).then((module: BridgeModule) => {
+      importModule(join(__dirname, moduleName)).then((module: TBridgeModule) => {
         resolve({ module });
       });
     }
@@ -38,7 +37,7 @@ export const useBridge = (moduleName: string): Promise<{ module: BridgeModule }>
 
       wasi.initialize(instance);
 
-      const module: BridgeModule = instance.exports as any;
+      const module: TBridgeModule = instance.exports as any;
       resolve({ module });
     }
   });

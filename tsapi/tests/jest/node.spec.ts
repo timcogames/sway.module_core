@@ -7,7 +7,7 @@ describe("Node", () => {
   let module: BridgeModule;
 
   beforeAll(async () => {
-    module = (await useBridge("/../../bin/module_core.0.1.0.wasm")).module;
+    module = (await useBridge<BridgeModule>("/../../bin/module_core.0.1.0.wasm")).module;
   });
 
   it("added node", async () => {
