@@ -6,6 +6,7 @@ project(${META_CORE_PRJNAME_TESTS} CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED on)
+set(CMAKE_THREAD_LIBS_INIT "-lpthread")
 
 set(GTest_ROOT "${CUSTOM_GTEST_ROOT_DIR}")
 set(GTEST_INCLUDE_DIR "${GTest_ROOT}/googletest/include")

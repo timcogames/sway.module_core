@@ -9,13 +9,16 @@ mkdir build && cd ./build
 ### Конфигурация сборки
 
 ```console
-cmake -DCMAKE_BUILD_TYPE=Release -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten -DGLOBAL_EMSCRIPTEN_PLATFORM=ON ../
+cmake -DCMAKE_BUILD_TYPE=Release \
+      -DCUSTOM_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten \
+      -DGLOBAL_EMSCRIPTEN_PLATFORM=ON ../
 ```
 
 #### для Google тестов
 
 ```console
-cmake -DCUSTOM_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest -DMODULE_CORE_ENABLE_TESTS=ON ../
+cmake -DCUSTOM_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest \
+      -DMODULE_CORE_ENABLE_TESTS=ON ../
 ```
 
 #### для Jest тестов

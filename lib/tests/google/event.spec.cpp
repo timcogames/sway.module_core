@@ -19,11 +19,19 @@
 using namespace sway;
 using namespace sway::core;
 
+struct MyEventData : public foundation::EventData {
+  std::string value;
+
+  MTHD_OVERRIDE(std::string serialize() const) { return ""; }
+
+  MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
+};
+
 class BaseEvent : public foundation::Event {
 public:
   DECLARE_CLASS_METADATA(BaseEvent, foundation::Event)
 
-  BaseEvent(u32_t type, void *data)
+  BaseEvent(u32_t type, MyEventData *data)
       : id_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))
       , type_(type)
       , data_(data) {}
@@ -41,22 +49,14 @@ public:
   }
 
   // clang-format off
-  MTHD_OVERRIDE(auto data() const -> void *) {  // clang-format on
+  MTHD_OVERRIDE(auto data() const -> foundation::EventData*) {  // clang-format on
     return data_;
   }
 
 private:
   std::string id_;
   u32_t type_;
-  void *data_;
-};
-
-struct MyEventData : public foundation::EventData {
-  std::string value;
-
-  MTHD_OVERRIDE(std::string serialize() const) { return ""; }
-
-  MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
+  MyEventData *data_;
 };
 
 class MyCreatedEvent : public BaseEvent {
@@ -66,7 +66,7 @@ public:
   MyCreatedEvent()
       : BaseEvent(EVT_CREATED, nullptr) {}
 
-  MyCreatedEvent(void *userdata)
+  MyCreatedEvent(MyEventData *userdata)
       : BaseEvent(EVT_CREATED, userdata) {}
 };
 
