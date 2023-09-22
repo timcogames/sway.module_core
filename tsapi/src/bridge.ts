@@ -15,15 +15,16 @@ async function importModule(moduleName: string): Promise<any> {
   return module;
 }
 
-export const useBridge = <TBridgeModule>(moduleName: string, newpath: string = "__dirname + \"/../../bin\""): Promise<{ module: TBridgeModule }> => {
+export const useBridge = <TBridgeModule>(moduleName: string): Promise<{ module: TBridgeModule }> => {
   return new Promise(async (resolve) => {
     if (process.env.USE_BINDING == "ON") {
       // importModule("../../bin/module_core.0.1.0.js")
 
       const fileData = await readFile(join(process.cwd(), moduleName));
+      const filePath = join(process.cwd(), moduleName.substring(0, moduleName.lastIndexOf("/")));
       let fileAsStr = fileData.toString("utf8");
 
-      fileAsStr = fileAsStr.replace(/__dirname/g, newpath);
+      fileAsStr = fileAsStr.replace(/__dirname/g, `"${filePath}"`);
 
       const Bridge = await eval(fileAsStr);
       Bridge().then((module: TBridgeModule) => {
