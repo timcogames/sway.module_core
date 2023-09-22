@@ -35,6 +35,7 @@ cmake -DCMAKE_BUILD_TYPE=Release \
 `MODULE_CORE_ENABLE_TESTS` | BOOL | Включает построение тестов | `OFF`
 `GLOBAL_EMSCRIPTEN_PLATFORM` | BOOL | Использует Emscripten компилятор | `OFF`
 `GLOBAL_EMSCRIPTEN_PLATFORM_USE_BINDING` | BOOL | Использует Emscripten привязки для функций | `OFF`
+`GLOBAL_EMSCRIPTEN_PLATFORM_USE_ES6` | BOOL | none | `OFF`
 `CUSTOM_EMSCRIPTEN_ROOT_DIR` | PATH | Путь до корневой директории Emscripten библиотеки | `-`
 `CUSTOM_BOOST_ROOT_DIR` | PATH | Путь до корневой директории Boost библиотеки (Не используется) | `-`
 `CUSTOM_GTEST_ROOT_DIR` | PATH | Путь до корневой директории GTest библиотеки | `-`
