@@ -1,9 +1,17 @@
 # project output files
-/build
-/bin
+build/*
+
+bin/*
+!bin/index.html
+!bin/exports.json
+!bin/runtime_exports.json
+
+!bin/media/
+bin/media/*
+!bin/media/core.cfg
 
 # tests
-/tsapi/node_modules
+tsapi/node_modules
 
 # osx noise
 .DS_Store
