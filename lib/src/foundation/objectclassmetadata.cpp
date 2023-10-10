@@ -5,7 +5,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 EMSCRIPTEN_BINDING_BEGIN(ObjectClassMetadata)
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
 emscripten::class_<ObjectClassMetadata>("ObjectClassMetadata")
     .constructor<lpcstr_t, const ObjectClassMetadata *>()
     .function("getSuperclass", &ObjectClassMetadata::getSuperclass, emscripten::allow_raw_pointers())

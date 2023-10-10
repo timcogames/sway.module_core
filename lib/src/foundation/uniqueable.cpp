@@ -3,7 +3,7 @@
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_PLATFORM_USE_BINDING
+#  ifdef EMSCRIPTEN_USE_WEB_BINDINGS
 #    include <emscripten/bind.h>
 #  endif
 #endif
@@ -14,7 +14,7 @@ NAMESPACE_BEGIN(foundation)
 
 template <>
 EMSCRIPTEN_BINDING_BEGIN(Uniqueable<std::string>)
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
 emscripten::class_<Uniqueable<std::string>>("Uniqueable")
     .constructor<const std::optional<std::string> &>()
     .function("getUid", &Uniqueable<std::string>::getUid)

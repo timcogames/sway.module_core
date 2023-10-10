@@ -1,74 +1,60 @@
 # Проверяем версию CMake
 cmake_minimum_required(VERSION 3.13.0 FATAL_ERROR)
 
-include("${CMAKE_CURRENT_SOURCE_DIR}/cmakehelpers/custom_enable_cxx17.cmake")
+set(MODULE_CORE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(MODULE_CORE_CMAKE_DIR ${MODULE_CORE_ROOT_DIR}/cmakehelpers)
+set(MODULE_CORE_BINARY_DIR ${MODULE_CORE_ROOT_DIR}/bin)
 
-# Мета-информация о проекте
-set(META_CORE_PRJNAME "module_core")
-set(META_CORE_LIBNAME "lib${META_CORE_PRJNAME}")
-set(META_CORE_VERSION_MAJOR 0)
-set(META_CORE_VERSION_MINOR 1)
-set(META_CORE_VERSION_PATCH 0)
-set(META_CORE_VERSION ${META_CORE_VERSION_MAJOR}.${META_CORE_VERSION_MINOR}.${META_CORE_VERSION_PATCH})
-
-# Опции сборки
-option(MODULE_CORE_SHARED_LIB "Build shared library (.so)" OFF)
-option(MODULE_CORE_ENABLE_COVERAGE "Enable coverage builds" OFF)
-option(MODULE_CORE_ENABLE_TESTS "Enable test builds" OFF)
-option(GLOBAL_EMSCRIPTEN_PLATFORM "Using emscripten compiler" OFF)
-option(GLOBAL_EMSCRIPTEN_PLATFORM_USE_BINDING "Using emscripten binding" OFF)
-option(GLOBAL_EMSCRIPTEN_PLATFORM_USE_ES6 "" OFF)
-option(CUSTOM_EMSCRIPTEN_ROOT_DIR "Emscripten root directory" OFF)
-option(CUSTOM_BOOST_ROOT_DIR "Boost root directory" OFF)
-option(CUSTOM_GTEST_ROOT_DIR "GTest root directory" OFF)
+include("${MODULE_CORE_CMAKE_DIR}/options.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/set_output_dir.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/project_metadata.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/emscripten/setup.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/emscripten/compiler.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/emscripten/compiler_flags/set_config.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/emscripten/compiler_flags/set_exports.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/detect_library_extension.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/create_library.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/enable_cxx17.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/enable_coverage.cmake")
 
 set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
 
-if (GLOBAL_EMSCRIPTEN_PLATFORM AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
-  set(CMAKE_TOOLCHAIN_FILE "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cmake/Modules/Platform/Emscripten.cmake")
-  include(${CMAKE_TOOLCHAIN_FILE})
-endif ()
+# Опции сборки
+option(MODULE_CORE_SHARED_LIB "Build shared library (.dylib|.so)" OFF)
+option(MODULE_CORE_ENABLE_COVERAGE "Enable coverage builds" OFF)
+option(MODULE_CORE_ENABLE_TESTS "Enable test builds" OFF)
 
-if (NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Choose the type of build" FORCE)
-endif ()
+if(GLOB_EMSCRIPTEN_PLATFORM)
+  emscripten_setup()
+endif()
 
-project(${META_CORE_PRJNAME} VERSION ${META_CORE_VERSION} LANGUAGES CXX)
+project_metadata("core" 0.1.0)
+project(${MODULE_CORE_PROJ_NAME} VERSION ${MODULE_CORE_VERSION} LANGUAGES CXX)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=default -fPIE")
 
-if (GLOBAL_EMSCRIPTEN_PLATFORM)
+if(GLOB_EMSCRIPTEN_PLATFORM)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --no-entry")
 
-  set(CMAKE_CXX_COMPILER "${CUSTOM_EMSCRIPTEN_ROOT_DIR}/em++")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Os -std=c++17")
+  set(CMAKE_CXX_COMPILER "${EMSCRIPTEN_COMPILER}")
+  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--whole-archive")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-unicode-whitespace \
     -Wno-unused-local-typedef -Wno-invalid-noreturn -Wno-unused-command-line-argument")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DEMSCRIPTEN_PLATFORM")
+endif()
 
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s WASM=1 -s MODULARIZE=1")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s STRICT=1")
+if(MODULE_CORE_ENABLE_COVERAGE)
+  enable_coverage()
+endif()
 
-  if (GLOBAL_EMSCRIPTEN_PLATFORM_USE_BINDING)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --bind")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DEMSCRIPTEN_PLATFORM_USE_BINDING")
-  endif ()
+# set(CMAKE_OSX_ARCHITECTURES "arm64")
 
-  if (GLOBAL_EMSCRIPTEN_PLATFORM_USE_ES6)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s EXPORT_ES6=1")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s ENVIRONMENT=node")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_ES6_IMPORT_META=1")
-  endif ()
-endif ()
+# message("ARH ${CMAKE_CXX_PLATFORM_ID}")
+# message("${EMSCRIPTEN_GENERATE_BITCODE_STATIC_LIBRARIES}")
+# message("${CMAKE_STATIC_LIBRARY_SUFFIX}")
 
-if (MODULE_CORE_ENABLE_COVERAGE)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fprofile-arcs")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ftest-coverage")
-  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --coverage")
-endif ()
-
-message("[${META_CORE_PRJNAME}]: ${META_CORE_VERSION}
+message("[${MODULE_CORE_PROJ_NAME}]: ${META_CORE_VERSION}
+           system | ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_VERSION}
+         platform | ${CMAKE_CXX_PLATFORM_ID}
          compiler | ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
        build type | ${CMAKE_BUILD_TYPE}
        shared lib | ${MODULE_CORE_SHARED_LIB}
@@ -77,61 +63,54 @@ message("[${META_CORE_PRJNAME}]: ${META_CORE_VERSION}
         build dir | ${CMAKE_BINARY_DIR}
    install prefix | ${CMAKE_INSTALL_PREFIX}
 
-   emscripten dir | ${CUSTOM_EMSCRIPTEN_ROOT_DIR}
-        boost dir | ${CUSTOM_BOOST_ROOT_DIR}
-        gtest dir | ${CUSTOM_GTEST_ROOT_DIR}
+   emscripten dir | ${GLOB_EMSCRIPTEN_ROOT_DIR}
+        boost dir | ${GLOB_BOOST_ROOT_DIR}
+        gtest dir | ${GLOB_GTEST_ROOT_DIR}
 
-       emscripten | ${GLOBAL_EMSCRIPTEN_PLATFORM}
+       emscripten | ${GLOB_EMSCRIPTEN_PLATFORM}
          coverage | ${MODULE_CORE_ENABLE_COVERAGE}
             tests | ${MODULE_CORE_ENABLE_TESTS}
 ")
 
 # Определяем каталог вывода по умолчанию
-if (CMAKE_BUILD_TYPE MATCHES Debug)
-  set(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin/dbg")
-  set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin/dbg")
-else ()
-  set(LIBRARY_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin")
-  set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/bin")
-endif ()
+set_output_dir("${CMAKE_SOURCE_DIR}/bin")
 
 set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
-if (GLOBAL_EMSCRIPTEN_PLATFORM)
-  include_directories("${CUSTOM_EMSCRIPTEN_ROOT_DIR}/cache/sysroot/include")
-endif ()
 include_directories("${MODULE_CORE_DIR}/lib/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
 file(GLOB_RECURSE MODULE_CORE_HEADERS "${MODULE_CORE_DIR}/lib/include/*.*")
 file(GLOB_RECURSE MODULE_CORE_SOURCES "${MODULE_CORE_DIR}/lib/src/*.*")
 
-if (MODULE_CORE_SHARED_LIB)
-  add_executable(${META_CORE_LIBNAME} ${MODULE_CORE_SOURCES})
-  set_target_properties(${META_CORE_LIBNAME} PROPERTIES OUTPUT_NAME ${META_CORE_PRJNAME})
-  if (GLOBAL_EMSCRIPTEN_PLATFORM)
-    if (GLOBAL_EMSCRIPTEN_PLATFORM_USE_BINDING)
-      set_target_properties(${META_CORE_LIBNAME} PROPERTIES SUFFIX ".${META_CORE_VERSION}.js")
-    else ()
-      set_target_properties(${META_CORE_LIBNAME} PROPERTIES SUFFIX ".${META_CORE_VERSION}.wasm")
-    endif ()
-  endif ()
-else ()
-  add_library(${META_CORE_LIBNAME} STATIC ${MODULE_CORE_SOURCES})
-  set_target_properties(${META_CORE_LIBNAME} PROPERTIES OUTPUT_NAME ${META_CORE_PRJNAME})
-  set_target_properties(${META_CORE_LIBNAME} PROPERTIES SUFFIX ".a.${META_CORE_VERSION}")
-endif ()
+create_bitcode_library(#[[TARGET_NAME]] ${MODULE_CORE_PROJ_NAME} #[[SOURCE_DIR]] "${MODULE_CORE_ROOT_DIR}/lib/src/*.*")
+enable_cxx17(${MODULE_CORE_PROJ_NAME})
 
-custom_enable_cxx17(${META_CORE_LIBNAME})
-target_link_libraries(${META_CORE_LIBNAME})
+if(GLOB_EMSCRIPTEN_PLATFORM)
+  emscripten_set_compiler_javascript(#[[CONFIG_NAME]] MODULE_CORE_COMPILER_WEBJS_CONFIG
+    #[[BINARY_DIR]] ${MODULE_CORE_BINARY_DIR} #[[IO_LIBNAME]] ${MODULE_CORE_LIB_NAME} #[[VERSION]] ${MODULE_CORE_VERSION})
+  emscripten_set_config(#[[TARGET_NAME]] ${MODULE_CORE_PROJ_NAME} #[[CONFIG_NAME]] MODULE_CORE_COMPILER_WEBJS_CONFIG)
+  emscripten_set_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_BINARY_DIR}/exports.json)
+  emscripten_set_runtime_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_BINARY_DIR}/runtime_exports.json)
+
+  # message("FLAGS ${EMSCRIPTEN_COMPILER_FLAGS}")
+  message("CONFIG ${MODULE_CORE_COMPILER_WEBJS_CONFIG}")
+
+  add_custom_command(TARGET ${MODULE_CORE_PROJ_NAME} POST_BUILD
+    COMMAND #${EMSCRIPTEN_COMPILER}
+      ${MODULE_CORE_COMPILER_WEBJS_CONFIG}
+      # ${EMSCRIPTEN_COMPILER_FLAGS}
+      --no-entry
+  )
+endif()
 
 # Добавляем построение тестов
-if (MODULE_CORE_ENABLE_TESTS)
-  if (MODULE_CORE_SHARED_LIB)
-    message(STATUS "[${META_CORE_PRJNAME}]: Tests are only allowed with a static lib")
-  else ()
-    message(STATUS "[${META_CORE_PRJNAME}]:Tests have been enabled")
+if(MODULE_CORE_ENABLE_TESTS)
+  if(MODULE_CORE_SHARED_LIB)
+    message(STATUS "[${MODULE_CORE_PROJ_NAME}]: Tests are only allowed with a static lib")
+  else()
+    message(STATUS "[${MODULE_CORE_PROJ_NAME}]:Tests have been enabled")
     add_subdirectory(lib/tests/google)
-  endif ()
-endif ()
+  endif()
+endif()

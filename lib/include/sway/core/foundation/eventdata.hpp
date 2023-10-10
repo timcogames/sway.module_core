@@ -22,7 +22,7 @@ public:
   PURE_VIRTUAL(void deserialize(const std::string &data));
 };
 
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
 class EventDataWrapper : public emscripten::wrapper<EventData> {
 public:
   EMSCRIPTEN_WRAPPER(EventDataWrapper);

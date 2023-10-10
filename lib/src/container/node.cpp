@@ -9,7 +9,7 @@
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_PLATFORM_USE_BINDING
+#  ifdef EMSCRIPTEN_USE_WEB_BINDINGS
 #    include <emscripten/bind.h>
 #  endif
 #endif
@@ -19,7 +19,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(Node)
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
 emscripten::class_<Node>("Node")
     .smart_ptr_constructor("Node", &std::make_shared<Node>)
     .function("addChildNode", &Node::addChildNode, emscripten::allow_raw_pointers())
@@ -186,27 +186,38 @@ auto Node::equal(std::shared_ptr<Node> other) -> bool { return other->chainEqual
 
 auto Node::chainEqual(NodeIdx::chain_t other) -> bool { return idx_.chainEqual(other); }
 
-#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_PLATFORM_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
 
 auto createNode() -> struct HierarchyNode * {
-  auto *obj = new Node();
+  auto obj = new Node();
   return (struct HierarchyNode *)obj;
 }
 
 void deleteNode(struct HierarchyNode *node) {
-  auto *obj = (Node *)node;
+  auto obj = (Node *)node;
   SAFE_DELETE_OBJECT(obj);
 }
 
 void addChildNode(struct HierarchyNode *root, struct HierarchyNode *node) {
-  auto *obj = (Node *)root;
+  auto obj = (Node *)root;
+  if (!obj) {
+    // TODO
+  }
+
   return obj->addChildNode(std::shared_ptr<Node>((Node *)node));
 }
 
 auto getNodeIdx(struct HierarchyNode *node) -> lpcstr_t {
-  auto *obj = (Node *)node;
+  auto obj = (Node *)node;
+  if (!obj) {
+    // TODO
+  }
 
-  return obj->getNodeIdx().toStr().c_str();
+  auto idxStr = obj->getNodeIdx().toStr();
+  auto result = new s8_t[idxStr.size() + 1];
+  strcpy(result, idxStr.c_str());
+
+  return result;
 }
 
 #endif

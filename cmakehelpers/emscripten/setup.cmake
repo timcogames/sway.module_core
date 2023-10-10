@@ -1,0 +1,30 @@
+function(emscripten_setup)
+  if(NOT GLOB_EMSCRIPTEN_PLATFORM)
+    return()
+  endif()
+
+  if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    set(EMSCRIPTEN_CMAKE_DIR "${GLOB_EMSCRIPTEN_ROOT_DIR}/cmake/Modules/Platform")
+    set(EMSCRIPTEN_CMAKE "${EMSCRIPTEN_CMAKE_DIR}/Emscripten.cmake")
+    if(NOT EXISTS "${EMSCRIPTEN_CMAKE}")
+      message(FATAL_ERROR "Cannot find the toolchain file '${EMSCRIPTEN_CMAKE}'. "
+                          "Please specify the toolchain file with -DCMAKE_TOOLCHAIN_FILE=<file>.")
+    else()
+      message(STATUS "Emscripten toolchain file within EMSDK detected: ${EMSCRIPTEN_CMAKE}")
+      set(CMAKE_TOOLCHAIN_FILE "${EMSCRIPTEN_CMAKE}" PARENT_SCOPE)
+      include("${EMSCRIPTEN_CMAKE}")
+      include_directories("${GLOB_EMSCRIPTEN_ROOT_DIR}/cache/sysroot/include")
+    endif()
+  endif()
+
+  set(EMSCRIPTEN_COMPILER "${GLOB_EMSCRIPTEN_ROOT_DIR}/em++" PARENT_SCOPE)
+  set(EMSCRIPTEN_FLAGS "-DEMSCRIPTEN_PLATFORM")
+
+  if(GLOB_EMSCRIPTEN_USE_WEB_BINDINGS)
+    set(EMSCRIPTEN_FLAGS "${EMSCRIPTEN_FLAGS} --bind")
+    set(EMSCRIPTEN_FLAGS "${EMSCRIPTEN_FLAGS} -DEMSCRIPTEN_USE_WEB_BINDINGS")
+  endif()
+
+  set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s WASM=1" PARENT_SCOPE)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${EMSCRIPTEN_FLAGS}" PARENT_SCOPE)
+endfunction(emscripten_setup)

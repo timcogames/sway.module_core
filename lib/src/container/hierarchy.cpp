@@ -3,7 +3,7 @@
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_PLATFORM_USE_BINDING
+#  ifdef EMSCRIPTEN_USE_WEB_BINDINGS
 #    include <emscripten/bind.h>
 #  endif
 #endif
@@ -13,7 +13,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(Hierarchy)
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_PLATFORM_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
 emscripten::class_<NodeData>("NodeData").property("nodeidx", &NodeData::nodeidx);
 
 emscripten::register_vector<NodeData>("NodeDataVec");

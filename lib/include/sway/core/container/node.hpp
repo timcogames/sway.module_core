@@ -92,7 +92,7 @@ private:
   bool visible_;
 };
 
-#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_PLATFORM_USE_BINDING)
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
 
 struct HierarchyNode;
 

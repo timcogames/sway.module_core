@@ -1,5 +1,0 @@
-function (custom_add_subdirectory SUBMODULE_NAME SUBMODULE_DIR)
-  if (NOT TARGET ${SUBMODULE_NAME})
-    add_subdirectory(${SUBMODULE_DIR})
-  endif ()
-endfunction(custom_add_subdirectory)

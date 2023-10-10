@@ -4,12 +4,11 @@
 
 ## Зависимости
 
-cmake v3.13.0
+[cmake v3.13.0](https://cmake.org/files/v3.13/)
 
 ## Contributing
 
 См. [CONTRIBUTING](./github/CONTRIBUTING.md)
-
 
 [codecov-svg]: https://codecov.io/gh/timcogames/sway.module_core/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/timcogames/sway.module_core
