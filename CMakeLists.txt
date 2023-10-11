@@ -28,18 +28,14 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_setup()
 endif()
 
-project_metadata("core" 0.1.0)
+project_metadata("core" 0.1.1)
 project(${MODULE_CORE_PROJ_NAME} VERSION ${MODULE_CORE_VERSION} LANGUAGES CXX)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=default -fPIE")
-
 if(GLOB_EMSCRIPTEN_PLATFORM)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} --no-entry")
-
   set(CMAKE_CXX_COMPILER "${EMSCRIPTEN_COMPILER}")
   # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--whole-archive")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-unicode-whitespace \
-    -Wno-unused-local-typedef -Wno-invalid-noreturn -Wno-unused-command-line-argument")
+  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-unicode-whitespace \
+  #   -Wno-unused-local-typedef -Wno-invalid-noreturn -Wno-unused-command-line-argument")
 endif()
 
 if(MODULE_CORE_ENABLE_COVERAGE)
@@ -101,7 +97,7 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
     COMMAND #${EMSCRIPTEN_COMPILER}
       ${MODULE_CORE_COMPILER_WEBJS_CONFIG}
       # ${EMSCRIPTEN_COMPILER_FLAGS}
-      --no-entry
+    COMMAND rm "${MODULE_CORE_BINARY_DIR}/${MODULE_CORE_LIB_NAME}.bc"
   )
 endif()
 
