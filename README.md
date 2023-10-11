@@ -4,7 +4,7 @@
 
 ## Зависимости
 
-[cmake v3.14.3](https://cmake.org/files/v3.14)
+[cmake v3.14.3](https://cmake.org/files/v3.14)\
 [googletest](https://google.github.io/googletest/)
 
 ## Contributing
