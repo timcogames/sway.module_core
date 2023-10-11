@@ -10,7 +10,7 @@ mkdir build && cd ./build
 
 ```console
 cmake -DCMAKE_BUILD_TYPE=Release \
-      -DGLOB_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten \
+      -DGLOB_EMSCRIPTEN_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/emsdk/upstream/emscripten \
       -DGLOB_EMSCRIPTEN_PLATFORM=ON \
       -DGLOB_EMSCRIPTEN_ENVIRONMENT_WEB=ON ../
 
@@ -20,7 +20,7 @@ python3 -m http.server <PORT>
 #### для Google тестов
 
 ```console
-cmake -DGLOB_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest \
+cmake -DGLOB_GTEST_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/googletest \
       -DMODULE_CORE_ENABLE_TESTS=ON ../
 ```
 
@@ -28,7 +28,7 @@ cmake -DGLOB_GTEST_ROOT_DIR=/Users/apriori85/Documents/Third-party/googletest \
 
 ```console
 cmake -DCMAKE_BUILD_TYPE=Release \
-      -DGLOB_EMSCRIPTEN_ROOT_DIR=/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten \
+      -DGLOB_EMSCRIPTEN_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/emsdk/upstream/emscripten \
       -DGLOB_EMSCRIPTEN_PLATFORM=ON \
       -DGLOB_EMSCRIPTEN_ENVIRONMENT_WEB=OFF \
       -DGLOB_EMSCRIPTEN_USE_WEB_BINDINGS=ON \

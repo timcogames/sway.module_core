@@ -23,6 +23,6 @@ include_directories(${GTEST_INCLUDE_DIR})
 file(GLOB MODULE_CORE_SOURCE_TESTS "${PROJECT_SOURCE_DIR}/*.spec.cpp")
 
 add_executable(${META_CORE_EXENAME_TESTS} ${MODULE_CORE_SOURCE_TESTS} "${GTest_ROOT}/googletest/src/gtest_main.cc")
-target_link_libraries(${META_CORE_EXENAME_TESTS} core ${GTEST_LIBRARY_DIR}/libgtest.a ${CMAKE_DL_LIBS})
+target_link_libraries(${META_CORE_EXENAME_TESTS} module_core ${GTEST_LIBRARY_DIR}/libgtest.a ${CMAKE_DL_LIBS})
 
 add_custom_command(TARGET ${META_CORE_EXENAME_TESTS} POST_BUILD COMMAND ${META_CORE_EXENAME_TESTS})
