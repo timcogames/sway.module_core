@@ -37,14 +37,18 @@ cmake -DCMAKE_BUILD_TYPE=Release \
 
 Опция сборки | Тип | Описание | По умолчанию
 :---|:---|:---|:---:
-`MODULE_CORE_SHARED_LIB` | BOOL | Создать общую библиотеку (.so) | `OFF`
-`MODULE_CORE_ENABLE_COVERAGE` | BOOL | Включает поддержку сбора данных о покрытии кода тестами | `OFF`
-`MODULE_CORE_ENABLE_TESTS` | BOOL | Включает построение тестов | `OFF`
+`GLOB_THIRD_PARTY_DIR` | PATH | Путь до корневой директории Other библиотек | `-`
 `GLOB_EMSCRIPTEN_PLATFORM` | BOOL | Использует Emscripten компилятор | `OFF`
 `GLOB_EMSCRIPTEN_USE_WEB_BINDINGS` | BOOL | Использует Emscripten привязки для функций | `OFF`
 `GLOB_EMSCRIPTEN_ROOT_DIR` | PATH | Путь до корневой директории Emscripten библиотеки | `-`
 `GLOB_BOOST_ROOT_DIR` | PATH | Путь до корневой директории Boost библиотеки (Не используется) | `-`
 `GLOB_GTEST_ROOT_DIR` | PATH | Путь до корневой директории GTest библиотеки | `-`
+
+Опция сборки | Тип | Описание | По умолчанию
+:---|:---|:---|:---:
+`MODULE_CORE_SHARED_LIB` | BOOL | Создать общую библиотеку (.dylib|.so) | `OFF`
+`MODULE_CORE_ENABLE_COVERAGE` | BOOL | Включает поддержку сбора данных о покрытии кода тестами | `OFF`
+`MODULE_CORE_ENABLE_TESTS` | BOOL | Включает построение тестов | `OFF`
 
 ### Запуск сборки
 

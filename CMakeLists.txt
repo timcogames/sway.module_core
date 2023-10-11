@@ -1,5 +1,5 @@
 # Проверяем версию CMake
-cmake_minimum_required(VERSION 3.13.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 
 set(MODULE_CORE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(MODULE_CORE_CMAKE_DIR ${MODULE_CORE_ROOT_DIR}/cmakehelpers)
