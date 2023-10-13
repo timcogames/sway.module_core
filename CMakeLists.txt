@@ -28,7 +28,7 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_setup()
 endif()
 
-project_metadata("core" 0.1.2)
+project_metadata("core" 0.1.3)
 project(${MODULE_CORE_PROJ_NAME} VERSION ${MODULE_CORE_VERSION} LANGUAGES CXX)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
@@ -77,8 +77,8 @@ set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 include_directories("${MODULE_CORE_DIR}/lib/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
-file(GLOB_RECURSE MODULE_CORE_HEADERS "${MODULE_CORE_DIR}/lib/include/*.*")
-file(GLOB_RECURSE MODULE_CORE_SOURCES "${MODULE_CORE_DIR}/lib/src/*.*")
+# file(GLOB_RECURSE MODULE_CORE_HEADERS "${MODULE_CORE_DIR}/lib/include/*.*")
+# file(GLOB_RECURSE MODULE_CORE_SOURCES "${MODULE_CORE_DIR}/lib/src/*.*")
 
 create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/src/*.*")
 enable_cxx17(${MODULE_CORE_TARGET})
@@ -91,7 +91,7 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_set_runtime_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_BINARY_DIR}/runtime_exports.json)
 
   # message("FLAGS ${EMSCRIPTEN_COMPILER_FLAGS}")
-  message("CONFIG ${MODULE_CORE_COMPILER_WEBJS_CONFIG}")
+  # message("CONFIG ${MODULE_CORE_COMPILER_WEBJS_CONFIG}")
 
   add_custom_command(TARGET ${MODULE_CORE_TARGET} POST_BUILD
     COMMAND #${EMSCRIPTEN_COMPILER}
