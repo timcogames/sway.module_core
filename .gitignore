@@ -2,7 +2,8 @@
 build/*
 
 bin/*
-!bin/index.html
+!bin/libmodule_core.*.js
+!bin/libmodule_core.*.wasm
 !bin/exports.json
 !bin/runtime_exports.json
 
