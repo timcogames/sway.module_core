@@ -12,7 +12,12 @@
     <script type="module">
       import create_core_module from"./bin/libmodule_core.0.1.2.js";
 
-      let instance = create_core_module();
+      let instance = create_core_module({
+        locateFile: function(path) {
+          const baseURL = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf( "/" ));
+          return baseURL + '/bin/' + path;
+        }
+      });
       instance.then((module) => {
         var root = module._createNode();
         var node = module._createNode();
