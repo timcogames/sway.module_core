@@ -32,7 +32,7 @@ NAMESPACE_BEGIN(container)
 
 class Node : public std::enable_shared_from_this<Node>, public utils::Visitable, public foundation::Eventable {
 public:
-#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
   using NodePtr = intptr_t;
 
   static Node *fromJs(NodePtr node) { return reinterpret_cast<Node *>(node); }
@@ -100,7 +100,7 @@ private:
   bool visible_;
 };
 
-#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
 EXTERN_C EMSCRIPTEN_KEEPALIVE auto createNode() -> Node::NodePtr;
 

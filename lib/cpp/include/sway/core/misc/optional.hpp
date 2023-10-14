@@ -11,7 +11,7 @@
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_WEB_BINDINGS
+#  ifdef EMSCRIPTEN_USE_BINDINGS
 #    include <emscripten/bind.h>
 #  endif
 #endif
@@ -20,7 +20,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(misc)
 
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
 
 template <typename T>
 struct OptionalAccess {
@@ -40,7 +40,7 @@ emscripten::class_<std::optional<T>> register_optional(lpcstr_t name) {
       .function("reset", OptionalAccess<OptionalType>::reset);
 }
 
-#endif  // EMSCRIPTEN_PLATFORM && EMSCRIPTEN_USE_WEB_BINDINGS
+#endif  // EMSCRIPTEN_PLATFORM && EMSCRIPTEN_USE_BINDINGS
 
 class StringOptional {
 public:

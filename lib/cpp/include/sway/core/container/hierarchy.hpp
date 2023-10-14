@@ -20,7 +20,7 @@
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_WEB_BINDINGS
+#  ifdef EMSCRIPTEN_USE_BINDINGS
 #    include <emscripten/bind.h>
 #  endif
 #endif
@@ -42,7 +42,7 @@ using NodeDataList = std::vector<NodeData>;
 
 class Hierarchy {
 public:
-#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
   using HierarchyPtr = intptr_t;
 
   static Hierarchy *fromJs(HierarchyPtr hierarchy) { return reinterpret_cast<Hierarchy *>(hierarchy); }
@@ -66,7 +66,7 @@ private:
   std::shared_ptr<Node> root_;
 };
 
-#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
 EXTERN_C EMSCRIPTEN_KEEPALIVE auto createHierarchy() -> Hierarchy::HierarchyPtr;
 

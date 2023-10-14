@@ -9,7 +9,7 @@
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_WEB_BINDINGS
+#  ifdef EMSCRIPTEN_USE_BINDINGS
 #    include <emscripten/bind.h>
 #  endif
 #endif
@@ -19,7 +19,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(Node)
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
 emscripten::class_<Node>("Node")
     .smart_ptr_constructor("Node", &std::make_shared<Node>)
     .function("addChildNode", &Node::addChildNode, emscripten::allow_raw_pointers())
@@ -186,7 +186,7 @@ auto Node::equal(std::shared_ptr<Node> other) -> bool { return other->chainEqual
 
 auto Node::chainEqual(NodeIdx::chain_t other) -> bool { return idx_.chainEqual(other); }
 
-#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
 auto createNode() -> Node::NodePtr { return Node::toJs(new Node()); }
 

@@ -4,7 +4,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(misc)
 
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
 template <typename T>
 emscripten::class_<std::optional<T>> register_optional(lpcstr_t *name) {
   using OptionalType = std::optional<T>;
@@ -18,7 +18,7 @@ emscripten::class_<std::optional<T>> register_optional(lpcstr_t *name) {
 #endif
 
 EMSCRIPTEN_BINDING_BEGIN(StringOptional)
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
 emscripten::class_<StringOptional>("StringOptional").constructor<>().class_function("set", &StringOptional::set);
 #endif
 EMSCRIPTEN_BINDING_END()

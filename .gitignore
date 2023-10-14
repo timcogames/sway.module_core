@@ -1,12 +1,9 @@
 # project output files
 build/*
 bin/*
+!bin/.gitkeep
 
 lib/web/node_modules
-
-!bin/media/
-bin/media/*
-!bin/media/core.cfg
 
 # osx noise
 .DS_Store

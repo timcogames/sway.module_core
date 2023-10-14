@@ -9,7 +9,7 @@
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_WEB_BINDINGS
+#  ifdef EMSCRIPTEN_USE_BINDINGS
 #    include <emscripten/bind.h>
 #  endif
 #endif

@@ -14,7 +14,7 @@ using namespace sway::core::misc;
 using namespace sway::core::foundation;
 using namespace sway::core::container;
 
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
 
 #  include <emscripten/bind.h>
 

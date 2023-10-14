@@ -12,7 +12,7 @@
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_WEB_BINDINGS
+#  ifdef EMSCRIPTEN_USE_BINDINGS
 #    include <emscripten/bind.h>
 #  endif
 #endif
@@ -54,7 +54,7 @@ protected:
   std::string eventname_;  // Название события.
 };
 
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
 class AEventHandlerWrapper : public emscripten::wrapper<AEventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(AEventHandlerWrapper);

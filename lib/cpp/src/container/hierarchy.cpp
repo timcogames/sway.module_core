@@ -3,7 +3,7 @@
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_WEB_BINDINGS
+#  ifdef EMSCRIPTEN_USE_BINDINGS
 #    include <emscripten/bind.h>
 #  endif
 #endif
@@ -13,7 +13,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(Hierarchy)
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
 emscripten::class_<NodeData>("NodeData").property("nodeidx", &NodeData::nodeidx);
 
 emscripten::register_vector<NodeData>("NodeDataVec");
@@ -45,7 +45,7 @@ auto Hierarchy::getRootNode() -> std::shared_ptr<Node> { return root_; }
 
 void Hierarchy::setRootNode(std::shared_ptr<Node> root) { root_ = root; }
 
-#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
 auto createHierarchy() -> Hierarchy::HierarchyPtr { return Hierarchy::toJs(new Hierarchy()); }
 
