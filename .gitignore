@@ -1,18 +1,12 @@
 # project output files
 build/*
-
 bin/*
-!bin/libmodule_core.*.js
-!bin/libmodule_core.*.wasm
-!bin/exports.json
-!bin/runtime_exports.json
+
+lib/web/node_modules
 
 !bin/media/
 bin/media/*
 !bin/media/core.cfg
-
-# tests
-tsapi/node_modules
 
 # osx noise
 .DS_Store

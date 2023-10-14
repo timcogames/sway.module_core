@@ -4,29 +4,48 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./wwwroot/dist/libmodule.css">
     <title></title>
   </head>
   <body>
-    <p id="text"></p>
+    <h1 class="heading">Hello</h1>
+    <ul id="wrap" class="content"></ul>
 
     <script type="module">
-      import create_core_module from"./bin/libmodule_core.0.1.2.js";
+      import create_core_module from"./wwwroot/dist/libmodule_core.0.1.3.js";
 
       let instance = create_core_module({
         locateFile: function(path) {
           const baseURL = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf( "/" ));
-          return baseURL + '/bin/' + path;
+          return baseURL + '/wwwroot/dist/' + path;
         }
       });
-      instance.then((module) => {
-        var root = module._createNode();
-        var node = module._createNode();
-        module._addChildNode(root, node);
 
-        const charArr = new Int8Array(module.HEAP32.buffer, module._getNodeIdx(node), 7);
-        const str = String.fromCharCode.apply(null, charArr);
-        const elm = document.getElementById("text");
-        elm.innerText = str;
+      instance.then((module) => {
+        let hierarchy = module._createHierarchy();
+
+        let root = module._getRootNode(hierarchy);
+        let node_A = module._createNode();
+        let node_B = module._createNode();
+        module._addChildNode(root, node_A);
+        module._addChildNode(root, node_B);
+
+        const nodeLen = module._getNumOfChildNodes(root);
+        const nodeArr = Array.from(new Uint32Array(module.HEAPU32.buffer, module._getChildNodes(root), nodeLen));
+
+        for (let i = 0; i < nodeLen; i++) {
+          const charArr = new Int8Array(module.HEAP8.buffer, module._getNodeIdx(nodeArr[i]), 7);
+          const str = String.fromCharCode.apply(null, charArr);
+
+          let ul = document.getElementById("wrap");
+          let li = document.createElement("li");
+          ul.appendChild(li);
+
+          li.innerHTML = li.innerHTML + str;
+        }
       });
     </script>
   </body>

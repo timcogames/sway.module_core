@@ -116,7 +116,7 @@ void Node::removeChildNode(std::shared_ptr<Node> child) {
 
 void Node::recursiveRemoveChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx) {
   if (!parentNodeIdx.chainEqual({NODEIDX_NEGATIVE})) {
-    NodeIdx::chain_t chain = child->getNodeIdx().getChain();
+    auto chain = child->getNodeIdx().getChain();
     chain.erase(chain.begin(), chain.begin() + parentNodeIdx.getDepth());
     chain.at(0) = NODEIDX_ROOT;
     child->setNodeIdx(chain, NODEIDX_NEGATIVE);
@@ -188,27 +188,24 @@ auto Node::chainEqual(NodeIdx::chain_t other) -> bool { return idx_.chainEqual(o
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
 
-auto createNode() -> struct HierarchyNode * {
-  auto obj = new Node();
-  return (struct HierarchyNode *)obj;
-}
+auto createNode() -> Node::NodePtr { return Node::toJs(new Node()); }
 
-void deleteNode(struct HierarchyNode *node) {
-  auto obj = (Node *)node;
+void deleteNode(Node::NodePtr node) {
+  auto obj = Node::fromJs(node);
   SAFE_DELETE_OBJECT(obj);
 }
 
-void addChildNode(struct HierarchyNode *root, struct HierarchyNode *node) {
-  auto obj = (Node *)root;
+void addChildNode(Node::NodePtr root, Node::NodePtr node) {
+  auto obj = Node::fromJs(root);
   if (!obj) {
     // TODO
   }
 
-  return obj->addChildNode(std::shared_ptr<Node>((Node *)node));
+  return obj->addChildNode(std::shared_ptr<Node>(Node::fromJs(node)));
 }
 
-auto getNodeIdx(struct HierarchyNode *node) -> lpcstr_t {
-  auto obj = (Node *)node;
+auto getNodeIdx(Node::NodePtr node) -> lpcstr_t {
+  auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO
   }
@@ -218,6 +215,32 @@ auto getNodeIdx(struct HierarchyNode *node) -> lpcstr_t {
   strcpy(result, idxStr.c_str());
 
   return result;
+}
+
+auto getChildNodes(Node::NodePtr node) -> Node::NodePtr * {
+  auto obj = Node::fromJs(node);
+  if (!obj) {
+    // TODO
+  }
+
+  auto nodes = obj->getChildNodes();
+  Node::NodePtr arr[nodes.size()];
+
+  for (auto i = 0; i < nodes.size(); i++) {
+    arr[i] = Node::toJs(nodes[i].get());
+  }
+
+  auto *result = &arr[0];
+  return result;
+}
+
+auto getNumOfChildNodes(Node::NodePtr node) -> s32_t {
+  auto obj = Node::fromJs(node);
+  if (!obj) {
+    // TODO
+  }
+
+  return obj->getNumOfChildNodes();
 }
 
 #endif

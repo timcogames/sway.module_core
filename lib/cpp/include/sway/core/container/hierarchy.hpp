@@ -3,13 +3,12 @@
 
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeidx.hpp>
-#include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
+#include <sway/visibilitymacros.hpp>
 
 #include <algorithm>
-#include <any>
 #include <iostream>
 #include <iterator>
 #include <memory>
@@ -43,6 +42,14 @@ using NodeDataList = std::vector<NodeData>;
 
 class Hierarchy {
 public:
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
+  using HierarchyPtr = intptr_t;
+
+  static Hierarchy *fromJs(HierarchyPtr hierarchy) { return reinterpret_cast<Hierarchy *>(hierarchy); }
+
+  static HierarchyPtr toJs(Hierarchy *hierarchy) { return reinterpret_cast<HierarchyPtr>(hierarchy); }
+#endif
+
   DECLARE_EMSCRIPTEN_BINDING()
 
   static auto findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx) -> std::optional<std::shared_ptr<Node>>;
@@ -58,6 +65,16 @@ public:
 private:
   std::shared_ptr<Node> root_;
 };
+
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
+
+EXTERN_C EMSCRIPTEN_KEEPALIVE auto createHierarchy() -> Hierarchy::HierarchyPtr;
+
+EXTERN_C EMSCRIPTEN_KEEPALIVE void deleteHierarchy(Hierarchy::HierarchyPtr hierarchy);
+
+EXTERN_C EMSCRIPTEN_KEEPALIVE auto getRootNode(Hierarchy::HierarchyPtr hierarchy) -> Node::NodePtr;
+
+#endif
 
 NAMESPACE_END(container)
 NAMESPACE_END(core)

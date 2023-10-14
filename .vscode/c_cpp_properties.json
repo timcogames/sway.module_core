@@ -7,13 +7,13 @@
       "intelliSenseMode": "macos-clang-arm64",
       "configurationProvider": "ms-vscode.cpptools",
       "includePath": [
-        "${workspaceFolder}/lib/include",
+        "${workspaceFolder}/lib/cpp/include",
         "/Users/apriori85/Documents/Third-party/googletest/googletest/include",
         "/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten/system/include"
       ],
       "browse": {
         "path": [
-          "${workspaceFolder}/lib/include",
+          "${workspaceFolder}/lib/cpp/include",
           "/Users/apriori85/Documents/Third-party/googletest/googletest/include",
           "/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten/system/include"
         ],

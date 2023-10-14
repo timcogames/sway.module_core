@@ -32,6 +32,14 @@ NAMESPACE_BEGIN(container)
 
 class Node : public std::enable_shared_from_this<Node>, public utils::Visitable, public foundation::Eventable {
 public:
+#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
+  using NodePtr = intptr_t;
+
+  static Node *fromJs(NodePtr node) { return reinterpret_cast<Node *>(node); }
+
+  static NodePtr toJs(Node *node) { return reinterpret_cast<NodePtr>(node); }
+#endif
+
   DECLARE_EMSCRIPTEN_BINDING()
   DECLARE_EVENT(EVT_ADDED, NodeAdded)
   DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
@@ -94,15 +102,17 @@ private:
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_WEB_BINDINGS)
 
-struct HierarchyNode;
+EXTERN_C EMSCRIPTEN_KEEPALIVE auto createNode() -> Node::NodePtr;
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE auto createNode() -> struct HierarchyNode *;
+EXTERN_C EMSCRIPTEN_KEEPALIVE void deleteNode(Node::NodePtr node);
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE void deleteNode(struct HierarchyNode *node);
+EXTERN_C EMSCRIPTEN_KEEPALIVE void addChildNode(Node::NodePtr root, Node::NodePtr node);
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE void addChildNode(struct HierarchyNode *root, struct HierarchyNode *node);
+EXTERN_C EMSCRIPTEN_KEEPALIVE auto getNodeIdx(Node::NodePtr node) -> lpcstr_t;
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE auto getNodeIdx(struct HierarchyNode *node) -> lpcstr_t;
+EXTERN_C EMSCRIPTEN_KEEPALIVE auto getChildNodes(Node::NodePtr node) -> Node::NodePtr *;
+
+EXTERN_C EMSCRIPTEN_KEEPALIVE auto getNumOfChildNodes(Node::NodePtr node) -> s32_t;
 
 #endif
 

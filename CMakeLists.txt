@@ -3,7 +3,8 @@ cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 
 set(MODULE_CORE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(MODULE_CORE_CMAKE_DIR ${MODULE_CORE_ROOT_DIR}/cmakehelpers)
-set(MODULE_CORE_BINARY_DIR ${MODULE_CORE_ROOT_DIR}/bin)
+set(MODULE_CORE_LIB_DIR ${MODULE_CORE_ROOT_DIR}/lib)
+set(MODULE_CORE_BIN_DIR ${MODULE_CORE_ROOT_DIR}/bin)
 
 include("${MODULE_CORE_CMAKE_DIR}/options.cmake")
 include("${MODULE_CORE_CMAKE_DIR}/set_output_dir.cmake")
@@ -28,7 +29,7 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_setup()
 endif()
 
-project_metadata("core" 0.1.3)
+project_metadata("core" 0.2.0)
 project(${MODULE_CORE_PROJ_NAME} VERSION ${MODULE_CORE_VERSION} LANGUAGES CXX)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
@@ -74,21 +75,21 @@ set_output_dir("${CMAKE_SOURCE_DIR}/bin")
 set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
-include_directories("${MODULE_CORE_DIR}/lib/include")
+include_directories("${MODULE_CORE_DIR}/lib/cpp/include")
 
 # Получаем пути ко всем хедерам и исходникам библиотеки
-# file(GLOB_RECURSE MODULE_CORE_HEADERS "${MODULE_CORE_DIR}/lib/include/*.*")
-# file(GLOB_RECURSE MODULE_CORE_SOURCES "${MODULE_CORE_DIR}/lib/src/*.*")
+# file(GLOB_RECURSE MODULE_CORE_HEADERS "${MODULE_CORE_DIR}/lib/cpp/include/*.*")
+# file(GLOB_RECURSE MODULE_CORE_SOURCES "${MODULE_CORE_DIR}/lib/cpp/src/*.*")
 
-create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/src/*.*")
+create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/cpp/src/*.*")
 enable_cxx17(${MODULE_CORE_TARGET})
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_set_compiler_javascript(#[[CONFIG_NAME]] MODULE_CORE_COMPILER_WEBJS_CONFIG
-    #[[BINARY_DIR]] ${MODULE_CORE_BINARY_DIR} #[[IO_LIBNAME]] ${MODULE_CORE_LIB_NAME} #[[VERSION]] ${MODULE_CORE_VERSION})
+    #[[BINARY_DIR]] ${MODULE_CORE_BIN_DIR} #[[IO_LIBNAME]] ${MODULE_CORE_LIB_NAME} #[[VERSION]] ${MODULE_CORE_VERSION})
   emscripten_set_config(#[[PROJ_NAME]] ${MODULE_CORE_PROJ_NAME} #[[CONFIG_NAME]] MODULE_CORE_COMPILER_WEBJS_CONFIG)
-  emscripten_set_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_BINARY_DIR}/exports.json)
-  emscripten_set_runtime_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_BINARY_DIR}/runtime_exports.json)
+  emscripten_set_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_LIB_DIR}/exports.json)
+  emscripten_set_runtime_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_LIB_DIR}/runtime_exports.json)
 
   # message("FLAGS ${EMSCRIPTEN_COMPILER_FLAGS}")
   # message("CONFIG ${MODULE_CORE_COMPILER_WEBJS_CONFIG}")
@@ -97,7 +98,7 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
     COMMAND #${EMSCRIPTEN_COMPILER}
       ${MODULE_CORE_COMPILER_WEBJS_CONFIG}
       # ${EMSCRIPTEN_COMPILER_FLAGS}
-    COMMAND rm "${MODULE_CORE_BINARY_DIR}/${MODULE_CORE_LIB_NAME}.bc"
+    COMMAND rm "${MODULE_CORE_BIN_DIR}/${MODULE_CORE_LIB_NAME}.bc"
   )
 endif()
 
