@@ -29,7 +29,7 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_setup()
 endif()
 
-project_metadata("core" 0.2.0)
+project_metadata("core" 0.2.1)
 project(${MODULE_CORE_PROJ_NAME} VERSION ${MODULE_CORE_VERSION} LANGUAGES CXX)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
