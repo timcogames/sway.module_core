@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 set(MODULE_CORE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(MODULE_CORE_CMAKE_DIR ${MODULE_CORE_ROOT_DIR}/cmakehelpers)
 set(MODULE_CORE_LIB_DIR ${MODULE_CORE_ROOT_DIR}/lib)
-set(MODULE_CORE_BIN_DIR ${MODULE_CORE_ROOT_DIR}/bin)
+set(MODULE_CORE_BIN_DIR ${CMAKE_SOURCE_DIR}/bin)
 
 include("${MODULE_CORE_CMAKE_DIR}/options.cmake")
 include("${MODULE_CORE_CMAKE_DIR}/set_output_dir.cmake")
@@ -21,7 +21,7 @@ include("${MODULE_CORE_CMAKE_DIR}/enable_coverage.cmake")
 set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
 
 # Опции сборки
-option(MODULE_CORE_SHARED_LIB "Build shared library (.dylib|.so)" OFF)
+option(MODULE_CORE_SHARED_LIB "Build shared library (.dylib/.so)" OFF)
 option(MODULE_CORE_ENABLE_COVERAGE "Enable coverage builds" OFF)
 option(MODULE_CORE_ENABLE_TESTS "Enable test builds" OFF)
 
@@ -29,7 +29,7 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_setup()
 endif()
 
-project_metadata("core" 0.2.1)
+project_metadata("core" 0.2.2)
 project(${MODULE_CORE_PROJ_NAME} VERSION ${MODULE_CORE_VERSION} LANGUAGES CXX)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
@@ -42,12 +42,6 @@ endif()
 if(MODULE_CORE_ENABLE_COVERAGE)
   enable_coverage()
 endif()
-
-# set(CMAKE_OSX_ARCHITECTURES "arm64")
-
-# message("ARH ${CMAKE_CXX_PLATFORM_ID}")
-# message("${EMSCRIPTEN_GENERATE_BITCODE_STATIC_LIBRARIES}")
-# message("${CMAKE_STATIC_LIBRARY_SUFFIX}")
 
 message("[${MODULE_CORE_PROJ_NAME}]: ${META_CORE_VERSION}
            system | ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_VERSION}
@@ -70,16 +64,12 @@ message("[${MODULE_CORE_PROJ_NAME}]: ${META_CORE_VERSION}
 ")
 
 # Определяем каталог вывода по умолчанию
-set_output_dir("${CMAKE_SOURCE_DIR}/bin")
+set_output_dir(${MODULE_CORE_BIN_DIR})
 
 set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 # Добавляем пути для поиска хедеров
 include_directories("${MODULE_CORE_DIR}/lib/cpp/include")
-
-# Получаем пути ко всем хедерам и исходникам библиотеки
-# file(GLOB_RECURSE MODULE_CORE_HEADERS "${MODULE_CORE_DIR}/lib/cpp/include/*.*")
-# file(GLOB_RECURSE MODULE_CORE_SOURCES "${MODULE_CORE_DIR}/lib/cpp/src/*.*")
 
 create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/cpp/src/*.*")
 enable_cxx17(${MODULE_CORE_TARGET})
@@ -91,13 +81,8 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_set_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_LIB_DIR}/exports.json)
   emscripten_set_runtime_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_LIB_DIR}/runtime_exports.json)
 
-  # message("FLAGS ${EMSCRIPTEN_COMPILER_FLAGS}")
-  # message("CONFIG ${MODULE_CORE_COMPILER_WEBJS_CONFIG}")
-
   add_custom_command(TARGET ${MODULE_CORE_TARGET} POST_BUILD
-    COMMAND #${EMSCRIPTEN_COMPILER}
-      ${MODULE_CORE_COMPILER_WEBJS_CONFIG}
-      # ${EMSCRIPTEN_COMPILER_FLAGS}
+    COMMAND ${MODULE_CORE_COMPILER_WEBJS_CONFIG}
     COMMAND rm "${MODULE_CORE_BIN_DIR}/${MODULE_CORE_LIB_NAME}.bc"
   )
 endif()
@@ -108,6 +93,6 @@ if(MODULE_CORE_ENABLE_TESTS)
     message(STATUS "[${MODULE_CORE_PROJ_NAME}]: Tests are only allowed with a static lib")
   else()
     message(STATUS "[${MODULE_CORE_PROJ_NAME}]:Tests have been enabled")
-    add_subdirectory(lib/tests/google)
+    add_subdirectory(lib/cpp/tests/google)
   endif()
 endif()

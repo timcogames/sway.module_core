@@ -50,7 +50,7 @@ cmake -DCMAKE_BUILD_TYPE=Release \
 
 Опция сборки | Тип | Описание | По умолчанию
 :---|:---|:---|:---:
-`MODULE_CORE_SHARED_LIB` | BOOL | Создать общую библиотеку (.dylib|.so) | `OFF`
+`MODULE_CORE_SHARED_LIB` | BOOL | Создать общую библиотеку (.dylib/.so) | `OFF`
 `MODULE_CORE_ENABLE_COVERAGE` | BOOL | Включает поддержку сбора данных о покрытии кода тестами | `OFF`
 `MODULE_CORE_ENABLE_TESTS` | BOOL | Включает построение тестов | `OFF`
 
