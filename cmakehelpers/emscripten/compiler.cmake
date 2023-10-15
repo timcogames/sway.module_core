@@ -10,7 +10,15 @@ function(emscripten_set_compiler #[[CONFIG]] config_arg)
 endfunction(emscripten_set_compiler)
 
 function(emscripten_set_compiler_javascript #[[CONFIG]] config_arg 
-  #[[BINARY_DIR]] binary_dir_arg #[[IO_LIB_NAME]] io_lib_name_arg #[[VERSION]] version_arg)
+  #[[BINARY_DIR]] binary_dir_arg #[[LIB_NAME_LIST]] lib_name_list_arg #[[VERSION]] version_arg)
   emscripten_set_compiler(${config_arg})
-  set(${config_arg} ${${config_arg}} \"${binary_dir_arg}/${io_lib_name_arg}.bc\" -o \"${binary_dir_arg}/${io_lib_name_arg}.${version_arg}.js\" PARENT_SCOPE)
+
+  list(REMOVE_DUPLICATES ${lib_name_list_arg})
+  list(GET ${lib_name_list_arg} 0 OUTPUT_LIB_NAME)
+
+  foreach(lib_name_var IN LISTS ${lib_name_list_arg})
+    set(IN_LIB_NAME_LIST "${IN_LIB_NAME_LIST};${binary_dir_arg}/${lib_name_var}.bc")
+  endforeach()
+
+  set(${config_arg} ${${config_arg}} ${IN_LIB_NAME_LIST} -o \"${binary_dir_arg}/${OUTPUT_LIB_NAME}.${version_arg}.js\" PARENT_SCOPE)
 endfunction(emscripten_set_compiler_javascript)
