@@ -14,6 +14,7 @@
 #include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/core/foundation/object.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
+#include <sway/core/foundation/uniqueable.hpp>
 #include <sway/core/generic/io/filesource.hpp>
 #include <sway/core/generic/io/path.hpp>
 #include <sway/core/intrusive/priorities.hpp>

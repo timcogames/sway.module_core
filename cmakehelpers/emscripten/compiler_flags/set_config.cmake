@@ -1,7 +1,3 @@
-include("${CMAKE_CURRENT_SOURCE_DIR}/cmakehelpers/emscripten/compiler_flags/set_modularize.cmake")
-include("${CMAKE_CURRENT_SOURCE_DIR}/cmakehelpers/emscripten/compiler_flags/set_environment.cmake")
-include("${CMAKE_CURRENT_SOURCE_DIR}/cmakehelpers/emscripten/compiler_flags/set_optimization.cmake")
-
 function(emscripten_set_config #[[PROJ_NAME]] proj_name_arg #[[CONFIG]] config_arg)
   emscripten_set_modularize(${proj_name_arg} ${config_arg})
   emscripten_set_environment(${config_arg})
