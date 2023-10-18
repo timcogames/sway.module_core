@@ -32,7 +32,7 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_setup()
 endif()
 
-project_metadata("core" 0.2.3)
+project_metadata("core" 0.2.4)
 project(${MODULE_CORE_PROJ_NAME} VERSION ${MODULE_CORE_VERSION} LANGUAGES CXX)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
@@ -84,7 +84,7 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
     #[[BINARY_DIR]] ${MODULE_CORE_BIN_DIR} #[[LIB_NAME_LIST]] LIB_NAME_LIST #[[VERSION]] ${MODULE_CORE_VERSION})
   emscripten_set_config(#[[PROJ_NAME]] ${MODULE_CORE_PROJ_NAME} #[[CONFIG_NAME]] MODULE_CORE_COMPILER_WEBJS_CONFIG)
   emscripten_set_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_LIB_DIR}/exports.json)
-  emscripten_set_runtime_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_LIB_DIR}/runtime_exports.json)
+  emscripten_set_runtime_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_LIB_DIR}/runtime_exports.json 0)
 
   add_custom_command(TARGET ${MODULE_CORE_TARGET} POST_BUILD
     COMMAND ${MODULE_CORE_COMPILER_WEBJS_CONFIG}
