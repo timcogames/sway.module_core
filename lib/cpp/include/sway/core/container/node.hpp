@@ -32,14 +32,7 @@ NAMESPACE_BEGIN(container)
 
 class Node : public std::enable_shared_from_this<Node>, public utils::Visitable, public foundation::Eventable {
 public:
-#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
-  using NodePtr = intptr_t;
-
-  static Node *fromJs(NodePtr node) { return reinterpret_cast<Node *>(node); }
-
-  static NodePtr toJs(Node *node) { return reinterpret_cast<NodePtr>(node); }
-#endif
-
+  DECLARE_EMSCRIPTEN(Node)
   DECLARE_EMSCRIPTEN_BINDING()
   DECLARE_EVENT(EVT_ADDED, NodeAdded)
   DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
@@ -101,19 +94,21 @@ private:
 };
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
+EXTERN_C_BEGIN
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE auto createNode() -> Node::NodePtr;
+EXPORT_API auto createNode() -> Node::JsPtr_t;
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE void deleteNode(Node::NodePtr node);
+EXPORT_API void deleteNode(Node::JsPtr_t node);
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE void addChildNode(Node::NodePtr root, Node::NodePtr node);
+EXPORT_API void addChildNode(Node::JsPtr_t root, Node::JsPtr_t node);
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE auto getNodeIdx(Node::NodePtr node) -> lpcstr_t;
+EXPORT_API auto getNodeIdx(Node::JsPtr_t node) -> lpcstr_t;
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE auto getChildNodes(Node::NodePtr node) -> Node::NodePtr *;
+EXPORT_API auto getChildNodes(Node::JsPtr_t node) -> Node::JsPtr_t *;
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE auto getNumOfChildNodes(Node::NodePtr node) -> s32_t;
+EXPORT_API auto getNumOfChildNodes(Node::JsPtr_t node) -> s32_t;
 
+EXTERN_C_END
 #endif
 
 NAMESPACE_END(container)

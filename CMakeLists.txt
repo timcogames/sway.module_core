@@ -6,6 +6,8 @@ set(MODULE_CORE_CMAKE_DIR ${MODULE_CORE_ROOT_DIR}/cmakehelpers)
 set(MODULE_CORE_LIB_DIR ${MODULE_CORE_ROOT_DIR}/lib)
 set(MODULE_CORE_BIN_DIR ${CMAKE_SOURCE_DIR}/bin)
 
+#_________________________________________________________________________________
+#                                                            Include CMake modules
 include("${MODULE_CORE_CMAKE_DIR}/options.cmake")
 include("${MODULE_CORE_CMAKE_DIR}/set_output_dir.cmake")
 include("${MODULE_CORE_CMAKE_DIR}/project_metadata.cmake")
@@ -23,16 +25,21 @@ include("${MODULE_CORE_CMAKE_DIR}/enable_coverage.cmake")
 
 set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
 
-# Опции сборки
+#_________________________________________________________________________________
+#                                                                    Build options
 option(MODULE_CORE_SHARED_LIB "Build shared library (.dylib/.so)" OFF)
 option(MODULE_CORE_ENABLE_COVERAGE "Enable coverage builds" OFF)
 option(MODULE_CORE_ENABLE_TESTS "Enable test builds" OFF)
 
+#_________________________________________________________________________________
+#                                                              [Emscripten]: Setup
 if(GLOB_EMSCRIPTEN_PLATFORM)
   emscripten_setup()
 endif()
 
-project_metadata("core" 0.2.4)
+#_________________________________________________________________________________
+#                                                                          Project
+project_metadata("core" 0.2.5)
 project(${MODULE_CORE_PROJ_NAME} VERSION ${MODULE_CORE_VERSION} LANGUAGES CXX)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
@@ -40,6 +47,11 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--whole-archive")
   # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-unicode-whitespace \
   #   -Wno-unused-local-typedef -Wno-invalid-noreturn -Wno-unused-command-line-argument")
+endif()
+
+if((GLOB_EMSCRIPTEN_PLATFORM AND NOT GLOB_EMSCRIPTEN_USE_BINDINGS) OR MODULE_CORE_SHARED_LIB)
+  add_definitions(-DMODULE_CORE_EXPORT_API)
+  # target_compile_definitions(${MODULE_CORE_TARGET} PUBLIC -DMODULE_CORE_EXPORT_API)
 endif()
 
 if(MODULE_CORE_ENABLE_COVERAGE)
@@ -66,12 +78,14 @@ message("[${MODULE_CORE_PROJ_NAME}]: ${META_CORE_VERSION}
             tests | ${MODULE_CORE_ENABLE_TESTS}
 ")
 
-# Определяем каталог вывода по умолчанию
+#_________________________________________________________________________________
+#                                                           Executable output path
 set_output_dir(${MODULE_CORE_BIN_DIR})
 
 set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
 
-# Добавляем пути для поиска хедеров
+#_________________________________________________________________________________
+#                                                          Include project headers
 include_directories("${MODULE_CORE_DIR}/lib/cpp/include")
 
 create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/cpp/src/*.*")
@@ -92,7 +106,8 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   )
 endif()
 
-# Добавляем построение тестов
+#_________________________________________________________________________________
+#                                                                            Tests
 if(MODULE_CORE_ENABLE_TESTS)
   if(MODULE_CORE_SHARED_LIB)
     message(STATUS "[${MODULE_CORE_PROJ_NAME}]: Tests are only allowed with a static lib")

@@ -11,15 +11,19 @@
 #  define EXTERN_C_END
 #endif
 
-#define PUBLIC_ATTRIBUTE __attribute__((visibility("default")))
-#define HIDDEN_ATTRIBUTE __attribute__((visibility("hidden")))
+#define PUBLIC_ATTRIB __attribute__((visibility("default")))
+#define HIDDEN_ATTRIB __attribute__((visibility("hidden")))
 
-#ifdef BUILD_DLLAPI_LIBMODULE
-#  undef DLLAPI_EXPORT
-#  define DLLAPI_EXPORT PUBLIC_ATTRIBUTE
+#undef EXPORT_API
+#ifdef MODULE_CORE_EXPORT_API
+#  if defined(EMSCRIPTEN_PLATFORM)
+#    include <emscripten.h>
+#    define EXPORT_API EMSCRIPTEN_KEEPALIVE
+#  else
+#    define EXPORT_API PUBLIC_ATTRIB
+#  endif
 #else
-#  undef DLLAPI_EXPORT
-#  define DLLAPI_EXPORT
+#  define EXPORT_API
 #endif
 
 #endif  // SWAY_VISIBILITYMACROS_HPP

@@ -42,14 +42,7 @@ using NodeDataList = std::vector<NodeData>;
 
 class Hierarchy {
 public:
-#if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
-  using HierarchyPtr = intptr_t;
-
-  static Hierarchy *fromJs(HierarchyPtr hierarchy) { return reinterpret_cast<Hierarchy *>(hierarchy); }
-
-  static HierarchyPtr toJs(Hierarchy *hierarchy) { return reinterpret_cast<HierarchyPtr>(hierarchy); }
-#endif
-
+  DECLARE_EMSCRIPTEN(Hierarchy)
   DECLARE_EMSCRIPTEN_BINDING()
 
   static auto findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx) -> std::optional<std::shared_ptr<Node>>;
@@ -67,13 +60,15 @@ private:
 };
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
+EXTERN_C_BEGIN
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE auto createHierarchy() -> Hierarchy::HierarchyPtr;
+EXPORT_API auto createHierarchy() -> Hierarchy::JsPtr_t;
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE void deleteHierarchy(Hierarchy::HierarchyPtr hierarchy);
+EXPORT_API void deleteHierarchy(Hierarchy::JsPtr_t hierarchy);
 
-EXTERN_C EMSCRIPTEN_KEEPALIVE auto getRootNode(Hierarchy::HierarchyPtr hierarchy) -> Node::NodePtr;
+EXPORT_API auto getRootNode(Hierarchy::JsPtr_t hierarchy) -> Node::JsPtr_t;
 
+EXTERN_C_END
 #endif
 
 NAMESPACE_END(container)

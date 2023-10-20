@@ -188,14 +188,14 @@ auto Node::chainEqual(NodeIdx::chain_t other) -> bool { return idx_.chainEqual(o
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
-auto createNode() -> Node::NodePtr { return Node::toJs(new Node()); }
+auto createNode() -> Node::JsPtr_t { return Node::toJs(new Node()); }
 
-void deleteNode(Node::NodePtr node) {
+void deleteNode(Node::JsPtr_t node) {
   auto obj = Node::fromJs(node);
   SAFE_DELETE_OBJECT(obj);
 }
 
-void addChildNode(Node::NodePtr root, Node::NodePtr node) {
+void addChildNode(Node::JsPtr_t root, Node::JsPtr_t node) {
   auto obj = Node::fromJs(root);
   if (!obj) {
     // TODO
@@ -204,7 +204,7 @@ void addChildNode(Node::NodePtr root, Node::NodePtr node) {
   return obj->addChildNode(std::shared_ptr<Node>(Node::fromJs(node)));
 }
 
-auto getNodeIdx(Node::NodePtr node) -> lpcstr_t {
+auto getNodeIdx(Node::JsPtr_t node) -> lpcstr_t {
   auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO
@@ -217,14 +217,14 @@ auto getNodeIdx(Node::NodePtr node) -> lpcstr_t {
   return result;
 }
 
-auto getChildNodes(Node::NodePtr node) -> Node::NodePtr * {
+auto getChildNodes(Node::JsPtr_t node) -> Node::JsPtr_t * {
   auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO
   }
 
   auto nodes = obj->getChildNodes();
-  Node::NodePtr arr[nodes.size()];
+  Node::JsPtr_t arr[nodes.size()];
 
   for (auto i = 0; i < nodes.size(); i++) {
     arr[i] = Node::toJs(nodes[i].get());
@@ -234,7 +234,7 @@ auto getChildNodes(Node::NodePtr node) -> Node::NodePtr * {
   return result;
 }
 
-auto getNumOfChildNodes(Node::NodePtr node) -> s32_t {
+auto getNumOfChildNodes(Node::JsPtr_t node) -> s32_t {
   auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO

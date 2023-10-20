@@ -47,14 +47,14 @@ void Hierarchy::setRootNode(std::shared_ptr<Node> root) { root_ = root; }
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
-auto createHierarchy() -> Hierarchy::HierarchyPtr { return Hierarchy::toJs(new Hierarchy()); }
+auto createHierarchy() -> Hierarchy::JsPtr_t { return Hierarchy::toJs(new Hierarchy()); }
 
-void deleteHierarchy(Hierarchy::HierarchyPtr hierarchy) {
+void deleteHierarchy(Hierarchy::JsPtr_t hierarchy) {
   auto obj = Hierarchy::fromJs(hierarchy);
   SAFE_DELETE_OBJECT(obj);
 }
 
-auto getRootNode(Hierarchy::HierarchyPtr hierarchy) -> Node::NodePtr {
+auto getRootNode(Hierarchy::JsPtr_t hierarchy) -> Node::JsPtr_t {
   auto obj = Hierarchy::fromJs(hierarchy);
   return Node::toJs(obj->getRootNode().get());
 }
