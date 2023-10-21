@@ -1,7 +1,11 @@
-# Проверяем версию CMake
+#_________________________________________________________________________________
+#                                                                    CMake version
 cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 
+#_________________________________________________________________________________
+#                                                              Project directories
 set(MODULE_CORE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
+set(MODULE_CORE_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(MODULE_CORE_CMAKE_DIR ${MODULE_CORE_ROOT_DIR}/cmakehelpers)
 set(MODULE_CORE_LIB_DIR ${MODULE_CORE_ROOT_DIR}/lib)
 set(MODULE_CORE_BIN_DIR ${CMAKE_SOURCE_DIR}/bin)
@@ -39,7 +43,7 @@ endif()
 
 #_________________________________________________________________________________
 #                                                                          Project
-project_metadata("core" 0.2.5)
+project_metadata("core" 0.2.6)
 project(${MODULE_CORE_PROJ_NAME} VERSION ${MODULE_CORE_VERSION} LANGUAGES CXX)
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
@@ -54,6 +58,8 @@ if((GLOB_EMSCRIPTEN_PLATFORM AND NOT GLOB_EMSCRIPTEN_USE_BINDINGS) OR MODULE_COR
   # target_compile_definitions(${MODULE_CORE_TARGET} PUBLIC -DMODULE_CORE_EXPORT_API)
 endif()
 
+#_________________________________________________________________________________
+#                                                                         Coverage
 if(MODULE_CORE_ENABLE_COVERAGE)
   enable_coverage()
 endif()
@@ -82,15 +88,17 @@ message("[${MODULE_CORE_PROJ_NAME}]: ${META_CORE_VERSION}
 #                                                           Executable output path
 set_output_dir(${MODULE_CORE_BIN_DIR})
 
-set(MODULE_CORE_DIR ${CMAKE_CURRENT_LIST_DIR})
-
 #_________________________________________________________________________________
 #                                                          Include project headers
-include_directories("${MODULE_CORE_DIR}/lib/cpp/include")
+include_directories("${MODULE_CORE_LIST_DIR}/lib/cpp/include")
 
+#_________________________________________________________________________________
+#                                                                          Bitcode
 create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/cpp/src/*.*")
 enable_cxx17(${MODULE_CORE_TARGET})
 
+#_________________________________________________________________________________
+#                                                                  Build libraries
 if(GLOB_EMSCRIPTEN_PLATFORM)
   set(LIB_NAME_LIST ${MODULE_CORE_LIB_NAME})
 
@@ -102,6 +110,19 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
 
   add_custom_command(TARGET ${MODULE_CORE_TARGET} POST_BUILD
     COMMAND ${MODULE_CORE_COMPILER_WEBJS_CONFIG}
+
+    # COMMAND ${ASMJS_SYNC_NODE}
+    # COMMAND ${ASMJS_SYNC_WEB}
+
+    # COMMAND ${ASMJS_ASYNC_NODE}
+    # COMMAND ${ASMJS_ASYNC_WEB}
+
+    # COMMAND ${WASM_SYNC_NODE}
+    # COMMAND ${WASM_SYNC_WEB}
+
+    # COMMAND ${WASM_ASYNC_NODE}
+    # COMMAND ${WASM_ASYNC_WEB}
+
     # COMMAND rm "${MODULE_CORE_BIN_DIR}/${MODULE_CORE_LIB_NAME}.bc"
   )
 endif()
