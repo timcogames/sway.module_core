@@ -15,7 +15,7 @@ async function importModule(moduleName: string): Promise<any> {
   return module;
 }
 
-export const useBridge = <TBridgeModule>(moduleName: string): Promise<{ module: TBridgeModule }> => {
+export const useBridge = <TBridgeModule>(moduleName: string): Promise<{ create_core_module: TBridgeModule }> => {
   return new Promise(async (resolve) => {
     if (process.env.USE_BINDING == "ON") {
       // importModule("../../bin/module_core.0.1.0.js")
@@ -27,8 +27,8 @@ export const useBridge = <TBridgeModule>(moduleName: string): Promise<{ module: 
       fileAsStr = fileAsStr.replace(/__dirname/g, `"${filePath}"`);
 
       const Bridge = await eval(fileAsStr);
-      Bridge().then((module: TBridgeModule) => {
-        resolve({ module });
+      Bridge().then((create_core_module: TBridgeModule) => {
+        resolve({ create_core_module });
       });
     }
     else {
@@ -47,8 +47,8 @@ export const useBridge = <TBridgeModule>(moduleName: string): Promise<{ module: 
 
       wasi.initialize(instance);
 
-      const module: TBridgeModule = instance.exports as any;
-      resolve({ module });
+      const create_core_module: TBridgeModule = instance.exports as any;
+      resolve({ create_core_module });
     }
   });
 }

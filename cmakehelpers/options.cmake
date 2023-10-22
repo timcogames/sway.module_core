@@ -1,6 +1,5 @@
 option(GLOB_THIRD_PARTY_DIR "Third party directory" OFF)
 option(GLOB_EMSCRIPTEN_PLATFORM "Using emscripten compiler" OFF)
-option(GLOB_EMSCRIPTEN_WEB_ENVIRONMENT "" OFF)
 option(GLOB_EMSCRIPTEN_USE_BINDINGS "Using emscripten binding" OFF)
 option(GLOB_EMSCRIPTEN_ENABLE_ASSERTIONS "" OFF)
 option(GLOB_EMSCRIPTEN_ROOT_DIR "Emscripten root directory" OFF)

@@ -20,7 +20,7 @@
 	],
 	"scripts": {
 		"lint": "eslint './' --ext .ts",
-		"jest": "node --experimental-vm-modules node_modules/.bin/jest --no-cache",
+		"jest": "node --experimental-vm-modules --trace-warnings node_modules/.bin/jest --no-cache",
 		"jest:embind": "cross-env USE_BINDING=ON npm run jest"
 	},
 	"devDependencies": {

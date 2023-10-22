@@ -1,4 +1,4 @@
-function(emscripten_set_pthread #[[FLAGS]] flags_arg #[[POOL_SIZE]] pool_size_arg)
+function(emscripten_set_pthread flags_arg pool_size_arg)
   if(${pool_size_arg} EQUAL 1)
     # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--shared-memory,--no-check-features")
     # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -s USE_PTHREADS=1 -s ALLOW_MEMORY_GROWTH=1 -s INITIAL_MEMORY=512Mb -s TOTAL_MEMORY=256Mb")

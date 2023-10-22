@@ -27,5 +27,5 @@ function(create_bitcode_library #[[TARGET]] target_arg #[[PROJ_NAME]] proj_name_
   endif()
 
   create_library(${target_arg} STATIC ${source_dir_arg})
-  set_target_properties(${target_arg} PROPERTIES LINK_FLAGS "--no-entry")
+  # set_target_properties(${target_arg} PROPERTIES LINK_FLAGS "--no-entry")
 endfunction(create_bitcode_library)
