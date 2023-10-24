@@ -1,8 +1,6 @@
 #
 # Build stage
 #
-# TODO: AMD64 / ARM64
-# FROM --platform=linux/amd64 gcc:10
 FROM --platform=linux/arm64/v8 gcc:10
 
 LABEL Victor Timoshin <victor-timoshin@hotmail.com>
@@ -24,6 +22,7 @@ COPY ./CMakeLists.txt /module_core_workspace
 COPY ./index.html /module_core_workspace
 
 WORKDIR /module_core_workspace/build
+
 RUN cmake -DCMAKE_BUILD_TYPE=${selected_build_type} \
           -DGLOB_GTEST_ROOT_DIR=/usr/src/gtest \
           -DMODULE_CORE_ENABLE_TESTS=${enabled_google_tests} \
@@ -31,4 +30,4 @@ RUN cmake -DCMAKE_BUILD_TYPE=${selected_build_type} \
 
 RUN cmake --build .
 
-ENTRYPOINT ["../bin/module_core_tests"]
+ENTRYPOINT ["/bin/module_core_tests"]
