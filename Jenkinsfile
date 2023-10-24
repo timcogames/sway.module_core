@@ -23,7 +23,7 @@ node {
     stage("Clone repository") {
       SELECTED_BRANCH_NAME = input(message: "Select active branch", parameters: [
         [$class: "ChoiceParameterDefinition", 
-          choices: "develop\norigin/master", 
+          choices: "develop\nmaster", 
           name: "Active branch", 
           description: "Select option the relevant branch"]
       ])
@@ -60,7 +60,8 @@ node {
 
     stage("Build:Dockerfile-ARM64") {
       sh "${DOCKER_PATH}/docker build --no-cache --pull --rm \
-        --build-arg selected_build_type=${SELECTED_BRANCH_NAME == "origin/master" ? "Release" : "Debug"} \
+        --target image-${SELECTED_BRANCH_NAME} \
+        --build-arg selected_build_type=${SELECTED_BRANCH_NAME == "master" ? "Release" : "Debug"} \
         --build-arg enabled_google_tests=${booleanToStr(ENABLED_GOOGLE_TESTS)} \
         --build-arg enabled_coverage=${booleanToStr(ENABLED_COVERAGE)} \
         -f \"Dockerfile-ARM64\" \
@@ -95,7 +96,7 @@ node {
         // [  -i] - interactive mode
         // [  -e] - entrypoint
         def RESULT = sh(
-          script: "${DOCKER_PATH}/docker run --rm -i -e /bin/bash ${MODULE_CORE_IMAGE_ID}", 
+          script: "${DOCKER_PATH}/docker run ${MODULE_CORE_IMAGE_ID}", 
           returnStdout: true
         ).trim()
 

@@ -1,7 +1,7 @@
 #
 # Build stage
 #
-FROM --platform=linux/arm64/v8 gcc:10
+FROM --platform=linux/arm64/v8 gcc:10 AS base
 
 LABEL Victor Timoshin <victor-timoshin@hotmail.com>
 
@@ -23,11 +23,24 @@ COPY ./index.html /module_core_workspace
 
 WORKDIR /module_core_workspace/build
 
-RUN cmake -DCMAKE_BUILD_TYPE=${selected_build_type} \
+# Build development image
+
+FROM base as image-develop
+RUN cmake -DCMAKE_BUILD_TYPE=Debug \
           -DGLOB_GTEST_ROOT_DIR=/usr/src/gtest \
           -DMODULE_CORE_ENABLE_TESTS=${enabled_google_tests} \
           -DMODULE_CORE_ENABLE_COVERAGE=${enabled_coverage} ../
 
 RUN cmake --build .
+ENTRYPOINT ["/module_core_workspace/bin/dbg/module_core_tests"]
 
+# Build production image
+
+FROM base as image-master
+RUN cmake -DCMAKE_BUILD_TYPE=Release \
+          -DGLOB_GTEST_ROOT_DIR=/usr/src/gtest \
+          -DMODULE_CORE_ENABLE_TESTS=${enabled_google_tests} \
+          -DMODULE_CORE_ENABLE_COVERAGE=${enabled_coverage} ../
+
+RUN cmake --build .
 ENTRYPOINT ["/module_core_workspace/bin/module_core_tests"]
