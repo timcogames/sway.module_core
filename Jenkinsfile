@@ -96,11 +96,11 @@ node {
         // [  -i] - interactive mode
         // [  -e] - entrypoint
         def RESULT = sh(
-          script: "${DOCKER_PATH}/docker run ${MODULE_CORE_IMAGE_ID}", 
+          script: "${DOCKER_PATH}/docker start -i ${MODULE_CORE_CONTAINER_ID}", 
           returnStdout: true
         ).trim()
 
-        sh "echo ${RESULT}"
+        // sh "echo ${RESULT}"
 
         // dir("./bin") {
         //   if (SELECTED_BUILD_TYPE == "debug") {
@@ -142,7 +142,7 @@ node {
     }
   } finally {
     stage("cleanup") {
-      // sh "${DOCKER_PATH}/docker rm --force ${MODULE_CORE_CONTAINER_ID}"
+      sh "${DOCKER_PATH}/docker rm --force ${MODULE_CORE_CONTAINER_ID}"
       sh "${DOCKER_PATH}/docker rmi ${MODULE_CORE_IMAGE_ID}"
     }
   }
