@@ -30,4 +30,4 @@ RUN cmake -DCMAKE_BUILD_TYPE=${selected_build_type} \
 
 RUN cmake --build .
 
-ENTRYPOINT ["/bin/module_core_tests"]
+ENTRYPOINT ["/module_core_workspace/bin/module_core_tests"]
