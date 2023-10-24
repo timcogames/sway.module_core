@@ -17,10 +17,20 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       -DMODULE_CORE_ENVIRONMENT=web,node \
       -DMODULE_CORE_COMPILATION=ON ../
 
+docker build \
+      --no-cache \
+      --progress plain \
+      --pull --rm \
+      --build-arg selected_build_type=Release \
+      --build-arg enabled_google_tests=ON \
+      --build-arg enabled_coverage=OFF \
+      -f "Dockerfile-ARM64" \
+      -t sway/module_core:latest "."
+
 python3 -m http.server <PORT>
 ```
 
-[для Google тестов](./lib/cpp/tests/README.md)
+[для Google тестов](./lib/cxx/tests/README.md)
 
 [для Jest тестов](./lib/web/tests/README.md)
 

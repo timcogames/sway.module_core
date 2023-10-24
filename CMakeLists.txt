@@ -85,16 +85,19 @@ set_output_dir(${MODULE_CORE_BIN_DIR})
 
 #_________________________________________________________________________________
 #                                                          Include project headers
-include_directories("${MODULE_CORE_LIST_DIR}/lib/cpp/include")
+include_directories("${MODULE_CORE_LIST_DIR}/lib/cxx/include")
 
 #_________________________________________________________________________________
 #                                                             [EMSCRIPTEN] Bitcode
 if(GLOB_EMSCRIPTEN_PLATFORM)
-  # create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/cpp/src/*.*")
-  create_bitcode(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cpp/src/*.*")
+  # create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
+  create_bitcode(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
 else()
-  create_library(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cpp/src/*.*")
+  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -static-libgcc")
+  create_library(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
 endif()
+
+enable_cxx17(${MODULE_CORE_TARGET})
 
 #_________________________________________________________________________________
 #                                                                      Definitions
@@ -126,7 +129,7 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
     printf_link_options(${target})
   endforeach()
 else()
-  create_library(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cpp/src/*.*")
+  # create_library(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
 endif()
 
 # if(GLOB_EMSCRIPTEN_PLATFORM)
@@ -152,6 +155,6 @@ if(MODULE_CORE_ENABLE_TESTS)
     message(STATUS "[${MODULE_CORE_PROJ_NAME}]: Tests are only allowed with a static lib")
   else()
     message(STATUS "[${MODULE_CORE_PROJ_NAME}]:Tests have been enabled")
-    add_subdirectory(lib/cpp/tests/google)
+    add_subdirectory(lib/cxx/tests/google)
   endif()
 endif()

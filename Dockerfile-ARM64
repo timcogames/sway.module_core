@@ -1,0 +1,34 @@
+#
+# Build stage
+#
+# TODO: AMD64 / ARM64
+# FROM --platform=linux/amd64 gcc:10
+FROM --platform=linux/arm64/v8 gcc:10
+
+LABEL Victor Timoshin <victor-timoshin@hotmail.com>
+
+RUN update-ca-certificates -f
+
+RUN apt-get update -y && apt-get install -y software-properties-common && apt-add-repository 'deb http://archive.debian.org/debian stretch main contrib non-free'
+RUN apt-get update -y && apt-get install -y \
+    cmake \
+    libgtest-dev
+
+ARG selected_build_type=Debug
+ARG enabled_google_tests=ON
+ARG enabled_coverage=OFF
+
+COPY ./lib /module_core_workspace/lib
+COPY ./cmakehelpers /module_core_workspace/cmakehelpers
+COPY ./CMakeLists.txt /module_core_workspace
+COPY ./index.html /module_core_workspace
+
+WORKDIR /module_core_workspace/build
+RUN cmake -DCMAKE_BUILD_TYPE=${selected_build_type} \
+          -DGLOB_GTEST_ROOT_DIR=/usr/src/gtest \
+          -DMODULE_CORE_ENABLE_TESTS=${enabled_google_tests} \
+          -DMODULE_CORE_ENABLE_COVERAGE=${enabled_coverage} ../
+
+RUN cmake --build .
+
+ENTRYPOINT ["../bin/module_core_tests"]

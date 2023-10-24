@@ -1,3 +1,4 @@
-[Jest](./jest/README.md)
+# Tests
 
-[Jest enbind](./jest-embind/README.md)
+- [Jest](./jest/README.md)
+- [Jest enbind](./jest-embind/README.md)
