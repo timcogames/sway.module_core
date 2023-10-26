@@ -1,18 +1,21 @@
+import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
+
 def DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
+def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
 
 def MODULE_CORE_CONTAINER_NAME = "sway"
 def MODULE_CORE_CONTAINER_ID = ""
 
 def MODULE_CORE_IMAGE_NAME = "${MODULE_CORE_CONTAINER_NAME}/module_core"
-def MODULE_CORE_IMAGE_TAG = "latest-arm64"
+def MODULE_CORE_IMAGE_TAG = "latest"
 def MODULE_CORE_IMAGE_ID=""
 
-def SELECTED_BRANCH_NAME = "develop"
-
+def SELECTED_BRANCH_NAME = ""
 def APPLIED_THIRD_PARTY_DIR = ""
-def APPLIED_GOOGLE_TEST_ROOT_DIR = ""
-def ENABLED_GOOGLE_TESTS = "ON"
-def ENABLED_COVERAGE = "OFF"
+def APPLIED_TEST_ROOT_DIR = ""
+def ENABLED_DOCKER = false
+def ENABLED_TESTS = ""
+def ENABLED_COVERAGE = ""
 
 def booleanToStr(value) {
   return (value) ? "ON" : "OFF"
@@ -41,57 +44,87 @@ node {
       ])
 
       APPLIED_THIRD_PARTY_DIR = options["THIRD_PARTY_DIR"]
-      APPLIED_GOOGLE_TEST_ROOT_DIR = "${APPLIED_THIRD_PARTY_DIR}/googletest"
-      ENABLED_GOOGLE_TESTS = options["GOOGLE_TESTS"]
+      APPLIED_TEST_ROOT_DIR = "${APPLIED_THIRD_PARTY_DIR}/googletest"
+      ENABLED_TESTS = options["GOOGLE_TESTS"]
       ENABLED_COVERAGE = options["COVERAGE"]
     }
 
-    // stage("Build") {
-    //   sh "mkdir -p build"
-    //   dir("./build") {
-    //     sh "/opt/homebrew/Cellar/cmake/3.22.1/bin/cmake \
-    //       -DCMAKE_BUILD_TYPE=${SELECTED_BRANCH_NAME == "origin/master" ? "Release" : "Debug"} \
-    //       -DGLOB_GTEST_ROOT_DIR=${APPLIED_GOOGLE_TEST_ROOT_DIR} \
-    //       -DMODULE_CORE_ENABLE_TESTS=${booleanToStr(ENABLED_GOOGLE_TESTS)} \
-    //       -DMODULE_CORE_ENABLE_COVERAGE=${booleanToStr(ENABLED_COVERAGE)} ../"
-    //     sh "/opt/homebrew/bin/cmake --build ./"
-    //   }
-    // }
-
-    stage("Build:Dockerfile-ARM64") {
-      sh "${DOCKER_PATH}/docker build --no-cache --pull --rm \
-        --target image-${SELECTED_BRANCH_NAME} \
-        --build-arg selected_build_type=${SELECTED_BRANCH_NAME == "master" ? "Release" : "Debug"} \
-        --build-arg enabled_google_tests=${booleanToStr(ENABLED_GOOGLE_TESTS)} \
-        --build-arg enabled_coverage=${booleanToStr(ENABLED_COVERAGE)} \
-        -f \"Dockerfile-ARM64\" \
-        -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
-
-      MODULE_CORE_IMAGE_ID = sh(
-        script: "${DOCKER_PATH}/docker images --filter=reference=${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} --format {{.ID}}",
-        returnStdout: true
-      ).trim()
-
-      def CONTAINER_CREATED = sh(
-        script: "${DOCKER_PATH}/docker inspect -f {{.State.Status}} ${MODULE_CORE_CONTAINER_NAME}",
-        returnStatus: true
-      ) == 0
-      if (CONTAINER_CREATED == false) {
-        sh "${DOCKER_PATH}/docker create --name ${MODULE_CORE_CONTAINER_NAME} ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
+    stage("Build:without-docker gcc-linux-arm64") {
+      if (ENABLED_DOCKER) {
+        echo "Skipping stage..."
+        Utils.markStageSkippedForConditional("Build:without-docker gcc-linux-arm64")
+      } else {
+        sh "mkdir -p build"
+        dir("./build") {
+          sh "${CMAKE_PATH}/cmake \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DGLOB_GTEST_ROOT_DIR=${APPLIED_TEST_ROOT_DIR} \
+            -DMODULE_CORE_ENABLE_TESTS=${booleanToStr(ENABLED_TESTS)} \
+            -DMODULE_CORE_ENABLE_COVERAGE=${booleanToStr(ENABLED_COVERAGE)} ../"
+          sh "${CMAKE_PATH}/cmake --build ./"
+        }
       }
-
-      MODULE_CORE_CONTAINER_ID = sh(
-        script: "${DOCKER_PATH}/docker ps -aqf \"name=${MODULE_CORE_CONTAINER_NAME}\"",
-        returnStdout: true
-      ).trim()
     }
 
-    stage("Build:Emscripten") {
-      sh "echo Build:Emscripten"
+    stage("Build/Push:docker gcc-linux-xarch") {
+      if (!ENABLED_DOCKER && SELECTED_BRANCH_NAME != "master") {
+        echo "Skipping stage..."
+        Utils.markStageSkippedForConditional("Build/Push:docker gcc-linux-xarch")
+      } else {
+        sh "${DOCKER_PATH}/docker buildx bake --push \
+          --set image.args.ENABLED_COVERAGE=\"${booleanToStr(ENABLED_COVERAGE)}\" \
+          -f \"gcc-linux-xarch.hcl\" module_core-release"
+      }
+    }
+
+    // stage("Build:docker alpine-multi-arch") {
+    //   sh "${DOCKER_PATH}/docker buildx build --platform linux/amd64,linux/arm64 \
+    //     --no-cache \
+    //     --progress plain \
+    //     --pull --rm \
+    //     --target image-${SELECTED_BRANCH_NAME} \
+    //     --build-arg ENABLED_TESTS=${booleanToStr(ENABLED_TESTS)} \
+    //     --build-arg ENABLED_COVERAGE=${booleanToStr(ENABLED_COVERAGE)} \
+    //     -f \"Dockerfile-alpine-multi-arch\" \
+    //     -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
+
+    //   MODULE_CORE_IMAGE_ID = sh(
+    //     script: "${DOCKER_PATH}/docker images --filter=reference=${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} --format {{.ID}}",
+    //     returnStdout: true
+    //   ).trim()
+
+    //   def CONTAINER_CREATED = sh(
+    //     script: "${DOCKER_PATH}/docker inspect -f {{.State.Status}} ${MODULE_CORE_CONTAINER_NAME}",
+    //     returnStatus: true
+    //   ) == 0
+    //   if (CONTAINER_CREATED == false) {
+    //     sh "${DOCKER_PATH}/docker buildx create --use \
+    //       --name ${MODULE_CORE_CONTAINER_NAME} node-amd64 ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
+    //     sh "${DOCKER_PATH}/docker buildx create --append \
+    //       --name ${MODULE_CORE_CONTAINER_NAME} node-arm64"
+    //   }
+
+    //   MODULE_CORE_CONTAINER_ID = sh(
+    //     script: "${DOCKER_PATH}/docker ps -aqf \"name=${MODULE_CORE_CONTAINER_NAME}\"",
+    //     returnStdout: true
+    //   ).trim()
+    // }
+
+    stage("Build:docker wasm") {
+      sh "echo Build:Dockerfile-wasm"
+      // docker build --no-cache --pull --rm \
+      // --progress plain \
+      // --target image-develop \
+      // --build-arg selected_build_type=Debug \
+      // --build-arg ENABLED_TESTS=OFF \
+      // --build-arg ENABLED_COVERAGE=OFF \
+      // -f "Dockerfile-wasm" \
+      // -t sway/module_core:latest-wasm "."
     }
 
     stage("Tests") {
-      if (ENABLED_GOOGLE_TESTS) {
+      if (ENABLED_TESTS) {
+        if (ENABLED_DOCKER) {
         // [--rm] - to delete the container once finished the process
         // [  -i] - interactive mode
         // [  -e] - entrypoint
@@ -99,16 +132,16 @@ node {
           script: "${DOCKER_PATH}/docker start -i ${MODULE_CORE_CONTAINER_ID}", 
           returnStdout: true
         ).trim()
-
         // sh "echo ${RESULT}"
-
-        // dir("./bin") {
-        //   if (SELECTED_BUILD_TYPE == "debug") {
-        //     sh "./dbg/module_core_tests"
-        //   } else {
-        //     sh "./module_core_tests"
-        //   }
-        // }
+        } else {
+          dir("./bin") {
+            if (SELECTED_BUILD_TYPE == "debug") {
+              sh "./dbg/module_core_tests"
+            } else {
+              sh "./module_core_tests"
+            }
+          }
+        }
       } else {
         println "echo Tests is disabled"
       }

@@ -7,6 +7,7 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
+#include <optional>
 #include <string>
 #include <unordered_map>
 

@@ -29,7 +29,10 @@ include_directories(${GTEST_INCLUDE_DIRS})
 # Получаем пути ко всем исходникам с тестами
 file(GLOB MODULE_CORE_SOURCE_TESTS "${PROJECT_SOURCE_DIR}/*.spec.cpp")
 # add_executable(${META_CORE_EXENAME_TESTS} ${MODULE_CORE_SOURCE_TESTS} "${GTest_ROOT}/googletest/src/gtest_main.cc")
+
 add_executable(${META_CORE_EXENAME_TESTS} ${MODULE_CORE_SOURCE_TESTS} "/usr/src/gtest/src/gtest_main.cc")
+# add_executable(${META_CORE_EXENAME_TESTS} ${MODULE_CORE_SOURCE_TESTS} "/opt/.gtest/googletest/src/gtest_main.cc")
+
 # target_link_libraries(${META_CORE_EXENAME_TESTS} module_core ${GTEST_LIBRARY_DIR}/libgtest.a ${CMAKE_DL_LIBS})
 target_link_libraries(${META_CORE_EXENAME_TESTS} module_core ${GTEST_LIBRARIES} pthread)
 
