@@ -113,6 +113,7 @@ endif()
 #                                                                           Logger
 printf_compiler_name(${MODULE_CORE_TARGET})
 printf_compile_definitions(${MODULE_CORE_TARGET})
+message("[module_core]: arch=${CMAKE_HOST_SYSTEM_PROCESSOR}")
 
 #_________________________________________________________________________________
 #                                                                  Build libraries

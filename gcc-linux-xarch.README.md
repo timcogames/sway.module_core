@@ -1,4 +1,3 @@
-
 ### list
 
 ```console
@@ -59,4 +58,32 @@ docker buildx imagetools inspect bonus85/sway.module_core:buildx-latest
 
 ```console
 docker run --rm docker.io/bonus85/sway.module_core:buildx-latest@<DIGEST>
+```
+
+## Ручная сборка тестов
+
+```console
+cmake -DCMAKE_BUILD_TYPE=Debug \
+      -DGLOB_GTEST_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/googletest/googletest \
+      -DGLOB_GTEST_LIB_DIR=/Users/<USER_NAME>/Documents/Third-party/googletest/build/lib \
+      -DMODULE_CORE_ENABLE_TESTS=ON ../
+
+cmake --build ./
+```
+
+## Ручная сборка тестов в Docker
+
+```console
+docker build --no-cache --pull --rm \
+             --progress plain \
+             --target image-develop \
+             --build-arg BUILDPLATFORM=linux/arm64/v8 \
+             --build-arg TARGETPLATFORM=linux \
+             --build-arg TARGETARCH=arm64 \
+             --build-arg ENABLED_TESTS=ON \
+             --build-arg ENABLED_COVERAGE=OFF \
+             -f gcc-linux-xarch.Dockerfile \
+             -t sway/module_core:latest .
+
+cmake --build ./
 ```

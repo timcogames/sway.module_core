@@ -13,6 +13,7 @@ def MODULE_CORE_IMAGE_ID=""
 def SELECTED_BRANCH_NAME = ""
 def APPLIED_THIRD_PARTY_DIR = ""
 def APPLIED_TEST_ROOT_DIR = ""
+def APPLIED_TEST_LIB_DIR = ""
 def ENABLED_DOCKER = false
 def ENABLED_TESTS = ""
 def ENABLED_COVERAGE = ""
@@ -39,14 +40,44 @@ node {
       def options = input(message: "Build options", ok: "Run", parameters: [
         // choice(name: "BUILD_TYPE", choices: "Release\nDebug", description: "Select build type"),
         string(name: "THIRD_PARTY_DIR", defaultValue: "/Users/<USER_NAME>/Documents/Third-party", description: ""),
-        booleanParam(name: "GOOGLE_TESTS", defaultValue: true, description: ""),
+        string(name: "TEST_ROOT_DIR", defaultValue: "/Users/<USER_NAME>/Documents/Third-party/googletest/googletest", description: ""),
+        string(name: "TEST_LIB_DIR", defaultValue: "/Users/<USER_NAME>/Documents/Third-party/googletest/build/lib", description: ""),
+        booleanParam(name: "TESTS", defaultValue: true, description: ""),
         booleanParam(name: "COVERAGE", defaultValue: false, description: "")
       ])
 
       APPLIED_THIRD_PARTY_DIR = options["THIRD_PARTY_DIR"]
-      APPLIED_TEST_ROOT_DIR = "${APPLIED_THIRD_PARTY_DIR}/googletest"
-      ENABLED_TESTS = options["GOOGLE_TESTS"]
+      APPLIED_TEST_ROOT_DIR = options["TEST_ROOT_DIR"]
+      APPLIED_TEST_LIB_DIR = options["TEST_LIB_DIR"]
+      ENABLED_TESTS = options["TESTS"]
       ENABLED_COVERAGE = options["COVERAGE"]
+    }
+
+    stage("Build:with-docker gcc-linux-arm64[TESTS]") {
+      def continued
+      try {
+        continued = input(id: "proceed_id", message: "Build tests without Docker?", parameters: [
+          [$class: "BooleanParameterDefinition", defaultValue: true, description: "", name: "Please confirm that you agree to continue"]
+        ])
+      } catch(err) {
+        continued = false
+      }
+
+      if (!continued) {
+        echo "Skipping stage..."
+        Utils.markStageSkippedForConditional("Build:with-docker gcc-linux-arm64[TESTS]")
+      } else {
+        sh "${DOCKER_PATH}/docker build --no-cache --pull --rm \
+          --progress plain \
+          --target image-${SELECTED_BRANCH_NAME} \
+          --build-arg BUILDPLATFORM=linux/arm64/v8 \
+          --build-arg TARGETPLATFORM=linux \
+          --build-arg TARGETARCH=arm64/v8 \
+          --build-arg ENABLED_TESTS=ON \
+          --build-arg ENABLED_COVERAGE=OFF \
+          -f gcc-linux-xarch.Dockerfile \
+          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} ."
+      }
     }
 
     stage("Build:without-docker gcc-linux-arm64") {
@@ -59,6 +90,7 @@ node {
           sh "${CMAKE_PATH}/cmake \
             -DCMAKE_BUILD_TYPE=Debug \
             -DGLOB_GTEST_ROOT_DIR=${APPLIED_TEST_ROOT_DIR} \
+            -DGLOB_GTEST_LIB_DIR=${APPLIED_TEST_LIB_DIR} \
             -DMODULE_CORE_ENABLE_TESTS=${booleanToStr(ENABLED_TESTS)} \
             -DMODULE_CORE_ENABLE_COVERAGE=${booleanToStr(ENABLED_COVERAGE)} ../"
           sh "${CMAKE_PATH}/cmake --build ./"
@@ -115,7 +147,6 @@ node {
       // docker build --no-cache --pull --rm \
       // --progress plain \
       // --target image-develop \
-      // --build-arg selected_build_type=Debug \
       // --build-arg ENABLED_TESTS=OFF \
       // --build-arg ENABLED_COVERAGE=OFF \
       // -f "Dockerfile-wasm" \
