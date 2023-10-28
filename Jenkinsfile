@@ -22,7 +22,7 @@ def ENABLED_COVERAGE = ""
 
 node {
   def rootDir = pwd()
-  def base = load "${rootDir}@scripts/jenkins/base.groovy"
+  def base = load "${rootDir}/scripts/jenkins/base.groovy"
 
   try {
     stage("Clone repository") {
