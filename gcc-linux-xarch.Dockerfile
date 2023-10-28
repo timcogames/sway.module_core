@@ -13,23 +13,20 @@ ARG TARGETPLATFORM
 ARG TARGETARCH
 
 ARG GTEST_ROOT_DIR=/usr/src/gtest
-ARG GTEST_LIB_DIR
+ARG GTEST_LIB_DIR=/tmp/lib
 ARG ENABLED_TESTS
 ARG ENABLED_COVERAGE
 
-RUN if [ "$TARGETARCH" = "arm64" || "$TARGETARCH" = "arm64/v8" ]; then \
-      $GTEST_LIB_DIR=/usr/lib/aarch64-linux-gnu; \
-    elif [ "$TARGETARCH" = "amd64" ]; then \
-      $GTEST_LIB_DIR=/usr/lib/x86_64-linux-gnu; \
-    else \
-      echo "Unsupported architecture: $TARGETPLATFORM/$TARGETARCH"; \
-    fi
 
 #_________________________________________________________________________________
 #                                                                          Install
 RUN apt-get update -y && apt-get install -y \
     cmake \
     libgtest-dev
+
+RUN `([ $TARGETARCH = arm64/v8 ] && ln -s /usr/lib/aarch64-linux-gnu /tmp/lib ) || \
+     ([ $TARGETARCH = arm64 ] && ln -s /usr/lib/aarch64-linux-gnu /tmp/lib ) || \
+     ([ $TARGETARCH = amd64 ] && ln -s /usr/lib/x86_64-linux-gnu /tmp/lib )`
 
 #_________________________________________________________________________________
 #                                              Copy project files to the workspace

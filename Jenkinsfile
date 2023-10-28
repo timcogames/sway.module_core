@@ -23,10 +23,6 @@ def ENABLED_TESTS = ""
 def ENABLED_COVERAGE = ""
 
 node {
-  dir("scripts/jenkins") {
-    base = load "base.groovy"
-  }
-
   try {
     stage("Clone repository") {
       SELECTED_BRANCH_NAME = input(message: "Select active branch", parameters: [
@@ -38,10 +34,14 @@ node {
 
       git url: "https://github.com/timcogames/sway.module_core.git", branch: "${SELECTED_BRANCH_NAME}"
       sh "git submodule update --init --recursive"
+
+      dir("scripts/jenkins") {
+        base = load "base.groovy"
+      }
     }
 
     stage("Build options") {
-      def optionParams = [ choice(name: "BUILD_TYPE", choices: "release\ndebug", description: "Select the build type") ]
+      def optionParams = [ choice(name: "BUILD_TYPE", choices: "debug\nrelease", description: "Select the build type") ]
 
       def archVariants = [ "arm64/v8": true, "amd64": false ]
       archVariants.each { arch -> 
