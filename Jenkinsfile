@@ -1,5 +1,7 @@
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 
+def base
+
 def DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
 def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
 
@@ -21,8 +23,9 @@ def ENABLED_TESTS = ""
 def ENABLED_COVERAGE = ""
 
 node {
-  def rootDir = pwd()
-  def base = load "${rootDir}/scripts/jenkins/base.groovy"
+  dir("scripts/jenkins") {
+    base = load "base.groovy"
+  }
 
   try {
     stage("Clone repository") {
