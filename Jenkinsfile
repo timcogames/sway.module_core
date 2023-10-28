@@ -108,12 +108,12 @@ node {
           --progress plain \
           --target module_core-${SELECTED_BUILD_TYPE} \
           --build-arg BUILDPLATFORM=${SELECTED_PLATFORN_LIST_STR} \
-          --build-arg TARGETPLATFORM=${targetPlatform​} \
+          --build-arg TARGETPLATFORM=${targetPlatform} \
           --build-arg TARGETARCH=${targetArch} \
           --build-arg ENABLED_TESTS=${base.booleanToCMakeStr(ENABLED_TESTS)} \
           --build-arg ENABLED_COVERAGE=${base.booleanToCMakeStr(ENABLED_COVERAGE)} \
           -f \"gcc-linux-xarch.Dockerfile\" \
-          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch} \".\""
+          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")} \".\""
       }
     }
 
