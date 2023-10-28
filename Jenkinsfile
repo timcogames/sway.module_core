@@ -125,7 +125,7 @@ node {
         }
 
         sh "${DOCKER_PATH}/docker buildx --push ${cacheFromSet.join(" ")} \
-          --platform ${SELECTED_PLATFORN_LIST_STR}
+          --platform ${SELECTED_PLATFORN_LIST_STR} \
           -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
       } else {
         def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
