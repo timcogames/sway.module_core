@@ -1,5 +1,5 @@
 variable "TAG" {
-  default = "buildx-latest"
+  default = "latest"
 }
 
 group "default" {

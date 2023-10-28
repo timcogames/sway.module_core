@@ -17,7 +17,7 @@ ARG GTEST_LIB_DIR
 ARG ENABLED_TESTS
 ARG ENABLED_COVERAGE
 
-RUN if [ "$TARGETARCH" = "arm64/v8" ]; then \
+RUN if [ "$TARGETARCH" = "arm64" || "$TARGETARCH" = "arm64/v8" ]; then \
       $GTEST_LIB_DIR=/usr/lib/aarch64-linux-gnu; \
     elif [ "$TARGETARCH" = "amd64" ]; then \
       $GTEST_LIB_DIR=/usr/lib/x86_64-linux-gnu; \
@@ -40,7 +40,7 @@ COPY /index.html /module_core_workspace
 
 #_________________________________________________________________________________
 #                                                          Build development image
-FROM base as image-develop
+FROM base as module_core-debug
 
 WORKDIR /module_core_workspace/build
 RUN cmake -DCMAKE_BUILD_TYPE=Debug \
@@ -55,7 +55,7 @@ ENTRYPOINT ["/module_core_workspace/bin/dbg/module_core_tests"]
 
 #_________________________________________________________________________________
 #                                                           Build production image
-FROM base as image-master
+FROM base as module_core-release
 
 WORKDIR /module_core_workspace/build
 RUN cmake -DCMAKE_BUILD_TYPE=Release \

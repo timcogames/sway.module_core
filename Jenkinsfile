@@ -7,22 +7,23 @@ def MODULE_CORE_CONTAINER_NAME = "sway"
 def MODULE_CORE_CONTAINER_ID = ""
 
 def MODULE_CORE_IMAGE_NAME = "${MODULE_CORE_CONTAINER_NAME}/module_core"
+def MODULE_CORE_IMAGE_BUILD_CACHE_TAG = "buildcache"
 def MODULE_CORE_IMAGE_TAG = "latest"
-def MODULE_CORE_IMAGE_ID=""
+def MODULE_CORE_IMAGE_ID = ""
 
 def SELECTED_BRANCH_NAME = ""
+def SELECTED_BUILD_TYPE = ""
+def SELECTED_PLATFORN_LIST = []
+def SELECTED_PLATFORN_LIST_STR = ""
+def MULTIPLE_PLATFORN = false
 def APPLIED_THIRD_PARTY_DIR = ""
-def APPLIED_TEST_ROOT_DIR = ""
-def APPLIED_TEST_LIB_DIR = ""
-def ENABLED_DOCKER = false
 def ENABLED_TESTS = ""
 def ENABLED_COVERAGE = ""
 
-def booleanToStr(value) {
-  return (value) ? "ON" : "OFF"
-}
-
 node {
+  def rootDir = pwd()
+  def base = load "${rootDir}@scripts/jenkins/base.groovy"
+
   try {
     stage("Clone repository") {
       SELECTED_BRANCH_NAME = input(message: "Select active branch", parameters: [
@@ -37,110 +38,120 @@ node {
     }
 
     stage("Build options") {
-      def options = input(message: "Build options", ok: "Run", parameters: [
-        // choice(name: "BUILD_TYPE", choices: "Release\nDebug", description: "Select build type"),
-        string(name: "THIRD_PARTY_DIR", defaultValue: "/Users/<USER_NAME>/Documents/Third-party", description: ""),
-        string(name: "TEST_ROOT_DIR", defaultValue: "/Users/<USER_NAME>/Documents/Third-party/googletest/googletest", description: ""),
-        string(name: "TEST_LIB_DIR", defaultValue: "/Users/<USER_NAME>/Documents/Third-party/googletest/build/lib", description: ""),
-        booleanParam(name: "TESTS", defaultValue: true, description: ""),
-        booleanParam(name: "COVERAGE", defaultValue: false, description: "")
-      ])
+      def optionParams = [ choice(name: "BUILD_TYPE", choices: "release\ndebug", description: "Select the build type") ]
 
+      def archVariants = [ "arm64/v8": true, "amd64": false ]
+      archVariants.each { arch -> 
+        optionParams.add(booleanParam(name: arch.key, defaultValue: arch.value))
+      }
+
+      optionParams.add(string(name: "THIRD_PARTY_DIR", defaultValue: "/opt/third_party", description: ""))
+      optionParams.add(booleanParam(name: "TESTS", defaultValue: true, description: ""))
+      optionParams.add(booleanParam(name: "COVERAGE", defaultValue: false, description: ""))
+
+      def options = input(message: "Build options", ok: "Run", parameters: optionParams)
+
+      archVariants.each {
+        if (options."${it.key}") {
+          SELECTED_PLATFORN_LIST.add("linux/${it.key}");
+        }
+      }
+
+      SELECTED_BUILD_TYPE = options["BUILD_TYPE"]
+      SELECTED_PLATFORN_LIST_STR = SELECTED_PLATFORN_LIST.join(",")
+      MULTIPLE_PLATFORN = SELECTED_PLATFORN_LIST.size() > 1
       APPLIED_THIRD_PARTY_DIR = options["THIRD_PARTY_DIR"]
-      APPLIED_TEST_ROOT_DIR = options["TEST_ROOT_DIR"]
-      APPLIED_TEST_LIB_DIR = options["TEST_LIB_DIR"]
       ENABLED_TESTS = options["TESTS"]
       ENABLED_COVERAGE = options["COVERAGE"]
     }
 
-    stage("Build:with-docker gcc-linux-arm64[TESTS]") {
-      def continued
-      try {
-        continued = input(id: "proceed_id", message: "Build tests without Docker?", parameters: [
-          [$class: "BooleanParameterDefinition", defaultValue: true, description: "", name: "Please confirm that you agree to continue"]
-        ])
-      } catch(err) {
-        continued = false
-      }
+    stage("Prebuild:docker gcc-linux-xarch") {
+      if (MULTIPLE_PLATFORN) {
+        def CONTAINER_FOUND = sh(
+          script: "${DOCKER_PATH}/docker buildx inspect ${MODULE_CORE_CONTAINER_NAME}-cntr",
+          returnStdout: true
+        ).trim()
 
-      if (!continued) {
-        echo "Skipping stage..."
-        Utils.markStageSkippedForConditional("Build:with-docker gcc-linux-arm64[TESTS]")
-      } else {
-        sh "${DOCKER_PATH}/docker build --no-cache --pull --rm \
-          --progress plain \
-          --target image-${SELECTED_BRANCH_NAME} \
-          --build-arg BUILDPLATFORM=linux/arm64/v8 \
-          --build-arg TARGETPLATFORM=linux \
-          --build-arg TARGETARCH=arm64/v8 \
-          --build-arg ENABLED_TESTS=ON \
-          --build-arg ENABLED_COVERAGE=OFF \
-          -f gcc-linux-xarch.Dockerfile \
-          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} ."
-      }
-    }
-
-    stage("Build:without-docker gcc-linux-arm64") {
-      if (ENABLED_DOCKER) {
-        echo "Skipping stage..."
-        Utils.markStageSkippedForConditional("Build:without-docker gcc-linux-arm64")
-      } else {
-        sh "mkdir -p build"
-        dir("./build") {
-          sh "${CMAKE_PATH}/cmake \
-            -DCMAKE_BUILD_TYPE=Debug \
-            -DGLOB_GTEST_ROOT_DIR=${APPLIED_TEST_ROOT_DIR} \
-            -DGLOB_GTEST_LIB_DIR=${APPLIED_TEST_LIB_DIR} \
-            -DMODULE_CORE_ENABLE_TESTS=${booleanToStr(ENABLED_TESTS)} \
-            -DMODULE_CORE_ENABLE_COVERAGE=${booleanToStr(ENABLED_COVERAGE)} ../"
-          sh "${CMAKE_PATH}/cmake --build ./"
+        if (CONTAINER_FOUND) {
+          echo "${MODULE_CORE_CONTAINER_NAME}-cntr already exists..."
+        } else {
+          sh "${DOCKER_PATH}/docker buildx create \
+            --use \
+            --bootstrap \
+            --name ${MODULE_CORE_CONTAINER_NAME}-cntr \
+            --platform ${SELECTED_PLATFORN_LIST_STR} \
+            --driver docker-container"
         }
       }
     }
 
-    stage("Build/Push:docker gcc-linux-xarch") {
-      if (!ENABLED_DOCKER && SELECTED_BRANCH_NAME != "master") {
-        echo "Skipping stage..."
-        Utils.markStageSkippedForConditional("Build/Push:docker gcc-linux-xarch")
+    stage("Build:docker gcc-linux-xarch") {
+      if (MULTIPLE_PLATFORN) {
+        if (SELECTED_BRANCH_NAME != "master") {
+          echo "Skipping stage..."
+          Utils.markStageSkippedForConditional("Build/Push:docker gcc-linux-xarch")
+        } else {
+          sh "${DOCKER_PATH}/docker buildx bake \
+            --builder ${MODULE_CORE_CONTAINER_NAME}-cntr \
+            --set image.args.ENABLED_COVERAGE=${base.booleanToCMakeStr(ENABLED_COVERAGE)} \
+            -f \"gcc-linux-xarch.hcl\" module_core-${SELECTED_BUILD_TYPE}"
+        }
       } else {
-        sh "${DOCKER_PATH}/docker buildx bake --push \
-          --set image.args.ENABLED_COVERAGE=\"${booleanToStr(ENABLED_COVERAGE)}\" \
-          -f \"gcc-linux-xarch.hcl\" module_core-release"
+        def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
+        def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
+
+        sh "${DOCKER_PATH}/docker build \
+          --pull --rm \
+          --progress plain \
+          --target module_core-${SELECTED_BUILD_TYPE} \
+          --build-arg BUILDPLATFORM=${SELECTED_PLATFORN_LIST_STR} \
+          --build-arg TARGETPLATFORM=${targetPlatform​} \
+          --build-arg TARGETARCH=${targetArch} \
+          --build-arg ENABLED_TESTS=${base.booleanToCMakeStr(ENABLED_TESTS)} \
+          --build-arg ENABLED_COVERAGE=${base.booleanToCMakeStr(ENABLED_COVERAGE)} \
+          -f \"gcc-linux-xarch.Dockerfile\" \
+          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch} \".\""
       }
     }
 
-    // stage("Build:docker alpine-multi-arch") {
-    //   sh "${DOCKER_PATH}/docker buildx build --platform linux/amd64,linux/arm64 \
-    //     --no-cache \
-    //     --progress plain \
-    //     --pull --rm \
-    //     --target image-${SELECTED_BRANCH_NAME} \
-    //     --build-arg ENABLED_TESTS=${booleanToStr(ENABLED_TESTS)} \
-    //     --build-arg ENABLED_COVERAGE=${booleanToStr(ENABLED_COVERAGE)} \
-    //     -f \"Dockerfile-alpine-multi-arch\" \
-    //     -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
+    stage("Push:docker") {
+      if (MULTIPLE_PLATFORN) {
+        def cacheFromSet = []
+        for (platform in SELECTED_PLATFORN_LIST) {
+          def targetPlatform = platform.tokenize("/")[0];
+          def targetArch = platform.substring(targetPlatform.size() + 1)
 
-    //   MODULE_CORE_IMAGE_ID = sh(
-    //     script: "${DOCKER_PATH}/docker images --filter=reference=${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} --format {{.ID}}",
-    //     returnStdout: true
-    //   ).trim()
+          cacheFromSet.add("--cache-from ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch}")
+        }
 
-    //   def CONTAINER_CREATED = sh(
-    //     script: "${DOCKER_PATH}/docker inspect -f {{.State.Status}} ${MODULE_CORE_CONTAINER_NAME}",
-    //     returnStatus: true
-    //   ) == 0
-    //   if (CONTAINER_CREATED == false) {
-    //     sh "${DOCKER_PATH}/docker buildx create --use \
-    //       --name ${MODULE_CORE_CONTAINER_NAME} node-amd64 ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
-    //     sh "${DOCKER_PATH}/docker buildx create --append \
-    //       --name ${MODULE_CORE_CONTAINER_NAME} node-arm64"
-    //   }
+        sh "${DOCKER_PATH}/docker buildx --push ${cacheFromSet.join(" ")} \
+          --platform ${SELECTED_PLATFORN_LIST_STR}
+          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
+      } else {
+        def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
+        def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
 
-    //   MODULE_CORE_CONTAINER_ID = sh(
-    //     script: "${DOCKER_PATH}/docker ps -aqf \"name=${MODULE_CORE_CONTAINER_NAME}\"",
-    //     returnStdout: true
-    //   ).trim()
-    // }
+        sh "${DOCKER_PATH}/docker build \
+          --cache-from ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch} \
+          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
+        sh "${DOCKER_PATH}/docker push ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
+
+        // def CONTAINER_CREATED = sh(
+        //   script: "${DOCKER_PATH}/docker inspect -f {{.State.Status}} ${MODULE_CORE_CONTAINER_NAME}",
+        //   returnStatus: true
+        // ) == 0
+
+        MODULE_CORE_CONTAINER_ID = sh(
+          script: "${DOCKER_PATH}/docker ps -aqf \"name=${MODULE_CORE_CONTAINER_NAME}\"",
+          returnStdout: true
+        ).trim()
+
+        MODULE_CORE_IMAGE_ID = sh(
+          script: "${DOCKER_PATH}/docker images --filter=reference=${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} --format {{.ID}}",
+          returnStdout: true
+        ).trim()
+      }
+    }
 
     stage("Build:docker wasm") {
       sh "echo Build:Dockerfile-wasm"
@@ -155,26 +166,14 @@ node {
 
     stage("Tests") {
       if (ENABLED_TESTS) {
-        if (ENABLED_DOCKER) {
-        // [--rm] - to delete the container once finished the process
-        // [  -i] - interactive mode
-        // [  -e] - entrypoint
         def RESULT = sh(
           script: "${DOCKER_PATH}/docker start -i ${MODULE_CORE_CONTAINER_ID}", 
           returnStdout: true
         ).trim()
         // sh "echo ${RESULT}"
-        } else {
-          dir("./bin") {
-            if (SELECTED_BUILD_TYPE == "debug") {
-              sh "./dbg/module_core_tests"
-            } else {
-              sh "./module_core_tests"
-            }
-          }
-        }
       } else {
-        println "echo Tests is disabled"
+        echo "Skipping stage..."
+        Utils.markStageSkippedForConditional("Tests")
       }
     }
 
@@ -194,11 +193,10 @@ node {
         withCredentials([string(credentialsId: "MODULE_CORE_CODECOV_TOKEN", variable: "CODECOV")]) {
           sh "curl -s https://codecov.io/bash | bash -s - -t $CODECOV || echo \"Codecov failed to upload\""
         }
+      } else {
+        echo "Skipping stage..."
+        Utils.markStageSkippedForConditional("Codecov")
       }
-    }
-
-    stage("Push") {
-      sh "echo Push"
     }
 
     stage("Deploy") {
@@ -206,8 +204,11 @@ node {
     }
   } finally {
     stage("cleanup") {
-      sh "${DOCKER_PATH}/docker rm --force ${MODULE_CORE_CONTAINER_ID}"
-      sh "${DOCKER_PATH}/docker rmi ${MODULE_CORE_IMAGE_ID}"
+      if (MULTIPLE_PLATFORN) {
+      } else {
+        sh "${DOCKER_PATH}/docker rm --force ${MODULE_CORE_CONTAINER_ID}"
+        sh "${DOCKER_PATH}/docker rmi ${MODULE_CORE_IMAGE_ID}"
+      }
     }
   }
 }
