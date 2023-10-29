@@ -1,6 +1,8 @@
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 
 def base
+def dockerContainer
+def dockerImage
 
 def DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
 def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
@@ -8,9 +10,10 @@ def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
 def MODULE_CORE_CONTAINER_NAME = "sway"
 def MODULE_CORE_CONTAINER_ID = ""
 
-def MODULE_CORE_IMAGE_NAME = "${MODULE_CORE_CONTAINER_NAME}/module_core"
 def MODULE_CORE_IMAGE_BUILD_CACHE_TAG = "buildcache"
 def MODULE_CORE_IMAGE_TAG = "latest"
+def MODULE_CORE_IMAGE_NAME = "${MODULE_CORE_CONTAINER_NAME}/module_core"
+def MODULE_CORE_IMAGE_FULLNAME = "${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
 def MODULE_CORE_IMAGE_ID = ""
 
 def SELECTED_BRANCH_NAME = ""
@@ -37,6 +40,8 @@ node {
 
       dir("scripts/jenkins") {
         base = load "base.groovy"
+        dockerContainer = load "docker-container.groovy"
+        dockerImage = load "docker-image.groovy"
       }
     }
 
@@ -70,20 +75,11 @@ node {
 
     stage("Prebuild:docker gcc-linux-xarch") {
       if (MULTIPLE_PLATFORN) {
-        def CONTAINER_FOUND = sh(
-          script: "${DOCKER_PATH}/docker buildx inspect ${MODULE_CORE_CONTAINER_NAME}-cntr",
-          returnStdout: true
-        ).trim()
-
-        if (CONTAINER_FOUND) {
+        def containerExists = dockerContainer.isBuildxExists(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
+        if (containerExists) {
           echo "${MODULE_CORE_CONTAINER_NAME}-cntr already exists..."
         } else {
-          sh "${DOCKER_PATH}/docker buildx create \
-            --use \
-            --bootstrap \
-            --name ${MODULE_CORE_CONTAINER_NAME}-cntr \
-            --platform ${SELECTED_PLATFORN_LIST_STR} \
-            --driver docker-container"
+          dockerContainer.createBuildx(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME, SELECTED_PLATFORN_LIST_STR)
         }
       }
     }
@@ -117,45 +113,6 @@ node {
       }
     }
 
-    stage("Push:docker") {
-      if (MULTIPLE_PLATFORN) {
-        def cacheFromSet = []
-        for (platform in SELECTED_PLATFORN_LIST) {
-          def targetPlatform = platform.tokenize("/")[0];
-          def targetArch = platform.substring(targetPlatform.size() + 1)
-
-          cacheFromSet.add("--cache-from ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch}")
-        }
-
-        sh "${DOCKER_PATH}/docker buildx --push ${cacheFromSet.join(" ")} \
-          --platform ${SELECTED_PLATFORN_LIST_STR} \
-          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
-      } else {
-        def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
-        def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
-
-        sh "${DOCKER_PATH}/docker build \
-          --cache-from ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch} \
-          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
-        sh "${DOCKER_PATH}/docker push ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
-
-        // def CONTAINER_CREATED = sh(
-        //   script: "${DOCKER_PATH}/docker inspect -f {{.State.Status}} ${MODULE_CORE_CONTAINER_NAME}",
-        //   returnStatus: true
-        // ) == 0
-
-        MODULE_CORE_CONTAINER_ID = sh(
-          script: "${DOCKER_PATH}/docker ps -aqf \"name=${MODULE_CORE_CONTAINER_NAME}\"",
-          returnStdout: true
-        ).trim()
-
-        MODULE_CORE_IMAGE_ID = sh(
-          script: "${DOCKER_PATH}/docker images --filter=reference=${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} --format {{.ID}}",
-          returnStdout: true
-        ).trim()
-      }
-    }
-
     stage("Build:docker wasm") {
       sh "echo Build:Dockerfile-wasm"
       // docker build --no-cache --pull --rm \
@@ -177,6 +134,41 @@ node {
       } else {
         echo "Skipping stage..."
         Utils.markStageSkippedForConditional("Tests")
+      }
+    }
+
+    stage("Push:docker") {
+      if (MULTIPLE_PLATFORN) {
+        def cacheFromSet = []
+        for (platform in SELECTED_PLATFORN_LIST) {
+          def targetPlatform = platform.tokenize("/")[0];
+          def targetArch = platform.substring(targetPlatform.size() + 1)
+
+          cacheFromSet.add("--cache-from ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch}")
+        }
+
+        sh "${DOCKER_PATH}/docker buildx --push ${cacheFromSet.join(" ")} \
+          --platform ${SELECTED_PLATFORN_LIST_STR} \
+          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
+      } else {
+        def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
+        def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
+
+        sh "${DOCKER_PATH}/docker build \
+          --cache-from ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")} \
+          --target module_core-${SELECTED_BUILD_TYPE} \
+          -f \"gcc-linux-xarch.Dockerfile\" \
+          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
+
+        def containerExists = dockerContainer.isExists(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
+        if (containerExists) {
+          echo "${MODULE_CORE_CONTAINER_NAME} already exists..."
+        } else {
+          dockerContainer.create(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME, MODULE_CORE_IMAGE_FULLNAME)
+        }
+
+        MODULE_CORE_CONTAINER_ID = dockerContainer.getId(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
+        MODULE_CORE_IMAGE_ID = dockerImage.getId(DOCKER_PATH, MODULE_CORE_IMAGE_FULLNAME)
       }
     }
 
@@ -209,8 +201,8 @@ node {
     stage("cleanup") {
       if (MULTIPLE_PLATFORN) {
       } else {
-        sh "${DOCKER_PATH}/docker rm --force ${MODULE_CORE_CONTAINER_ID}"
-        sh "${DOCKER_PATH}/docker rmi ${MODULE_CORE_IMAGE_ID}"
+        // sh "${DOCKER_PATH}/docker rm --force ${MODULE_CORE_CONTAINER_ID}"
+        // sh "${DOCKER_PATH}/docker rmi ${MODULE_CORE_IMAGE_ID}"
       }
     }
   }

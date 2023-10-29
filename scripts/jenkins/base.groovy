@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-def booleanToCMakeStr(val) {
+def booleanToCMakeStr(Boolean val) {
   return (val) ? "ON" : "OFF"
 }
 
