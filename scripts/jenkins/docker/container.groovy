@@ -1,5 +1,24 @@
 #!/usr/bin/env groovy
 
+class Container implements Entity {
+  private String docker_
+  private String name_
+
+  Container(String dockerPath, String name) {
+    this.docker_ = "${dockerPath}/docker"
+    this.name_ = name
+  }
+
+  // override
+  String name() {
+    return this.name_;
+  }
+}
+
+Container createContainer(String dockerPath, String name) {
+  return new Container(dockerPath, name)
+}
+
 def isBuildxExists(String dockerPath, String containerName) {
   return sh(
     script: "${dockerPath}/docker buildx inspect ${containerName}-cntr",

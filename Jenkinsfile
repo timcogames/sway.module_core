@@ -4,6 +4,8 @@ def base
 def dockerContainer
 def dockerImage
 
+def dockerImageObject
+
 def DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
 def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
 
@@ -40,8 +42,8 @@ node {
 
       dir("scripts/jenkins") {
         base = load "base.groovy"
-        dockerContainer = load "docker-container.groovy"
-        dockerImage = load "docker-image.groovy"
+        dockerContainer = load "docker/container.groovy"
+        dockerImage = load "docker/image.groovy"
       }
     }
 
@@ -110,6 +112,9 @@ node {
           --build-arg ENABLED_COVERAGE=${base.booleanToCMakeStr(ENABLED_COVERAGE)} \
           -f \"gcc-linux-xarch.Dockerfile\" \
           -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")} \".\""
+
+        dockerImageObject = dockerImage.createImage(DOCKER_PATH, MODULE_CORE_IMAGE_NAME, "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}")
+        MODULE_CORE_IMAGE_ID = dockerImageObject.id(this)
       }
     }
 
@@ -168,7 +173,7 @@ node {
         }
 
         MODULE_CORE_CONTAINER_ID = dockerContainer.getId(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
-        MODULE_CORE_IMAGE_ID = dockerImage.getId(DOCKER_PATH, MODULE_CORE_IMAGE_FULLNAME)
+        // MODULE_CORE_IMAGE_ID = dockerImage.getId(DOCKER_PATH, MODULE_CORE_IMAGE_FULLNAME)
       }
     }
 
@@ -200,6 +205,7 @@ node {
   } finally {
     stage("cleanup") {
       if (MULTIPLE_PLATFORN) {
+        // 
       } else {
         // sh "${DOCKER_PATH}/docker rm --force ${MODULE_CORE_CONTAINER_ID}"
         // sh "${DOCKER_PATH}/docker rmi ${MODULE_CORE_IMAGE_ID}"
