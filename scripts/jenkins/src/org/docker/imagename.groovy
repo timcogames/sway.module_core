@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-package jenkins.docker
+package org.docker
 
 @RecordOptions(copyWith=true)
 record ImageName(String name, String tag) { }

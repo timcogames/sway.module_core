@@ -40,10 +40,10 @@ node {
       git url: "https://github.com/timcogames/sway.module_core.git", branch: "${SELECTED_BRANCH_NAME}"
       sh "git submodule update --init --recursive"
 
-      dir("scripts/jenkins") {
-        base = load "base.groovy"
-        dockerContainer = load "docker/container.groovy"
-        dockerImage = load "docker/image.groovy"
+      dir("scripts") {
+        base = load "jenkins/base.groovy"
+        dockerContainer = load "jenkins/vars/container.groovy"
+        dockerImage = load "jenkins/vars/image.groovy"
       }
     }
 

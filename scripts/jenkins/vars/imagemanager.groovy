@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+import org.docker.Entity
+
 class ImageManager {
   private String docker_
   private List<Entity> images_
