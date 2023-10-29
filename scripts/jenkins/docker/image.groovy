@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+import jenkins.docker.Entity
+
 class Image implements Entity {
   private String docker_
   private ImageName name_

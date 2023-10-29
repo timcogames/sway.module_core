@@ -8,3 +8,7 @@ class ImageManager {
     this.docker_ = "${dockerPath}/docker"
   }
 }
+
+ImageManager createImageManager(String dockerPath) {
+  return new ImageManager(dockerPath)
+}

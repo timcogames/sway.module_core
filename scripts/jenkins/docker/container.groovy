@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+import jenkins.docker.Entity
+
 class Container implements Entity {
   private String docker_
   private String name_
