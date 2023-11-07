@@ -1,0 +1,3 @@
+[submodule "scripts/sway.jenkins_pipeline-docker"]
+	path = scripts/sway.jenkins_pipeline-docker
+	url = https://github.com/victor-timoshin/sway.jenkins_pipeline-docker.git

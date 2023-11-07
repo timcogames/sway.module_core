@@ -1,4 +1,8 @@
+@Library("sway_jenkins_pipeline_docker") _
+
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
+
+import sway.jenkins_pipeline.docker.*
 
 def base
 def dockerContainer
@@ -40,10 +44,15 @@ node {
       git url: "https://github.com/timcogames/sway.module_core.git", branch: "${SELECTED_BRANCH_NAME}"
       sh "git submodule update --init --recursive"
 
+      // ImageEntityCall()
       dir("scripts") {
-        base = load "jenkins/base.groovy"
-        dockerContainer = load "jenkins/vars/container.groovy"
-        dockerImage = load "jenkins/vars/image.groovy"
+        // def request = libraryResource "request.json"
+
+        base = load "sway.jenkins_pipeline-docker/vars/Utils.groovy"
+        // def myLib = library 'sway.jenkins_pipeline-docker'
+        script {
+          // dockerImage = new Image("DOCKER_PATH", MODULE_CORE_IMAGE_NAME, "buildcache-arm64_v8")
+        }
       }
     }
 
@@ -77,12 +86,12 @@ node {
 
     stage("Prebuild:docker gcc-linux-xarch") {
       if (MULTIPLE_PLATFORN) {
-        def containerExists = dockerContainer.isBuildxExists(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
-        if (containerExists) {
-          echo "${MODULE_CORE_CONTAINER_NAME}-cntr already exists..."
-        } else {
-          dockerContainer.createBuildx(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME, SELECTED_PLATFORN_LIST_STR)
-        }
+        // def containerExists = dockerContainer.isBuildxExists(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
+        // if (containerExists) {
+        //   echo "${MODULE_CORE_CONTAINER_NAME}-cntr already exists..."
+        // } else {
+        //   dockerContainer.createBuildx(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME, SELECTED_PLATFORN_LIST_STR)
+        // }
       }
     }
 
@@ -113,8 +122,9 @@ node {
           -f \"gcc-linux-xarch.Dockerfile\" \
           -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")} \".\""
 
-        dockerImageObject = dockerImage.createImage(DOCKER_PATH, MODULE_CORE_IMAGE_NAME, "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}")
-        MODULE_CORE_IMAGE_ID = dockerImageObject.id(this)
+        // dockerImageObject = dockerImage.createImage(DOCKER_PATH, MODULE_CORE_IMAGE_NAME, "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}")
+        // MODULE_CORE_IMAGE_ID = dockerImageObject.id(this)
+        // echo dockerImage.id(this)
       }
     }
 
@@ -165,15 +175,15 @@ node {
           -f \"gcc-linux-xarch.Dockerfile\" \
           -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
 
-        def containerExists = dockerContainer.isExists(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
-        if (containerExists) {
-          echo "${MODULE_CORE_CONTAINER_NAME} already exists..."
-        } else {
-          dockerContainer.create(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME, MODULE_CORE_IMAGE_FULLNAME)
-        }
+        // def containerExists = dockerContainer.isExists(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
+        // if (containerExists) {
+        //   echo "${MODULE_CORE_CONTAINER_NAME} already exists..."
+        // } else {
+        //   dockerContainer.create(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME, MODULE_CORE_IMAGE_FULLNAME)
+        // }
 
-        MODULE_CORE_CONTAINER_ID = dockerContainer.getId(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
-        // MODULE_CORE_IMAGE_ID = dockerImage.getId(DOCKER_PATH, MODULE_CORE_IMAGE_FULLNAME)
+        // MODULE_CORE_CONTAINER_ID = dockerContainer.getId(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
+        // // MODULE_CORE_IMAGE_ID = dockerImage.getId(DOCKER_PATH, MODULE_CORE_IMAGE_FULLNAME)
       }
     }
 
