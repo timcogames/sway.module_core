@@ -1,6 +1,8 @@
+ARG TARGET_PLATFORM=
+
 #_________________________________________________________________________________
 #                                                                      Build stage
-FROM --platform=$BUILDPLATFORM gcc:10 AS base
+FROM --platform=$TARGET_PLATFORM gcc:10 AS base
 
 #_________________________________________________________________________________
 #                                                                             Info
@@ -9,14 +11,13 @@ LABEL Victor Timoshin <victor-timoshin@hotmail.com>
 #_________________________________________________________________________________
 #                                                                             Args
 
-ARG TARGETPLATFORM
-ARG TARGETARCH
+ARG TARGET_PLATFORM_OS=
+ARG TARGET_PLATFORM_ARCH=
 
 ARG GTEST_ROOT_DIR=/usr/src/gtest
 ARG GTEST_LIB_DIR=/tmp/lib
-ARG ENABLED_TESTS
-ARG ENABLED_COVERAGE
-
+ARG ENABLED_TESTS=
+ARG ENABLED_COVERAGE=
 
 #_________________________________________________________________________________
 #                                                                          Install
@@ -24,9 +25,9 @@ RUN apt-get update -y && apt-get install -y \
     cmake \
     libgtest-dev
 
-RUN `([ $TARGETARCH = arm64/v8 ] && ln -s /usr/lib/aarch64-linux-gnu /tmp/lib ) || \
-     ([ $TARGETARCH = arm64 ] && ln -s /usr/lib/aarch64-linux-gnu /tmp/lib ) || \
-     ([ $TARGETARCH = amd64 ] && ln -s /usr/lib/x86_64-linux-gnu /tmp/lib )`
+RUN `([ $TARGET_PLATFORM_ARCH = arm64/v8 ] && ln -s /usr/lib/aarch64-linux-gnu /tmp/lib ) || \
+     ([ $TARGET_PLATFORM_ARCH = arm64 ] && ln -s /usr/lib/aarch64-linux-gnu /tmp/lib ) || \
+     ([ $TARGET_PLATFORM_ARCH = amd64 ] && ln -s /usr/lib/x86_64-linux-gnu /tmp/lib )`
 
 #_________________________________________________________________________________
 #                                              Copy project files to the workspace

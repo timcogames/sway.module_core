@@ -2,13 +2,17 @@
 
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 
-import sway.jenkins_pipeline.docker.*
+import sway.jenkins_pipeline.docker.model.OSType
+import sway.jenkins_pipeline.docker.model.ArchitectureType
+import sway.jenkins_pipeline.docker.model.TargetPlatform
+import sway.jenkins_pipeline.docker.entity.ImageEntity
+import sway.jenkins_pipeline.docker.command.BuildImageCommand
+import sway.jenkins_pipeline.docker.command.BuildImageCommandHandler
+import sway.jenkins_pipeline.docker.command.CommandResult
 
 def base
 def dockerContainer
 def dockerImage
-
-def dockerImageObject
 
 def DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
 def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
@@ -47,12 +51,7 @@ node {
       // ImageEntityCall()
       dir("scripts") {
         // def request = libraryResource "request.json"
-
         base = load "sway.jenkins_pipeline-docker/vars/Utils.groovy"
-        // def myLib = library 'sway.jenkins_pipeline-docker'
-        script {
-          // dockerImage = new Image("DOCKER_PATH", MODULE_CORE_IMAGE_NAME, "buildcache-arm64_v8")
-        }
       }
     }
 
@@ -110,17 +109,35 @@ node {
         def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
         def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
 
-        sh "${DOCKER_PATH}/docker build \
-          --pull --rm \
-          --progress plain \
-          --target module_core-${SELECTED_BUILD_TYPE} \
-          --build-arg BUILDPLATFORM=${SELECTED_PLATFORN_LIST_STR} \
-          --build-arg TARGETPLATFORM=${targetPlatform} \
-          --build-arg TARGETARCH=${targetArch} \
-          --build-arg ENABLED_TESTS=${base.booleanToCMakeStr(ENABLED_TESTS)} \
-          --build-arg ENABLED_COVERAGE=${base.booleanToCMakeStr(ENABLED_COVERAGE)} \
-          -f \"gcc-linux-xarch.Dockerfile\" \
-          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")} \".\""
+        // sh "${DOCKER_PATH}/docker build \
+        //   --pull --rm \
+        //   --progress plain \
+        //   --target module_core-${SELECTED_BUILD_TYPE} \
+        //   --build-arg BUILDPLATFORM=${SELECTED_PLATFORN_LIST_STR} \
+        //   --build-arg TARGETPLATFORM=${targetPlatform} \
+        //   --build-arg TARGETARCH=${targetArch} \
+        //   --build-arg ENABLED_TESTS=${base.booleanToCMakeStr(ENABLED_TESTS)} \
+        //   --build-arg ENABLED_COVERAGE=${base.booleanToCMakeStr(ENABLED_COVERAGE)} \
+        //   -f \"gcc-linux-xarch.Dockerfile\" \
+        //   -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")} \".\""
+
+
+
+
+        def imageReference = "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}"
+        def targetPlatform = new TargetPlatform(OSType.LINUX, ArchitectureType.X64)
+
+        def image = new ImageEntity(MODULE_CORE_IMAGE_NAME, imageReference, targetPlatform)
+        def imageCommand = new BuildImageCommand(image.nameWithTag(), image.platform, "gcc-linux-xarch.Dockerfile", [
+          "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS), "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE) ])
+
+        imageCommand.parameters.put("target", "module_core-${SELECTED_BUILD_TYPE}")
+
+        def imageCommandHandler = new BuildImageCommandHandler(DOCKER_PATH)
+
+        def result = imageCommandHandler.execute(imageCommand)
+
+
 
         // dockerImageObject = dockerImage.createImage(DOCKER_PATH, MODULE_CORE_IMAGE_NAME, "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}")
         // MODULE_CORE_IMAGE_ID = dockerImageObject.id(this)
