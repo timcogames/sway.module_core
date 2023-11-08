@@ -109,25 +109,11 @@ node {
         def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
         def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
 
-        // sh "${DOCKER_PATH}/docker build \
-        //   --pull --rm \
-        //   --progress plain \
-        //   --target module_core-${SELECTED_BUILD_TYPE} \
-        //   --build-arg BUILDPLATFORM=${SELECTED_PLATFORN_LIST_STR} \
-        //   --build-arg TARGETPLATFORM=${targetPlatform} \
-        //   --build-arg TARGETARCH=${targetArch} \
-        //   --build-arg ENABLED_TESTS=${base.booleanToCMakeStr(ENABLED_TESTS)} \
-        //   --build-arg ENABLED_COVERAGE=${base.booleanToCMakeStr(ENABLED_COVERAGE)} \
-        //   -f \"gcc-linux-xarch.Dockerfile\" \
-        //   -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")} \".\""
 
+        def reference = "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}"
+        def platform = new TargetPlatform(OSType.LINUX, ArchitectureType.X64)
 
-
-
-        def imageReference = "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}"
-        def targetPlatform = new TargetPlatform(OSType.LINUX, ArchitectureType.X64)
-
-        def image = new ImageEntity(MODULE_CORE_IMAGE_NAME, imageReference, targetPlatform)
+        def image = new ImageEntity(MODULE_CORE_IMAGE_NAME, reference, platform)
         def imageCommand = new BuildImageCommand(image.nameWithTag(), image.platform, "gcc-linux-xarch.Dockerfile", [
           "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS), "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE) ])
 
@@ -139,7 +125,6 @@ node {
 
 
 
-        // dockerImageObject = dockerImage.createImage(DOCKER_PATH, MODULE_CORE_IMAGE_NAME, "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}")
         // MODULE_CORE_IMAGE_ID = dockerImageObject.id(this)
         // echo dockerImage.id(this)
       }
