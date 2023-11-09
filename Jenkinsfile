@@ -53,6 +53,13 @@ node {
       dir("scripts") {
         // def request = libraryResource "request.json"
         base = load "sway.jenkins_pipeline-docker/vars/Utils.groovy"
+        base.approveSignatures([
+          // "method groovy.json.JsonBuilder call java.util.List",
+          // "method groovy.json.JsonSlurper parseText java.lang.String",
+          // "method groovy.json.JsonSlurperClassic parseText",
+          // "method groovy.lang.Binding getVariable java.lang.String",
+          // "method groovy.lang.Binding getVariables"
+        ])
       }
     }
 
