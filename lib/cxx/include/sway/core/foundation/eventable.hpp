@@ -8,6 +8,7 @@
 
 #include <algorithm>  // std::remove_if
 #include <functional>
+#include <string>
 #include <vector>
 
 NAMESPACE_BEGIN(sway)

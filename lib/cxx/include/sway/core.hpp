@@ -10,6 +10,8 @@
 #include <sway/core/detail/rawtype.hpp>
 #include <sway/core/detail/valuedatatypes.hpp>
 #include <sway/core/foundation/context.hpp>
+#include <sway/core/foundation/event.hpp>
+#include <sway/core/foundation/eventable.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
 #include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/core/foundation/object.hpp>
