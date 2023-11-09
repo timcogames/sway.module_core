@@ -2,6 +2,7 @@
 
 import org.jenkinsci.plugins.pipeline.modeldefinition.Utils
 
+import java.util.Optional
 import sway.jenkins_pipeline.docker.model.OSType
 import sway.jenkins_pipeline.docker.model.ArchitectureType
 import sway.jenkins_pipeline.docker.model.TargetPlatform
@@ -111,17 +112,19 @@ node {
 
 
         def reference = "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}"
-        def platform = new TargetPlatform(OSType.LINUX, ArchitectureType.X64)
+        def platform = new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64)
 
         def image = new ImageEntity(MODULE_CORE_IMAGE_NAME, reference, platform)
-        def imageCommand = new BuildImageCommand(image.nameWithTag(), image.platform, "gcc-linux-xarch.Dockerfile", [
-          "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS), "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE) ])
+        def imageCommand = new BuildImageCommand(image.nameWithTag(), image.platform, "$WORKSPACE/gcc-linux-xarch.Dockerfile", [
+          "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS), "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE) ],
+          "$WORKSPACE")
 
-        imageCommand.line.put("target", "module_core-${SELECTED_BUILD_TYPE}")
+        imageCommand.line.addTarget("module_core-${SELECTED_BUILD_TYPE}")
 
         def imageCommandHandler = new BuildImageCommandHandler(DOCKER_PATH)
 
         def result = imageCommandHandler.execute(imageCommand)
+        // echo result.message
 
 
 
