@@ -8,6 +8,7 @@
 #include <sway/core/container/nodeidx.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/detail/rawtype.hpp>
+#include <sway/core/detail/valuedata.hpp>
 #include <sway/core/detail/valuedatatypes.hpp>
 #include <sway/core/foundation/context.hpp>
 #include <sway/core/foundation/event.hpp>
