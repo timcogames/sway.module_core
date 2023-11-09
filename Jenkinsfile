@@ -117,7 +117,7 @@ node {
         def imageCommand = new BuildImageCommand(image.nameWithTag(), image.platform, "gcc-linux-xarch.Dockerfile", [
           "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS), "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE) ])
 
-        imageCommand.parameters.put("target", "module_core-${SELECTED_BUILD_TYPE}")
+        imageCommand.line.put("target", "module_core-${SELECTED_BUILD_TYPE}")
 
         def imageCommandHandler = new BuildImageCommandHandler(DOCKER_PATH)
 
