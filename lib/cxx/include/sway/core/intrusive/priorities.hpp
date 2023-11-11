@@ -1,7 +1,7 @@
 #ifndef SWAY_CORE_INTRUSIVE_PRIORITIES_HPP
 #define SWAY_CORE_INTRUSIVE_PRIORITIES_HPP
 
-#include <sway/core.hpp>
+#include <sway/namespacemacros.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

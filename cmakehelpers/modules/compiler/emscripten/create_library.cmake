@@ -22,6 +22,8 @@ function(create_emscripten_library_private target_arg environment_arg compilatio
 
   if(${environment_arg} STREQUAL "node")
     set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES LINK_FLAGS "--no-entry")
+    # set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES LINK_FLAGS "--no-entry --export-dynamic")
+    # set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES LINK_FLAGS "--no-entry --export-all")
     set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES SUFFIX ".wasm")
 
     printf_link_flags(${CURRENT_TARGET_NAME})

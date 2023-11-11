@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include <type_traits>  // std::is_same
+
 using namespace sway;
 
 template <typename T, typename U>

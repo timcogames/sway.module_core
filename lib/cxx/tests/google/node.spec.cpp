@@ -5,7 +5,13 @@
 
 #include <gtest/gtest.h>
 
+#include <initializer_list>
+#include <memory>
 #include <sstream>  // std::stringstream
+#include <stdlib.h>  // srand
+#include <string>
+#include <time.h>  // time
+#include <vector>
 
 #define IDX_INTERN_A (0)
 #define IDX_INTERN_B (1)
