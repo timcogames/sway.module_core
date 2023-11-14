@@ -6,10 +6,15 @@ import java.util.Optional
 import sway.jenkins_pipeline.docker.model.OSType
 import sway.jenkins_pipeline.docker.model.ArchitectureType
 import sway.jenkins_pipeline.docker.model.TargetPlatform
+import sway.jenkins_pipeline.docker.entity.Entity
 import sway.jenkins_pipeline.docker.entity.ImageEntity
+import sway.jenkins_pipeline.docker.command.Command
 import sway.jenkins_pipeline.docker.command.BuildImageCommand
+import sway.jenkins_pipeline.docker.command.CommandHandler
 import sway.jenkins_pipeline.docker.command.BuildImageCommandHandler
 import sway.jenkins_pipeline.docker.command.CommandResult
+import sway.jenkins_pipeline.docker.shell.Executor
+import sway.jenkins_pipeline.docker.shell.ScriptExecutor
 
 def base
 def dockerContainer
@@ -129,8 +134,8 @@ node {
           "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
         ]
 
-        ImageEntity imageEntity = new ImageEntity(MODULE_CORE_IMAGE_NAME, "${MODULE_CORE_IMAGE_TAG}-${targetArch.replace("/", "_")}", platform)
-        BuildImageCommand imageCommand = new BuildImageCommand(imageEntity, 
+        Entity imageEntity = new ImageEntity(MODULE_CORE_IMAGE_NAME, "${MODULE_CORE_IMAGE_TAG}-${targetArch.replace("/", "_")}", platform)
+        Command imageCommand = new BuildImageCommand(imageEntity, 
           "$WORKSPACE", dockerFile, dockerEnvFile, envs, args, "module_core-${SELECTED_BUILD_TYPE}")
 
         Executor executor = ScriptExecutor(DOCKER_PATH)
