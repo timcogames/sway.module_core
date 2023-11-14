@@ -128,7 +128,7 @@ node {
 
         String dockerFile = "/gcc-linux-xarch.dockerfile"
         String dockerEnvFile = "" // "/docker.env"
-        Map<String, String> envs = []
+        Map<String, String> envs = [:]
         Map<String, String> args = [
           "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE),
           "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
