@@ -118,19 +118,35 @@ node {
         def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
 
 
-        def reference = "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}"
+        // def reference = "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}"
         def platform = new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64)
 
-        def image = new ImageEntity(MODULE_CORE_IMAGE_NAME, reference, platform)
-        def imageCommand = new BuildImageCommand(image.nameWithTag(), image.platform, "$WORKSPACE/gcc-linux-xarch.Dockerfile", [
-          "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS), "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE) ],
-          "$WORKSPACE")
+        String dockerFile = "/gcc-linux-xarch.dockerfile"
+        String dockerEnvFile = "" // "/docker.env"
+        Map<String, String> envs = []
+        Map<String, String> args = [
+          "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE),
+          "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
+        ]
 
-        imageCommand.line.addTarget("module_core-${SELECTED_BUILD_TYPE}")
+        ImageEntity imageEntity = new ImageEntity(MODULE_CORE_IMAGE_NAME, "${MODULE_CORE_IMAGE_TAG}-${targetArch.replace("/", "_")}", platform)
+        BuildImageCommand imageCommand = new BuildImageCommand(imageEntity, 
+          "$WORKSPACE", dockerFile, dockerEnvFile, envs, args, "module_core-${SELECTED_BUILD_TYPE}")
 
-        def imageCommandHandler = new BuildImageCommandHandler(DOCKER_PATH)
+        Executor executor = ScriptExecutor(DOCKER_PATH)
+        CommandHandler imageCommandHandler = new BuildImageCommandHandler(executor)
+        imageCommandHandler.handle(imageCommand)
 
-        def result = imageCommandHandler.execute(imageCommand)
+        // def image = new ImageEntity(MODULE_CORE_IMAGE_NAME, reference, platform)
+        // def imageCommand = new BuildImageCommand(image.nameWithTag(), image.platform, "$WORKSPACE/gcc-linux-xarch.Dockerfile", [
+        //   "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS), "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE) ],
+        //   "$WORKSPACE")
+
+        // imageCommand.line.addTarget("module_core-${SELECTED_BUILD_TYPE}")
+
+        // def imageCommandHandler = new BuildImageCommandHandler(DOCKER_PATH)
+
+        // def result = imageCommandHandler.execute(imageCommand)
         // echo result.message
 
 
