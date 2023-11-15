@@ -96,57 +96,29 @@ node {
       ENABLED_COVERAGE = options["COVERAGE"]
     }
 
-    stage("Prebuild:docker gcc-linux-xarch") {
-      if (MULTIPLE_PLATFORN) {
-        // def containerExists = dockerContainer.isBuildxExists(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
-        // if (containerExists) {
-        //   echo "${MODULE_CORE_CONTAINER_NAME}-cntr already exists..."
-        // } else {
-        //   dockerContainer.createBuildx(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME, SELECTED_PLATFORN_LIST_STR)
-        // }
-      }
-    }
-
     stage("Build:docker gcc-linux-xarch") {
-      if (MULTIPLE_PLATFORN) {
-        if (SELECTED_BRANCH_NAME != "master") {
-          echo "Skipping stage..."
-          Utils.markStageSkippedForConditional("Build/Push:docker gcc-linux-xarch")
-        } else {
-          sh "${DOCKER_PATH}/docker buildx bake \
-            --builder ${MODULE_CORE_CONTAINER_NAME}-cntr \
-            --set image.args.ENABLED_COVERAGE=${base.booleanToCMakeStr(ENABLED_COVERAGE)} \
-            -f \"gcc-linux-xarch.hcl\" module_core-${SELECTED_BUILD_TYPE}"
-        }
-      } else {
-        def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
-        def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
+      def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
+      def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
 
+      def platform = new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64)
 
-        // def reference = "${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")}"
-        def platform = new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64)
+      Map<String, String> envs = [:]
+      Map<String, String> args = [
+        "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE),
+        "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
+      ]
 
-        String dockerFile = "/gcc-linux-xarch.dockerfile"
-        Map<String, String> envs = [:]
-        Map<String, String> args = [
-          "TARGET_PLATFORM_OS": platform.os.name,
-          "TARGET_PLATFORM_ARCH": platform.arch.alias,
-          "TARGET_PLATFORM": platform.os.name + "/" + platform.arch.alias,
-          "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE),
-          "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
-        ]
+      Entity imageEntity = new ImageEntity(MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG, platform)
+      Command imageCommand = new BuildImageCommand(imageEntity, 
+        "$WORKSPACE", "gcc-linux-xarch.Dockerfile", envs, args, "module_core-${SELECTED_BUILD_TYPE}")
 
-        Entity imageEntity = new ImageEntity(MODULE_CORE_IMAGE_NAME, "${MODULE_CORE_IMAGE_TAG}-${targetArch.replace("/", "_")}", platform)
-        Command imageCommand = new BuildImageCommand(imageEntity, 
-          "$WORKSPACE", dockerFile, envs, args, "module_core-${SELECTED_BUILD_TYPE}")
+      Executor executor = new ScriptExecutor(DOCKER_PATH)
+      CommandHandler imageCommandHandler = new BuildImageCommandHandler(executor)
+      def result = imageCommandHandler.handle(imageCommand)
+      echo result.message
 
-        Executor executor = new ScriptExecutor(DOCKER_PATH)
-        CommandHandler imageCommandHandler = new BuildImageCommandHandler(executor)
-        imageCommandHandler.handle(imageCommand)
-
-        // MODULE_CORE_IMAGE_ID = dockerImageObject.id(this)
-        // echo dockerImage.id(this)
-      }
+      // MODULE_CORE_IMAGE_ID = dockerImageObject.id(this)
+      // echo dockerImage.id(this)
     }
 
     stage("Build:docker wasm") {
