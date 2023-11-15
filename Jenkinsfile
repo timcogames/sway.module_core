@@ -130,6 +130,9 @@ node {
         String dockerEnvFile = "" // "/docker.env"
         Map<String, String> envs = [:]
         Map<String, String> args = [
+          "TARGET_PLATFORM_OS", platform.os.name,
+          "TARGET_PLATFORM_ARCH", platform.arch.alias,
+          "TARGET_PLATFORM", platform.os.name + "/" + platform.arch.alias,
           "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE),
           "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
         ]
@@ -138,23 +141,9 @@ node {
         Command imageCommand = new BuildImageCommand(imageEntity, 
           "$WORKSPACE", dockerFile, dockerEnvFile, envs, args, "module_core-${SELECTED_BUILD_TYPE}")
 
-        Executor executor = ScriptExecutor(DOCKER_PATH)
+        Executor executor = new ScriptExecutor(DOCKER_PATH)
         CommandHandler imageCommandHandler = new BuildImageCommandHandler(executor)
         imageCommandHandler.handle(imageCommand)
-
-        // def image = new ImageEntity(MODULE_CORE_IMAGE_NAME, reference, platform)
-        // def imageCommand = new BuildImageCommand(image.nameWithTag(), image.platform, "$WORKSPACE/gcc-linux-xarch.Dockerfile", [
-        //   "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS), "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE) ],
-        //   "$WORKSPACE")
-
-        // imageCommand.line.addTarget("module_core-${SELECTED_BUILD_TYPE}")
-
-        // def imageCommandHandler = new BuildImageCommandHandler(DOCKER_PATH)
-
-        // def result = imageCommandHandler.execute(imageCommand)
-        // echo result.message
-
-
 
         // MODULE_CORE_IMAGE_ID = dockerImageObject.id(this)
         // echo dockerImage.id(this)
