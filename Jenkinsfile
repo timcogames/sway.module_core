@@ -130,9 +130,9 @@ node {
         String dockerEnvFile = "" // "/docker.env"
         Map<String, String> envs = [:]
         Map<String, String> args = [
-          "TARGET_PLATFORM_OS", platform.os.name,
-          "TARGET_PLATFORM_ARCH", platform.arch.alias,
-          "TARGET_PLATFORM", platform.os.name + "/" + platform.arch.alias,
+          "TARGET_PLATFORM_OS": platform.os.name,
+          "TARGET_PLATFORM_ARCH": platform.arch.alias,
+          "TARGET_PLATFORM": platform.os.name + "/" + platform.arch.alias,
           "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE),
           "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
         ]
