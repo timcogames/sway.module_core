@@ -127,7 +127,6 @@ node {
         def platform = new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64)
 
         String dockerFile = "/gcc-linux-xarch.dockerfile"
-        String dockerEnvFile = "" // "/docker.env"
         Map<String, String> envs = [:]
         Map<String, String> args = [
           "TARGET_PLATFORM_OS": platform.os.name,
@@ -139,7 +138,7 @@ node {
 
         Entity imageEntity = new ImageEntity(MODULE_CORE_IMAGE_NAME, "${MODULE_CORE_IMAGE_TAG}-${targetArch.replace("/", "_")}", platform)
         Command imageCommand = new BuildImageCommand(imageEntity, 
-          "$WORKSPACE", dockerFile, dockerEnvFile, envs, args, "module_core-${SELECTED_BUILD_TYPE}")
+          "$WORKSPACE", dockerFile, envs, args, "module_core-${SELECTED_BUILD_TYPE}")
 
         Executor executor = new ScriptExecutor(DOCKER_PATH)
         CommandHandler imageCommandHandler = new BuildImageCommandHandler(executor)
@@ -175,38 +174,38 @@ node {
     }
 
     stage("Push:docker") {
-      if (MULTIPLE_PLATFORN) {
-        def cacheFromSet = []
-        for (platform in SELECTED_PLATFORN_LIST) {
-          def targetPlatform = platform.tokenize("/")[0];
-          def targetArch = platform.substring(targetPlatform.size() + 1)
+      // if (MULTIPLE_PLATFORN) {
+      //   def cacheFromSet = []
+      //   for (platform in SELECTED_PLATFORN_LIST) {
+      //     def targetPlatform = platform.tokenize("/")[0];
+      //     def targetArch = platform.substring(targetPlatform.size() + 1)
 
-          cacheFromSet.add("--cache-from ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch}")
-        }
+      //     cacheFromSet.add("--cache-from ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch}")
+      //   }
 
-        sh "${DOCKER_PATH}/docker buildx --push ${cacheFromSet.join(" ")} \
-          --platform ${SELECTED_PLATFORN_LIST_STR} \
-          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
-      } else {
-        def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
-        def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
+      //   sh "${DOCKER_PATH}/docker buildx --push ${cacheFromSet.join(" ")} \
+      //     --platform ${SELECTED_PLATFORN_LIST_STR} \
+      //     -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
+      // } else {
+      //   def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
+      //   def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
 
-        sh "${DOCKER_PATH}/docker build \
-          --cache-from ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")} \
-          --target module_core-${SELECTED_BUILD_TYPE} \
-          -f \"gcc-linux-xarch.Dockerfile\" \
-          -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
+      //   sh "${DOCKER_PATH}/docker build \
+      //     --cache-from ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_BUILD_CACHE_TAG}-${targetArch.replace("/", "_")} \
+      //     --target module_core-${SELECTED_BUILD_TYPE} \
+      //     -f \"gcc-linux-xarch.Dockerfile\" \
+      //     -t ${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG} \".\""
 
-        // def containerExists = dockerContainer.isExists(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
-        // if (containerExists) {
-        //   echo "${MODULE_CORE_CONTAINER_NAME} already exists..."
-        // } else {
-        //   dockerContainer.create(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME, MODULE_CORE_IMAGE_FULLNAME)
-        // }
+      //   // def containerExists = dockerContainer.isExists(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
+      //   // if (containerExists) {
+      //   //   echo "${MODULE_CORE_CONTAINER_NAME} already exists..."
+      //   // } else {
+      //   //   dockerContainer.create(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME, MODULE_CORE_IMAGE_FULLNAME)
+      //   // }
 
-        // MODULE_CORE_CONTAINER_ID = dockerContainer.getId(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
-        // // MODULE_CORE_IMAGE_ID = dockerImage.getId(DOCKER_PATH, MODULE_CORE_IMAGE_FULLNAME)
-      }
+      //   // MODULE_CORE_CONTAINER_ID = dockerContainer.getId(DOCKER_PATH, MODULE_CORE_CONTAINER_NAME)
+      //   // // MODULE_CORE_IMAGE_ID = dockerImage.getId(DOCKER_PATH, MODULE_CORE_IMAGE_FULLNAME)
+      // }
     }
 
     stage("Codecov") {
