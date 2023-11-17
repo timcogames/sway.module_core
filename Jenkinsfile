@@ -110,7 +110,7 @@ node {
 
       Entity imageEntity = new ImageEntity(MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG, platform)
       Command imageCommand = new BuildImageCommand(imageEntity, 
-        "$WORKSPACE", "gcc-linux-xarch.Dockerfile", envs, args, "module_core-${SELECTED_BUILD_TYPE}")
+        "$WORKSPACE", "gcc-linux-multiarch.dockerfile", envs, args, "module_core-${SELECTED_BUILD_TYPE}")
 
       Executor executor = new ScriptExecutor(DOCKER_PATH)
       CommandHandler imageCommandHandler = new BuildImageCommandHandler(executor)
