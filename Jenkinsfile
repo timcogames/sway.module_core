@@ -140,6 +140,13 @@ node {
 
     stage("Tests") {
       if (ENABLED_TESTS) {
+        // MODULE_CORE_CONTAINER_ID = sh(
+        //   script: "${DOCKER_PATH}/docker ps -aqf \"name=${MODULE_CORE_CONTAINER_NAME}\"",
+        //   returnStdout: true
+        // ).trim()
+
+        // sh "${DOCKER_PATH}/docker rm --force ${MODULE_CORE_CONTAINER_ID}"
+
         ContainerInspectQuery containerQuery = new ContainerInspectQuery(dockerContainerEntity)
         ContainerInspectQueryHandler containerQueryHandler = new ContainerInspectQueryHandler(scriptExec)
         Map<String, String> containerQueryHandlerResult = containerQueryHandler.handle(containerQuery)
@@ -153,14 +160,9 @@ node {
           CommandResult<String> commandResult = commandHandler.handle(command)
 
           if (commandResult.succeeded) {
-
+            MODULE_CORE_CONTAINER_ID = commandResult.message
           }
         }
-
-        MODULE_CORE_CONTAINER_ID = sh(
-          script: "${DOCKER_PATH}/docker ps -aqf \"name=${MODULE_CORE_CONTAINER_NAME}\"",
-          returnStdout: true
-        ).trim()
 
         // [--rm] - to delete the container once finished the process
         // [  -i] - interactive mode
