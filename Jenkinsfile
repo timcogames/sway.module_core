@@ -8,17 +8,20 @@ import sway.jenkins_pipeline.docker.model.ArchitectureType
 import sway.jenkins_pipeline.docker.model.TargetPlatform
 import sway.jenkins_pipeline.docker.entity.Entity
 import sway.jenkins_pipeline.docker.entity.ImageEntity
+import sway.jenkins_pipeline.docker.entity.ContainerEntity
 import sway.jenkins_pipeline.docker.command.Command
-import sway.jenkins_pipeline.docker.command.BuildImageCommand
 import sway.jenkins_pipeline.docker.command.CommandHandler
-import sway.jenkins_pipeline.docker.command.BuildImageCommandHandler
 import sway.jenkins_pipeline.docker.command.CommandResult
+import sway.jenkins_pipeline.docker.command.BuildImageCommand
+import sway.jenkins_pipeline.docker.command.BuildImageCommandHandler
+import sway.jenkins_pipeline.docker.command.CreateContainerCommand
+import sway.jenkins_pipeline.docker.command.CreateContainerCommandHandler
+import sway.jenkins_pipeline.docker.query.ImageInspectQuery
+import sway.jenkins_pipeline.docker.query.ImageInspectQueryHandler
+import sway.jenkins_pipeline.docker.query.ContainerInspectQuery
+import sway.jenkins_pipeline.docker.query.ContainerInspectQueryHandler
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.ScriptExecutor
-
-def base
-def dockerContainer
-def dockerImage
 
 def DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
 def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
@@ -41,6 +44,12 @@ def APPLIED_THIRD_PARTY_DIR = ""
 def ENABLED_TESTS = ""
 def ENABLED_COVERAGE = ""
 
+def base
+
+ScriptExecutor scriptExec = new ScriptExecutor(DOCKER_PATH)
+ContainerEntity dockerContainerEntity = new ContainerEntity(MODULE_CORE_CONTAINER_NAME)
+List<ImageEntity> dockerImageEntities = new ArrayList<ImageEntity>()
+
 node {
   try {
     stage("Clone repository") {
@@ -58,12 +67,10 @@ node {
       dir("scripts") {
         // def request = libraryResource "request.json"
         base = load "sway.jenkins_pipeline-docker/vars/Utils.groovy"
+
+        // TODO
         base.approveSignatures([
-          // "method groovy.json.JsonBuilder call java.util.List",
-          // "method groovy.json.JsonSlurper parseText java.lang.String",
-          // "method groovy.json.JsonSlurperClassic parseText",
-          // "method groovy.lang.Binding getVariable java.lang.String",
-          // "method groovy.lang.Binding getVariables"
+          "new java.util.ArrayList"
         ])
       }
     }
@@ -108,17 +115,20 @@ node {
         "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
       ]
 
-      Entity imageEntity = new ImageEntity(MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG, platform)
-      Command imageCommand = new BuildImageCommand(imageEntity, 
+      dockerImageEntities.add(new ImageEntity(MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG, platform))
+      
+      Command imageCommand = new BuildImageCommand(dockerImageEntities.get(0), 
         "$WORKSPACE", "gcc-linux-xarch.Dockerfile", envs, args, "module_core-${SELECTED_BUILD_TYPE}")
+      CommandHandler imageCommandHandler = new BuildImageCommandHandler(scriptExec)
+      CommandResult<String> imageCommandHandlerResult = imageCommandHandler.handle(imageCommand)
+      echo "MSG >> ${imageCommandHandlerResult.message}"
 
-      Executor executor = new ScriptExecutor(DOCKER_PATH)
-      CommandHandler imageCommandHandler = new BuildImageCommandHandler(executor)
-      def result = imageCommandHandler.handle(imageCommand)
-      echo result.message
-
-      // MODULE_CORE_IMAGE_ID = dockerImageObject.id(this)
-      // echo dockerImage.id(this)
+      if (imageCommandHandlerResult.succeeded) {
+        ImageInspectQuery imageQuery = new ImageInspectQuery(dockerImageEntities.get(0))
+        ImageInspectQueryHandler imageQueryHandler = new ImageInspectQueryHandler(scriptExec)
+        Map<String, String> imageQueryHandlerResult = imageQueryHandler.handle(imageQuery)
+        dockerImageEntities.get(0).setId(imageQueryHandlerResult.id)
+      }
     }
 
     stage("Build:docker wasm") {
@@ -134,11 +144,22 @@ node {
 
     stage("Tests") {
       if (ENABLED_TESTS) {
-        def RESULT = sh(
-          script: "${DOCKER_PATH}/docker start -i ${MODULE_CORE_CONTAINER_ID}", 
-          returnStdout: true
-        ).trim()
-        // sh "echo ${RESULT}"
+        ContainerInspectQuery containerQuery = new ContainerInspectQuery(dockerContainerEntity)
+        ContainerInspectQueryHandler containerQueryHandler = new ContainerInspectQueryHandler(scriptExec)
+        Map<String, String> containerQueryHandlerResult = containerQueryHandler.handle(containerQuery)
+        echo "STATUS >> ${containerQueryHandlerResult.status}"
+
+        if (containerQueryHandlerResult.status == null) {
+          CreateContainerCommand command = new CreateContainerCommand(dockerContainerEntity, dockerImageEntities.get(0))
+          CreateContainerCommandHandler commandHandler = new CreateContainerCommandHandler(scriptExec)
+          CommandResult<String> commandResult = commandHandler.handle(command)
+          echo "MSG >> ${commandResult.message}"
+
+          def RESULT = sh(
+            script: "${DOCKER_PATH}/docker start -i ${commandResult.message}", 
+            returnStdout: true
+          ).trim()
+        }
       } else {
         echo "Skipping stage..."
         Utils.markStageSkippedForConditional("Tests")
