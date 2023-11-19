@@ -104,29 +104,33 @@ node {
     }
 
     stage("Build:docker gcc-linux-xarch") {
-      def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
-      def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
+      // def targetPlatform = SELECTED_PLATFORN_LIST_STR.tokenize("/")[0];
+      // def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
 
-      def platform = new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64)
+      List<TargetPlatform> platforms = [ 
+        new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64),
+        new TargetPlatform(OSType.LINUX, ArchitectureType.X64) ]
 
-      Map<String, String> envs = [:]
-      Map<String, String> args = [
-        "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE),
-        "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
-      ]
+      platforms.eachWithIndex { item, index ->
+        dockerImageEntities.add(new ImageEntity(MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG, item))
+        
+        Map<String, String> envs = [:]
+        Map<String, String> args = [
+          "ENABLED_COVERAGE": base.booleanToCMakeStr(ENABLED_COVERAGE),
+          "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
+        ]
 
-      dockerImageEntities.add(new ImageEntity(MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG, platform))
-      
-      Command imageCommand = new BuildImageCommand(dockerImageEntities.get(0), 
-        "$WORKSPACE", "gcc-linux-xarch.Dockerfile", envs, args, "module_core-${SELECTED_BUILD_TYPE}")
-      CommandHandler imageCommandHandler = new BuildImageCommandHandler(scriptExec)
-      CommandResult<String> imageCommandHandlerResult = imageCommandHandler.handle(imageCommand)
+        Command imageCommand = new BuildImageCommand(dockerImageEntities.get(index), 
+          "$WORKSPACE", "gcc-linux-xarch.Dockerfile", envs, args, "module_core-${SELECTED_BUILD_TYPE}")
+        CommandHandler imageCommandHandler = new BuildImageCommandHandler(scriptExec)
+        CommandResult<String> imageCommandHandlerResult = imageCommandHandler.handle(imageCommand)
 
-      if (imageCommandHandlerResult.succeeded) {
-        ImageInspectQuery imageQuery = new ImageInspectQuery(dockerImageEntities.get(0))
-        ImageInspectQueryHandler imageQueryHandler = new ImageInspectQueryHandler(scriptExec)
-        Map<String, String> imageQueryHandlerResult = imageQueryHandler.handle(imageQuery)
-        dockerImageEntities.get(0).setId(imageQueryHandlerResult.id)
+        if (imageCommandHandlerResult.succeeded) {
+          ImageInspectQuery imageQuery = new ImageInspectQuery(dockerImageEntities.get(index))
+          ImageInspectQueryHandler imageQueryHandler = new ImageInspectQueryHandler(scriptExec)
+          Map<String, String> imageQueryHandlerResult = imageQueryHandler.handle(imageQuery)
+          dockerImageEntities.get(index).setId(imageQueryHandlerResult.id)
+        }
       }
     }
 
