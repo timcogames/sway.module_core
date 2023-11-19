@@ -140,13 +140,6 @@ node {
 
     stage("Tests") {
       if (ENABLED_TESTS) {
-        // MODULE_CORE_CONTAINER_ID = sh(
-        //   script: "${DOCKER_PATH}/docker ps -aqf \"name=${MODULE_CORE_CONTAINER_NAME}\"",
-        //   returnStdout: true
-        // ).trim()
-
-        // sh "${DOCKER_PATH}/docker rm --force ${MODULE_CORE_CONTAINER_ID}"
-
         ContainerInspectQuery containerQuery = new ContainerInspectQuery(dockerContainerEntity)
         ContainerInspectQueryHandler containerQueryHandler = new ContainerInspectQueryHandler(scriptExec)
         Map<String, String> containerQueryHandlerResult = containerQueryHandler.handle(containerQuery)
