@@ -8,6 +8,7 @@ import sway.jenkins_pipeline.docker.model.ArchitectureType
 import sway.jenkins_pipeline.docker.model.TargetPlatform
 import sway.jenkins_pipeline.docker.entity.Entity
 import sway.jenkins_pipeline.docker.entity.ImageEntity
+import sway.jenkins_pipeline.docker.entity.MultiarchImageEntity
 import sway.jenkins_pipeline.docker.entity.ContainerEntity
 import sway.jenkins_pipeline.docker.command.Command
 import sway.jenkins_pipeline.docker.command.CommandHandler
@@ -16,6 +17,8 @@ import sway.jenkins_pipeline.docker.command.BuildImageCommand
 import sway.jenkins_pipeline.docker.command.BuildImageCommandHandler
 import sway.jenkins_pipeline.docker.command.CreateContainerCommand
 import sway.jenkins_pipeline.docker.command.CreateContainerCommandHandler
+import sway.jenkins_pipeline.docker.command.CreateMultiarchCommand
+import sway.jenkins_pipeline.docker.command.CreateMultiarchCommandHandler
 import sway.jenkins_pipeline.docker.query.ImageInspectQuery
 import sway.jenkins_pipeline.docker.query.ImageInspectQueryHandler
 import sway.jenkins_pipeline.docker.query.ContainerInspectQuery
@@ -29,7 +32,6 @@ def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
 def MODULE_CORE_CONTAINER_NAME = "sway"
 def MODULE_CORE_CONTAINER_ID = ""
 
-def MODULE_CORE_IMAGE_BUILD_CACHE_TAG = "buildcache"
 def MODULE_CORE_IMAGE_TAG = "latest"
 def MODULE_CORE_IMAGE_NAME = "${MODULE_CORE_CONTAINER_NAME}/module_core"
 def MODULE_CORE_IMAGE_FULLNAME = "${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
@@ -48,6 +50,7 @@ def base
 
 ScriptExecutor scriptExec = new ScriptExecutor(DOCKER_PATH)
 ContainerEntity dockerContainerEntity = new ContainerEntity(MODULE_CORE_CONTAINER_NAME)
+MultiarchImageEntity dockerMultiarchImageEntity = new MultiarchImageEntity(MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG)
 List<ImageEntity> dockerImageEntities = new ArrayList<ImageEntity>()
 
 node {
@@ -171,7 +174,9 @@ node {
     }
 
     stage("Push:docker") {
-      // TODO
+      CreateMultiarchCommand command = new CreateMultiarchCommand(dockerMultiarchImageEntity, dockerImageEntities)
+      CreateMultiarchCommandHandler commandHandler = new CreateMultiarchCommandHandler(scriptExec)
+      CommandResult<String> commandResult = commandHandler.handle(command)
     }
 
     stage("Codecov") {
