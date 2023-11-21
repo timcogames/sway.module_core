@@ -26,6 +26,7 @@ import sway.jenkins_pipeline.docker.query.ContainerInspectQueryHandler
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.ScriptExecutor
 
+def GIT_PATH = "/usr/bin"
 def DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
 def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
 
@@ -64,7 +65,7 @@ node {
       ])
 
       git url: "https://github.com/timcogames/sway.module_core.git", branch: "${SELECTED_BRANCH_NAME}"
-      sh "git submodule update --init --recursive"
+      sh "${GIT_PATH}/git submodule update --init --recursive"
 
       // ImageEntityCall()
       dir("scripts") {
