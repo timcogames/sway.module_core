@@ -30,11 +30,11 @@ def GIT_PATH = "/usr/bin"
 def DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
 def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
 
-def MODULE_CORE_CONTAINER_NAME = "sway"
+def MODULE_CORE_CONTAINER_NAME = "bonus85"
 def MODULE_CORE_CONTAINER_ID = ""
 
 def MODULE_CORE_IMAGE_TAG = "latest"
-def MODULE_CORE_IMAGE_NAME = "${MODULE_CORE_CONTAINER_NAME}/module_core"
+def MODULE_CORE_IMAGE_NAME = "${MODULE_CORE_CONTAINER_NAME}/sway.module_core"
 def MODULE_CORE_IMAGE_FULLNAME = "${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
 def MODULE_CORE_IMAGE_ID = ""
 
@@ -176,7 +176,9 @@ node {
     }
 
     stage("Push:docker") {
-      sh "${DOCKER_PATH}/docker login -u=${DOCKER_REGISTRY_USER} -p=${DOCKER_REGISTRY_TOKEN} "
+      withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "DOCKER_HUB_TOKEN", usernameVariable: "DOCKER_REGISTRY_USER", passwordVariable: "DOCKER_REGISTRY_TOKEN"]]) {
+        sh "${DOCKER_PATH}/docker login -u=$DOCKER_REGISTRY_USER -p=$DOCKER_REGISTRY_TOKEN"
+      }
 
       CreateMultiarchCommand command = new CreateMultiarchCommand(dockerMultiarchImageEntity, dockerImageEntities)
       CreateMultiarchCommandHandler commandHandler = new CreateMultiarchCommandHandler(scriptExec)
@@ -185,7 +187,7 @@ node {
     }
 
     stage("Codecov") {
-      if (ENABLED_COVERAGE && SELECTED_BRANCH_NAME == "master") {
+      if (ENABLED_COVERAGE) {
         def PROJECT_SOURCE_DIR = "$WORKSPACE/lib"
         def OUTPUT_DIR = "$WORKSPACE/lcov-report"
         def OUTPUT_FILE = "${OUTPUT_DIR}/coverage.info"
