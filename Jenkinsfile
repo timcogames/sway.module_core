@@ -177,13 +177,21 @@ node {
 
     stage("Push:docker") {
       withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "DOCKER_HUB_TOKEN", usernameVariable: "DOCKER_REGISTRY_USER", passwordVariable: "DOCKER_REGISTRY_TOKEN"]]) {
-       sh "echo $DOCKER_REGISTRY_TOKEN | ${DOCKER_PATH}/docker login -u=$DOCKER_REGISTRY_USER --password-stdin"
+        //sh "echo $DOCKER_REGISTRY_TOKEN | ${DOCKER_PATH}/docker login hub.docker.com -u=victor-timoshin@hotmail.com --password-stdin"
+        echo "$DOCKER_REGISTRY_TOKEN | ${DOCKER_PATH}/docker login https://hub.docker.com/v2/ -u=victor-timoshin@hotmail.com --password-stdin"
       }
 
       CreateMultiarchCommand command = new CreateMultiarchCommand(dockerMultiarchImageEntity, dockerImageEntities)
       CreateMultiarchCommandHandler commandHandler = new CreateMultiarchCommandHandler(scriptExec)
       CommandResult<String> commandResult = commandHandler.handle(command)
       echo ">> ${commandResult.message}"
+
+      def RESULT = sh(
+        script: "${DOCKER_PATH}/docker manifest push ${MODULE_CORE_IMAGE_FULLNAME}", 
+        returnStdout: true
+      ).trim()
+
+      echo ">> ${RESULT}"
     }
 
     stage("Codecov") {
