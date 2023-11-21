@@ -111,8 +111,9 @@ node {
       // def targetArch = SELECTED_PLATFORN_LIST_STR.substring(targetPlatform.size() + 1)
 
       List<TargetPlatform> platforms = [ 
-        new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64),
-        new TargetPlatform(OSType.LINUX, ArchitectureType.X64) ]
+        new TargetPlatform(OSType.LINUX, ArchitectureType.AARCH64)
+        // new TargetPlatform(OSType.LINUX, ArchitectureType.X64) 
+        ]
 
       platforms.eachWithIndex { item, index ->
         dockerImageEntities.add(new ImageEntity(MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG, item))
@@ -174,6 +175,8 @@ node {
     }
 
     stage("Push:docker") {
+      sh "${DOCKER_PATH}/docker login -u=${DOCKER_REGISTRY_USER} -p=${DOCKER_REGISTRY_TOKEN} "
+
       CreateMultiarchCommand command = new CreateMultiarchCommand(dockerMultiarchImageEntity, dockerImageEntities)
       CreateMultiarchCommandHandler commandHandler = new CreateMultiarchCommandHandler(scriptExec)
       CommandResult<String> commandResult = commandHandler.handle(command)
@@ -182,13 +185,26 @@ node {
 
     stage("Codecov") {
       if (ENABLED_COVERAGE && SELECTED_BRANCH_NAME == "master") {
-        sh "/opt/homebrew/opt/lcov/bin/lcov --directory ./build/ --capture --output-file ./code_coverage.info -rc lcov_branch_coverage=1"
-        sh "/opt/homebrew/opt/lcov/bin/genhtml code_coverage.info --branch-coverage --output-directory ./code_coverage_report/ --prefix \"$WORKSPACE\""
+        def PROJECT_SOURCE_DIR = "$WORKSPACE/lib"
+        def OUTPUT_DIR = "$WORKSPACE/lcov-report"
+        def OUTPUT_FILE = "${OUTPUT_DIR}/coverage.info"
+        def LCOV_ENABLE_COVERAGE_BRANCH = "--rc lcov_branch_coverage=1"
+
+        sh "/opt/homebrew/opt/lcov/bin/lcov \
+          --base-directory ${PROJECT_SOURCE_DIR} \
+          --directory ${PROJECT_SOURCE_DIR} \
+          --capture \
+          --output-file ${OUTPUT_FILE}"
+
+        def GENHTML_ENABLE_COVERAGE_BRANCH = "--branch-coverage"
+        sh "/opt/homebrew/opt/lcov/bin/genhtml ${OUTPUT_FILE} \
+          --output-directory ${OUTPUT_DIR}"
+        
         publishHTML(target: [
           allowMissing: false,
           alwaysLinkToLastBuild: false,
           keepAll: true,
-          reportDir: "code_coverage_report",
+          reportDir: OUTPUT_DIR,
           reportFiles: "index.html",
           reportName: "LCov Report"
         ])
