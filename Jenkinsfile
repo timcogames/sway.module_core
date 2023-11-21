@@ -177,7 +177,7 @@ node {
 
     stage("Push:docker") {
       withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "DOCKER_HUB_TOKEN", usernameVariable: "DOCKER_REGISTRY_USER", passwordVariable: "DOCKER_REGISTRY_TOKEN"]]) {
-        sh "${DOCKER_PATH}/docker login -u=$DOCKER_REGISTRY_USER -p=$DOCKER_REGISTRY_TOKEN"
+       sh "echo $DOCKER_REGISTRY_TOKEN | ${DOCKER_PATH}/docker login -u=$DOCKER_REGISTRY_USER --password-stdin"
       }
 
       CreateMultiarchCommand command = new CreateMultiarchCommand(dockerMultiarchImageEntity, dockerImageEntities)
@@ -194,7 +194,7 @@ node {
         def LCOV_ENABLE_COVERAGE_BRANCH = "--rc lcov_branch_coverage=1"
 
         sh "/opt/homebrew/opt/lcov/bin/lcov \
-          --base-directory ${PROJECT_SOURCE_DIR} \
+          --base-directory $WORKSPACE/ \
           --directory ${PROJECT_SOURCE_DIR} \
           --capture \
           --output-file ${OUTPUT_FILE}"
