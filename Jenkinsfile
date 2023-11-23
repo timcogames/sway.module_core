@@ -150,7 +150,7 @@ node {
     }
 
     stage("Tests") {
-      if (ENABLED_TESTS) {
+      //if (ENABLED_TESTS) {
         ContainerInspectQuery containerInspectQry = new ContainerInspectQuery(dockerContainerEntity)
         ContainerInspectQueryHandler containerInspectQryHandler = new ContainerInspectQueryHandler(scriptExec)
         Map<String, String> containerInspectQryResult = containerInspectQryHandler.handle(containerInspectQry)
@@ -163,58 +163,67 @@ node {
           CreateContainerCommandHandler createContainerCmdHandler = new CreateContainerCommandHandler(scriptExec)
           CommandResult<String> createContainerCmdResult = createContainerCmdHandler.handle(createContainerCmd)
           if (createContainerCmdResult.succeeded) {
-            MODULE_CORE_CONTAINER_ID = createContainerCmdResult.message
+            echo "CreateContainerCommand OK : ${createContainerCmdResult.message}"
           }
         }
+
+        MODULE_CORE_CONTAINER_ID = sh(
+          script: "${DOCKER_PATH}/docker ps -aqf \"name=${MODULE_CORE_CONTAINER_NAME}\"",
+          returnStdout: true
+        ).trim()
 
         // [--rm] - to delete the container once finished the process
         // [  -i] - interactive mode
         // [  -e] - entrypoint
-        def RESULT = sh(
-          script: "${DOCKER_PATH}/docker container start ${MODULE_CORE_CONTAINER_ID}", 
-          returnStdout: true
-        ).trim()
 
-        sh "${DOCKER_PATH}/docker cp ${MODULE_CORE_CONTAINER_ID}:/module_core_workspace/build ${env.WORKSPACE}/build"
-      } else {
-        echo "Skipping stage..."
-        Utils.markStageSkippedForConditional("Tests")
-      }
+        // TODO: IF NO RUNNING
+
+        // def RESULT = sh(
+        //   script: "${DOCKER_PATH}/docker container start ${MODULE_CORE_CONTAINER_ID}", 
+        //   returnStdout: true
+        // ).trim()
+
+        sh "${DOCKER_PATH}/docker cp ${MODULE_CORE_CONTAINER_ID}:/module_core_workspace/build/. ${env.WORKSPACE}/build"
+
+      // } else {
+      //   echo "Skipping stage..."
+      //   Utils.markStageSkippedForConditional("Tests")
+      // }
     }
 
     stage("Push:docker") {
-      withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "DOCKER_HUB_TOKEN", usernameVariable: "DOCKER_REGISTRY_USER", passwordVariable: "DOCKER_REGISTRY_TOKEN"]]) {
-        echo "$DOCKER_REGISTRY_TOKEN | ${DOCKER_PATH}/docker login https://hub.docker.com/v2/ -u=victor-timoshin@hotmail.com --password-stdin"
-      }
+      // withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "DOCKER_HUB_TOKEN", usernameVariable: "DOCKER_REGISTRY_USER", passwordVariable: "DOCKER_REGISTRY_TOKEN"]]) {
+      //   echo "$DOCKER_REGISTRY_TOKEN | ${DOCKER_PATH}/docker login https://hub.docker.com/v2/ -u=victor-timoshin@hotmail.com --password-stdin"
+      // }
 
-      dockerImageEntities.each { item ->
-        PushImageCommand pushImageCmd = new PushImageCommand(item, MODULE_CORE_IMAGE_REGISTRY_NAMESPACE)
-        PushImageCommandHandler pushImageCmdHandler = new PushImageCommandHandler(scriptExec)
-        CommandResult<String> pushImageCmdResult = pushImageCmdHandler.handle(pushImageCmd)
-        echo ">> ${pushImageCmdResult.message}"
-      }
+      // dockerImageEntities.each { item ->
+      //   PushImageCommand pushImageCmd = new PushImageCommand(item, MODULE_CORE_IMAGE_REGISTRY_NAMESPACE)
+      //   PushImageCommandHandler pushImageCmdHandler = new PushImageCommandHandler(scriptExec)
+      //   CommandResult<String> pushImageCmdResult = pushImageCmdHandler.handle(pushImageCmd)
+      //   echo ">> ${pushImageCmdResult.message}"
+      // }
 
-      CreateMultiarchImageCommand createMAImageCmd = new CreateMultiarchImageCommand(dockerMultiarchImageEntity, dockerImageEntities)
-      CreateMultiarchImageCommandHandler createMAImageCmdHandler = new CreateMultiarchImageCommandHandler(scriptExec)
-      CommandResult<String> createMAImageCmdResult = createMAImageCmdHandler.handle(createMAImageCmd)
-      echo ">> ${createMAImageCmdResult.message}"
+      // CreateMultiarchImageCommand createMAImageCmd = new CreateMultiarchImageCommand(dockerMultiarchImageEntity, dockerImageEntities)
+      // CreateMultiarchImageCommandHandler createMAImageCmdHandler = new CreateMultiarchImageCommandHandler(scriptExec)
+      // CommandResult<String> createMAImageCmdResult = createMAImageCmdHandler.handle(createMAImageCmd)
+      // echo ">> ${createMAImageCmdResult.message}"
 
-      PushMultiarchImageCommand pushMAImageCmd = new PushMultiarchImageCommand(dockerMultiarchImageEntity, MODULE_CORE_IMAGE_REGISTRY_NAMESPACE)
-      PushMultiarchImageCommandHandler pushMAImageCmdHandler = new PushMultiarchImageCommandHandler(scriptExec)
-      CommandResult<String> pushMAImageCmdResult = pushMAImageCmdHandler.handle(pushMAImageCmd)
-      echo ">> ${pushMAImageCmdResult.message}"
+      // PushMultiarchImageCommand pushMAImageCmd = new PushMultiarchImageCommand(dockerMultiarchImageEntity, MODULE_CORE_IMAGE_REGISTRY_NAMESPACE)
+      // PushMultiarchImageCommandHandler pushMAImageCmdHandler = new PushMultiarchImageCommandHandler(scriptExec)
+      // CommandResult<String> pushMAImageCmdResult = pushMAImageCmdHandler.handle(pushMAImageCmd)
+      // echo ">> ${pushMAImageCmdResult.message}"
 
-      def RESULT = sh(
-        script: "${DOCKER_PATH}/docker manifest push ${MODULE_CORE_IMAGE_REGISTRY_NAMESPACE}/${MODULE_CORE_IMAGE_REFERENCE_NAME}", 
-        returnStdout: true
-      ).trim()
+      // def RESULT = sh(
+      //   script: "${DOCKER_PATH}/docker manifest push ${MODULE_CORE_IMAGE_REGISTRY_NAMESPACE}/${MODULE_CORE_IMAGE_REFERENCE_NAME}", 
+      //   returnStdout: true
+      // ).trim()
 
-      echo ">> ${RESULT}"
+      // echo ">> ${RESULT}"
     }
 
     stage("Codecov") {
       if (ENABLED_COVERAGE) {
-        def PROJECT_SOURCE_DIR = "${env.WORKSPACE}/lib"
+        def PROJECT_SOURCE_DIR = "${env.WORKSPACE}/build"
         def OUTPUT_DIR = "${env.WORKSPACE}/lcov-report"
         def OUTPUT_FILE = "${OUTPUT_DIR}/coverage.info"
         def LCOV_ENABLE_COVERAGE_BRANCH = "--rc lcov_branch_coverage=1"
@@ -228,7 +237,7 @@ node {
         def GENHTML_ENABLE_COVERAGE_BRANCH = "--branch-coverage"
         sh "/opt/homebrew/opt/lcov/bin/genhtml ${OUTPUT_FILE} \
           --output-directory ${OUTPUT_DIR}"
-        
+
         publishHTML(target: [
           allowMissing: false,
           alwaysLinkToLastBuild: false,
