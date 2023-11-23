@@ -54,9 +54,6 @@ RUN cmake -D CMAKE_BUILD_TYPE=Release \
 
 RUN cmake --build ./
 
-#TEMP
-RUN ls ./
-
 #_________________________________________________________________________________
 #                                                          Build development image
 

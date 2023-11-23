@@ -17,8 +17,10 @@ import sway.jenkins_pipeline.docker.command.BuildImageCommand
 import sway.jenkins_pipeline.docker.command.BuildImageCommandHandler
 import sway.jenkins_pipeline.docker.command.CreateContainerCommand
 import sway.jenkins_pipeline.docker.command.CreateContainerCommandHandler
-import sway.jenkins_pipeline.docker.command.CreateMultiarchCommand
-import sway.jenkins_pipeline.docker.command.CreateMultiarchCommandHandler
+import sway.jenkins_pipeline.docker.command.CreateMultiarchImageCommand
+import sway.jenkins_pipeline.docker.command.CreateMultiarchImageCommandHandler
+import sway.jenkins_pipeline.docker.command.PushMultiarchImageCommand
+import sway.jenkins_pipeline.docker.command.PushMultiarchImageCommandHandler
 import sway.jenkins_pipeline.docker.query.ImageInspectQuery
 import sway.jenkins_pipeline.docker.query.ImageInspectQueryHandler
 import sway.jenkins_pipeline.docker.query.ContainerInspectQuery
@@ -30,13 +32,15 @@ def GIT_PATH = "/usr/bin"
 def DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
 def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
 
-def MODULE_CORE_CONTAINER_NAME = "bonus85"
 def MODULE_CORE_CONTAINER_ID = ""
+def MODULE_CORE_CONTAINER_NAME = "cntr"
 
-def MODULE_CORE_IMAGE_TAG = "latest"
-def MODULE_CORE_IMAGE_NAME = "${MODULE_CORE_CONTAINER_NAME}/sway.module_core"
-def MODULE_CORE_IMAGE_FULLNAME = "${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
 def MODULE_CORE_IMAGE_ID = ""
+def MODULE_CORE_IMAGE_REGISTRY_NAMESPACE = "bonus85"
+def MODULE_CORE_IMAGE_LOCAL_NAMESPACE = "local"
+def MODULE_CORE_IMAGE_NAME = "sway.module_core"
+def MODULE_CORE_IMAGE_TAG = "latest"
+def MODULE_CORE_IMAGE_REFERENCE_NAME = "${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
 
 def SELECTED_BRANCH_NAME = ""
 def SELECTED_BUILD_TYPE = ""
@@ -51,7 +55,7 @@ def base
 
 ScriptExecutor scriptExec = new ScriptExecutor(DOCKER_PATH)
 ContainerEntity dockerContainerEntity = new ContainerEntity(MODULE_CORE_CONTAINER_NAME)
-MultiarchImageEntity dockerMultiarchImageEntity = new MultiarchImageEntity(MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG)
+MultiarchImageEntity dockerMultiarchImageEntity = new MultiarchImageEntity(MODULE_CORE_IMAGE_REGISTRY_NAMESPACE, MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG)
 List<ImageEntity> dockerImageEntities = new ArrayList<ImageEntity>()
 
 node {
@@ -117,7 +121,7 @@ node {
         ]
 
       platforms.eachWithIndex { item, index ->
-        dockerImageEntities.add(new ImageEntity(MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG, item))
+        dockerImageEntities.add(new ImageEntity(MODULE_CORE_IMAGE_LOCAL_NAMESPACE, MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG, item))
         
         Map<String, String> envs = [:]
         Map<String, String> args = [
@@ -126,7 +130,7 @@ node {
         ]
 
         Command imageCommand = new BuildImageCommand(dockerImageEntities.get(index), 
-          "$WORKSPACE", "gcc-linux-xarch.Dockerfile", envs, args, "module_core-${SELECTED_BUILD_TYPE}")
+          "${env.WORKSPACE}", "gcc-linux-xarch.Dockerfile", envs, args, "module_core-${SELECTED_BUILD_TYPE}")
         CommandHandler imageCommandHandler = new BuildImageCommandHandler(scriptExec)
         CommandResult<String> imageCommandHandlerResult = imageCommandHandler.handle(imageCommand)
 
@@ -145,20 +149,19 @@ node {
 
     stage("Tests") {
       if (ENABLED_TESTS) {
-        ContainerInspectQuery containerQuery = new ContainerInspectQuery(dockerContainerEntity)
-        ContainerInspectQueryHandler containerQueryHandler = new ContainerInspectQueryHandler(scriptExec)
-        Map<String, String> containerQueryHandlerResult = containerQueryHandler.handle(containerQuery)
+        ContainerInspectQuery containerInspectQry = new ContainerInspectQuery(dockerContainerEntity)
+        ContainerInspectQueryHandler containerInspectQryHandler = new ContainerInspectQueryHandler(scriptExec)
+        Map<String, String> containerInspectQryResult = containerInspectQryHandler.handle(containerInspectQry)
 
-        boolean containerExists = containerQueryHandlerResult.status != null
+        boolean containerExists = containerInspectQryResult.status != null
         if (containerExists) {
           echo "${MODULE_CORE_CONTAINER_NAME} already exists..."
         } else {
-          CreateContainerCommand command = new CreateContainerCommand(dockerContainerEntity, dockerImageEntities.get(0))
-          CreateContainerCommandHandler commandHandler = new CreateContainerCommandHandler(scriptExec)
-          CommandResult<String> commandResult = commandHandler.handle(command)
-
-          if (commandResult.succeeded) {
-            MODULE_CORE_CONTAINER_ID = commandResult.message
+          CreateContainerCommand createContainerCmd = new CreateContainerCommand(dockerContainerEntity, dockerImageEntities.get(0))
+          CreateContainerCommandHandler createContainerCmdHandler = new CreateContainerCommandHandler(scriptExec)
+          CommandResult<String> createContainerCmdResult = createContainerCmdHandler.handle(createContainerCmd)
+          if (createContainerCmdResult.succeeded) {
+            MODULE_CORE_CONTAINER_ID = createContainerCmdResult.message
           }
         }
 
@@ -169,6 +172,8 @@ node {
           script: "${DOCKER_PATH}/docker container start ${MODULE_CORE_CONTAINER_ID}", 
           returnStdout: true
         ).trim()
+
+        sh "${DOCKER_PATH}/docker cp ${MODULE_CORE_CONTAINER_ID}:/module_core_workspace/build ${env.WORKSPACE}/build"
       } else {
         echo "Skipping stage..."
         Utils.markStageSkippedForConditional("Tests")
@@ -177,17 +182,28 @@ node {
 
     stage("Push:docker") {
       withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "DOCKER_HUB_TOKEN", usernameVariable: "DOCKER_REGISTRY_USER", passwordVariable: "DOCKER_REGISTRY_TOKEN"]]) {
-        //sh "echo $DOCKER_REGISTRY_TOKEN | ${DOCKER_PATH}/docker login hub.docker.com -u=victor-timoshin@hotmail.com --password-stdin"
         echo "$DOCKER_REGISTRY_TOKEN | ${DOCKER_PATH}/docker login https://hub.docker.com/v2/ -u=victor-timoshin@hotmail.com --password-stdin"
       }
 
-      CreateMultiarchCommand command = new CreateMultiarchCommand(dockerMultiarchImageEntity, dockerImageEntities)
-      CreateMultiarchCommandHandler commandHandler = new CreateMultiarchCommandHandler(scriptExec)
-      CommandResult<String> commandResult = commandHandler.handle(command)
-      echo ">> ${commandResult.message}"
+      dockerImageEntities.each { item ->
+        PushImageCommand pushImageCmd = new PushImageCommand(item, MODULE_CORE_IMAGE_REGISTRY_NAMESPACE)
+        PushImageCommandHandler pushImageCmdHandler = new PushImageCommandHandler(scriptExec)
+        CommandResult<String> pushImageCmdResult = pushImageCmdHandler.handle(pushImageCmd)
+        echo ">> ${pushImageCmdResult.message}"
+      }
+
+      CreateMultiarchImageCommand createMAImageCmd = new CreateMultiarchImageCommand(dockerMultiarchImageEntity, dockerImageEntities)
+      CreateMultiarchImageCommandHandler createMAImageCmdHandler = new CreateMultiarchImageCommandHandler(scriptExec)
+      CommandResult<String> createMAImageCmdResult = createMAImageCmdHandler.handle(createMAImageCmd)
+      echo ">> ${createMAImageCmdResult.message}"
+
+      PushMultiarchImageCommand pushMAImageCmd = new PushMultiarchImageCommand(dockerMultiarchImageEntity, MODULE_CORE_IMAGE_REGISTRY_NAMESPACE)
+      PushMultiarchImageCommandHandler pushMAImageCmdHandler = new PushMultiarchImageCommandHandler(scriptExec)
+      CommandResult<String> pushMAImageCmdResult = pushMAImageCmdHandler.handle(pushMAImageCmd)
+      echo ">> ${pushMAImageCmdResult.message}"
 
       def RESULT = sh(
-        script: "${DOCKER_PATH}/docker manifest push ${MODULE_CORE_IMAGE_FULLNAME}", 
+        script: "${DOCKER_PATH}/docker manifest push ${MODULE_CORE_IMAGE_REGISTRY_NAMESPACE}/${MODULE_CORE_IMAGE_REFERENCE_NAME}", 
         returnStdout: true
       ).trim()
 
@@ -196,13 +212,13 @@ node {
 
     stage("Codecov") {
       if (ENABLED_COVERAGE) {
-        def PROJECT_SOURCE_DIR = "$WORKSPACE/lib"
-        def OUTPUT_DIR = "$WORKSPACE/lcov-report"
+        def PROJECT_SOURCE_DIR = "${env.WORKSPACE}/lib"
+        def OUTPUT_DIR = "${env.WORKSPACE}/lcov-report"
         def OUTPUT_FILE = "${OUTPUT_DIR}/coverage.info"
         def LCOV_ENABLE_COVERAGE_BRANCH = "--rc lcov_branch_coverage=1"
 
         sh "/opt/homebrew/opt/lcov/bin/lcov \
-          --base-directory $WORKSPACE/ \
+          --base-directory ${env.WORKSPACE}/ \
           --directory ${PROJECT_SOURCE_DIR} \
           --capture \
           --output-file ${OUTPUT_FILE}"
