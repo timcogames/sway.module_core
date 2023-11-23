@@ -19,6 +19,8 @@ import sway.jenkins_pipeline.docker.command.CreateContainerCommand
 import sway.jenkins_pipeline.docker.command.CreateContainerCommandHandler
 import sway.jenkins_pipeline.docker.command.CreateMultiarchImageCommand
 import sway.jenkins_pipeline.docker.command.CreateMultiarchImageCommandHandler
+import sway.jenkins_pipeline.docker.command.PushImageCommand
+import sway.jenkins_pipeline.docker.command.PushImageCommandHandler
 import sway.jenkins_pipeline.docker.command.PushMultiarchImageCommand
 import sway.jenkins_pipeline.docker.command.PushMultiarchImageCommandHandler
 import sway.jenkins_pipeline.docker.query.ImageInspectQuery
