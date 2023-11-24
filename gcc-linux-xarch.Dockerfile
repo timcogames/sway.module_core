@@ -36,7 +36,7 @@ RUN `([ $TARGET_PLATFORM_ARCH = arm64/v8 ] && ln -s /usr/lib/aarch64-linux-gnu /
 #                                              Copy project files to the workspace
 
 COPY /lib /module_core_workspace/lib
-COPY /cmakehelpers /module_core_workspace/cmakehelpers
+COPY /cmake_modules /module_core_workspace/cmake_modules
 COPY /CMakeLists.txt /module_core_workspace
 COPY /index.html /module_core_workspace
 

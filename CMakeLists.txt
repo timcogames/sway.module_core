@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.14.3 FATAL_ERROR)
 #                                                              Project directories
 set(MODULE_CORE_ROOT_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(MODULE_CORE_LIST_DIR ${CMAKE_CURRENT_LIST_DIR})
-set(MODULE_CORE_CMAKE_DIR ${MODULE_CORE_ROOT_DIR}/cmakehelpers)
+set(MODULE_CORE_CMAKE_DIR ${MODULE_CORE_ROOT_DIR}/cmake_modules)
 set(MODULE_CORE_LIB_DIR ${MODULE_CORE_ROOT_DIR}/lib)
 set(MODULE_CORE_BIN_DIR ${CMAKE_SOURCE_DIR}/bin)
 
@@ -126,12 +126,23 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
       "SHELL:-s MODULARIZE=1"
       "SHELL:-s EXPORT_NAME=\"create_core_module\""
       "SHELL:-s EXPORTED_FUNCTIONS=@${MODULE_CORE_LIB_DIR}/exports.json"
-      "SHELL:-s EXPORTED_RUNTIME_METHODS=@${MODULE_CORE_LIB_DIR}/runtime_exports.json")
+      "SHELL:-s EXPORTED_RUNTIME_METHODS=@${MODULE_CORE_LIB_DIR}/runtime-exports.json")
     printf_link_options(${target})
   endforeach()
 else()
   # create_library(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
 endif()
+
+# target_compile_options(${MODULE_CORE_TARGET} PRIVATE
+#   -O0        # no optimization
+#   -g         # generate debug info
+#   -fprofile-arcs -ftest-coverage
+#   --coverage # sets all required flags
+# )
+# # set_target_properties(${MODULE_CORE_TARGET} PROPERTIES COMPILE_FLAGS "--coverage")
+# # set_target_properties(${MODULE_CORE_TARGET} PROPERTIES LINK_FLAGS "--coverage")
+# set_target_properties(${MODULE_CORE_TARGET} PROPERTIES LINK_FLAGS "-lgcov")
+
 
 # if(GLOB_EMSCRIPTEN_PLATFORM)
 #   set(LIB_NAME_LIST ${MODULE_CORE_LIB_NAME})
