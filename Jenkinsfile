@@ -65,7 +65,6 @@ def PUBLISH_COVERAGE_REPORT = false
 
 def base
 
-ScriptExecutor scriptExec = new ScriptExecutor(DOCKER_PATH)
 ContainerEntity dockerContainerEntity = new ContainerEntity(MODULE_CORE_CONTAINER_NAME)
 MultiarchImageEntity dockerMultiarchImageEntity = new MultiarchImageEntity(MODULE_CORE_IMAGE_REGISTRY_NAMESPACE, MODULE_CORE_IMAGE_NAME, MODULE_CORE_IMAGE_TAG)
 List<ImageEntity> dockerImageEntities = new ArrayList<ImageEntity>()
@@ -146,16 +145,13 @@ node {
 
         BuildImageCommand buildImageCmd = new BuildImageCommand(dockerImageEntities.get(index), 
           "${env.WORKSPACE}", "gcc-linux-xarch.Dockerfile", envs, args, "module_core-${SELECTED_BUILD_TYPE}")
-        BuildImageCommandHandler buildImageCmdHandler = new BuildImageCommandHandler(scriptExec)
+        BuildImageCommandHandler buildImageCmdHandler = new BuildImageCommandHandler(new ScriptExecutor(DOCKER_PATH))
         CommandResult<String> buildImageCmdHandlerResult = buildImageCmdHandler.handle(buildImageCmd)
-        echo "buildImageCmdHandlerResult ${buildImageCmdHandlerResult}"
 
         if (buildImageCmdHandlerResult.succeeded) {
           ImageInspectQuery imageInspectQry = new ImageInspectQuery(dockerImageEntities.get(index))
-          ImageInspectQueryHandler imageInspectQryHandler = new ImageInspectQueryHandler(scriptExec)
+          ImageInspectQueryHandler imageInspectQryHandler = new ImageInspectQueryHandler(new ScriptExecutor(DOCKER_PATH))
           Map<String, String> imageInspectQryHandlerResult = imageInspectQryHandler.handle(imageInspectQry)
-          echo "buildImageCmdHandlerResult ${imageInspectQryHandlerResult}"
-          
           dockerImageEntities.get(index).setId(imageInspectQryHandlerResult.id)
         }
       }
@@ -165,41 +161,43 @@ node {
       sh "echo Build:Dockerfile-wasm"
     }
 
-    stage("Tests") {
-      if (ENABLED_TESTS) {
-        ContainerInspectQuery containerInspectQry = new ContainerInspectQuery(dockerContainerEntity)
-        ContainerInspectQueryHandler containerInspectQryHandler = new ContainerInspectQueryHandler(scriptExec)
-        Optional<Map<String, String>> containerInspectQryResult = containerInspectQryHandler.handle(containerInspectQry)
-        echo "containerInspectQryResult ${containerInspectQryResult}"
-        boolean containerExists = containerInspectQryResult.get().status != null
-        if (containerExists) {
-          echo "${MODULE_CORE_CONTAINER_NAME} already exists..."
-        } else {
-          CreateContainerCommand createContainerCmd = new CreateContainerCommand(dockerContainerEntity, dockerImageEntities.get(0))
-          CreateContainerCommandHandler createContainerCmdHandler = new CreateContainerCommandHandler(scriptExec)
-          CommandResult<String> createContainerCmdResult = createContainerCmdHandler.handle(createContainerCmd)
-          if (createContainerCmdResult.succeeded) {
-            echo "CreateContainerCommand : ${createContainerCmdResult.message}"
-          }
+    stage("Start:docker") {
+      ContainerInspectQuery containerInspectQry = new ContainerInspectQuery(dockerContainerEntity)
+      ContainerInspectQueryHandler containerInspectQryHandler = new ContainerInspectQueryHandler(new ScriptExecutor(DOCKER_PATH))
+      Optional<Map<String, String>> containerInspectQryResult = containerInspectQryHandler.handle(containerInspectQry)
+
+      boolean containerExists = containerInspectQryResult.get().status != null
+      if (containerExists) {
+        echo "${MODULE_CORE_CONTAINER_NAME} already exists..."
+      } else {
+        CreateContainerCommand createContainerCmd = new CreateContainerCommand(dockerContainerEntity, dockerImageEntities.get(0))
+        CreateContainerCommandHandler createContainerCmdHandler = new CreateContainerCommandHandler(new ScriptExecutor(DOCKER_PATH))
+        CommandResult<String> createContainerCmdResult = createContainerCmdHandler.handle(createContainerCmd)
+        if (createContainerCmdResult.succeeded) {
+          echo "CreateContainerCommand : ${createContainerCmdResult.message}"
         }
+      }
 
-        GetIdContainerQuery getIdContainerQry = new GetIdContainerQuery(dockerContainerEntity)
-        GetIdContainerQueryHandler getIdContainerQryHandler = new GetIdContainerQueryHandler(scriptExec)
-        Optional<String> containerIdOpt = getIdContainerQryHandler.handle(getIdContainerQry)
-        dockerContainerEntity.setId(containerIdOpt.get())
+      GetIdContainerQuery getIdContainerQry = new GetIdContainerQuery(dockerContainerEntity)
+      GetIdContainerQueryHandler getIdContainerQryHandler = new GetIdContainerQueryHandler(new ScriptExecutor(DOCKER_PATH))
+      Optional<String> containerIdOpt = getIdContainerQryHandler.handle(getIdContainerQry)
+      dockerContainerEntity.setId(containerIdOpt.get())
 
-        UpdateContainerStateCommand updateContainerStateCmd = new UpdateContainerStateCommand(dockerContainerEntity, ContainerAction.START)
-        UpdateContainerStateCommandHandler updateContainerStateCmdHandler = new UpdateContainerStateCommandHandler(scriptExec)
-        updateContainerStateCmdHandler.handle(updateContainerStateCmd)
+      UpdateContainerStateCommand updateContainerStateCmd = new UpdateContainerStateCommand(dockerContainerEntity, ContainerAction.START)
+      UpdateContainerStateCommandHandler updateContainerStateCmdHandler = new UpdateContainerStateCommandHandler(new ScriptExecutor(DOCKER_PATH))
+      updateContainerStateCmdHandler.handle(updateContainerStateCmd)
+    }
 
-        if (ENABLED_TESTS) {
+    stage("Run:Tests") {
+      if (ENABLED_TESTS) {
+        if (SELECTED_BUILD_TYPE == "debug") {
           sh "${DOCKER_PATH}/docker exec -i ${dockerContainerEntity.getId().get()} ./bin/dbg/module_core_tests"
         } else {
           sh "${DOCKER_PATH}/docker exec -i ${dockerContainerEntity.getId().get()} ./bin/module_core_tests"
         }
       } else {
         echo "Skipping stage..."
-        Utils.markStageSkippedForConditional("Tests")
+        Utils.markStageSkippedForConditional("Run tests")
       }
     }
 
@@ -278,21 +276,19 @@ node {
     }
   } finally {
     stage("cleanup") {
-      // // if (MULTIPLE_PLATFORN) {
-      // //   // 
-      // // } else {
-      //   UpdateContainerStateCommand updateContainerStateCmd = new UpdateContainerStateCommand(dockerContainerEntity, ContainerAction.STOP)
-      //   UpdateContainerStateCommandHandler updateContainerStateCmdHandler = new UpdateContainerStateCommandHandler(scriptExec)
-      //   updateContainerStateCmdHandler.handle(updateContainerStateCmd)
+      UpdateContainerStateCommand updateContainerStateCmd = new UpdateContainerStateCommand(dockerContainerEntity, ContainerAction.STOP)
+      UpdateContainerStateCommandHandler updateContainerStateCmdHandler = new UpdateContainerStateCommandHandler(new ScriptExecutor(DOCKER_PATH))
+      updateContainerStateCmdHandler.handle(updateContainerStateCmd)
 
-      //   RemoveContainerCommand removeContainerCmd = new RemoveContainerCommand(dockerContainerEntity)
-      //   RemoveContainerCommandHandler removeContainerCmdHandler = new RemoveContainerCommandHandler(scriptExec)
-      //   removeContainerCmdHandler.handle(removeContainerCmd)
+      RemoveContainerCommand removeContainerCmd = new RemoveContainerCommand(dockerContainerEntity)
+      RemoveContainerCommandHandler removeContainerCmdHandler = new RemoveContainerCommandHandler(new ScriptExecutor(DOCKER_PATH))
+      removeContainerCmdHandler.handle(removeContainerCmd)
 
-      //   RemoveImageCommand removeImageCmd = new RemoveImageCommand(dockerImageEntities.get(0))
-      //   RemoveImageCommandHandler removeImageCmdHandler = new RemoveImageCommandHandler(scriptExec)
-      //   removeImageCmdHandler.handle(removeImageCmd)
-      // // }
+      dockerImageEntities.each { item ->
+        RemoveImageCommand removeImageCmd = new RemoveImageCommand(item)
+        RemoveImageCommandHandler removeImageCmdHandler = new RemoveImageCommandHandler(new ScriptExecutor(DOCKER_PATH))
+        removeImageCmdHandler.handle(removeImageCmd)
+      }
     }
   }
 }
