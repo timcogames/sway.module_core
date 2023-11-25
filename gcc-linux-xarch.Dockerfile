@@ -49,13 +49,15 @@ RUN mkdir /module_core_workspace/lcov_report
 FROM base as module_core-release
 
 WORKDIR /module_core_workspace/build
+
 RUN cmake -D CMAKE_BUILD_TYPE=Release \
           -D GLOB_GTEST_ROOT_DIR= \
           -D GLOB_GTEST_LIB_DIR= \
           -D MODULE_CORE_ENABLE_TESTS=OFF \
           -D MODULE_CORE_ENABLE_COVERAGE=$ENABLED_COVERAGE ../
-
 RUN cmake --build ./
+
+WORKDIR /module_core_workspace
 
 ENTRYPOINT ["tail"]
 CMD ["-f", "/dev/null"]
@@ -66,13 +68,15 @@ CMD ["-f", "/dev/null"]
 FROM base as module_core-debug
 
 WORKDIR /module_core_workspace/build
+
 RUN cmake -D CMAKE_BUILD_TYPE=Debug \
           -D GLOB_GTEST_ROOT_DIR=$GTEST_ROOT_DIR \
           -D GLOB_GTEST_LIB_DIR=$GTEST_LIB_DIR \
           -D MODULE_CORE_ENABLE_TESTS=ON \
           -D MODULE_CORE_ENABLE_COVERAGE=$ENABLED_COVERAGE ../
-
 RUN cmake --build ./
+
+WORKDIR /module_core_workspace
 
 ENTRYPOINT ["tail"]
 CMD ["-f", "/dev/null"]
