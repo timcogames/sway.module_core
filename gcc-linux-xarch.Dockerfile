@@ -26,6 +26,7 @@ ARG ENABLED_COVERAGE=
 
 RUN apt-get update -y && apt-get install -y \
     cmake \
+    lcov \
     libgtest-dev
 
 RUN `([ $TARGET_PLATFORM_ARCH = arm64/v8 ] && ln -s /usr/lib/aarch64-linux-gnu /tmp/lib ) || \
@@ -39,6 +40,8 @@ COPY /lib /module_core_workspace/lib
 COPY /cmake_modules /module_core_workspace/cmake_modules
 COPY /CMakeLists.txt /module_core_workspace
 COPY /index.html /module_core_workspace
+
+RUN mkdir /module_core_workspace/lcov_report
 
 #_________________________________________________________________________________
 #                                                           Build production image
@@ -54,6 +57,9 @@ RUN cmake -D CMAKE_BUILD_TYPE=Release \
 
 RUN cmake --build ./
 
+ENTRYPOINT ["tail"]
+CMD ["-f", "/dev/null"]
+
 #_________________________________________________________________________________
 #                                                          Build development image
 
@@ -68,4 +74,5 @@ RUN cmake -D CMAKE_BUILD_TYPE=Debug \
 
 RUN cmake --build ./
 
-ENTRYPOINT ["/module_core_workspace/bin/dbg/module_core_tests"]
+ENTRYPOINT ["tail"]
+CMD ["-f", "/dev/null"]

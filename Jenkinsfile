@@ -178,12 +178,16 @@ node {
 
         // TODO: IF NO RUNNING
 
-        // def RESULT = sh(
-        //   script: "${DOCKER_PATH}/docker container start ${MODULE_CORE_CONTAINER_ID}", 
-        //   returnStdout: true
-        // ).trim()
+        def RESULT = sh(
+          script: "${DOCKER_PATH}/docker container start ${MODULE_CORE_CONTAINER_ID}", 
+          returnStdout: true
+        ).trim()
 
-        sh "${DOCKER_PATH}/docker cp ${MODULE_CORE_CONTAINER_ID}:/module_core_workspace/build/. ${env.WORKSPACE}/build"
+        if (ENABLED_TESTS) {
+          sh "${DOCKER_PATH}/docker exec -it ${MODULE_CORE_CONTAINER_ID} ../bin/dbg/module_core_tests"
+        } else {
+          sh "${DOCKER_PATH}/docker exec -it ${MODULE_CORE_CONTAINER_ID} ../bin/module_core_tests"
+        }
 
       // } else {
       //   echo "Skipping stage..."
@@ -224,19 +228,31 @@ node {
     stage("Codecov") {
       if (ENABLED_COVERAGE) {
         def PROJECT_SOURCE_DIR = "${env.WORKSPACE}/build"
-        def OUTPUT_DIR = "${env.WORKSPACE}/lcov-report"
+        def OUTPUT_DIR = "${env.WORKSPACE}/lcov_report"
         def OUTPUT_FILE = "${OUTPUT_DIR}/coverage.info"
         def LCOV_ENABLE_COVERAGE_BRANCH = "--rc lcov_branch_coverage=1"
 
-        sh "/opt/homebrew/opt/lcov/bin/lcov \
+        // sh "/opt/homebrew/opt/lcov/bin/lcov \
+        //   --base-directory ${env.WORKSPACE}/ \
+        //   --directory ${PROJECT_SOURCE_DIR} \
+        //   --capture \
+        //   --output-file ${OUTPUT_FILE}"
+
+        // def GENHTML_ENABLE_COVERAGE_BRANCH = "--branch-coverage"
+        // sh "/opt/homebrew/opt/lcov/bin/genhtml ${OUTPUT_FILE} \
+        //   --output-directory ${OUTPUT_DIR}"
+
+        sh "${DOCKER_PATH}/docker exec -it ${MODULE_CORE_CONTAINER_ID} lcov \
           --base-directory ${env.WORKSPACE}/ \
           --directory ${PROJECT_SOURCE_DIR} \
           --capture \
           --output-file ${OUTPUT_FILE}"
 
         def GENHTML_ENABLE_COVERAGE_BRANCH = "--branch-coverage"
-        sh "/opt/homebrew/opt/lcov/bin/genhtml ${OUTPUT_FILE} \
+        sh "${DOCKER_PATH}/docker exec -it ${MODULE_CORE_CONTAINER_ID} genhtml ${OUTPUT_FILE} \
           --output-directory ${OUTPUT_DIR}"
+
+        sh "${DOCKER_PATH}/docker cp ${MODULE_CORE_CONTAINER_ID}:/module_core_workspace/lcov_report/. ${env.WORKSPACE}/lcov_report"
 
         publishHTML(target: [
           allowMissing: false,
