@@ -6,6 +6,7 @@ import java.util.Optional
 import sway.jenkins_pipeline.docker.model.OSType
 import sway.jenkins_pipeline.docker.model.ArchitectureType
 import sway.jenkins_pipeline.docker.model.TargetPlatform
+import sway.jenkins_pipeline.docker.model.ContainerAction
 import sway.jenkins_pipeline.docker.entity.Entity
 import sway.jenkins_pipeline.docker.entity.ImageEntity
 import sway.jenkins_pipeline.docker.entity.MultiarchImageEntity
@@ -23,10 +24,18 @@ import sway.jenkins_pipeline.docker.command.PushImageCommand
 import sway.jenkins_pipeline.docker.command.PushImageCommandHandler
 import sway.jenkins_pipeline.docker.command.PushMultiarchImageCommand
 import sway.jenkins_pipeline.docker.command.PushMultiarchImageCommandHandler
+import sway.jenkins_pipeline.docker.command.UpdateContainerStateCommand
+import sway.jenkins_pipeline.docker.command.UpdateContainerStateCommandHandler
+import sway.jenkins_pipeline.docker.command.RemoveContainerCommand
+import sway.jenkins_pipeline.docker.command.RemoveContainerCommandHandler
+import sway.jenkins_pipeline.docker.command.RemoveImageCommand
+import sway.jenkins_pipeline.docker.command.RemoveImageCommandHandler
 import sway.jenkins_pipeline.docker.query.ImageInspectQuery
 import sway.jenkins_pipeline.docker.query.ImageInspectQueryHandler
 import sway.jenkins_pipeline.docker.query.ContainerInspectQuery
 import sway.jenkins_pipeline.docker.query.ContainerInspectQueryHandler
+import sway.jenkins_pipeline.docker.query.GetIdContainerQuery
+import sway.jenkins_pipeline.docker.query.GetIdContainerQueryHandler
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.ScriptExecutor
 
@@ -52,6 +61,7 @@ def MULTIPLE_PLATFORN = false
 def APPLIED_THIRD_PARTY_DIR = ""
 def ENABLED_TESTS = ""
 def ENABLED_COVERAGE = ""
+def PUBLISH_COVERAGE_REPORT = false
 
 def base
 
@@ -80,7 +90,8 @@ node {
 
         // TODO
         base.approveSignatures([
-          "new java.util.ArrayList"
+          "new java.util.ArrayList",
+          "new java.util.Optional java.lang.Object"
         ])
       }
     }
@@ -96,6 +107,7 @@ node {
       optionParams.add(string(name: "THIRD_PARTY_DIR", defaultValue: "/opt/third_party", description: ""))
       optionParams.add(booleanParam(name: "TESTS", defaultValue: true, description: ""))
       optionParams.add(booleanParam(name: "COVERAGE", defaultValue: false, description: ""))
+      optionParams.add(booleanParam(name: "COVERAGE_REPORT", defaultValue: false, description: ""))
 
       def options = input(message: "Build options", ok: "Run", parameters: optionParams)
 
@@ -111,6 +123,7 @@ node {
       APPLIED_THIRD_PARTY_DIR = options["THIRD_PARTY_DIR"]
       ENABLED_TESTS = options["TESTS"]
       ENABLED_COVERAGE = options["COVERAGE"]
+      PUBLISH_COVERAGE_REPORT = options["COVERAGE_REPORT"]
     }
 
     stage("Build:docker gcc-linux-xarch") {
@@ -131,16 +144,19 @@ node {
           "ENABLED_TESTS": base.booleanToCMakeStr(ENABLED_TESTS)
         ]
 
-        Command imageCommand = new BuildImageCommand(dockerImageEntities.get(index), 
+        BuildImageCommand buildImageCmd = new BuildImageCommand(dockerImageEntities.get(index), 
           "${env.WORKSPACE}", "gcc-linux-xarch.Dockerfile", envs, args, "module_core-${SELECTED_BUILD_TYPE}")
-        CommandHandler imageCommandHandler = new BuildImageCommandHandler(scriptExec)
-        CommandResult<String> imageCommandHandlerResult = imageCommandHandler.handle(imageCommand)
+        BuildImageCommandHandler buildImageCmdHandler = new BuildImageCommandHandler(scriptExec)
+        CommandResult<String> buildImageCmdHandlerResult = buildImageCmdHandler.handle(buildImageCmd)
+        echo "buildImageCmdHandlerResult ${buildImageCmdHandlerResult}"
 
-        if (imageCommandHandlerResult.succeeded) {
-          ImageInspectQuery imageQuery = new ImageInspectQuery(dockerImageEntities.get(index))
-          ImageInspectQueryHandler imageQueryHandler = new ImageInspectQueryHandler(scriptExec)
-          Map<String, String> imageQueryHandlerResult = imageQueryHandler.handle(imageQuery)
-          dockerImageEntities.get(index).setId(imageQueryHandlerResult.id)
+        if (buildImageCmdHandlerResult.succeeded) {
+          ImageInspectQuery imageInspectQry = new ImageInspectQuery(dockerImageEntities.get(index))
+          ImageInspectQueryHandler imageInspectQryHandler = new ImageInspectQueryHandler(scriptExec)
+          Map<String, String> imageInspectQryHandlerResult = imageInspectQryHandler.handle(imageInspectQry)
+          echo "buildImageCmdHandlerResult ${imageInspectQryHandlerResult}"
+          
+          dockerImageEntities.get(index).setId(imageInspectQryHandlerResult.id)
         }
       }
     }
@@ -150,12 +166,12 @@ node {
     }
 
     stage("Tests") {
-      //if (ENABLED_TESTS) {
+      if (ENABLED_TESTS) {
         ContainerInspectQuery containerInspectQry = new ContainerInspectQuery(dockerContainerEntity)
         ContainerInspectQueryHandler containerInspectQryHandler = new ContainerInspectQueryHandler(scriptExec)
-        Map<String, String> containerInspectQryResult = containerInspectQryHandler.handle(containerInspectQry)
-
-        boolean containerExists = containerInspectQryResult.status != null
+        Optional<Map<String, String>> containerInspectQryResult = containerInspectQryHandler.handle(containerInspectQry)
+        echo "containerInspectQryResult ${containerInspectQryResult}"
+        boolean containerExists = containerInspectQryResult.get().status != null
         if (containerExists) {
           echo "${MODULE_CORE_CONTAINER_NAME} already exists..."
         } else {
@@ -163,36 +179,28 @@ node {
           CreateContainerCommandHandler createContainerCmdHandler = new CreateContainerCommandHandler(scriptExec)
           CommandResult<String> createContainerCmdResult = createContainerCmdHandler.handle(createContainerCmd)
           if (createContainerCmdResult.succeeded) {
-            echo "CreateContainerCommand OK : ${createContainerCmdResult.message}"
+            echo "CreateContainerCommand : ${createContainerCmdResult.message}"
           }
         }
 
-        MODULE_CORE_CONTAINER_ID = sh(
-          script: "${DOCKER_PATH}/docker ps -aqf \"name=${MODULE_CORE_CONTAINER_NAME}\"",
-          returnStdout: true
-        ).trim()
+        GetIdContainerQuery getIdContainerQry = new GetIdContainerQuery(dockerContainerEntity)
+        GetIdContainerQueryHandler getIdContainerQryHandler = new GetIdContainerQueryHandler(scriptExec)
+        Optional<String> containerIdOpt = getIdContainerQryHandler.handle(getIdContainerQry)
+        dockerContainerEntity.setId(containerIdOpt.get())
 
-        // [--rm] - to delete the container once finished the process
-        // [  -i] - interactive mode
-        // [  -e] - entrypoint
-
-        // TODO: IF NO RUNNING
-
-        def RESULT = sh(
-          script: "${DOCKER_PATH}/docker container start ${MODULE_CORE_CONTAINER_ID}", 
-          returnStdout: true
-        ).trim()
+        UpdateContainerStateCommand updateContainerStateCmd = new UpdateContainerStateCommand(dockerContainerEntity, ContainerAction.START)
+        UpdateContainerStateCommandHandler updateContainerStateCmdHandler = new UpdateContainerStateCommandHandler(scriptExec)
+        updateContainerStateCmdHandler.handle(updateContainerStateCmd)
 
         if (ENABLED_TESTS) {
-          sh "${DOCKER_PATH}/docker exec -it ${MODULE_CORE_CONTAINER_ID} ../bin/dbg/module_core_tests"
+          sh "${DOCKER_PATH}/docker exec -i ${dockerContainerEntity.getId().get()} ./bin/dbg/module_core_tests"
         } else {
-          sh "${DOCKER_PATH}/docker exec -it ${MODULE_CORE_CONTAINER_ID} ../bin/module_core_tests"
+          sh "${DOCKER_PATH}/docker exec -i ${dockerContainerEntity.getId().get()} ./bin/module_core_tests"
         }
-
-      // } else {
-      //   echo "Skipping stage..."
-      //   Utils.markStageSkippedForConditional("Tests")
-      // }
+      } else {
+        echo "Skipping stage..."
+        Utils.markStageSkippedForConditional("Tests")
+      }
     }
 
     stage("Push:docker") {
@@ -226,45 +234,38 @@ node {
     }
 
     stage("Codecov") {
-      if (ENABLED_COVERAGE) {
-        def PROJECT_SOURCE_DIR = "${env.WORKSPACE}/build"
-        def OUTPUT_DIR = "${env.WORKSPACE}/lcov_report"
+      if (ENABLED_TESTS && ENABLED_COVERAGE) {
+        def PROJECT_ROOT_DIR = "."
+        def PROJECT_SOURCE_DIR = "${PROJECT_ROOT_DIR}/build"
+        def OUTPUT_DIR = "${PROJECT_ROOT_DIR}/lcov_report"
         def OUTPUT_FILE = "${OUTPUT_DIR}/coverage.info"
         def LCOV_ENABLE_COVERAGE_BRANCH = "--rc lcov_branch_coverage=1"
 
-        // sh "/opt/homebrew/opt/lcov/bin/lcov \
-        //   --base-directory ${env.WORKSPACE}/ \
-        //   --directory ${PROJECT_SOURCE_DIR} \
-        //   --capture \
-        //   --output-file ${OUTPUT_FILE}"
-
-        // def GENHTML_ENABLE_COVERAGE_BRANCH = "--branch-coverage"
-        // sh "/opt/homebrew/opt/lcov/bin/genhtml ${OUTPUT_FILE} \
-        //   --output-directory ${OUTPUT_DIR}"
-
-        sh "${DOCKER_PATH}/docker exec -it ${MODULE_CORE_CONTAINER_ID} lcov \
-          --base-directory ${env.WORKSPACE}/ \
+        sh "${DOCKER_PATH}/docker exec -i ${dockerContainerEntity.getId().get()} lcov \
+          --base-directory ${PROJECT_ROOT_DIR}/ \
           --directory ${PROJECT_SOURCE_DIR} \
           --capture \
           --output-file ${OUTPUT_FILE}"
 
         def GENHTML_ENABLE_COVERAGE_BRANCH = "--branch-coverage"
-        sh "${DOCKER_PATH}/docker exec -it ${MODULE_CORE_CONTAINER_ID} genhtml ${OUTPUT_FILE} \
+        sh "${DOCKER_PATH}/docker exec -i ${dockerContainerEntity.getId().get()} genhtml ${OUTPUT_FILE} \
           --output-directory ${OUTPUT_DIR}"
 
-        sh "${DOCKER_PATH}/docker cp ${MODULE_CORE_CONTAINER_ID}:/module_core_workspace/lcov_report/. ${env.WORKSPACE}/lcov_report"
+        sh "${DOCKER_PATH}/docker cp ${dockerContainerEntity.getId().get()}:/module_core_workspace/lcov_report/. ${env.WORKSPACE}/lcov_report"
 
-        publishHTML(target: [
-          allowMissing: false,
-          alwaysLinkToLastBuild: false,
-          keepAll: true,
-          reportDir: OUTPUT_DIR,
-          reportFiles: "index.html",
-          reportName: "LCov Report"
-        ])
+        if (PUBLISH_COVERAGE_REPORT) {
+          publishHTML(target: [
+            allowMissing: false,
+            alwaysLinkToLastBuild: false,
+            keepAll: true,
+            reportDir: OUTPUT_DIR,
+            reportFiles: "index.html",
+            reportName: "LCov Report"
+          ])
 
-        withCredentials([string(credentialsId: "MODULE_CORE_CODECOV_TOKEN", variable: "CODECOV")]) {
-          sh "curl -s https://codecov.io/bash | bash -s - -t $CODECOV || echo \"Codecov failed to upload\""
+          withCredentials([string(credentialsId: "MODULE_CORE_CODECOV_TOKEN", variable: "CODECOV")]) {
+            sh "curl -s https://codecov.io/bash | bash -s - -t $CODECOV || echo \"Codecov failed to upload\""
+          }
         }
       } else {
         echo "Skipping stage..."
@@ -277,12 +278,21 @@ node {
     }
   } finally {
     stage("cleanup") {
-      if (MULTIPLE_PLATFORN) {
-        // 
-      } else {
-        // sh "${DOCKER_PATH}/docker rm --force ${MODULE_CORE_CONTAINER_ID}"
-        // sh "${DOCKER_PATH}/docker rmi ${MODULE_CORE_IMAGE_ID}"
-      }
+      // // if (MULTIPLE_PLATFORN) {
+      // //   // 
+      // // } else {
+      //   UpdateContainerStateCommand updateContainerStateCmd = new UpdateContainerStateCommand(dockerContainerEntity, ContainerAction.STOP)
+      //   UpdateContainerStateCommandHandler updateContainerStateCmdHandler = new UpdateContainerStateCommandHandler(scriptExec)
+      //   updateContainerStateCmdHandler.handle(updateContainerStateCmd)
+
+      //   RemoveContainerCommand removeContainerCmd = new RemoveContainerCommand(dockerContainerEntity)
+      //   RemoveContainerCommandHandler removeContainerCmdHandler = new RemoveContainerCommandHandler(scriptExec)
+      //   removeContainerCmdHandler.handle(removeContainerCmd)
+
+      //   RemoveImageCommand removeImageCmd = new RemoveImageCommand(dockerImageEntities.get(0))
+      //   RemoveImageCommandHandler removeImageCmdHandler = new RemoveImageCommandHandler(scriptExec)
+      //   removeImageCmdHandler.handle(removeImageCmd)
+      // // }
     }
   }
 }
