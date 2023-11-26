@@ -1,6 +1,6 @@
 # sway.module_core
 
-[![codecov][codecov-svg]][codecov-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
+[![CodeFactor][codefactor-svg]][codefactor-url] [![codecov][codecov-svg]][codecov-url] [![Documentation][codedocs-svg]][codedocs-url] [![License][license-svg]][license-url]
 
 ## Зависимости
 
@@ -11,6 +11,8 @@
 
 См. [CONTRIBUTING](./github/CONTRIBUTING.md)
 
+[codefactor-svg]: https://www.codefactor.io/repository/github/timcogames/sway.module_core/badge
+[codefactor-url]: https://www.codefactor.io/repository/github/timcogames/sway.module_core
 [codecov-svg]: https://codecov.io/gh/timcogames/sway.module_core/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/timcogames/sway.module_core
 [codedocs-svg]: https://codedocs.xyz/timcogames/sway.module_core.svg
