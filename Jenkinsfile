@@ -55,15 +55,17 @@ String MODULE_CORE_IMAGE_NAME = "sway.module_core"
 String MODULE_CORE_IMAGE_TAG = "latest"
 String MODULE_CORE_IMAGE_REFERENCE_NAME = "${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
 
-def SELECTED_BRANCH_NAME = ""
-def SELECTED_BUILD_TYPE = ""
-def SELECTED_PLATFORN_LIST = []
-def SELECTED_PLATFORN_LIST_STR = ""
-def MULTIPLE_PLATFORN = false
-def APPLIED_THIRD_PARTY_DIR = ""
-def ENABLED_TESTS = ""
-def ENABLED_COVERAGE = ""
-def PUBLISH_COVERAGE_REPORT = false
+String SELECTED_BRANCH_NAME = ""
+String SELECTED_BUILD_TYPE = ""
+String SELECTED_PLATFORN_LIST_STR = ""
+String APPLIED_THIRD_PARTY_DIR = ""
+String ENABLED_TESTS = ""
+String ENABLED_COVERAGE = ""
+
+boolean PUBLISHED_COVERAGE_REPORT = false
+boolean PUBLISHED_MULTIARCH_IMAGE = false
+
+List<String> SELECTED_PLATFORN_LIST = []
 
 def base
 
@@ -109,6 +111,7 @@ node {
       optionParams.add(booleanParam(name: "TESTS", defaultValue: true, description: ""))
       optionParams.add(booleanParam(name: "COVERAGE", defaultValue: false, description: ""))
       optionParams.add(booleanParam(name: "COVERAGE_REPORT", defaultValue: false, description: ""))
+      optionParams.add(booleanParam(name: "DOCKER_REGISTRY", defaultValue: false, description: ""))
 
       def options = input(message: "Build options", ok: "Run", parameters: optionParams)
 
@@ -120,11 +123,11 @@ node {
 
       SELECTED_BUILD_TYPE = options["BUILD_TYPE"]
       SELECTED_PLATFORN_LIST_STR = SELECTED_PLATFORN_LIST.join(",")
-      MULTIPLE_PLATFORN = SELECTED_PLATFORN_LIST.size() > 1
       APPLIED_THIRD_PARTY_DIR = options["THIRD_PARTY_DIR"]
       ENABLED_TESTS = options["TESTS"]
       ENABLED_COVERAGE = options["COVERAGE"]
-      PUBLISH_COVERAGE_REPORT = options["COVERAGE_REPORT"]
+      PUBLISHED_COVERAGE_REPORT = options["COVERAGE_REPORT"]
+      PUBLISHED_MULTIARCH_IMAGE = options["DOCKER_REGISTRY"]
     }
 
     stage("Build:docker gcc-linux-xarch") {
@@ -203,33 +206,28 @@ node {
     }
 
     stage("Push:docker") {
-      // withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "DOCKER_HUB_TOKEN", usernameVariable: "DOCKER_REGISTRY_USER", passwordVariable: "DOCKER_REGISTRY_TOKEN"]]) {
-      //   echo "$DOCKER_REGISTRY_TOKEN | ${DOCKER_PATH}/docker login https://hub.docker.com/v2/ -u=victor-timoshin@hotmail.com --password-stdin"
-      // }
+      if (PUBLISHED_MULTIARCH_IMAGE) {
+        withCredentials([[$class: "UsernamePasswordMultiBinding", credentialsId: "DOCKER_HUB_TOKEN", usernameVariable: "DOCKER_REGISTRY_USER", passwordVariable: "DOCKER_REGISTRY_TOKEN"]]) {
+          echo "$DOCKER_REGISTRY_TOKEN | ${DOCKER_PATH}/docker login https://hub.docker.com/v2/ -u=victor-timoshin@hotmail.com --password-stdin"
+        }
 
-      // dockerImageEntities.each { item ->
-      //   PushImageCommand pushImageCmd = new PushImageCommand(item, MODULE_CORE_IMAGE_REGISTRY_NAMESPACE)
-      //   PushImageCommandHandler pushImageCmdHandler = new PushImageCommandHandler(scriptExec)
-      //   CommandResult<String> pushImageCmdResult = pushImageCmdHandler.handle(pushImageCmd)
-      //   echo ">> ${pushImageCmdResult.message}"
-      // }
+        dockerImageEntities.each { item ->
+          PushImageCommand pushImageCmd = new PushImageCommand(item, MODULE_CORE_IMAGE_REGISTRY_NAMESPACE)
+          PushImageCommandHandler pushImageCmdHandler = new PushImageCommandHandler(new ScriptExecutor(DOCKER_PATH))
+          CommandResult<String> pushImageCmdResult = pushImageCmdHandler.handle(pushImageCmd)
+        }
 
-      // CreateMultiarchImageCommand createMAImageCmd = new CreateMultiarchImageCommand(dockerMultiarchImageEntity, dockerImageEntities)
-      // CreateMultiarchImageCommandHandler createMAImageCmdHandler = new CreateMultiarchImageCommandHandler(scriptExec)
-      // CommandResult<String> createMAImageCmdResult = createMAImageCmdHandler.handle(createMAImageCmd)
-      // echo ">> ${createMAImageCmdResult.message}"
+        CreateMultiarchImageCommand createMAImageCmd = new CreateMultiarchImageCommand(dockerMultiarchImageEntity, dockerImageEntities)
+        CreateMultiarchImageCommandHandler createMAImageCmdHandler = new CreateMultiarchImageCommandHandler(new ScriptExecutor(DOCKER_PATH))
+        CommandResult<String> createMAImageCmdResult = createMAImageCmdHandler.handle(createMAImageCmd)
 
-      // PushMultiarchImageCommand pushMAImageCmd = new PushMultiarchImageCommand(dockerMultiarchImageEntity, MODULE_CORE_IMAGE_REGISTRY_NAMESPACE)
-      // PushMultiarchImageCommandHandler pushMAImageCmdHandler = new PushMultiarchImageCommandHandler(scriptExec)
-      // CommandResult<String> pushMAImageCmdResult = pushMAImageCmdHandler.handle(pushMAImageCmd)
-      // echo ">> ${pushMAImageCmdResult.message}"
-
-      // def RESULT = sh(
-      //   script: "${DOCKER_PATH}/docker manifest push ${MODULE_CORE_IMAGE_REGISTRY_NAMESPACE}/${MODULE_CORE_IMAGE_REFERENCE_NAME}", 
-      //   returnStdout: true
-      // ).trim()
-
-      // echo ">> ${RESULT}"
+        PushMultiarchImageCommand pushMAImageCmd = new PushMultiarchImageCommand(dockerMultiarchImageEntity, MODULE_CORE_IMAGE_REGISTRY_NAMESPACE)
+        PushMultiarchImageCommandHandler pushMAImageCmdHandler = new PushMultiarchImageCommandHandler(new ScriptExecutor(DOCKER_PATH))
+        CommandResult<String> pushMAImageCmdResult = pushMAImageCmdHandler.handle(pushMAImageCmd)
+      } else {
+        echo "Skipping stage..."
+        Utils.markStageSkippedForConditional("Push:docker")
+      }
     }
 
     stage("Codecov") {
@@ -257,7 +255,7 @@ node {
 
         sh "${DOCKER_PATH}/docker cp ${dockerContainerEntity.getId().get()}:/module_core_workspace/lcov_report/. ${env.WORKSPACE}/lcov_report"
 
-        if (PUBLISH_COVERAGE_REPORT) {
+        if (PUBLISHED_COVERAGE_REPORT) {
           publishHTML(target: [
             allowMissing: false,
             alwaysLinkToLastBuild: false,
