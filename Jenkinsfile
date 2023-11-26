@@ -30,6 +30,8 @@ import sway.jenkins_pipeline.docker.command.RemoveContainerCommand
 import sway.jenkins_pipeline.docker.command.RemoveContainerCommandHandler
 import sway.jenkins_pipeline.docker.command.RemoveImageCommand
 import sway.jenkins_pipeline.docker.command.RemoveImageCommandHandler
+import sway.jenkins_pipeline.docker.command.RunContainerScenarioCommand
+import sway.jenkins_pipeline.docker.command.RunContainerScenarioCommandHandler
 import sway.jenkins_pipeline.docker.query.ImageInspectQuery
 import sway.jenkins_pipeline.docker.query.ImageInspectQueryHandler
 import sway.jenkins_pipeline.docker.query.ContainerInspectQuery
@@ -39,19 +41,19 @@ import sway.jenkins_pipeline.docker.query.GetIdContainerQueryHandler
 import sway.jenkins_pipeline.docker.shell.Executor
 import sway.jenkins_pipeline.docker.shell.ScriptExecutor
 
-def GIT_PATH = "/usr/bin"
-def DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
-def CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
+String GIT_PATH = "/usr/bin"
+String DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
+String CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
 
-def MODULE_CORE_CONTAINER_ID = ""
-def MODULE_CORE_CONTAINER_NAME = "cntr"
+String MODULE_CORE_CONTAINER_ID = ""
+String MODULE_CORE_CONTAINER_NAME = "cntr"
 
-def MODULE_CORE_IMAGE_ID = ""
-def MODULE_CORE_IMAGE_REGISTRY_NAMESPACE = "bonus85"
-def MODULE_CORE_IMAGE_LOCAL_NAMESPACE = "local"
-def MODULE_CORE_IMAGE_NAME = "sway.module_core"
-def MODULE_CORE_IMAGE_TAG = "latest"
-def MODULE_CORE_IMAGE_REFERENCE_NAME = "${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
+String MODULE_CORE_IMAGE_ID = ""
+String MODULE_CORE_IMAGE_REGISTRY_NAMESPACE = "bonus85"
+String MODULE_CORE_IMAGE_LOCAL_NAMESPACE = "local"
+String MODULE_CORE_IMAGE_NAME = "sway.module_core"
+String MODULE_CORE_IMAGE_TAG = "latest"
+String MODULE_CORE_IMAGE_REFERENCE_NAME = "${MODULE_CORE_IMAGE_NAME}:${MODULE_CORE_IMAGE_TAG}"
 
 def SELECTED_BRANCH_NAME = ""
 def SELECTED_BUILD_TYPE = ""
@@ -190,14 +192,13 @@ node {
 
     stage("Run:Tests") {
       if (ENABLED_TESTS) {
-        if (SELECTED_BUILD_TYPE == "debug") {
-          sh "${DOCKER_PATH}/docker exec -i ${dockerContainerEntity.getId().get()} ./bin/dbg/module_core_tests"
-        } else {
-          sh "${DOCKER_PATH}/docker exec -i ${dockerContainerEntity.getId().get()} ./bin/module_core_tests"
-        }
+        RunContainerScenarioCommand runContainerScenarioCmd = new RunContainerScenarioCommand(dockerContainerEntity, 
+          (SELECTED_BUILD_TYPE == "debug") ? "./bin/dbg/module_core_tests" : "./bin/module_core_tests")
+        RunContainerScenarioCommandHandler runContainerScenarioCmdHandler = new RunContainerScenarioCommandHandler(new ScriptExecutor(DOCKER_PATH))
+        runContainerScenarioCmdHandler.handle(runContainerScenarioCmd)
       } else {
         echo "Skipping stage..."
-        Utils.markStageSkippedForConditional("Run tests")
+        Utils.markStageSkippedForConditional("Run:Tests")
       }
     }
 
@@ -233,21 +234,26 @@ node {
 
     stage("Codecov") {
       if (ENABLED_TESTS && ENABLED_COVERAGE) {
-        def PROJECT_ROOT_DIR = "."
-        def PROJECT_SOURCE_DIR = "${PROJECT_ROOT_DIR}/build"
-        def OUTPUT_DIR = "${PROJECT_ROOT_DIR}/lcov_report"
-        def OUTPUT_FILE = "${OUTPUT_DIR}/coverage.info"
-        def LCOV_ENABLE_COVERAGE_BRANCH = "--rc lcov_branch_coverage=1"
+        String PROJECT_ROOT_DIR = "."
+        String PROJECT_SOURCE_DIR = "${PROJECT_ROOT_DIR}/build"
+        String OUTPUT_DIR = "${PROJECT_ROOT_DIR}/lcov_report"
+        String OUTPUT_FILE = "${OUTPUT_DIR}/coverage.info"
+        String LCOV_ENABLE_COVERAGE_BRANCH = "--rc lcov_branch_coverage=1"
 
-        sh "${DOCKER_PATH}/docker exec -i ${dockerContainerEntity.getId().get()} lcov \
+        RunContainerScenarioCommand generateInfoCmd = new RunContainerScenarioCommand(dockerContainerEntity, "lcov \
           --base-directory ${PROJECT_ROOT_DIR}/ \
           --directory ${PROJECT_SOURCE_DIR} \
           --capture \
-          --output-file ${OUTPUT_FILE}"
+          --output-file ${OUTPUT_FILE}")
+        RunContainerScenarioCommandHandler generateInfoCmdHandler = new RunContainerScenarioCommandHandler(new ScriptExecutor(DOCKER_PATH))
+        generateInfoCmdHandler.handle(generateInfoCmd)
 
-        def GENHTML_ENABLE_COVERAGE_BRANCH = "--branch-coverage"
-        sh "${DOCKER_PATH}/docker exec -i ${dockerContainerEntity.getId().get()} genhtml ${OUTPUT_FILE} \
-          --output-directory ${OUTPUT_DIR}"
+        String GENHTML_ENABLE_COVERAGE_BRANCH = "--branch-coverage"
+
+        RunContainerScenarioCommand generateHTMLCmd = new RunContainerScenarioCommand(dockerContainerEntity, "genhtml ${OUTPUT_FILE} \
+          --output-directory ${OUTPUT_DIR}")
+        RunContainerScenarioCommandHandler generateHTMLCmdHandler = new RunContainerScenarioCommandHandler(new ScriptExecutor(DOCKER_PATH))
+        generateHTMLCmdHandler.handle(generateHTMLCmd)
 
         sh "${DOCKER_PATH}/docker cp ${dockerContainerEntity.getId().get()}:/module_core_workspace/lcov_report/. ${env.WORKSPACE}/lcov_report"
 
