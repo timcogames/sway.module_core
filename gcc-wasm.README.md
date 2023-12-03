@@ -15,7 +15,7 @@ cmake -DCMAKE_BUILD_TYPE=Release \
       -DGLOB_EMSCRIPTEN_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/emsdk/upstream/emscripten \
       -DGLOB_EMSCRIPTEN_PLATFORM=ON \
       -DMODULE_CORE_ENVIRONMENT=web,node \
-      -DMODULE_CORE_COMPILATION=ON ../
+      -DMODULE_CORE_COMPILATION=async ../
 
 python3 -m http.server <PORT>
 ```
