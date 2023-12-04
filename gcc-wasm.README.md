@@ -11,11 +11,11 @@ mkdir build && cd ./build
 📋 *cmake -DCMAKE_BUILD_TYPE=Release -DGLOB_EMSCRIPTEN_ROOT_DIR=<[__PATH__](#glob_options)> -DGLOB_EMSCRIPTEN_PLATFORM=ON -DMODULE_CORE_ENVIRONMENT=<[__VARS__](#glob_options)>*
 
 ```console
-cmake -DCMAKE_BUILD_TYPE=Release \
-      -DGLOB_EMSCRIPTEN_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/emsdk/upstream/emscripten \
-      -DGLOB_EMSCRIPTEN_PLATFORM=ON \
-      -DMODULE_CORE_ENVIRONMENT=web,node \
-      -DMODULE_CORE_COMPILATION=async ../
+cmake -D CMAKE_BUILD_TYPE=Release \
+      -D GLOB_EMSCRIPTEN_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/emsdk/upstream/emscripten \
+      -D GLOB_EMSCRIPTEN_PLATFORM=ON \
+      -D MODULE_CORE_ENVIRONMENT=web,node \
+      -D MODULE_CORE_COMPILATION=async ../
 
 python3 -m http.server <PORT>
 ```

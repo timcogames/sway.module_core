@@ -37,11 +37,11 @@ WORKDIR /module_core_workspace/build
 
 FROM base as image-develop
 RUN echo "source /opt/.emsdk/emsdk_env.sh > /dev/null 2>&1" >> ~/.bashrc
-RUN cmake -DCMAKE_BUILD_TYPE=Debug \
-          -DGLOB_EMSCRIPTEN_ROOT_DIR=/opt/.emsdk/upstream/emscripten \
-          -DGLOB_EMSCRIPTEN_PLATFORM=ON \
-          -DMODULE_CORE_ENVIRONMENT=web,node \
-          -DMODULE_CORE_COMPILATION=async ../
+RUN cmake -D CMAKE_BUILD_TYPE=Debug \
+          -D GLOB_EMSCRIPTEN_ROOT_DIR=/opt/.emsdk/upstream/emscripten \
+          -D GLOB_EMSCRIPTEN_PLATFORM=ON \
+          -D MODULE_CORE_ENVIRONMENT=web,node \
+          -D MODULE_CORE_COMPILATION=async ../
 
 RUN cmake --build .
 ENTRYPOINT ["/module_core_workspace/bin/dbg/module_core_tests"]

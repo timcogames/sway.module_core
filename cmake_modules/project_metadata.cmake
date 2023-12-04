@@ -1,4 +1,5 @@
-function(project_metadata #[[PROJ_NAME]] proj_name_arg #[[VERSION]] version_arg)
+function(project_metadata #[[ARG]] proj_name_arg 
+                          #[[ARG]] version_arg)
   string(TOUPPER ${proj_name_arg} proj_name_upper)
 
   set(MODULE_${proj_name_upper}_PROJ_NAME "${proj_name_arg}" PARENT_SCOPE)

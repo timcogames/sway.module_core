@@ -5,7 +5,10 @@
 # \arg:compilation_arg - Тип компиляции
 # \arg:output_target_name_arg
 #
-function(create_emscripten_library_private target_arg environment_arg compilation_arg output_target_name_arg)
+function(create_emscripten_library_private #[[ARG]] target_arg 
+                                           #[[ARG]] environment_arg 
+                                           #[[ARG]] compilation_arg 
+                                           #[[ARG]] output_target_name_arg)
   gen_emscripten_target_name(CURRENT_TARGET_NAME ${target_arg} ${environment_arg} ${compilation_arg})
   set(${output_target_name_arg} ${CURRENT_TARGET_NAME} PARENT_SCOPE)
 
@@ -32,13 +35,17 @@ function(create_emscripten_library_private target_arg environment_arg compilatio
   # set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES OUTPUT_NAME "${CURRENT_TARGET_NAME}.v1")
 endfunction(create_emscripten_library_private)
 
+#
 # Создает Emscripten библиотеку
 #
-# arg:target_arg - Цель
-# arg:environment_arg - Строка с типами окружения (прим.: "web,node")
-# arg:compilation_arg - Тип компиляции
+# \arg:target_arg - Цель
+# \arg:environment_arg - Строка с типами окружения (прим.: "web,node")
+# \arg:compilation_arg - Тип компиляции
 #
-function(create_emscripten_library target_arg environment_arg compilation_arg output_target_name_list_arg)
+function(create_emscripten_library #[[ARG]] target_arg 
+                                   #[[ARG]] environment_arg 
+                                   #[[ARG]] compilation_arg 
+                                   #[[ARG]] output_target_name_list_arg)
   string(REPLACE "," ";" ENVIRONMENT_LIST ${environment_arg})
   list(LENGTH ENVIRONMENT_LIST ENVIRONMENT_LIST_LENGTH)
 

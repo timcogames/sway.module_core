@@ -1,4 +1,7 @@
-macro(gen_emscripten_target_name output_target_arg target_arg environment_arg compilation_arg)
+macro(gen_emscripten_target_name #[[ARG]] output_target_arg 
+                                 #[[ARG]] target_arg 
+                                 #[[ARG]] environment_arg 
+                                 #[[ARG]] compilation_arg)
   set(${output_target_arg} "${target_arg}_wasm")
 
   if(${environment_arg} STREQUAL "web")

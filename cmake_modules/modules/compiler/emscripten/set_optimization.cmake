@@ -1,4 +1,4 @@
-macro(set_emscripten_optimization flags_arg)
+macro(set_emscripten_optimization #[[ARG]] flags_arg)
   if(CMAKE_BUILD_TYPE MATCHES "Debug")
     set(${flags_arg} ${${flags_arg}} -O0 -gsource-map --source-map-base=/)
   else()

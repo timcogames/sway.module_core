@@ -1,4 +1,6 @@
-function(create_library #[[TARGET]] target_arg #[[TYPE]] type_arg #[[SOURCE_DIR]] source_dir_arg)
+function(create_library #[[ARG]] target_arg 
+                        #[[ARG]] type_arg 
+                        #[[ARG]] source_dir_arg)
   if(${type_arg} STREQUAL STATIC)
     detect_static_extension()
   elseif(${type_arg} STREQUAL SHARED)
@@ -20,7 +22,9 @@ function(create_library #[[TARGET]] target_arg #[[TYPE]] type_arg #[[SOURCE_DIR]
   # target_link_libraries(${target_arg})
 endfunction(create_library)
 
-function(create_bitcode_library #[[TARGET]] target_arg #[[PROJ_NAME]] proj_name_arg #[[SOURCE_DIR]] source_dir_arg)
+function(create_bitcode_library #[[ARG]] target_arg 
+                                #[[ARG]] proj_name_arg 
+                                #[[ARG]] source_dir_arg)
   string(TOUPPER ${proj_name_arg} proj_name_upper)
   if(GLOB_EMSCRIPTEN_PLATFORM AND MODULE_${proj_name_upper}_SHARED_LIB)
     message(WARNING "Bitcode requires a static library type")

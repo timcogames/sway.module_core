@@ -1,4 +1,5 @@
-macro(set_emscripten_environment output_flags_arg environment_arg)
+macro(set_emscripten_environment #[[ARG]] output_flags_arg 
+                                 #[[ARG]] environment_arg)
   if(${environment_arg} STREQUAL "web")
     set(${output_flags_arg} "SHELL:-s ENVIRONMENT=${environment_arg},worker")
     list(APPEND ${output_flags_arg} "SHELL:-s EXPORT_ES6=1")
@@ -10,7 +11,8 @@ macro(set_emscripten_environment output_flags_arg environment_arg)
   endif()
 endmacro(set_emscripten_environment)
 
-macro(set_emscripten_environment_deprecated output_flags_arg environment_arg)
+macro(set_emscripten_environment_deprecated #[[ARG]] output_flags_arg 
+                                            #[[ARG]] environment_arg)
   if(${environment_arg} STREQUAL "web")
     set(${output_flags_arg} ${${output_flags_arg}} -s ENVIRONMENT=web,worker
                                                    -s EXPORT_ES6=1 

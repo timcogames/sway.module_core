@@ -2,7 +2,7 @@
 #
 # arg:target_arg Цель
 #
-function(printf_compiler_name target_arg)
+function(printf_compiler_name #[[ARG]] target_arg)
   get_filename_component(CURRENT_COMPILER_NAME "${CMAKE_CXX_COMPILER}" NAME)
   message("[${target_arg}]: compiler=${CMAKE_CXX_COMPILER_ID} v${CMAKE_CXX_COMPILER_VERSION} (${CURRENT_COMPILER_NAME})")
 endfunction(printf_compiler_name)
@@ -11,7 +11,7 @@ endfunction(printf_compiler_name)
 #
 # arg:target_arg Цель
 #
-function(printf_compile_definitions target_arg)
+function(printf_compile_definitions #[[ARG]] target_arg)
   get_target_property(CURRENT_COMPILE_DEFINITIONS ${target_arg} INTERFACE_COMPILE_DEFINITIONS)
   message("[${target_arg}]: defines=${CURRENT_COMPILE_DEFINITIONS}")
 endfunction(printf_compile_definitions)
@@ -20,7 +20,7 @@ endfunction(printf_compile_definitions)
 #
 # arg1:target_arg Цель
 #
-function(printf_compile_options target_arg)
+function(printf_compile_options #[[ARG]] target_arg)
   get_target_property(CURRENT_COMPILE_OPTIONS ${target_arg} INTERFACE_COMPILE_OPTIONS)
   string(REPLACE ";" "\n\t" COMPILE_OPTIONS_RESULT "\n\t${CURRENT_COMPILE_OPTIONS}")
   message("[${target_arg}]: compile options=[${COMPILE_OPTIONS_RESULT}]")
@@ -30,7 +30,7 @@ endfunction(printf_compile_options)
 #
 # arg1:target_arg Цель
 #
-function(printf_link_options target_arg)
+function(printf_link_options #[[ARG]] target_arg)
   get_target_property(CURRENT_LINK_OPTIONS ${target_arg} INTERFACE_LINK_OPTIONS)
   string(REPLACE "SHELL:" "\n\t" LINK_OPTIONS_WITHOUT_SHELL "${CURRENT_LINK_OPTIONS}")
   string(REPLACE " " "" LINK_OPTIONS_WITHOUT_SPACE "${LINK_OPTIONS_WITHOUT_SHELL}")
@@ -42,7 +42,7 @@ endfunction(printf_link_options)
 #
 # arg1:target_arg Цель
 #
-function(printf_link_flags target_arg)
+function(printf_link_flags #[[ARG]] target_arg)
   get_target_property(CURRENT_LINK_FLAGS ${target_arg} LINK_FLAGS)
   message("[${target_arg}]: link flags=${CURRENT_LINK_FLAGS}")
 endfunction(printf_link_flags)

@@ -1,4 +1,5 @@
-macro(set_emscripten_compilation output_flags_arg compilation_arg)
+macro(set_emscripten_compilation #[[ARG]] output_flags_arg 
+                                 #[[ARG]] compilation_arg)
   if(${compilation_arg} STREQUAL "async")
     set(${output_flags_arg} "SHELL:-s WASM_ASYNC_COMPILATION=1")
   elseif(${compilation_arg} STREQUAL "sync")
