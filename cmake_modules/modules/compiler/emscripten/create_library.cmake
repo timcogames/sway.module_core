@@ -1,21 +1,26 @@
-# Создает конкретную Emscripten библиотеку
-#
-# \arg:target_arg - Цель
-# \arg:environment_arg - Тип окружения
-# \arg:compilation_arg - Тип компиляции
-# \arg:output_target_name_arg
-#
-function(create_emscripten_library_private #[[ARG]] target_arg 
-                                           #[[ARG]] environment_arg 
-                                           #[[ARG]] compilation_arg 
-                                           #[[ARG]] output_target_name_arg)
-  gen_emscripten_target_name(CURRENT_TARGET_NAME ${target_arg} ${environment_arg} ${compilation_arg})
-  set(${output_target_name_arg} ${CURRENT_TARGET_NAME} PARENT_SCOPE)
+#---------------------------------------------------------------------------------
+#[[
+# DESC
+  Создает конкретную Emscripten библиотеку
 
-  set_emscripten_environment(CURRENT_ENVIRONMENT ${environment_arg})
-  set_emscripten_compilation(CURRENT_COMPILATION ${compilation_arg})
+# ARGS
+  ARG1:TARGET target [IN] - Цель
+  ARG2:STRING environment [IN] - Тип окружения
+  ARG3:STRING compilation [IN] - Тип компиляции
+  ARG4:STRING target_name [OUT] - Имена цели
+ ]]
+#---------------------------------------------------------------------------------
+function(create_emscripten_library_private #[[ARG1]] target 
+                                           #[[ARG2]] environment 
+                                           #[[ARG3]] compilation 
+                                           #[[ARG4]] target_name)
+  gen_emscripten_target_name(CURRENT_TARGET_NAME ${target} ${environment} ${compilation})
+  set(${target_name} ${CURRENT_TARGET_NAME} PARENT_SCOPE)
 
-  add_executable(${CURRENT_TARGET_NAME} $<TARGET_OBJECTS:${target_arg}>)
+  set_emscripten_environment(${environment} CURRENT_ENVIRONMENT)
+  set_emscripten_compilation(${compilation} CURRENT_COMPILATION)
+
+  add_executable(${CURRENT_TARGET_NAME} $<TARGET_OBJECTS:${target}>)
 
   target_compile_options(${CURRENT_TARGET_NAME} PUBLIC -Wall -Wextra -Wundef -pedantic)
   printf_compile_options(${CURRENT_TARGET_NAME})
@@ -23,7 +28,7 @@ function(create_emscripten_library_private #[[ARG]] target_arg
   # Build for webassembly target
   target_link_options(${CURRENT_TARGET_NAME} PUBLIC "SHELL:-s WASM=1" ${CURRENT_ENVIRONMENT} ${CURRENT_COMPILATION})
 
-  if(${environment_arg} STREQUAL "node")
+  if(${environment} STREQUAL "node")
     set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES LINK_FLAGS "--no-entry")
     # set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES LINK_FLAGS "--no-entry --export-dynamic")
     # set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES LINK_FLAGS "--no-entry --export-all")
@@ -35,33 +40,35 @@ function(create_emscripten_library_private #[[ARG]] target_arg
   # set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES OUTPUT_NAME "${CURRENT_TARGET_NAME}.v1")
 endfunction(create_emscripten_library_private)
 
-#
-# Создает Emscripten библиотеку
-#
-# \arg:target_arg - Цель
-# \arg:environment_arg - Строка с типами окружения (прим.: "web,node")
-# \arg:compilation_arg - Тип компиляции
-#
-function(create_emscripten_library #[[ARG]] target_arg 
-                                   #[[ARG]] environment_arg 
-                                   #[[ARG]] compilation_arg 
-                                   #[[ARG]] output_target_name_list_arg)
-  string(REPLACE "," ";" ENVIRONMENT_LIST ${environment_arg})
-  list(LENGTH ENVIRONMENT_LIST ENVIRONMENT_LIST_LENGTH)
+#---------------------------------------------------------------------------------
+#[[
+# DESC
+  Создает Emscripten библиотеку
 
-  if(${ENVIRONMENT_LIST_LENGTH} GREATER 0)
-    list(GET ENVIRONMENT_LIST 0 ENVIRONMENT_STR)
-    create_emscripten_library_private(${target_arg} ${ENVIRONMENT_STR} ${compilation_arg} OUTPUT_TARGET_NAME)
-    set(${output_target_name_list_arg} ${${output_target_name_list_arg}} ${OUTPUT_TARGET_NAME})
-  else()
+# ARGS
+  ARG1:TARGET target [IN] - Цель
+  ARG2:STRING environment [IN] - Строка с типами окружения (прим.: "web,node")
+  ARG3:STRING compilation [IN] - Тип компиляции
+  ARG4:STRING_LIST target_name_list [OUT] - Список имен целей
+ ]]
+#---------------------------------------------------------------------------------
+function(create_emscripten_library #[[ARG1]] target 
+                                   #[[ARG2]] environment 
+                                   #[[ARG3]] compilation 
+                                   #[[ARG4]] target_name_list)
+  string(REPLACE "," ";" ENVIRONMENT_LIST ${environment})
+  if(NOT ENVIRONMENT_LIST) # Пустой список - пустая переменная, ее значение равно FALSE
     message(FATAL_ERROR "[EMSCRIPTEN]: Environment variable not set")
   endif()
 
-  if(${ENVIRONMENT_LIST_LENGTH} GREATER 1)
-    list(GET ENVIRONMENT_LIST 1 ENVIRONMENT_STR)
-    create_emscripten_library_private(${target_arg} ${ENVIRONMENT_STR} ${compilation_arg} OUTPUT_TARGET_NAME)
-    set(${output_target_name_list_arg} ${${output_target_name_list_arg}} ${OUTPUT_TARGET_NAME})
-  endif()
+  list(LENGTH ENVIRONMENT_LIST ENVIRONMENT_LIST_LENGTH)
+  math(EXPR ENVIRONMENT_LIST_LENGTH "${ENVIRONMENT_LIST_LENGTH} - 1")
 
-  set(${output_target_name_list_arg} ${${output_target_name_list_arg}} PARENT_SCOPE)
+  foreach(INDEX RANGE ${ENVIRONMENT_LIST_LENGTH})
+    list(GET ENVIRONMENT_LIST ${INDEX} ENVIRONMENT_STR)
+    create_emscripten_library_private(${target} ${ENVIRONMENT_STR} ${compilation} OUTPUT_TARGET_NAME)
+    set(${target_name_list} ${${target_name_list}} ${OUTPUT_TARGET_NAME})
+  endforeach()
+
+  set(${target_name_list} ${${target_name_list}} PARENT_SCOPE)
 endfunction(create_emscripten_library)

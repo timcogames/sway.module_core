@@ -40,3 +40,16 @@ python3 -m http.server <PORT>
 ```console
 cmake --build ./
 ```
+
+```console
+docker build --tag sway/module_core:latest \
+             --build-arg ENABLED_COVERAGE=ON \
+             --build-arg ENABLED_TESTS=ON \
+             --build-arg ENABLED_EXAMPLES=ON \
+             --build-arg TARGET_PLATFORM=linux/arm64/v8 \
+             --build-arg TARGET_PLATFORM_OS=linux \
+             --build-arg TARGET_PLATFORM_ARCH=arm64/v8 \
+             --file gcc-wasm.Dockerfile \
+             --target module_core-debug \
+             --progress plain .
+```

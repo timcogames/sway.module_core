@@ -1,18 +1,20 @@
-macro(set_exe_output_dir #[[ARG]] path_arg)
-  set(EXECUTABLE_OUTPUT_PATH "${path_arg}" PARENT_SCOPE)
-endmacro(set_exe_output_dir)
+#---------------------------------------------------------------------------------
+#[[
+# DESC
+  Устанавливает путь выходного файла
 
-macro(set_lib_output_dir #[[ARG]] path_arg)
-  set(LIBRARY_OUTPUT_PATH "${path_arg}" PARENT_SCOPE)
-endmacro(set_lib_output_dir)
-
-function(set_output_dir #[[ARG]] path_arg)
+# ARGS
+  ARG1:STRING path [IN] - Путь выходного файла
+ ]]
+#---------------------------------------------------------------------------------
+function(set_output_dir #[[ARG1]] path)
   if(CMAKE_BUILD_TYPE MATCHES "Debug")
-    set(OUTPUT_PATH "${path_arg}/dbg")
+    set(OUTPUT_PATH "${path}/dbg")
   else()
-    set(OUTPUT_PATH "${path_arg}")
+    set(OUTPUT_PATH "${path}")
   endif()
 
-  set_exe_output_dir("${OUTPUT_PATH}")
-  set_lib_output_dir("${OUTPUT_PATH}")
+  foreach(file_type IN LISTS "EXECUTABLE;LIBRARY")
+    set(${file_type}_OUTPUT_PATH "${OUTPUT_PATH}" PARENT_SCOPE)
+  endforeach()
 endfunction(set_output_dir)
