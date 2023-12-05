@@ -42,7 +42,7 @@ include("${MODULE_CORE_CMAKE_DIR}/enable_coverage.cmake")
 # Build options
 #---------------------------------------------------------------------------------
 
-option(MODULE_CORE_BUILD_TYPE "" OFF)
+option(MODULE_CORE_BUILD_TYPE "" "module") # module, bitcode
 option(MODULE_CORE_SHARED_LIB "Build shared library" OFF)
 option(MODULE_CORE_ENVIRONMENT "Environment variable" OFF)
 option(MODULE_CORE_COMPILATION "Compilation variable" OFF)
