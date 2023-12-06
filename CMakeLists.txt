@@ -19,8 +19,11 @@ set(MODULE_CORE_BIN_DIR "${CMAKE_SOURCE_DIR}/bin")
 #---------------------------------------------------------------------------------
 
 include("${MODULE_CORE_CMAKE_DIR}/options.cmake")
-include("${MODULE_CORE_CMAKE_DIR}/set_output_dir.cmake")
 include("${MODULE_CORE_CMAKE_DIR}/project_metadata.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/set_output_dir.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/set_compile_definitions.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/enable_cxx17.cmake")
+include("${MODULE_CORE_CMAKE_DIR}/enable_coverage.cmake")
 include("${MODULE_CORE_CMAKE_DIR}/modules/logger.cmake")
 include("${MODULE_CORE_CMAKE_DIR}/modules/compiler/clang/create_library.cmake")
 include("${MODULE_CORE_CMAKE_DIR}/modules/compiler/emscripten/setup.cmake")
@@ -31,12 +34,6 @@ include("${MODULE_CORE_CMAKE_DIR}/modules/compiler/emscripten/set_optimization.c
 include("${MODULE_CORE_CMAKE_DIR}/modules/compiler/emscripten/set_environment.cmake")
 include("${MODULE_CORE_CMAKE_DIR}/modules/compiler/emscripten/set_compilation.cmake")
 include("${MODULE_CORE_CMAKE_DIR}/modules/compiler/emscripten/set_modularize.cmake")
-# include("${MODULE_CORE_CMAKE_DIR}/detect_library_extension.cmake")
-# include("${MODULE_CORE_CMAKE_DIR}/create_library.cmake")
-include("${MODULE_CORE_CMAKE_DIR}/enable_cxx17.cmake")
-include("${MODULE_CORE_CMAKE_DIR}/enable_coverage.cmake")
-
-# set(CMAKE_OSX_SYSROOT "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk")
 
 #---------------------------------------------------------------------------------
 # Build options
@@ -66,18 +63,6 @@ project(${MODULE_CORE_PROJ_NAME} VERSION ${MODULE_CORE_VERSION} LANGUAGES CXX)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=default -fPIE")
 
-# if(GLOB_EMSCRIPTEN_PLATFORM)
-#   set(CMAKE_CXX_COMPILER "${EMSCRIPTEN_COMPILER}")
-#   # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,--whole-archive")
-#   # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-unknown-pragmas -Wno-unicode-whitespace \
-#   #   -Wno-unused-local-typedef -Wno-invalid-noreturn -Wno-unused-command-line-argument")
-# endif()
-
-# if((GLOB_EMSCRIPTEN_PLATFORM AND NOT GLOB_EMSCRIPTEN_USE_BINDINGS) OR MODULE_CORE_SHARED_LIB)
-#   add_definitions(-DMODULE_CORE_EXPORT_API)
-#   # target_compile_definitions(${MODULE_CORE_TARGET} PUBLIC -DMODULE_CORE_EXPORT_API)
-# endif()
-
 #---------------------------------------------------------------------------------
 # Coverage
 #---------------------------------------------------------------------------------
@@ -105,6 +90,8 @@ include_directories("${MODULE_CORE_LIST_DIR}/lib/cxx/include")
 #---------------------------------------------------------------------------------
 
 if(GLOB_EMSCRIPTEN_PLATFORM)
+  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-no-whole-archive")
+
   # create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
   create_bitcode(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
 else()
@@ -118,13 +105,7 @@ enable_cxx17(${MODULE_CORE_TARGET})
 # Definitions
 #---------------------------------------------------------------------------------
 
-if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  target_compile_definitions(${MODULE_CORE_TARGET} PUBLIC -DMODULE_CORE_DEBUG_BUILD)
-endif()
-
-if((GLOB_EMSCRIPTEN_PLATFORM AND NOT GLOB_EMSCRIPTEN_USE_BINDINGS) OR MODULE_CORE_SHARED_LIB)
-  target_compile_definitions(${MODULE_CORE_TARGET} PUBLIC -DMODULE_CORE_EXPORT_API)
-endif()
+set_compile_definitions(${MODULE_CORE_TARGET})
 
 #---------------------------------------------------------------------------------
 # Logger

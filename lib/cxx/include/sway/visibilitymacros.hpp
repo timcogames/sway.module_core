@@ -15,7 +15,7 @@
 #define HIDDEN_ATTRIB __attribute__((visibility("hidden")))
 
 #undef EXPORT_API
-#ifdef MODULE_CORE_EXPORT_API
+#ifdef SHARED_LIB_EXPORT_API
 #  if defined(EMSCRIPTEN_PLATFORM)
 #    include <emscripten.h>
 #    define EXPORT_API EMSCRIPTEN_KEEPALIVE
