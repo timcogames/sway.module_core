@@ -4,11 +4,25 @@
 
 ## Зависимости
 
-[cmake v3.14.3](https://cmake.org/files/v3.14)\
-[googletest](https://google.github.io/googletest/)
+<details>
+  <summary>cmake</summary>
+  
+  ```console
+  brew cleanup -n
+  brew reinstall cmake
+  ```
+  
+  I have [cmake v3.27.9](https://cmake.org/files/v3.27) installed
+</details>
+
+<details>
+  <summary>gtest</summary>
+  
+  [GoogleTest](https://google.github.io/googletest/) User’s Guide
+</details>
 
 ## Contributing
-
+  
 См. [CONTRIBUTING](./github/CONTRIBUTING.md)
 
 [codefactor-svg]: https://www.codefactor.io/repository/github/timcogames/sway.module_core/badge

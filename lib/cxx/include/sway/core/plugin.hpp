@@ -12,6 +12,10 @@
 #include <dlfcn.h>  // dlopen, dlclose, dlsym
 #include <string>
 
+#ifdef EMSCRIPTEN_PLATFORM
+#  include <emscripten/emscripten.h>
+#endif
+
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
@@ -37,7 +41,11 @@ public:
   auto getMethod(lpcstr_t name) const -> TCallbackFunc {
     auto func = (core::binding::ProcAddress_t)dlsym(handle_, name);
     if (!func) {
+#ifdef EMSCRIPTEN_PLATFORM
+      EM_ASM({ console.error(UTF8ToString($0)); }, dlerror());
+#else
       throw runtime::exceptions::SymbolNotFoundException(name, dlerror());
+#endif
     }
 
     return static_cast<TCallbackFunc>(func);

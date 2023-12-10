@@ -19,3 +19,6 @@ profile
 *.xcbkptlist
 *.xcworkspacedata
 *.xcuserstate
+
+# note‑taking app settings
+.obsidian

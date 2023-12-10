@@ -1,9 +1,5 @@
 #include <sway/core/plugin.hpp>
 
-#ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/emscripten.h>
-#endif
-
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
@@ -16,9 +12,9 @@ Plugin::Plugin(const generic::io::Path &filepath, int flags) {
   if (!isLoaded()) {
 #ifdef EMSCRIPTEN_PLATFORM
     EM_ASM({ console.error(UTF8ToString($0)); }, dlerror());
-#endif
-
+#else
     throw runtime::exceptions::LibraryNotFoundException(filepath.getFilename(), dlerror());
+#endif
   }
 }
 
