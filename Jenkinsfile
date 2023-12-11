@@ -43,7 +43,7 @@ import sway.jenkins_pipeline.docker.shell.ScriptExecutor
 
 String GIT_PATH = "/usr/bin"
 String DOCKER_PATH = "/Applications/Docker.app/Contents/Resources/bin"
-String CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.22.1/bin"
+String CMAKE_PATH = "/opt/homebrew/Cellar/cmake/3.27.9/bin"
 
 String MODULE_CORE_CONTAINER_ID = ""
 String MODULE_CORE_CONTAINER_NAME = "cntr"
