@@ -83,6 +83,10 @@ set_output_dir(${MODULE_CORE_BIN_DIR})
 # Include project headers
 #---------------------------------------------------------------------------------
 
+if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+  include_directories("/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include")
+endif()
+
 include_directories("${MODULE_CORE_LIST_DIR}/lib/cxx/include")
 
 #---------------------------------------------------------------------------------
@@ -95,6 +99,10 @@ if(GLOB_EMSCRIPTEN_PLATFORM)
   # create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
   create_bitcode(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
 else()
+  if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
+    set(CMAKE_CXX_COMPILER "/Library/Developer/CommandLineTools/usr/bin/clang")
+  endif()
+
   # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -static-libgcc")
   create_library(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
 endif()
@@ -144,23 +152,6 @@ endif()
 # # set_target_properties(${MODULE_CORE_TARGET} PROPERTIES COMPILE_FLAGS "--coverage")
 # # set_target_properties(${MODULE_CORE_TARGET} PROPERTIES LINK_FLAGS "--coverage")
 # set_target_properties(${MODULE_CORE_TARGET} PROPERTIES LINK_FLAGS "-lgcov")
-
-
-# if(GLOB_EMSCRIPTEN_PLATFORM)
-#   set(LIB_NAME_LIST ${MODULE_CORE_LIB_NAME})
-
-#   emscripten_set_compiler_javascript(#[[CONFIG_NAME]] MODULE_CORE_COMPILER_WEBJS_CONFIG
-#     #[[BINARY_DIR]] ${MODULE_CORE_BIN_DIR} #[[LIB_NAME_LIST]] LIB_NAME_LIST #[[VERSION]] ${MODULE_CORE_VERSION})
-#   emscripten_set_config(#[[PROJ_NAME]] ${MODULE_CORE_PROJ_NAME} #[[CONFIG_NAME]] MODULE_CORE_COMPILER_WEBJS_CONFIG)
-#   emscripten_set_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_LIB_DIR}/exports.json)
-#   emscripten_set_runtime_exports(#[[CONFIG]] MODULE_CORE_COMPILER_WEBJS_CONFIG #[[JSON_FILE]] ${MODULE_CORE_LIB_DIR}/runtime_exports.json 0)
-
-#   add_custom_command(TARGET ${MODULE_CORE_TARGET} POST_BUILD
-#     COMMAND ${MODULE_CORE_COMPILER_WEBJS_CONFIG}
-
-#     # COMMAND rm "${MODULE_CORE_BIN_DIR}/${MODULE_CORE_LIB_NAME}.bc"
-#   )
-# endif()
 
 #---------------------------------------------------------------------------------
 # Tests
