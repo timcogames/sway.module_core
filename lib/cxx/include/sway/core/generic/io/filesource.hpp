@@ -19,7 +19,7 @@ public:
 
   PURE_VIRTUAL(void *loadFromStream(std::ifstream &source));
 
-  auto isFileOpened() const -> bool;
+  [[nodiscard]] auto isFileOpened() const -> bool;
 
 protected:
   bool _fileOpened;  // Открыт ли файл в данный момент.

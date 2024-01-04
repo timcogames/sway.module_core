@@ -8,12 +8,14 @@
       "configurationProvider": "ms-vscode.cpptools",
       "includePath": [
         "${workspaceFolder}/lib/cxx/include",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
         "/Users/apriori85/Documents/Third-party/googletest/googletest/include",
         "/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten/system/include"
       ],
       "browse": {
         "path": [
           "${workspaceFolder}/lib/cxx/include",
+          "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include",
           "/Users/apriori85/Documents/Third-party/googletest/googletest/include",
           "/Users/apriori85/Documents/Third-party/emsdk/upstream/emscripten/system/include"
         ],
