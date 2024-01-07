@@ -13,6 +13,9 @@
 #include <sway/core/foundation/context.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventable.hpp>
+#include <sway/core/foundation/eventactionmapper.hpp>
+#include <sway/core/foundation/eventapplier.hpp>
+#include <sway/core/foundation/eventdata.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
 #include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/core/foundation/object.hpp>
