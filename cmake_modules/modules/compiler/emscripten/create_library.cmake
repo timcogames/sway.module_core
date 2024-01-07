@@ -27,12 +27,15 @@ function(create_emscripten_library_private #[[ARG1]] target
 
   # Build for webassembly target
   target_link_options(${CURRENT_TARGET_NAME} PUBLIC "SHELL:-s WASM=1" ${CURRENT_ENVIRONMENT} ${CURRENT_COMPILATION})
+  set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES LINK_FLAGS "--no-entry")
 
   if(${environment} STREQUAL "node")
-    set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES LINK_FLAGS "--no-entry")
     # set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES LINK_FLAGS "--no-entry --export-dynamic")
     # set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES LINK_FLAGS "--no-entry --export-all")
-    set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES SUFFIX ".wasm")
+
+    if(NOT GLOB_EMSCRIPTEN_USE_BINDINGS)
+      set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES SUFFIX ".wasm")
+    endif()
 
     printf_link_flags(${CURRENT_TARGET_NAME})
   endif()

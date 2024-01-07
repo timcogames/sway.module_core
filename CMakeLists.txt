@@ -42,6 +42,7 @@ include("${MODULE_CORE_CMAKE_DIR}/modules/compiler/emscripten/set_modularize.cma
 
 option(MODULE_CORE_BUILD_TYPE "" "module") # module, bitcode
 option(MODULE_CORE_SHARED_LIB "Build shared library" OFF)
+option(MODULE_CORE_ALL_EXPORT "" OFF)
 option(MODULE_CORE_ENVIRONMENT "Environment variable" OFF)
 option(MODULE_CORE_COMPILATION "Compilation variable" OFF)
 option(MODULE_CORE_ENABLE_COVERAGE "Enable coverage builds" OFF)
@@ -139,7 +140,11 @@ if(GLOB_EMSCRIPTEN_PLATFORM AND MODULE_CORE_BUILD_TYPE STREQUAL "module")
       "SHELL:-s EXPORTED_RUNTIME_METHODS=@${MODULE_CORE_LIB_DIR}/runtime-exports.json")
 
     if(NOT GLOB_EMSCRIPTEN_USE_BINDINGS)
-      target_link_options(${target} PUBLIC "SHELL:-s EXPORTED_FUNCTIONS=@${MODULE_CORE_LIB_DIR}/exports.json")
+      if(MODULE_CORE_ALL_EXPORT)
+        target_link_options(${target} PUBLIC "SHELL:-s LINKABLE=1") # Полный экспорт
+      else()
+        target_link_options(${target} PUBLIC "SHELL:-s EXPORTED_FUNCTIONS=@${MODULE_CORE_LIB_DIR}/exports.json") # Частичный экспорт
+      endif()
     endif()
 
     printf_link_options(${target})

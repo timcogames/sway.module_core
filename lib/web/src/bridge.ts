@@ -39,7 +39,7 @@ export const useBridge = <TBridgeModule>(moduleName: string): Promise<{ create_c
       }, { version: "preview1" }));
 
       const importObject = {
-        wasi_snapshot_preview1: wasi.wasiImport
+        "wasi_snapshot_preview1": wasi.wasiImport
       };
 
       const wasm = await WebAssembly.compile(await readFile(moduleName as string));
