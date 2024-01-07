@@ -97,8 +97,8 @@ include_directories("${MODULE_CORE_LIST_DIR}/lib/cxx/include")
 if(GLOB_EMSCRIPTEN_PLATFORM)
   # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wl,-no-whole-archive")
 
-  # create_bitcode_library(${MODULE_CORE_TARGET} ${MODULE_CORE_PROJ_NAME} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
-  create_object(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*" TRUE)
+  set(MODULE_CORE_ENABLE_FILE_EXPORT TRUE)
+  create_object(${MODULE_CORE_TARGET} "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*" ${MODULE_CORE_ENABLE_FILE_EXPORT})
 else()
   if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_CXX_COMPILER "/Library/Developer/CommandLineTools/usr/bin/clang")
@@ -136,8 +136,12 @@ if(GLOB_EMSCRIPTEN_PLATFORM AND MODULE_CORE_BUILD_TYPE STREQUAL "module")
       "SHELL:-s STRICT=1"
       "SHELL:-s MODULARIZE=1"
       "SHELL:-s EXPORT_NAME=\"create_core_module\""
-      "SHELL:-s EXPORTED_FUNCTIONS=@${MODULE_CORE_LIB_DIR}/exports.json"
       "SHELL:-s EXPORTED_RUNTIME_METHODS=@${MODULE_CORE_LIB_DIR}/runtime-exports.json")
+
+    if(NOT GLOB_EMSCRIPTEN_USE_BINDINGS)
+      target_link_options(${target} PUBLIC "SHELL:-s EXPORTED_FUNCTIONS=@${MODULE_CORE_LIB_DIR}/exports.json")
+    endif()
+
     printf_link_options(${target})
   endforeach()
 else()
