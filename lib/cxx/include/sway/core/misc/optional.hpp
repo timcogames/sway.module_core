@@ -44,7 +44,13 @@ emscripten::class_<std::optional<T>> register_optional(lpcstr_t name) {
 
 class StringOptional {
 public:
-  DECLARE_EMSCRIPTEN_BINDING()
+  // DECLARE_EMSCRIPTEN_BINDING()
+
+  static void bindEmscriptenClass() {
+#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
+    emscripten::class_<StringOptional>("StringOptional").constructor<>().class_function("set", &StringOptional::set);
+#endif
+  }
 
   static auto set(std::string val) -> std::optional<std::string> {
     if (val.empty()) {

@@ -33,6 +33,8 @@ private:
   std::optional<TValueType> uid_;  // Уникальный идентификатор.
 };
 
+#include <sway/core/foundation/uniqueable_embind.inl>
+
 NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)

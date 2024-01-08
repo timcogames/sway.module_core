@@ -42,33 +42,7 @@ public:
   }
 };
 
-#if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
-class EventWrapper : public emscripten::wrapper<Event> {
-public:
-  EMSCRIPTEN_WRAPPER(EventWrapper);
-
-  MTHD_OVERRIDE(const ObjectClassMetadata *getSuperclass() const) {
-    return call<const ObjectClassMetadata *const>("getSuperclass");
-  }
-
-  MTHD_OVERRIDE(const std::string &getClassname() const) { return call<const std::string &>("getClassname"); }
-
-  // clang-format off
-  MTHD_OVERRIDE(auto id() const -> std::string) {  // clang-format on
-    return call<std::string>("id");
-  }
-
-  // clang-format off
-  MTHD_OVERRIDE(auto type() const -> u32_t) {  // clang-format on
-    return call<u32_t>("type");
-  }
-
-  // clang-format off
-  MTHD_OVERRIDE(auto data() const -> EventData*) {  // clang-format on
-    return call<EventData *const>("data");
-  }
-};
-#endif
+#include <sway/core/foundation/event_embind.inl>
 
 NAMESPACE_END(foundation)
 NAMESPACE_END(core)
