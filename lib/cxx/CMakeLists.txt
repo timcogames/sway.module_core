@@ -26,11 +26,13 @@ include_directories("${MODULE_CORE_LIST_DIR}/lib/cxx/include")
 # Build object library
 #--------------------------------------------------------------------------------
 
-set(MODULE_CORE_LIB_SOURCES "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
-set(MODULE_CORE_ENABLE_FILE_EXPORT TRUE)
+if(NOT TARGET ${MODULE_CORE_OBJ_TARGET})
+  set(MODULE_CORE_LIB_SOURCES "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
+  set(MODULE_CORE_ENABLE_FILE_EXPORT TRUE)
 
-create_object_library(${MODULE_CORE_OBJ_TARGET} ${MODULE_CORE_LIB_SOURCES} ${MODULE_CORE_ENABLE_FILE_EXPORT})
-enable_cxx17(${MODULE_CORE_OBJ_TARGET})
+  create_object_library(${MODULE_CORE_OBJ_TARGET} ${MODULE_CORE_LIB_SOURCES} ${MODULE_CORE_ENABLE_FILE_EXPORT})
+  enable_cxx17(${MODULE_CORE_OBJ_TARGET})
+endif()
 
 #--------------------------------------------------------------------------------
 # Definitions
