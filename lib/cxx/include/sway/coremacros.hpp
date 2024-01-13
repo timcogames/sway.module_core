@@ -1,0 +1,18 @@
+#ifndef SWAY_COREMACROS_HPP
+#define SWAY_COREMACROS_HPP
+
+#include <sway/visibilitymacros.hpp>
+
+#undef MODULE_CORE_INTERFACE_EXPORT_API
+#ifdef MODULE_CORE_INTERFACE_EXPORT
+#  if defined(EMSCRIPTEN_PLATFORM)
+#    include <emscripten.h>
+#    define MODULE_CORE_INTERFACE_EXPORT_API EMSCRIPTEN_KEEPALIVE
+#  else
+#    define MODULE_CORE_INTERFACE_EXPORT_API PUBLIC_ATTRIB
+#  endif
+#else
+#  define MODULE_CORE_INTERFACE_EXPORT_API
+#endif
+
+#endif  // SWAY_COREMACROS_HPP

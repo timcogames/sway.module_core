@@ -1,28 +1,26 @@
-#---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 #[[
 # DESC
   Создает конкретную библиотеку
 
 # ARGS
   ARG1:TARGET target [IN] - Цель
-  ARG2:STRING source_dir [IN] - Директория с исходными файлами
  ]]
-#---------------------------------------------------------------------------------
-function(create_library target source_dir)
-  file(GLOB_RECURSE LIBRARY_SOURCE_FILE_LIST ${source_dir})
-  string(TOUPPER ${target} TARGET_NAME_UPPER)
-  if(${TARGET_NAME_UPPER}_SHARED_LIB)
+#--------------------------------------------------------------------------------
+function(create_clang_library #[[ARG1]] target)
+  string(TOUPPER ${target} target_name_in_uppercase)
+  set(CURRENT_BUILD_TYPE ${target_name_in_uppercase}_LIB_TYPE)
+
+  if(${CURRENT_BUILD_TYPE} STREQUAL "shared")
     if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
       set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS TRUE)
     endif()
 
-    # add_executable(${target} ${LIBRARY_SOURCE_FILE_LIST})
-    add_library(${target} SHARED ${LIBRARY_SOURCE_FILE_LIST})
-    # set_target_properties(${target_arg} PROPERTIES OUTPUT_NAME ${META_CORE_PRJNAME})
-    # set_target_properties(${target_arg} PROPERTIES SUFFIX ".${META_CORE_VERSION}.js")
-  else()
-    add_library(${target} STATIC ${LIBRARY_SOURCE_FILE_LIST})
-    # set_target_properties(${target_arg} PROPERTIES OUTPUT_NAME ${META_CORE_PRJNAME})
-    # set_target_properties(${target_arg} PROPERTIES SUFFIX ".a.${META_CORE_VERSION}")
+    add_library(${target} SHARED $<TARGET_OBJECTS:${target}_obj>)
+  elseif(${CURRENT_BUILD_TYPE} STREQUAL "static")
+    add_library(${target} STATIC $<TARGET_OBJECTS:${target}_obj>)
   endif()
-endfunction()
+
+  # set_target_properties(${target_arg} PROPERTIES OUTPUT_NAME ${META_CORE_PRJNAME})
+  # set_target_properties(${target_arg} PROPERTIES SUFFIX ".a.${META_CORE_VERSION}")
+endfunction(create_clang_library)

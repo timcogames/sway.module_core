@@ -1,4 +1,4 @@
-#---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 #[[
 # DESC
   Создает конкретную Emscripten библиотеку
@@ -9,7 +9,7 @@
   ARG3:STRING compilation [IN] - Тип компиляции
   ARG4:STRING target_name [OUT] - Имена цели
  ]]
-#---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 function(create_emscripten_library_private #[[ARG1]] target 
                                            #[[ARG2]] environment 
                                            #[[ARG3]] compilation 
@@ -20,7 +20,7 @@ function(create_emscripten_library_private #[[ARG1]] target
   set_emscripten_environment(${environment} CURRENT_ENVIRONMENT)
   set_emscripten_compilation(${compilation} CURRENT_COMPILATION)
 
-  add_executable(${CURRENT_TARGET_NAME} $<TARGET_OBJECTS:${target}>)
+  add_executable(${CURRENT_TARGET_NAME} $<TARGET_OBJECTS:${target}_obj>)
 
   target_compile_options(${CURRENT_TARGET_NAME} PUBLIC -Wall -Wextra -Wundef -pedantic)
   printf_compile_options(${CURRENT_TARGET_NAME})
@@ -43,7 +43,7 @@ function(create_emscripten_library_private #[[ARG1]] target
   # set_target_properties(${CURRENT_TARGET_NAME} PROPERTIES OUTPUT_NAME "${CURRENT_TARGET_NAME}.v1")
 endfunction(create_emscripten_library_private)
 
-#---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 #[[
 # DESC
   Создает Emscripten библиотеку
@@ -54,7 +54,7 @@ endfunction(create_emscripten_library_private)
   ARG3:STRING compilation [IN] - Тип компиляции
   ARG4:STRING_LIST target_name_list [OUT] - Список имен целей
  ]]
-#---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
 function(create_emscripten_library #[[ARG1]] target 
                                    #[[ARG2]] environment 
                                    #[[ARG3]] compilation 

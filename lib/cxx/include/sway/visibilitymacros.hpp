@@ -14,16 +14,4 @@
 #define PUBLIC_ATTRIB __attribute__((visibility("default")))
 #define HIDDEN_ATTRIB __attribute__((visibility("hidden")))
 
-#undef EXPORT_API
-#ifdef SHARED_LIB_EXPORT_API
-#  if defined(EMSCRIPTEN_PLATFORM)
-#    include <emscripten.h>
-#    define EXPORT_API EMSCRIPTEN_KEEPALIVE
-#  else
-#    define EXPORT_API PUBLIC_ATTRIB
-#  endif
-#else
-#  define EXPORT_API
-#endif
-
 #endif  // SWAY_VISIBILITYMACROS_HPP

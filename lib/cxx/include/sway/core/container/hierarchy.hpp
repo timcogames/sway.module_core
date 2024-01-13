@@ -62,11 +62,11 @@ private:
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 EXTERN_C_BEGIN
 
-EXPORT_API auto createHierarchy() -> Hierarchy::JsPtr_t;
+MODULE_CORE_INTERFACE_EXPORT_API auto createHierarchy() -> Hierarchy::JsPtr_t;
 
-EXPORT_API void deleteHierarchy(Hierarchy::JsPtr_t hierarchy);
+MODULE_CORE_INTERFACE_EXPORT_API void deleteHierarchy(Hierarchy::JsPtr_t hierarchy);
 
-EXPORT_API auto getRootNode(Hierarchy::JsPtr_t hierarchy) -> Node::JsPtr_t;
+MODULE_CORE_INTERFACE_EXPORT_API auto getRootNode(Hierarchy::JsPtr_t hierarchy) -> Node::JsPtr_t;
 
 EXTERN_C_END
 #endif

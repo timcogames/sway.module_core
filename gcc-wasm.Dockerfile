@@ -42,7 +42,8 @@ RUN cmake -D CMAKE_BUILD_TYPE=Debug \
           -D GLOB_EMSCRIPTEN_ROOT_DIR=/opt/.emsdk/upstream/emscripten \
           -D GLOB_EMSCRIPTEN_PLATFORM=ON \
           -D MODULE_CORE_ENVIRONMENT=web,node \
-          -D MODULE_CORE_COMPILATION=async ../
+          -D MODULE_CORE_COMPILATION=async \
+          ../
 RUN cmake --build ./
 
 WORKDIR /module_core_workspace

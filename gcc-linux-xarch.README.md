@@ -26,8 +26,10 @@ docker run --rm docker.io/bonus85/sway.module_core:buildx-latest@<DIGEST>
 cmake -D CMAKE_BUILD_TYPE=Debug \
       -D GLOB_GTEST_ROOT_DIR=/Users/<USER_NAME>/Documents/Third-party/googletest/googletest \
       -D GLOB_GTEST_LIB_DIR=/Users/<USER_NAME>/Documents/Third-party/googletest/build/lib \
+      -D MODULE_CORE_LIB_TYPE=shared \
       -D MODULE_CORE_ENABLE_TESTS=ON \
-      -D MODULE_CORE_ENABLE_COVERAGE=OFF ../
+      -D MODULE_CORE_ENABLE_COVERAGE=OFF \
+      ../
 
 cmake --build ./
 ```

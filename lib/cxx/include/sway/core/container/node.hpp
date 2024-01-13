@@ -96,17 +96,17 @@ private:
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 EXTERN_C_BEGIN
 
-EXPORT_API auto createNode() -> Node::JsPtr_t;
+MODULE_CORE_INTERFACE_EXPORT_API auto createNode() -> Node::JsPtr_t;
 
-EXPORT_API void deleteNode(Node::JsPtr_t node);
+MODULE_CORE_INTERFACE_EXPORT_API void deleteNode(Node::JsPtr_t node);
 
-EXPORT_API void addChildNode(Node::JsPtr_t root, Node::JsPtr_t node);
+MODULE_CORE_INTERFACE_EXPORT_API void addChildNode(Node::JsPtr_t root, Node::JsPtr_t node);
 
-EXPORT_API auto getNodeIdx(Node::JsPtr_t node) -> lpcstr_t;
+MODULE_CORE_INTERFACE_EXPORT_API auto getNodeIdx(Node::JsPtr_t node) -> lpcstr_t;
 
-EXPORT_API auto getChildNodes(Node::JsPtr_t node) -> Node::JsPtr_t *;
+MODULE_CORE_INTERFACE_EXPORT_API auto getChildNodes(Node::JsPtr_t node) -> Node::JsPtr_t *;
 
-EXPORT_API auto getNumOfChildNodes(Node::JsPtr_t node) -> s32_t;
+MODULE_CORE_INTERFACE_EXPORT_API auto getNumOfChildNodes(Node::JsPtr_t node) -> s32_t;
 
 EXTERN_C_END
 #endif

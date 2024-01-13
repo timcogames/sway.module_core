@@ -146,7 +146,7 @@ public:
     eventdata.prev = 2;
     eventdata.next = 5;
     emit(VALUE_CHANGED, new ValueChangedEvent(0, &eventdata), [&](core::foundation::AEventHandler *handler) {
-      std::cout << "EXRCUTE:" << std::endl;
+      std::cout << "EXECUTE:" << std::endl;
       return true;
     });
   }

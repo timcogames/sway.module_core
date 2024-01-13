@@ -53,7 +53,7 @@ macro(create_logger)
           platform | ${CMAKE_CXX_PLATFORM_ID}
           compiler | ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION}
         build type | ${CMAKE_BUILD_TYPE}
-        shared lib | ${MODULE_CORE_SHARED_LIB}
+        shared lib | ${MODULE_CORE_LIB_TYPE}
           cxxflags | ${CMAKE_CXX_FLAGS} ${EXTRA_FLAGS}
   build type flags | ${BUILD_TYPE_CXX_FLAGS}
          build dir | ${CMAKE_BINARY_DIR}

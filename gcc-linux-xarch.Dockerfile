@@ -59,7 +59,8 @@ RUN cmake -D CMAKE_BUILD_TYPE=Release \
           -D GLOB_GTEST_ROOT_DIR= \
           -D GLOB_GTEST_LIB_DIR= \
           -D MODULE_CORE_ENABLE_TESTS=OFF \
-          -D MODULE_CORE_ENABLE_COVERAGE=$ENABLED_COVERAGE ../
+          -D MODULE_CORE_ENABLE_COVERAGE=$ENABLED_COVERAGE \
+          ../
 RUN cmake --build ./
 
 WORKDIR /module_core_workspace
@@ -77,7 +78,8 @@ RUN cmake -D CMAKE_BUILD_TYPE=Debug \
           -D GLOB_GTEST_ROOT_DIR=$GTEST_ROOT_DIR \
           -D GLOB_GTEST_LIB_DIR=$GTEST_LIB_DIR \
           -D MODULE_CORE_ENABLE_TESTS=ON \
-          -D MODULE_CORE_ENABLE_COVERAGE=$ENABLED_COVERAGE ../
+          -D MODULE_CORE_ENABLE_COVERAGE=$ENABLED_COVERAGE \
+          ../
 RUN cmake --build ./
 
 WORKDIR /module_core_workspace
