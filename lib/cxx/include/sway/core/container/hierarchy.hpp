@@ -3,6 +3,7 @@
 
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeidx.hpp>
+#include <sway/coremacros.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>

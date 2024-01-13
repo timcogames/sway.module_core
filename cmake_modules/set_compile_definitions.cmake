@@ -12,11 +12,17 @@ function(set_compile_definitions #[[ARG1]] proj_name
                                  #[[ARG2]] target)
   string(TOUPPER ${proj_name} proj_name_in_uppercase)
 
+  get_target_property(CURRENT_COMPILE_DEFINITIONS ${target} INTERFACE_COMPILE_DEFINITIONS)
+
   if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    target_compile_definitions(${target} PUBLIC -DMODULE_${proj_name_in_uppercase}_DEBUG)
+    if(NOT MODULE_${proj_name_in_uppercase}_DEBUG IN_LIST CURRENT_COMPILE_DEFINITIONS)
+      target_compile_definitions(${target} PUBLIC -DMODULE_${proj_name_in_uppercase}_DEBUG)
+    endif()
   endif()
 
   if((GLOB_EMSCRIPTEN_PLATFORM AND NOT GLOB_EMSCRIPTEN_USE_BINDINGS) OR MODULE_${proj_name_in_uppercase}_LIB_TYPE STREQUAL "shared")
-    target_compile_definitions(${target} PUBLIC -DMODULE_${proj_name_in_uppercase}_INTERFACE_EXPORT)
+    if(NOT MODULE_${proj_name_in_uppercase}_INTERFACE_EXPORT IN_LIST CURRENT_COMPILE_DEFINITIONS)
+      target_compile_definitions(${target} PUBLIC -DMODULE_${proj_name_in_uppercase}_INTERFACE_EXPORT)
+    endif()
   endif()
 endfunction(set_compile_definitions)

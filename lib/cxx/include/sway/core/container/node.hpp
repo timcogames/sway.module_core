@@ -10,6 +10,7 @@
 #include <sway/core/misc/guid.hpp>
 #include <sway/core/utils/traverser.hpp>
 #include <sway/core/utils/visitable.hpp>
+#include <sway/coremacros.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
