@@ -8,15 +8,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(intrusive)
 
-// clang-format off
-enum class Priority : u32_t {
-  VERY_LOW = 0,
-  LOW = 1,
-  NORMAL = 2,
-  HIGH = 3,
-  VERY_HIGH = 4
-};
-// clang-format on
+enum class Priority : u32_t { VERY_LOW = 0, LOW, NORMAL, HIGH, VERY_HIGH };
 
 NAMESPACE_END(intrusive)
 NAMESPACE_END(core)

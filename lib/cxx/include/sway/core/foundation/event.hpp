@@ -34,7 +34,7 @@ public:
   PURE_VIRTUAL(auto type() const -> u32_t);  // clang-format on
 
   // clang-format off
-  PURE_VIRTUAL(auto data() const -> EventData*);  // clang-format on
+  PURE_VIRTUAL(auto data() const -> EventData *);  // clang-format on
 
   template <typename TResult>
   auto getConcreteData() {

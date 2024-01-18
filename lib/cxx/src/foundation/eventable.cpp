@@ -24,28 +24,29 @@ emscripten::class_<Eventable>("Eventable")
 #endif
 EMSCRIPTEN_BINDING_END()
 
-void Eventable::subscribe(Eventable *sender, const std::string &eventname, AEventHandler *handler) {
+void Eventable::subscribe(Eventable *sender, const std::string &eventname, EventHandler *handler) {
   handler->setSender(sender);
   handler->setEventName(eventname);
   eventHandlers_.push_back(handler);
 }
 
 void Eventable::unsubscribe(const std::string &eventname) {
-  eventHandlers_.erase(std::remove_if(eventHandlers_.begin(), eventHandlers_.end(),
-                           [eventname](AEventHandler *handler) { return handler->getEventName().compare(eventname); }),
-      eventHandlers_.end());
+  // clang-format off
+  eventHandlers_.erase(std::remove_if(eventHandlers_.begin(), eventHandlers_.end(), [eventname](EventHandler *handler) {
+    return handler->getEventName().compare(eventname);
+  }), eventHandlers_.end());  // clang-format on
 }
 
 void Eventable::emit(const std::string &eventname, Event *event, EmitPredicate_t predicate) {
-  for (AEventHandler *handler : eventHandlers_) {
+  for (auto *handler : eventHandlers_) {
     if (handler->getEventName().compare(eventname) == 0 && predicate(handler)) {
       handler->invoke(event);
     }
   }
 }
 
-auto Eventable::findEventHandler(const std::string &eventname) -> AEventHandler * {
-  bool found = false;
+auto Eventable::findEventHandler(const std::string &eventname) -> EventHandler * {
+  auto found = false;
   auto iter = eventHandlers_.begin();
   while (iter != eventHandlers_.end()) {
     if ((*iter)->getEventName().compare(eventname) == 0) {

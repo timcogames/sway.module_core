@@ -24,16 +24,16 @@ NAMESPACE_BEGIN(foundation)
 class Eventable;
 
 /**
- * @class AEventHandler
+ * @class EventHandler
  * @brief Описывает обработчик для события.
  */
-class AEventHandler {
+class EventHandler {
 public:
   DECLARE_EMSCRIPTEN_BINDING()
 
-  AEventHandler(Eventable *receiver);
+  EventHandler(Eventable *receiver);
 
-  virtual ~AEventHandler() = default;
+  virtual ~EventHandler() = default;
 
   PURE_VIRTUAL(void invoke(Event *event));
 
@@ -55,9 +55,9 @@ protected:
 };
 
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
-class AEventHandlerWrapper : public emscripten::wrapper<AEventHandler> {
+class EventHandlerWrapper : public emscripten::wrapper<EventHandler> {
 public:
-  EMSCRIPTEN_WRAPPER(AEventHandlerWrapper);
+  EMSCRIPTEN_WRAPPER(EventHandlerWrapper);
 
   MTHD_OVERRIDE(void invoke(Event *event)) { return call<void>("invoke", event); }
 };

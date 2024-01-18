@@ -5,25 +5,25 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-EMSCRIPTEN_BINDING_BEGIN(AEventHandler)
+EMSCRIPTEN_BINDING_BEGIN(EventHandler)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
-emscripten::class_<AEventHandler>("AEventHandler")
-    .allow_subclass<AEventHandlerWrapper>("AEventHandlerWrapper", emscripten::constructor<Eventable *>())
-    .function("invoke", &AEventHandler::invoke, emscripten::allow_raw_pointers(), emscripten::pure_virtual())
-    .function("getSender", &AEventHandler::getSender, emscripten::allow_raw_pointers())
-    .function("setSender", &AEventHandler::setSender, emscripten::allow_raw_pointers())
-    .function("getReceiver", &AEventHandler::getReceiver, emscripten::allow_raw_pointers());
+emscripten::class_<EventHandler>("EventHandler")
+    .allow_subclass<EventHandlerWrapper>("EventHandlerWrapper", emscripten::constructor<Eventable *>())
+    .function("invoke", &EventHandler::invoke, emscripten::allow_raw_pointers(), emscripten::pure_virtual())
+    .function("getSender", &EventHandler::getSender, emscripten::allow_raw_pointers())
+    .function("setSender", &EventHandler::setSender, emscripten::allow_raw_pointers())
+    .function("getReceiver", &EventHandler::getReceiver, emscripten::allow_raw_pointers());
 #endif
 EMSCRIPTEN_BINDING_END()
 
-AEventHandler::AEventHandler(Eventable *receiver)
+EventHandler::EventHandler(Eventable *receiver)
     : receiver_(receiver) {}
 
-auto AEventHandler::getSender() const -> Eventable * { return sender_; }
+auto EventHandler::getSender() const -> Eventable * { return sender_; }
 
-void AEventHandler::setSender(Eventable *sender) { sender_ = sender; }
+void EventHandler::setSender(Eventable *sender) { sender_ = sender; }
 
-auto AEventHandler::getReceiver() const -> Eventable * { return receiver_; }
+auto EventHandler::getReceiver() const -> Eventable * { return receiver_; }
 
 NAMESPACE_END(foundation)
 NAMESPACE_END(core)

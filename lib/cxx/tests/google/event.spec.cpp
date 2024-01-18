@@ -50,7 +50,7 @@ public:
   }
 
   // clang-format off
-  MTHD_OVERRIDE(auto data() const -> foundation::EventData*) {  // clang-format on
+  MTHD_OVERRIDE(auto data() const -> foundation::EventData *) {  // clang-format on
     return data_;
   }
 
@@ -145,7 +145,7 @@ public:
     TestEventData eventdata;
     eventdata.prev = 2;
     eventdata.next = 5;
-    emit(VALUE_CHANGED, new ValueChangedEvent(0, &eventdata), [&](core::foundation::AEventHandler *handler) {
+    emit(VALUE_CHANGED, new ValueChangedEvent(0, &eventdata), [&](core::foundation::EventHandler *handler) {
       std::cout << "EXECUTE:" << std::endl;
       return true;
     });

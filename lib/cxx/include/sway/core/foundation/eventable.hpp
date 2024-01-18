@@ -15,7 +15,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-using EmitPredicate_t = std::function<bool(AEventHandler *)>;
+using EmitPredicate_t = std::function<bool(EventHandler *)>;
 
 class Eventable {
 public:
@@ -25,16 +25,16 @@ public:
 
   ~Eventable() = default;
 
-  void subscribe(Eventable *sender, const std::string &eventname, AEventHandler *handler);
+  void subscribe(Eventable *sender, const std::string &eventname, EventHandler *handler);
 
   void unsubscribe(const std::string &eventname);
 
   void emit(const std::string &eventname, Event *event, EmitPredicate_t predicate);
 
-  auto findEventHandler(const std::string &eventname) -> AEventHandler *;
+  auto findEventHandler(const std::string &eventname) -> EventHandler *;
 
 protected:
-  std::vector<AEventHandler *> eventHandlers_;  // Обработчики событий.
+  std::vector<EventHandler *> eventHandlers_;  // Обработчики событий.
 };
 
 NAMESPACE_END(foundation)

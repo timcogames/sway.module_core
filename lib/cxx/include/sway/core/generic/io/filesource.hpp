@@ -22,7 +22,7 @@ public:
   [[nodiscard]] auto isFileOpened() const -> bool;
 
 protected:
-  bool _fileOpened;  // Открыт ли файл в данный момент.
+  bool opened_;  // Открыт ли файл в данный момент.
 };
 
 NAMESPACE_END(io)

@@ -29,7 +29,7 @@ public:
   }
 
   // clang-format off
-  MTHD_OVERRIDE(auto data() const -> EventData*) {  // clang-format on
+  MTHD_OVERRIDE(auto data() const -> EventData *) {  // clang-format on
     return call<EventData *const>("data");
   }
 };

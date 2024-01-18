@@ -6,9 +6,9 @@ NAMESPACE_BEGIN(generic)
 NAMESPACE_BEGIN(io)
 
 FileSource::FileSource()
-    : _fileOpened(false) {}
+    : opened_(false) {}
 
-auto FileSource::isFileOpened() const -> bool { return _fileOpened; }
+auto FileSource::isFileOpened() const -> bool { return opened_; }
 
 NAMESPACE_END(io)
 NAMESPACE_END(generic)

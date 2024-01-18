@@ -12,12 +12,12 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 template <class TYPE>
-class TEventHandlerImpl : public AEventHandler {
+class TEventHandlerImpl : public EventHandler {
 public:
   using HandlerFunction_t = void (TYPE::*)(Event *);
 
   TEventHandlerImpl(TYPE *receiver, HandlerFunction_t function)
-      : AEventHandler(receiver)
+      : EventHandler(receiver)
       , function_(std::move(function)) {}
 
   virtual ~TEventHandlerImpl() = default;
@@ -32,18 +32,18 @@ private:
 };
 
 #ifdef EMSCRIPTEN_PLATFORM
-class EventHandlerImpl : public AEventHandler {
+class EventHandlerImpl : public EventHandler {
 public:
   static void registerEmsClass() {
 #  ifdef EMSCRIPTEN_USE_BINDINGS
-    emscripten::class_<EventHandlerImpl, emscripten::base<AEventHandler>>("EventHandlerImpl")
+    emscripten::class_<EventHandlerImpl, emscripten::base<EventHandler>>("EventHandlerImpl")
         .constructor<Eventable *, emscripten::val>()
         .function("invoke", &EventHandlerImpl::invoke, emscripten::allow_raw_pointers());
 #  endif
   }
 
   EventHandlerImpl(Eventable *receiver, emscripten::val function)
-      : AEventHandler(receiver)
+      : EventHandler(receiver)
       , function_(function) {}
 
   virtual ~EventHandlerImpl() = default;
