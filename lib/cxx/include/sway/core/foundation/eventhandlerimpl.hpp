@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_HPP
 #define SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_HPP
 
+#include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
 #include <sway/namespacemacros.hpp>
 

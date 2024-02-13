@@ -21,6 +21,8 @@ public:
   explicit Object(Context *ctx)
       : context_(ctx) {}
 
+  auto getContext() -> Context * { return context_; }
+
   template <class TConcreteContext>
   auto getContext() -> TConcreteContext * {
     return static_cast<TConcreteContext *>(context_);
