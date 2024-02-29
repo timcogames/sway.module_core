@@ -19,7 +19,9 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
-struct PluginFunctionSet {};
+struct PluginFunctionSet {
+  virtual ~PluginFunctionSet() = default;
+};
 
 using DlibHandle_t = void *;
 using PluginGetInfoFunc_t = binding::TFunction<PluginInfo()>;
