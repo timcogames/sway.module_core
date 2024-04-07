@@ -7,6 +7,7 @@
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeeventdata.hpp>
 #include <sway/core/container/nodeidx.hpp>
+#include <sway/core/detail/enumclassbitset.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/detail/rawtype.hpp>
 #include <sway/core/detail/valuedata.hpp>
