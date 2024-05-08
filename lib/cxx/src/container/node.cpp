@@ -39,23 +39,23 @@ Node::Node()
 
 Node::~Node() { children_.clear(); }
 
-auto Node::traverse(utils::Traverser *traverser) -> u32_t {
-  switch (static_cast<utils::Traverser::Action>(traverser->visit(this))) {
-    case utils::Traverser::Action::CONTINUE:
+auto Node::traverse(util::Traverser *traverser) -> u32_t {
+  switch (static_cast<util::Traverser::Action>(traverser->visit(this))) {
+    case util::Traverser::Action::CONTINUE:
       for (const auto &node : getChildNodes()) {
-        if (node->traverse(traverser) == detail::toUnderlying(utils::Traverser::Action::ABORT)) {
-          return detail::toUnderlying(utils::Traverser::Action::ABORT);
+        if (node->traverse(traverser) == detail::toUnderlying(util::Traverser::Action::ABORT)) {
+          return detail::toUnderlying(util::Traverser::Action::ABORT);
         }
       }
 
-    case utils::Traverser::Action::PRUNE:
-      return detail::toUnderlying(utils::Traverser::Action::CONTINUE);
+    case util::Traverser::Action::PRUNE:
+      return detail::toUnderlying(util::Traverser::Action::CONTINUE);
 
-    case utils::Traverser::Action::ABORT:
+    case util::Traverser::Action::ABORT:
       break;
   }
 
-  return detail::toUnderlying(utils::Traverser::Action::ABORT);
+  return detail::toUnderlying(util::Traverser::Action::ABORT);
 }
 
 void Node::addChildNode(std::shared_ptr<Node> child) {

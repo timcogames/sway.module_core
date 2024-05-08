@@ -1,10 +1,10 @@
-#include <sway/core/utils/observable.hpp>
+#include <sway/core/util/observable.hpp>
 
 #include <algorithm>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(utils)
+NAMESPACE_BEGIN(util)
 
 Observable::Observable() { observers_ = std::vector<IObserver *>(); }
 
@@ -25,6 +25,6 @@ void Observable::notify() {
   }
 }
 
-NAMESPACE_END(utils)
+NAMESPACE_END(util)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)

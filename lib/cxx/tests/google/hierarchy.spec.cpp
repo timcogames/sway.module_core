@@ -14,10 +14,10 @@ public:
   container::Hierarchy *hierarchy_;
 };
 
-class HierarchyChildTraverser : public utils::Traverser {
+class HierarchyChildTraverser : public util::Traverser {
 public:
-  MTHD_OVERRIDE(u32_t visit([[maybe_unused]] utils::Visitable *node)) {
-    return detail::toUnderlying(utils::Traverser::Action::CONTINUE);
+  MTHD_OVERRIDE(u32_t visit([[maybe_unused]] util::Visitable *node)) {
+    return detail::toUnderlying(util::Traverser::Action::CONTINUE);
   }
 };
 

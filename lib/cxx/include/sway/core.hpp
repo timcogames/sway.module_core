@@ -30,6 +30,8 @@
 #include <sway/core/generic/io/path.hpp>
 #include <sway/core/intrusive/priorities.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
+#include <sway/core/misc/chronounits.hpp>
+#include <sway/core/misc/duration.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
 #include <sway/core/plugin.hpp>
@@ -38,10 +40,10 @@
 #include <sway/core/runtime/exceptions/argumentnullexception.hpp>
 #include <sway/core/runtime/exceptions/librarynotfoundexception.hpp>
 #include <sway/core/runtime/exceptions/symbolnotfoundexception.hpp>
-#include <sway/core/utils/observable.hpp>
-#include <sway/core/utils/observer.hpp>
-#include <sway/core/utils/traverser.hpp>
-#include <sway/core/utils/visitable.hpp>
+#include <sway/core/util/observable.hpp>
+#include <sway/core/util/observer.hpp>
+#include <sway/core/util/traverser.hpp>
+#include <sway/core/util/visitable.hpp>
 #include <sway/core/version.hpp>
 #include <sway/defines.hpp>
 #include <sway/emscriptenmacros.hpp>

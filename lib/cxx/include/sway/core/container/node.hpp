@@ -8,8 +8,8 @@
 #include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
-#include <sway/core/utils/traverser.hpp>
-#include <sway/core/utils/visitable.hpp>
+#include <sway/core/util/traverser.hpp>
+#include <sway/core/util/visitable.hpp>
 #include <sway/coremacros.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
@@ -31,7 +31,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-class Node : public std::enable_shared_from_this<Node>, public utils::Visitable, public foundation::Eventable {
+class Node : public std::enable_shared_from_this<Node>, public util::Visitable, public foundation::Eventable {
 public:
   DECLARE_EMSCRIPTEN(Node)
   DECLARE_EMSCRIPTEN_BINDING()
@@ -43,7 +43,7 @@ public:
   virtual ~Node();
 
   // clang-format off
-  MTHD_OVERRIDE(auto traverse(utils::Traverser *traverser) -> u32_t);  // clang-format on
+  MTHD_OVERRIDE(auto traverse(util::Traverser *traverser) -> u32_t);  // clang-format on
 
   void addChildNode(std::shared_ptr<Node> child);
 

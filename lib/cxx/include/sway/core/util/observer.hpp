@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_UTILS_OBSERVER_HPP
-#define SWAY_CORE_UTILS_OBSERVER_HPP
+#ifndef SWAY_CORE_UTIL_OBSERVER_HPP
+#define SWAY_CORE_UTIL_OBSERVER_HPP
 
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
@@ -8,7 +8,7 @@
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(utils)
+NAMESPACE_BEGIN(util)
 
 using ObserverArray_t = std::vector<class IObserver *>;
 using ObserverArrayIterator_t = ObserverArray_t::const_iterator;
@@ -24,8 +24,8 @@ public:
   PURE_VIRTUAL(void update());
 };
 
-NAMESPACE_END(utils)
+NAMESPACE_END(util)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#endif  // SWAY_CORE_UTILS_OBSERVER_HPP
+#endif  // SWAY_CORE_UTIL_OBSERVER_HPP
