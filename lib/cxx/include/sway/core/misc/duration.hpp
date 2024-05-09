@@ -25,22 +25,22 @@ public:
   ~Duration() = default;
 
   [[nodiscard]]
-  auto toMillis() const -> f64_t {
+  auto asMillis() const -> f64_t {
     return millis_;
   }
 
   [[nodiscard]]
-  auto toSeconds() const -> f64_t {
+  auto asSeconds() const -> f64_t {
     return millis_ / CHRONO_UNIT_TABLE.at(ChronoUnit::SECONDS);
   }
 
   [[nodiscard]]
-  auto toMinutes() const -> f64_t {
+  auto asMinutes() const -> f64_t {
     return millis_ / CHRONO_UNIT_TABLE.at(ChronoUnit::MINUTES);
   }
 
   [[nodiscard]]
-  auto toHours() const -> f64_t {
+  auto asHours() const -> f64_t {
     return millis_ / CHRONO_UNIT_TABLE.at(ChronoUnit::HOURS);
   }
 

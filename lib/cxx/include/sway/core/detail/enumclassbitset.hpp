@@ -14,22 +14,22 @@ template <typename TEnumClass>
 class EnumClassBitset {
 public:
   EnumClassBitset()
-      : values_() {}
+      : flags_() {}
 
-  auto test(TEnumClass val) const -> bool { return values_.test(toUnderlying(val)); }
-
-  auto reset(TEnumClass val) -> EnumClassBitset & {
-    values_.reset(toUnderlying(val));
+  auto set(TEnumClass flag) -> EnumClassBitset & {
+    flags_.flip(toUnderlying(flag));
     return *this;
   }
 
-  auto flip(TEnumClass val) -> EnumClassBitset & {
-    values_.flip(toUnderlying(val));
+  auto rem(TEnumClass flag) -> EnumClassBitset & {
+    flags_.reset(toUnderlying(flag));
     return *this;
   }
+
+  auto has(TEnumClass flag) const -> bool { return flags_.test(toUnderlying(flag)); }
 
 private:
-  std::bitset<toUnderlying(TEnumClass::Latest)> values_;
+  std::bitset<toUnderlying(TEnumClass::Latest)> flags_;
 };
 
 NAMESPACE_END(detail)
