@@ -30,8 +30,6 @@
 #include <sway/core/generic/io/path.hpp>
 #include <sway/core/intrusive/priorities.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
-#include <sway/core/misc/chronounits.hpp>
-#include <sway/core/misc/duration.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
 #include <sway/core/plugin.hpp>
@@ -40,6 +38,12 @@
 #include <sway/core/runtime/exceptions/argumentnullexception.hpp>
 #include <sway/core/runtime/exceptions/librarynotfoundexception.hpp>
 #include <sway/core/runtime/exceptions/symbolnotfoundexception.hpp>
+#include <sway/core/time/chronounits.hpp>
+#include <sway/core/time/clock.hpp>
+#include <sway/core/time/duration.hpp>
+#include <sway/core/time/timepoint.hpp>
+#include <sway/core/time/timer.hpp>
+#include <sway/core/time/timerstatus.hpp>
 #include <sway/core/util/observable.hpp>
 #include <sway/core/util/observer.hpp>
 #include <sway/core/util/traverser.hpp>

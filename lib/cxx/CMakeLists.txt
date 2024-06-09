@@ -17,7 +17,11 @@ endif()
 #--------------------------------------------------------------------------------
 
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
-  include_directories("/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include")
+  # sudo ln -s /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/c++/v1/* /Library/Developer/CommandLineTools/usr/include/c++/v1
+  # sudo ln -s /usr/local/include/c++/v1/* /Library/Developer/CommandLineTools/usr/include/c++/v1
+
+  # include_directories("/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include")
+  include_directories("/usr/local/include/c++/v1")
 endif()
 
 include_directories("${MODULE_CORE_LIST_DIR}/lib/cxx/include")
