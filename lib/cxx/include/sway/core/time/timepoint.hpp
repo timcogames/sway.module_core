@@ -23,13 +23,15 @@ struct TimePoint {
     return {raw - rhs.raw};
   }
 
-  void operator+=(const Duration &rhs) { raw += rhs.asMillis(); }
+  void operator+=(const Duration &rhs) { raw += rhs.getRaw(); }
 
-  void operator-=(const Duration &rhs) { raw -= rhs.asMillis(); }
+  void operator-=(const Duration &rhs) { raw -= rhs.getRaw(); }
 };
 
 NAMESPACE_END(time)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
+
+#include <sway/core/time/timepoint.inl>
 
 #endif  // SWAY_CORE_TIME_TIMEPOINT_HPP

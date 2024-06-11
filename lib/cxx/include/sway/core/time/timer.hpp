@@ -19,16 +19,16 @@ public:
 
   void start() {
     started_ = Clock::now();
-    elapsed_ = 0;
+    paused_ = {0};
     status_ = TimerStatusUtil::as(TimerStatus::RUNNING);
   }
 
   void pause() {
-    if (!TimerStatusUtil::isRunning(status_)) {
+    if (!TimerStatusUtil::isRunning(status_) || TimerStatusUtil::isPaused(status_)) {
       return;
     }
 
-    elapsed_ += Clock::since(started_);
+    paused_ = Clock::now();
     status_ = TimerStatusUtil::as(TimerStatus::PAUSED);
   }
 
@@ -37,7 +37,7 @@ public:
       return;
     }
 
-    started_ = Clock::now();
+    started_ = started_ + Clock::since(paused_);
     status_ = TimerStatusUtil::as(TimerStatus::RUNNING);
   }
 
@@ -46,8 +46,20 @@ public:
       return;
     }
 
-    elapsed_ += Clock::since(started_);
     status_ = TimerStatusUtil::as(TimerStatus::STOPPED);
+  }
+
+  [[nodiscard]]
+  auto getElapsed() -> Duration {
+    if (TimerStatusUtil::isStopped(status_)) {
+      return {0};
+    }
+
+    if (TimerStatusUtil::isPaused(status_)) {
+      return paused_ - started_;
+    }
+
+    return Clock::since(started_);
   }
 
   [[nodiscard]]
@@ -57,7 +69,7 @@ public:
 
 private:
   TimePoint started_;
-  TimePoint elapsed_;
+  TimePoint paused_;
   u32_t status_;
 };
 
