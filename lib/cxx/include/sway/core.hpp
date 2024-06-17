@@ -32,6 +32,8 @@
 #include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
+// #include <sway/core/misc/optional.hpp>
+#include <sway/core/misc/string.hpp>
 #include <sway/core/plugin.hpp>
 #include <sway/core/plugininfo.hpp>
 #include <sway/core/runtime/exception.hpp>
