@@ -15,6 +15,7 @@
 #include <sway/core/events/eventbus.hpp>
 #include <sway/core/events/eventhandler.hpp>
 #include <sway/core/events/subscribable.hpp>
+#include <sway/core/foundation/callbackmacros.hpp>
 #include <sway/core/foundation/context.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventable.hpp>

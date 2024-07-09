@@ -6,9 +6,7 @@
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 
-#include <map>
 #include <memory>
-#include <string>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

@@ -3,6 +3,9 @@
 
 #define DONT_CARE (-1)
 
+#define GLOB_IDX_INVALID DONT_CARE
+#define GLOB_IDX_INITIAL 0
+
 #define STRINGIFY_HELPER(x) #x
 #define STRINGIFY(x) STRINGIFY_HELPER(x)
 

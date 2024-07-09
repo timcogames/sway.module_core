@@ -46,6 +46,11 @@ public:
     return std::nullopt;
   }
 
+  template <class TConcreteSubsystem>
+  auto getSubsystem() const -> std::optional<std::shared_ptr<TConcreteSubsystem>> {
+    return this->getSubsystem<TConcreteSubsystem>(TConcreteSubsystem::getObjectClassMetadata()->getClassname());
+  }
+
   void initialize() {
     for (const auto &[_, subsystem] : subsystems_) {
       auto initialized = subsystem->initialize();
