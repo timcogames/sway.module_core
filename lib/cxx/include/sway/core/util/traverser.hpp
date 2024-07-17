@@ -3,6 +3,7 @@
 
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/types.hpp>
 
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)

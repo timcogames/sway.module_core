@@ -51,10 +51,13 @@ public:
 
   auto getChildNodes() -> std::vector<std::shared_ptr<Node>>;
 
+  [[nodiscard]]
   auto getChildNode(const NodeIdx &idx) const -> std::shared_ptr<Node>;
 
+  [[nodiscard]]
   auto getChildAt(int targetIdx) const -> std::optional<std::shared_ptr<Node>>;
 
+  [[nodiscard]]
   auto getNumOfChildNodes() const -> int;
 
   void setNodeIdx(const NodeIdx::chain_t &chain, int last);
@@ -75,7 +78,10 @@ public:
 
   void setVisible(bool value) { visible_ = value; }
 
-  auto isVisible() const -> bool { return visible_; }
+  [[nodiscard]]
+  auto isVisible() const -> bool {
+    return visible_;
+  }
 
 protected:
   template <typename T>

@@ -17,9 +17,15 @@ public:
       , symbolName_(symbolName)
       , dlError_(dlerror) {}
 
-  auto getSymbolName() const -> std::string { return symbolName_; }
+  [[nodiscard]]
+  auto getSymbolName() const -> std::string {
+    return symbolName_;
+  }
 
-  auto getDlerror() const -> std::string { return dlError_; }
+  [[nodiscard]]
+  auto getDlerror() const -> std::string {
+    return dlError_;
+  }
 
 private:
   std::string symbolName_;  // Имя символа.

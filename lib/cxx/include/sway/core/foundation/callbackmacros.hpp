@@ -8,12 +8,12 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-#define RUN_CALLBACK(callback, args...) \
-  [=]() {                               \
-    if (callback == nullptr) {          \
-      return;                           \
-    }                                   \
-    callback(args);                     \
+#define RUN_CALLBACK(FUNC, ARGS...) \
+  [=]() {                           \
+    if (FUNC == nullptr) {          \
+      return;                       \
+    }                               \
+    FUNC(ARGS);                     \
   }()
 
 NAMESPACE_END(foundation)

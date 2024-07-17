@@ -20,9 +20,9 @@ constexpr s32_t NODEIDX_ROOT_DEPTH = 1;
 #define NODEIDX_CHAIN_INITIALROOT std::vector<int>({NODEIDX_ROOT})
 
 class NodeIdx {
-public:
   DECLARE_EMSCRIPTEN_BINDING()
 
+public:
   using index_t = s32_t;
   using chain_t = std::vector<NodeIdx::index_t>;
 
@@ -42,19 +42,24 @@ public:
 
   void setChain(const NodeIdx::chain_t &chain, NodeIdx::index_t idx);
 
-  [[nodiscard]] auto getChain() const -> NodeIdx::chain_t;
+  [[nodiscard]]
+  auto getChain() const -> NodeIdx::chain_t;
 
-  [[nodiscard]] auto getParent() const -> NodeIdx::chain_t;
+  [[nodiscard]]
+  auto getParent() const -> NodeIdx::chain_t;
 
-  [[nodiscard]] auto getDepth() const -> int;
+  [[nodiscard]]
+  auto getDepth() const -> int;
 
-  [[nodiscard]] auto getIdxAt(int idx) const -> NodeIdx::index_t;
+  [[nodiscard]]
+  auto getIdxAt(int idx) const -> NodeIdx::index_t;
 
   auto equal(const NodeIdx &other) -> bool;
 
   auto chainEqual(const NodeIdx::chain_t &other) -> bool;
 
-  [[nodiscard]] auto toStr() const -> std::string;
+  [[nodiscard]]
+  auto toStr() const -> std::string;
 
 private:
   NodeIdx::chain_t chainLinks_;

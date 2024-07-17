@@ -26,19 +26,31 @@ public:
 
   void setMajor(s32_t major) { major_ = major; }
 
-  auto getMajor() const -> s32_t { return major_; }
+  [[nodiscard]]
+  auto getMajor() const -> s32_t {
+    return major_;
+  }
 
   void setMinor(s32_t minor) { minor_ = minor; }
 
-  auto getMinor() const -> s32_t { return minor_; }
+  [[nodiscard]]
+  auto getMinor() const -> s32_t {
+    return minor_;
+  }
 
   void setPatch(s32_t patch) { patch_ = patch; }
 
-  auto getPatch() const -> s32_t { return patch_; }
+  [[nodiscard]]
+  auto getPatch() const -> s32_t {
+    return patch_;
+  }
 
   void setExtra(lpcstr_t extra) { extra_ = extra; }
 
-  auto getExtra() const -> std::string { return extra_; }
+  [[nodiscard]]
+  auto getExtra() const -> std::string {
+    return extra_;
+  }
 
   auto compare(const Version &version) const -> s32_t;
 

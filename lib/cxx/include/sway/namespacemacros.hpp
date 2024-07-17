@@ -1,8 +1,8 @@
 #ifndef SWAY_NAMESPACEMACROS_HPP
 #define SWAY_NAMESPACEMACROS_HPP
 
-#define NAMESPACE_BEGIN(name) namespace name {
+#define NAMESPACE_BEGIN(NAME) namespace NAME {
 
-#define NAMESPACE_END(name) }
+#define NAMESPACE_END(NAME) }
 
 #endif  // SWAY_NAMESPACEMACROS_HPP

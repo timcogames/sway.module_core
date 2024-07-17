@@ -18,7 +18,10 @@ public:
 
   virtual ~Exception() throw() = default;
 
-  [[nodiscard]] virtual lpcstr_t what() const throw() { return message_.c_str(); }
+  [[nodiscard]]
+  virtual lpcstr_t what() const throw() {
+    return message_.c_str();
+  }
 
 private:
   std::string message_;  // Сообщение об ошибке.

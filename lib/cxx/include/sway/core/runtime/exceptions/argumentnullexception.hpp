@@ -18,7 +18,10 @@ public:
       }())
       , argname_(argumentName) {}
 
-  auto getArgumentName() const -> std::string { return argname_; }
+  [[nodiscard]]
+  auto getArgumentName() const -> std::string {
+    return argname_;
+  }
 
 private:
   std::string argname_;

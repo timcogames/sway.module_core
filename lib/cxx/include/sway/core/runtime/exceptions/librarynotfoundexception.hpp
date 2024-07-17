@@ -15,9 +15,15 @@ public:
       , libname_(libName)
       , dlError_(dlerror) {}
 
-  auto getLibName() const -> std::string { return libname_; }
+  [[nodiscard]]
+  auto getLibName() const -> std::string {
+    return libname_;
+  }
 
-  auto getDlerror() const -> std::string { return dlError_; }
+  [[nodiscard]]
+  auto getDlerror() const -> std::string {
+    return dlError_;
+  }
 
 private:
   std::string libname_;  // Имя библиотеки.

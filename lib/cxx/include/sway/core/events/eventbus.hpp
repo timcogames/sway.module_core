@@ -15,6 +15,9 @@ NAMESPACE_BEGIN(evts)
 
 class EventBus : public Subscribable {
 public:
+  using Ptr_t = EventBus *;
+  using SharedPtr_t = std::shared_ptr<EventBus>;
+
   ~EventBus() = default;
 
   void addToQueue(std::unique_ptr<foundation::Event> event) { events_.emplace(std::move(event)); }

@@ -1,9 +1,9 @@
 #ifndef SWAY_KEYWORDS_HPP
 #define SWAY_KEYWORDS_HPP
 
-#define DFLT_DTOR(objclass) ~objclass() = default
+#define DFLT_DTOR(OBJ_CLASS) ~OBJ_CLASS() = default
 
-#define DFLT_DTOR_VIRTUAL(objclass) virtual DFLT_DTOR(objclass)
+#define DFLT_DTOR_VIRTUAL(OBJ_CLASS) virtual DFLT_DTOR(OBJ_CLASS)
 
 #define PURE_VIRTUAL(...) virtual __VA_ARGS__ = 0
 

@@ -1,15 +1,15 @@
 #ifndef SWAY_CORE_DETAIL_VALUEDATATYPEMACROS_HPP
 #define SWAY_CORE_DETAIL_VALUEDATATYPEMACROS_HPP
 
-#define DECLARE_VALUEDATA_TYPE_RELATSP(key, valuetype) \
-  template <>                                          \
-  struct EnumToValueDataType<key> {                    \
-    using type_t = valuetype;                          \
-  };                                                   \
-                                                       \
-  template <>                                          \
-  struct ValueDataTypeToEnum<valuetype> {              \
-    static constexpr ValueDataType value = key;        \
+#define DECLARE_VALUEDATA_TYPE_RELATSP(KEY, VALUE_TYPE) \
+  template <>                                           \
+  struct EnumToValueDataType<KEY> {                     \
+    using type_t = VALUE_TYPE;                          \
+  };                                                    \
+                                                        \
+  template <>                                           \
+  struct ValueDataTypeToEnum<VALUE_TYPE> {              \
+    static constexpr ValueDataType value = KEY;         \
   };
 
 #endif  // SWAY_CORE_DETAIL_VALUEDATATYPEMACROS_HPP

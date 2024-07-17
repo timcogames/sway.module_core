@@ -12,9 +12,9 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 class Subsystem : public Object {
-public:
   DECLARE_CLASS_METADATA(Subsystem, Object)
 
+public:
   Subsystem() = default;
 
   explicit Subsystem(Context *ctx)
@@ -22,7 +22,7 @@ public:
 
   PURE_VIRTUAL(bool initialize());
 
-  PURE_VIRTUAL(void tick(float timestep));
+  PURE_VIRTUAL(void tick(f32_t dtm));
 
   PURE_VIRTUAL(void shutdown());
 };

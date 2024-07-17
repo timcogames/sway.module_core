@@ -10,11 +10,12 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 class Context;
+
 class Object {
-public:
   DECLARE_SUPERCLASS()
   DECLARE_EMSCRIPTEN_BINDING()
 
+public:
   Object()
       : context_(nullptr) {}
 
