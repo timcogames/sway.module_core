@@ -60,22 +60,28 @@ NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#define DECLARE_SUPERCLASS()                                                                       \
-public:                                                                                            \
-  static const sway::core::foundation::ObjectClassMetadata *getObjectClassMetadata() { return 0; } \
-  PURE_VIRTUAL(const sway::core::foundation::ObjectClassMetadata *getSuperclass() const);          \
-  PURE_VIRTUAL(const std::string &getClassname() const);
+// clang-format off
+#define DECLARE_SUPERCLASS()                                                                                \
+public:                                                                                                     \
+  static auto getObjectClassMetadata() -> const sway::core::foundation::ObjectClassMetadata * { return 0; } \
+  PURE_VIRTUAL(auto getSuperclass() const -> const sway::core::foundation::ObjectClassMetadata *);          \
+  PURE_VIRTUAL(auto getClassname() const -> const std::string &);
+// clang-format on
 
-#define DECLARE_CLASS_METADATA(objclass, superclass)                                                                 \
-public:                                                                                                              \
-  typedef superclass super_t;                                                                                        \
-  static const sway::core::foundation::ObjectClassMetadata *getObjectClassMetadata() {                               \
-    static const sway::core::foundation::ObjectClassMetadata metadata(#objclass, super_t::getObjectClassMetadata()); \
-    return &metadata;                                                                                                \
-  }                                                                                                                  \
-  MTHD_OVERRIDE(const sway::core::foundation::ObjectClassMetadata *getSuperclass() const) {                          \
-    return getObjectClassMetadata()->getSuperclass();                                                                \
-  }                                                                                                                  \
-  MTHD_OVERRIDE(const std::string &getClassname() const) { return getObjectClassMetadata()->getClassname(); }
+// clang-format off
+#define DECLARE_CLASS_METADATA(OBJ_CLASS, OBJ_SUPER)                                                             \
+public:                                                                                                               \
+  typedef OBJ_SUPER super_t;                                                                                     \
+  static auto getObjectClassMetadata() -> const sway::core::foundation::ObjectClassMetadata * {                       \
+    static const sway::core::foundation::ObjectClassMetadata metadata(#OBJ_CLASS, super_t::getObjectClassMetadata()); \
+    return &metadata;                                                                                                 \
+  }                                                                                                                   \
+  MTHD_OVERRIDE(auto getSuperclass() const -> const sway::core::foundation::ObjectClassMetadata *) {                  \
+    return getObjectClassMetadata()->getSuperclass();                                                                 \
+  }                                                                                                                   \
+  MTHD_OVERRIDE(auto getClassname() const -> const std::string &) {                                                   \
+    return getObjectClassMetadata()->getClassname();                                                                  \
+  }
+// clang-format on
 
 #endif  // SWAY_CORE_FOUNDATION_OBJECTCLASSMETADATA_HPP

@@ -28,22 +28,29 @@ class Eventable;
  * @brief Описывает обработчик для события.
  */
 class EventHandler {
-public:
   DECLARE_EMSCRIPTEN_BINDING()
+
+public:
+  using Ptr_t = EventHandler *;
 
   EventHandler(Eventable *receiver);
 
   virtual ~EventHandler() = default;
 
-  PURE_VIRTUAL(void invoke(Event *event));
+  PURE_VIRTUAL(void invoke(Event *evt));
 
-  [[nodiscard]] auto getSender() const -> Eventable *;
+  [[nodiscard]]
+  auto getSender() const -> Eventable *;
 
   void setSender(Eventable *sender);
 
-  [[nodiscard]] auto getReceiver() const -> Eventable *;
+  [[nodiscard]]
+  auto getReceiver() const -> Eventable *;
 
-  [[nodiscard]] auto getEventName() const -> std::string { return eventname_; }
+  [[nodiscard]]
+  auto getEventName() const -> std::string {
+    return eventname_;
+  }
 
   void setEventName(const std::string &name) { eventname_ = name; }
 
@@ -59,7 +66,7 @@ class EventHandlerWrapper : public emscripten::wrapper<EventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(EventHandlerWrapper);
 
-  MTHD_OVERRIDE(void invoke(Event *event)) { return call<void>("invoke", event); }
+  MTHD_OVERRIDE(void invoke(Event *evt)) { return call<void>("invoke", evt); }
 };
 #endif
 

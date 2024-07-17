@@ -17,15 +17,15 @@ class TEventHandlerImpl : public EventHandler {
 public:
   using HandlerFunction_t = void (TYPE::*)(Event *);
 
-  TEventHandlerImpl(TYPE *receiver, HandlerFunction_t function)
+  TEventHandlerImpl(TYPE *receiver, HandlerFunction_t func)
       : EventHandler(receiver)
-      , function_(std::move(function)) {}
+      , function_(std::move(func)) {}
 
   virtual ~TEventHandlerImpl() = default;
 
-  MTHD_OVERRIDE(void invoke(Event *event)) {
-    TYPE *receiver = static_cast<TYPE *>(receiver_);
-    (receiver->*function_)(event);
+  MTHD_OVERRIDE(void invoke(Event *evt)) {
+    auto *receiver = static_cast<TYPE *>(receiver_);
+    (receiver->*function_)(evt);
   }
 
 private:
@@ -38,20 +38,20 @@ public:
   static void registerEmsClass() {
 #  ifdef EMSCRIPTEN_USE_BINDINGS
     emscripten::class_<EventHandlerImpl, emscripten::base<EventHandler>>("EventHandlerImpl")
-        .constructor<Eventable *, emscripten::val>()
+        .constructor<Eventable::Ptr_t, emscripten::val>()
         .function("invoke", &EventHandlerImpl::invoke, emscripten::allow_raw_pointers());
 #  endif
   }
 
-  EventHandlerImpl(Eventable *receiver, emscripten::val function)
+  EventHandlerImpl(Eventable::Ptr_t receiver, emscripten::val func)
       : EventHandler(receiver)
-      , function_(function) {}
+      , function_(func) {}
 
   virtual ~EventHandlerImpl() = default;
 
-  MTHD_OVERRIDE(void invoke(Event *event)) {
+  MTHD_OVERRIDE(void invoke(Event *evt)) {
     if (function_.typeOf().as<std::string>() == "function") {
-      function_(event);
+      function_(evt);
     } else {
       EM_ASM(throw "callback is not a function");
     }
@@ -66,7 +66,7 @@ NAMESPACE_END(foundation)
 NAMESPACE_END(core)
 NAMESPACE_END(sway)
 
-#define EVENT_HANDLER(classname, function) \
-  (new sway::core::foundation::TEventHandlerImpl<classname>(this, &classname::function))
+#define EVENT_HANDLER(CLASS_NAME, FUNC) \
+  (new sway::core::foundation::TEventHandlerImpl<CLASS_NAME>(this, &CLASS_NAME::FUNC))
 
 #endif  // SWAY_CORE_FOUNDATION_EVENTHANDLERIMPL_HPP

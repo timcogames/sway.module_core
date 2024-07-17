@@ -42,10 +42,10 @@ using NodeDataList = std::vector<NodeData>;
 #endif
 
 class Hierarchy {
-public:
   DECLARE_EMSCRIPTEN(Hierarchy)
   DECLARE_EMSCRIPTEN_BINDING()
 
+public:
   static auto findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx) -> std::optional<std::shared_ptr<Node>>;
 
   Hierarchy();

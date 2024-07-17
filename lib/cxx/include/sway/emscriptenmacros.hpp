@@ -8,7 +8,9 @@ public:                                                                         
   static ObjectClass *fromJs(JsPtr_t ptr) { return reinterpret_cast<ObjectClass *>(ptr); } \
   static JsPtr_t toJs(ObjectClass *ptr) { return reinterpret_cast<JsPtr_t>(ptr); }
 
-#define DECLARE_EMSCRIPTEN_BINDING() static void bindEmscriptenClass();
+#define DECLARE_EMSCRIPTEN_BINDING() \
+public:                              \
+  static void bindEmscriptenClass();
 
 #define EMSCRIPTEN_BINDING_BEGIN(ObjectClass) void ObjectClass::bindEmscriptenClass() {
 

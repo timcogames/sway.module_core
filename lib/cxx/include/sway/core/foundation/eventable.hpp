@@ -15,17 +15,19 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-using EmitPredicate_t = std::function<bool(EventHandler *)>;
+using EmitPredicate_t = std::function<bool(EventHandler::Ptr_t)>;
 
 class Eventable {
-public:
   DECLARE_EMSCRIPTEN_BINDING()
+
+public:
+  using Ptr_t = Eventable *;
 
   Eventable() = default;
 
   ~Eventable() = default;
 
-  void subscribe(Eventable *sender, const std::string &eventname, EventHandler *handler);
+  void subscribe(Eventable *sender, const std::string &eventname, EventHandler::Ptr_t handler);
 
   void unsubscribe(const std::string &eventname);
 
@@ -34,7 +36,7 @@ public:
   auto findEventHandler(const std::string &eventname) -> EventHandler *;
 
 protected:
-  std::vector<EventHandler *> eventHandlers_;  // Обработчики событий.
+  std::vector<EventHandler::Ptr_t> eventHandlers_;  // Обработчики событий.
 };
 
 NAMESPACE_END(foundation)
