@@ -9,19 +9,26 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(detail)
 
-template <typename Enum>
-using enableEnum_t =
-    typename std::enable_if<std::is_enum<Enum>::value, typename std::underlying_type<Enum>::type>::type;
+// clang-format off
+template <typename TDataType> using IsEnum_t = std::is_enum<TDataType>;
+template <typename TDataType> using IsIntegral_t = std::is_integral<TDataType>;
+// clang-format on
 
-template <typename Enum>
-constexpr inline enableEnum_t<Enum> toUnderlying(Enum key) noexcept {
-  return static_cast<typename std::underlying_type<Enum>::type>(key);
+template <bool TCondition, typename TDataType = void>
+using EnableIf_t = typename std::enable_if_t<TCondition, TDataType>;
+
+template <typename TEnum>
+using BaseEnumType_t = typename std::underlying_type<TEnum>::type;
+
+template <typename TEnum>
+constexpr inline auto toBase(TEnum key) noexcept -> EnableIf_t<IsEnum_t<TEnum>::value, BaseEnumType_t<TEnum>> {
+  return static_cast<BaseEnumType_t<TEnum>>(key);
 }
 
-template <typename Enum, typename Type>
-constexpr inline typename std::enable_if<std::is_enum<Enum>::value && std::is_integral<Type>::value, Enum>::type toEnum(
-    Type value) noexcept {
-  return static_cast<Enum>(value);
+template <typename TEnum, typename TDataType>
+constexpr inline auto toEnum(
+    TDataType val) noexcept -> EnableIf_t<IsEnum_t<TEnum>::value && IsIntegral_t<TDataType>::value, TEnum> {
+  return static_cast<TEnum>(val);
 }
 
 NAMESPACE_END(detail)

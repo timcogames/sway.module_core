@@ -127,8 +127,8 @@ TEST_F(ModelTest, Event) {
 //-------------------------------------------
 
 struct TestEventData : public foundation::EventData {
-  s32_t prev;
-  s32_t next;
+  i32_t prev;
+  i32_t next;
 
   MTHD_OVERRIDE(std::string serialize() const) { return ""; }
 

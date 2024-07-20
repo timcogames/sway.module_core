@@ -19,7 +19,7 @@ public:
   virtual ~Exception() throw() = default;
 
   [[nodiscard]]
-  virtual lpcstr_t what() const throw() {
+  virtual auto what() const throw() -> lpcstr_t {
     return message_.c_str();
   }
 

@@ -20,28 +20,28 @@ public:
 
   Version(const Version &version);
 
-  explicit Version(s32_t major, s32_t minor = DONT_CARE, s32_t patch = DONT_CARE, lpcstr_t extra = "\0");
+  explicit Version(i32_t major, i32_t minor = DONT_CARE, i32_t patch = DONT_CARE, lpcstr_t extra = "\0");
 
   ~Version() = default;
 
-  void setMajor(s32_t major) { major_ = major; }
+  void setMajor(i32_t major) { major_ = major; }
 
   [[nodiscard]]
-  auto getMajor() const -> s32_t {
+  auto getMajor() const -> i32_t {
     return major_;
   }
 
-  void setMinor(s32_t minor) { minor_ = minor; }
+  void setMinor(i32_t minor) { minor_ = minor; }
 
   [[nodiscard]]
-  auto getMinor() const -> s32_t {
+  auto getMinor() const -> i32_t {
     return minor_;
   }
 
-  void setPatch(s32_t patch) { patch_ = patch; }
+  void setPatch(i32_t patch) { patch_ = patch; }
 
   [[nodiscard]]
-  auto getPatch() const -> s32_t {
+  auto getPatch() const -> i32_t {
     return patch_;
   }
 
@@ -52,9 +52,10 @@ public:
     return extra_;
   }
 
-  auto compare(const Version &version) const -> s32_t;
+  [[nodiscard]]
+  auto compare(const Version &version) const -> i32_t;
 
-  inline Version &operator=(const Version &version) {
+  Version &operator=(const Version &version) {
     major_ = version.getMajor();
     minor_ = version.getMinor();
     patch_ = version.getPatch();
@@ -63,22 +64,22 @@ public:
     return *this;
   }
 
-  inline bool operator<(const Version &version) const { return compare(version) < 0; }
+  auto operator<(const Version &version) const -> bool { return compare(version) < 0; }
 
-  inline bool operator>(const Version &version) const { return compare(version) > 0; }
+  auto operator>(const Version &version) const -> bool { return compare(version) > 0; }
 
-  inline bool operator==(const Version &version) const { return compare(version) == 0; }
+  auto operator==(const Version &version) const -> bool { return compare(version) == 0; }
 
-  inline bool operator!=(const Version &version) const { return compare(version) != 0; }
+  auto operator!=(const Version &version) const -> bool { return compare(version) != 0; }
 
-  inline bool operator>=(const Version &version) const { return *this > version || *this == version; }
+  auto operator>=(const Version &version) const -> bool { return *this > version || *this == version; }
 
-  inline bool operator<=(const Version &version) const { return *this < version || *this == version; }
+  auto operator<=(const Version &version) const -> bool { return *this < version || *this == version; }
 
 private:
-  s32_t major_;  // Главный номер версии.
-  s32_t minor_;  // Вспомогательный номер версии.
-  s32_t patch_;  // Уровень исправлений.
+  i32_t major_;  // Главный номер версии.
+  i32_t minor_;  // Вспомогательный номер версии.
+  i32_t patch_;  // Уровень исправлений.
   std::string extra_;  // Дополнительные символы.
 };
 

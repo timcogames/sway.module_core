@@ -14,13 +14,13 @@ Version::Version(const Version &version)
     , patch_(version.getPatch())
     , extra_(version.getExtra()) {}
 
-Version::Version(s32_t major, s32_t minor, s32_t patch, lpcstr_t extra)
+Version::Version(i32_t major, i32_t minor, i32_t patch, lpcstr_t extra)
     : major_(major)
     , minor_(minor)
     , patch_(patch)
     , extra_(extra) {}
 
-auto Version::compare(const Version &version) const -> s32_t {
+auto Version::compare(const Version &version) const -> i32_t {
   if (major_ < version.getMajor()) {
     return -1;
   }

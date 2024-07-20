@@ -21,7 +21,7 @@ TEST(VersionTest, DefaultConstructor) {
  *        которые были заданы.
  */
 TEST(VersionTest, ComponentConstructor) {
-  const s32_t major = 1, minor = 2, patch = 3;
+  const i32_t major = 1, minor = 2, patch = 3;
   const core::Version version(major, minor, patch, "tmp");
 
   ASSERT_EQ(version.getMajor(), major);
@@ -34,7 +34,7 @@ TEST(VersionTest, ComponentConstructor) {
  * @brief Убеждаемся, что установка всех компонентов версии проходит правильно.
  */
 TEST(VersionTest, Setters) {
-  const s32_t major = 1, minor = 2, patch = 3;
+  const i32_t major = 1, minor = 2, patch = 3;
   core::Version version;
 
   version.setMajor(major);

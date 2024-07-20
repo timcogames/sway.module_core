@@ -9,7 +9,21 @@
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
-enum class ValueDataType : u32_t { BYTE, SHORT, INT, LONG, UBYTE, USHORT, UINT, ULONG, FLOAT, DOUBLE, STRING };
+enum class ValueDataType : u32_t {
+  BYTE = 0,
+  SHORT,
+  INT,
+  LONG,
+  UBYTE,
+  USHORT,
+  UINT,
+  ULONG,
+  FLOAT,
+  DOUBLE,
+  STRING,
+
+  Latest
+};
 
 NAMESPACE_BEGIN(detail)
 
@@ -22,9 +36,9 @@ struct EnumToValueDataType {};
 #include <sway/core/detail/valuedatatypemacros.hpp>
 
 DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::BYTE, s8_t)
-DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::SHORT, s16_t)
-DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::INT, s32_t)
-DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::LONG, s64_t)
+DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::SHORT, i16_t)
+DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::INT, i32_t)
+DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::LONG, i64_t)
 DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::UBYTE, u8_t)
 DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::USHORT, u16_t)
 DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::UINT, u32_t)

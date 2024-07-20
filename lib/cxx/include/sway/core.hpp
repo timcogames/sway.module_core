@@ -56,6 +56,7 @@
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/numeraltypes.hpp>
 #include <sway/types.hpp>
 #include <sway/visibilitymacros.hpp>
 

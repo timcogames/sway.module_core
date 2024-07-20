@@ -26,7 +26,7 @@ struct GenericValueData : public ValueData {
 
   // clang-format off
   MTHD_OVERRIDE(auto type() const -> u32_t) {  // clang-format on
-    return detail::toUnderlying(detail::ValueDataTypeToEnum<TValueType>::value);
+    return detail::toBase(detail::ValueDataTypeToEnum<TValueType>::value);
   }
 };
 

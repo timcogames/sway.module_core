@@ -17,19 +17,19 @@ public:
       : flags_() {}
 
   auto set(TEnumClass flag) -> EnumClassBitset & {
-    flags_.flip(toUnderlying(flag));
+    flags_.flip(toBase(flag));
     return *this;
   }
 
   auto rem(TEnumClass flag) -> EnumClassBitset & {
-    flags_.reset(toUnderlying(flag));
+    flags_.reset(toBase(flag));
     return *this;
   }
 
-  auto has(TEnumClass flag) const -> bool { return flags_.test(toUnderlying(flag)); }
+  auto has(TEnumClass flag) const -> bool { return flags_.test(toBase(flag)); }
 
 private:
-  std::bitset<toUnderlying(TEnumClass::Latest)> flags_;
+  std::bitset<toBase(TEnumClass::Latest)> flags_;
 };
 
 NAMESPACE_END(detail)

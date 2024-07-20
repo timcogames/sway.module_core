@@ -17,7 +17,7 @@ public:
 class HierarchyChildTraverser : public util::Traverser {
 public:
   MTHD_OVERRIDE(u32_t visit([[maybe_unused]] util::Visitable *node)) {
-    return detail::toUnderlying(util::Traverser::Action::CONTINUE);
+    return detail::toBase(util::Traverser::Action::CONTINUE);
   }
 };
 

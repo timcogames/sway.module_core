@@ -13,9 +13,9 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-constexpr s32_t NODEIDX_NEGATIVE = (-1);
-constexpr s32_t NODEIDX_ROOT = NODEIDX_NEGATIVE;
-constexpr s32_t NODEIDX_ROOT_DEPTH = 1;
+constexpr i32_t NODEIDX_NEGATIVE = (-1);
+constexpr i32_t NODEIDX_ROOT = NODEIDX_NEGATIVE;
+constexpr i32_t NODEIDX_ROOT_DEPTH = 1;
 
 #define NODEIDX_CHAIN_INITIALROOT std::vector<int>({NODEIDX_ROOT})
 
@@ -23,7 +23,7 @@ class NodeIdx {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-  using index_t = s32_t;
+  using index_t = i32_t;
   using chain_t = std::vector<NodeIdx::index_t>;
 
   static auto chainToStr(const NodeIdx::chain_t &chain) -> std::string;

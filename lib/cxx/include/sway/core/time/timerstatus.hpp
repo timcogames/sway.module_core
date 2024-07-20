@@ -14,14 +14,14 @@ NAMESPACE_BEGIN(time)
 enum class TimerStatus : u32_t { STOPPED = 0, RUNNING, PAUSED, Latest };
 
 struct TimerStatusUtil {
-  template <typename INPUT_DATA_TYPE, typename = std::enable_if_t<std::is_same_v<INPUT_DATA_TYPE, u32_t>>>
+  template <typename INPUT_DATA_TYPE, typename = detail::EnableIf_t<std::is_same_v<INPUT_DATA_TYPE, u32_t>>>
   static auto as(INPUT_DATA_TYPE status) -> TimerStatus {
     return detail::toEnum<TimerStatus>(status);
   }
 
-  template <typename INPUT_DATA_TYPE, typename = std::enable_if_t<std::is_same_v<INPUT_DATA_TYPE, TimerStatus>>>
+  template <typename INPUT_DATA_TYPE, typename = detail::EnableIf_t<std::is_same_v<INPUT_DATA_TYPE, TimerStatus>>>
   static auto as(INPUT_DATA_TYPE status) -> u32_t {
-    return detail::toUnderlying<TimerStatus>(status);
+    return detail::toBase<TimerStatus>(status);
   }
 
   static auto has(u32_t lhs, TimerStatus rhs) -> bool { return lhs == TimerStatusUtil::as(rhs); }

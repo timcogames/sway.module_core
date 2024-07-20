@@ -43,19 +43,19 @@ auto Node::traverse(util::Traverser *traverser) -> u32_t {
   switch (static_cast<util::Traverser::Action>(traverser->visit(this))) {
     case util::Traverser::Action::CONTINUE:
       for (const auto &node : getChildNodes()) {
-        if (node->traverse(traverser) == detail::toUnderlying(util::Traverser::Action::ABORT)) {
-          return detail::toUnderlying(util::Traverser::Action::ABORT);
+        if (node->traverse(traverser) == detail::toBase(util::Traverser::Action::ABORT)) {
+          return detail::toBase(util::Traverser::Action::ABORT);
         }
       }
 
     case util::Traverser::Action::PRUNE:
-      return detail::toUnderlying(util::Traverser::Action::CONTINUE);
+      return detail::toBase(util::Traverser::Action::CONTINUE);
 
     case util::Traverser::Action::ABORT:
       break;
   }
 
-  return detail::toUnderlying(util::Traverser::Action::ABORT);
+  return detail::toBase(util::Traverser::Action::ABORT);
 }
 
 void Node::addChildNode(std::shared_ptr<Node> child) {
