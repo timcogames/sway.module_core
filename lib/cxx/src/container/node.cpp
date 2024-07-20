@@ -234,7 +234,7 @@ auto getChildNodes(Node::JsPtr_t node) -> Node::JsPtr_t * {
   return result;
 }
 
-auto getNumOfChildNodes(Node::JsPtr_t node) -> s32_t {
+auto getNumOfChildNodes(Node::JsPtr_t node) -> i32_t {
   auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO

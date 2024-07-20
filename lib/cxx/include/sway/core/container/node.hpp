@@ -113,7 +113,7 @@ D_MODULE_CORE_INTERFACE_EXPORT_API auto getNodeIdx(Node::JsPtr_t node) -> lpcstr
 
 D_MODULE_CORE_INTERFACE_EXPORT_API auto getChildNodes(Node::JsPtr_t node) -> Node::JsPtr_t *;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getNumOfChildNodes(Node::JsPtr_t node) -> s32_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getNumOfChildNodes(Node::JsPtr_t node) -> i32_t;
 
 EXTERN_C_END
 #endif

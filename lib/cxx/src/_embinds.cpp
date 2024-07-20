@@ -18,8 +18,8 @@ using namespace sway::core::container;
 
 #  include <emscripten/bind.h>
 
-std::vector<s32_t> toIntegerVec(const emscripten::val &data) {
-  return emscripten::convertJSArrayToNumberVector<s32_t>(data);
+std::vector<i32_t> toIntegerVec(const emscripten::val &data) {
+  return emscripten::convertJSArrayToNumberVector<i32_t>(data);
 }
 
 EMSCRIPTEN_BINDINGS(sway_core) {
