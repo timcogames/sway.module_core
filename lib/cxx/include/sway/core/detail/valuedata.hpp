@@ -13,21 +13,21 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 
 struct ValueData {
-  // clang-format off
-  PURE_VIRTUAL(auto type() const -> u32_t);  // clang-format on
+  PURE_VIRTUAL(auto type() const -> u32_t);
 };
 
-template <typename TValueType>
+template <typename VALUE_TYPE>
 struct GenericValueData : public ValueData {
-  TValueType value;
+  VALUE_TYPE value;
 
-  GenericValueData(TValueType val)
+  GenericValueData(VALUE_TYPE val)
       : value(val) {}
 
-  // clang-format off
-  MTHD_OVERRIDE(auto type() const -> u32_t) {  // clang-format on
-    return detail::toBase(detail::ValueDataTypeToEnum<TValueType>::value);
-  }
+#pragma region "Override ValueData methods"
+
+  MTHD_OVERRIDE(auto type() const -> u32_t) { return detail::toBase(detail::ValueDataTypeToEnum<VALUE_TYPE>::value); }
+
+#pragma endregion
 };
 
 NAMESPACE_END(core)

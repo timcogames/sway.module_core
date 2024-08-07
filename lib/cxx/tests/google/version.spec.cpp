@@ -7,7 +7,7 @@ using namespace sway;
 /**
  * @brief Убеждаемся, что конструктор по умолчанию приводит все компоненты к нулю.
  */
-TEST(VersionTest, DefaultConstructor) {
+TEST(VersionTest, ctor_def) {
   const core::Version version;
 
   ASSERT_EQ(version.getMajor(), DONT_CARE);
@@ -20,7 +20,7 @@ TEST(VersionTest, DefaultConstructor) {
  * @brief Убеждаемся, что конструктор устанавливает все значения компонентов в те,
  *        которые были заданы.
  */
-TEST(VersionTest, ComponentConstructor) {
+TEST(VersionTest, ctor_comps) {
   const i32_t major = 1, minor = 2, patch = 3;
   const core::Version version(major, minor, patch, "tmp");
 
@@ -33,7 +33,7 @@ TEST(VersionTest, ComponentConstructor) {
 /**
  * @brief Убеждаемся, что установка всех компонентов версии проходит правильно.
  */
-TEST(VersionTest, Setters) {
+TEST(VersionTest, setters) {
   const i32_t major = 1, minor = 2, patch = 3;
   core::Version version;
 
@@ -53,7 +53,7 @@ TEST(VersionTest, Setters) {
 /**
  * @brief Тест для оператора равенства.
  */
-TEST(VersionTest, EqualityOperator) {
+TEST(VersionTest, equality_operator) {
   const core::Version version(1, 2, 3);
 
   ASSERT_TRUE(version == core::Version(1, 2, 3));
@@ -62,7 +62,7 @@ TEST(VersionTest, EqualityOperator) {
 /**
  * @brief Тест для оператора неравенства.
  */
-TEST(VersionTest, NonEqualityOperator) {
+TEST(VersionTest, non_equality_operator) {
   const core::Version version(1, 2, 3);
 
   ASSERT_NE(version, core::Version(1));
@@ -72,7 +72,7 @@ TEST(VersionTest, NonEqualityOperator) {
 /**
  * @brief Убеждаемся, что сравнение номеров версий происходит правильно.
  */
-TEST(VersionTest, ComparisonOperation) {
+TEST(VersionTest, comparison_operation) {
   const core::Version version(5, 2, 3);
 
   ASSERT_GE(version, core::Version(4));

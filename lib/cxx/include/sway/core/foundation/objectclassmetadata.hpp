@@ -42,14 +42,22 @@ public:
 };
 
 class ObjectClassMetadata {
-public:
   DECLARE_EMSCRIPTEN_BINDING()
 
+public:
   ObjectClassMetadata(lpcstr_t classname, const ObjectClassMetadata *superclass)
       : superclass_(superclass)
       , classname_(classname) {}
-  [[nodiscard]] const ObjectClassMetadata *getSuperclass() const { return superclass_; }
-  [[nodiscard]] const std::string &getClassname() const { return classname_; }
+
+  [[nodiscard]]
+  auto getSuperclass() const -> const ObjectClassMetadata * {
+    return superclass_;
+  }
+
+  [[nodiscard]]
+  auto getClassname() const -> const std::string & {
+    return classname_;
+  }
 
 private:
   const ObjectClassMetadata *superclass_;

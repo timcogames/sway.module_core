@@ -19,9 +19,19 @@ using ObserverArrayIterator_t = ObserverArray_t::const_iterator;
  */
 class IObserver {
 public:
+  using Ptr_t = IObserver *;
+
+#pragma region "Ctors/Dtor"
+
   virtual ~IObserver() = default;
 
+#pragma endregion
+
+#pragma region "Pure virtual methods"
+
   PURE_VIRTUAL(void update());
+
+#pragma endregion
 };
 
 NAMESPACE_END(util)

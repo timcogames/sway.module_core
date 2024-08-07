@@ -13,13 +13,22 @@ NAMESPACE_BEGIN(io)
 
 class FileSource {
 public:
+#pragma region "Ctors/Dtor"
+
   FileSource();
 
   virtual ~FileSource() = default;
 
-  PURE_VIRTUAL(void *loadFromStream(std::ifstream &source));
+#pragma endregion
 
-  [[nodiscard]] auto isFileOpened() const -> bool;
+#pragma region "Pure virtual methods"
+
+  PURE_VIRTUAL(auto loadFromStream(std::ifstream &source) -> void *);
+
+#pragma endregion
+
+  [[nodiscard]]
+  auto isFileOpened() const -> bool;
 
 protected:
   bool opened_;  // Открыт ли файл в данный момент.

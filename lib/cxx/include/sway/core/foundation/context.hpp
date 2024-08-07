@@ -2,6 +2,7 @@
 #define SWAY_CORE_FOUNDATION_CONTEXT_HPP
 
 #include <sway/core/foundation/subsystem.hpp>
+#include <sway/core/foundation/types.hpp>
 #include <sway/core/runtime/exceptions/argumentnullexception.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
@@ -16,16 +17,24 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 class Context {
-public:
   DECLARE_EMSCRIPTEN_BINDING()
+
+public:
+#pragma region "Define aliases"
+
+  using Ptr_t = ContextPtr_t;
+
+#pragma endregion
+
+#pragma region "Ctors/Dtor"
 
   Context() = default;
 
   ~Context() { subsystems_.clear(); }
 
-  void registerSubsystem(std::shared_ptr<Subsystem> obj) {
-    subsystems_.insert(std::make_pair(obj->getClassname(), obj));
-  }
+#pragma endregion
+
+  void registerSubsystem(Subsystem::SharedPtr_t obj) { subsystems_.insert(std::make_pair(obj->getClassname(), obj)); }
 
   void unregisterSubsystem(const std::string &classname) {
     auto iter = subsystems_.find(classname);
@@ -34,21 +43,21 @@ public:
     }
   }
 
-  template <class TConcreteSubsystem>
-  auto getSubsystem(const std::string &classname) const -> std::optional<std::shared_ptr<TConcreteSubsystem>> {
-    static_assert(std::is_base_of<Subsystem, TConcreteSubsystem>::value, "Provided type does not implement Subsystem");
+  template <class TYPE>
+  auto getSubsystem(const std::string &classname) const -> std::optional<std::shared_ptr<TYPE>> {
+    static_assert(std::is_base_of<Subsystem, TYPE>::value, "Provided type does not implement Subsystem");
 
     auto iter = subsystems_.find(classname);
     if (iter != subsystems_.end()) {
-      return std::static_pointer_cast<TConcreteSubsystem>(iter->second);
+      return std::static_pointer_cast<TYPE>(iter->second);
     }
 
     return std::nullopt;
   }
 
-  template <class TConcreteSubsystem>
-  auto getSubsystem() const -> std::optional<std::shared_ptr<TConcreteSubsystem>> {
-    return this->getSubsystem<TConcreteSubsystem>(TConcreteSubsystem::getObjectClassMetadata()->getClassname());
+  template <class TYPE>
+  auto getSubsystem() const -> std::optional<std::shared_ptr<TYPE>> {
+    return this->getSubsystem<TYPE>(TYPE::getObjectClassMetadata()->getClassname());
   }
 
   void initialize() {
@@ -59,7 +68,7 @@ public:
     }
   }
 
-  void tick(float timestep) {
+  void tick(f32_t timestep) {
     for (const auto &[_, subsystem] : subsystems_) {
       subsystem->tick(timestep);
     }
@@ -72,7 +81,7 @@ public:
   }
 
 private:
-  std::unordered_map<std::string, std::shared_ptr<Subsystem>> subsystems_;  // Контейнер объектов.
+  std::unordered_map<std::string, Subsystem::SharedPtr_t> subsystems_;  // Контейнер объектов.
 };
 
 NAMESPACE_END(foundation)

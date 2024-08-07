@@ -12,12 +12,16 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-template <typename TConcreteEvent>
+template <typename TYPE>
 class EventAction {
 public:
-  using EventType_t = TConcreteEvent;
+  using EventType_t = TYPE;
 
-  PURE_VIRTUAL(void apply(std::shared_ptr<TConcreteEvent> evt));
+#pragma region "Pure virtual methods"
+
+  PURE_VIRTUAL(void apply(std::shared_ptr<TYPE> evt));
+
+#pragma endregion
 };
 
 NAMESPACE_END(foundation)

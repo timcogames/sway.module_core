@@ -2,6 +2,7 @@
 #define SWAY_CORE_CONTAINER_NODE_HPP
 
 #include <sway/core/container/nodeidx.hpp>
+#include <sway/core/container/types.hpp>
 #include <sway/core/foundation/declareeventmacros.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventable.hpp>
@@ -32,47 +33,62 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 class Node : public std::enable_shared_from_this<Node>, public util::Visitable, public foundation::Eventable {
-public:
   DECLARE_EMSCRIPTEN(Node)
   DECLARE_EMSCRIPTEN_BINDING()
   DECLARE_EVENT(EVT_ADDED, NodeAdded)
   DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
 
+public:
+#pragma region "Define aliases"
+
+  using Ptr_t = NodePtr_t;
+  using WeakPtr_t = NodeWeakPtr_t;
+  using SharedPtr_t = NodeSharedPtr_t;
+
+#pragma endregion
+
+#pragma region "Ctors/Dtor"
+
   Node();
 
   virtual ~Node();
 
-  // clang-format off
-  MTHD_OVERRIDE(auto traverse(util::Traverser *traverser) -> u32_t);  // clang-format on
+#pragma endregion
 
-  void addChildNode(std::shared_ptr<Node> child);
+#pragma region "Override Visitable methods"
 
-  void removeChildNode(std::shared_ptr<Node> child);
+  MTHD_OVERRIDE(auto traverse(util::Traverser *traverser) -> u32_t);
 
-  auto getChildNodes() -> std::vector<std::shared_ptr<Node>>;
+#pragma endregion
+
+  void addChildNode(Node::SharedPtr_t child);
+
+  void removeChildNode(Node::SharedPtr_t child);
+
+  auto getChildNodes() -> std::vector<Node::SharedPtr_t>;
 
   [[nodiscard]]
-  auto getChildNode(const NodeIdx &idx) const -> std::shared_ptr<Node>;
+  auto getChildNode(const NodeIdx &idx) const -> Node::SharedPtr_t;
 
   [[nodiscard]]
-  auto getChildAt(int targetIdx) const -> std::optional<std::shared_ptr<Node>>;
+  auto getChildAt(int targetIdx) const -> std::optional<Node::SharedPtr_t>;
 
   [[nodiscard]]
   auto getNumOfChildNodes() const -> int;
 
-  void setNodeIdx(const NodeIdx::chain_t &chain, int last);
+  void setNodeIdx(const NodeIdx::Chain_t &chain, int last);
 
   auto getNodeIdx() -> NodeIdx;
 
-  void setParentNode(std::weak_ptr<Node> parent);
+  void setParentNode(Node::WeakPtr_t parent);
 
-  auto getParentNode() -> std::optional<std::shared_ptr<Node>>;
+  auto getParentNode() -> std::optional<Node::SharedPtr_t>;
 
-  auto getParentNodeByDepth(int depth) -> std::shared_ptr<Node>;
+  auto getParentNodeByDepth(int depth) -> Node::SharedPtr_t;
 
-  auto equal(std::shared_ptr<Node> other) -> bool;
+  auto equal(Node::SharedPtr_t other) -> bool;
 
-  auto chainEqual(NodeIdx::chain_t other) -> bool;
+  auto chainEqual(NodeIdx::Chain_t other) -> bool;
 
   void setAsRoot();
 
@@ -84,19 +100,19 @@ public:
   }
 
 protected:
-  template <typename T>
-  auto sharedFrom(T *ptr) -> std::shared_ptr<T> {
-    return std::static_pointer_cast<T>(static_cast<Node *>(ptr)->shared_from_this());
+  template <typename TYPE>
+  auto getSharedFrom(TYPE *ptr) -> std::shared_ptr<TYPE> {
+    return std::static_pointer_cast<TYPE>(static_cast<Node::Ptr_t>(ptr)->shared_from_this());
   }
 
 private:
-  void recursiveAddChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx);
+  void recursiveAddChainLinks(Node::SharedPtr_t child, NodeIdx parentNodeIdx);
 
-  void recursiveRemoveChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx);
+  void recursiveRemoveChainLinks(Node::SharedPtr_t child, NodeIdx parentNodeIdx);
 
   NodeIdx idx_;
-  std::weak_ptr<Node> parent_;
-  std::vector<std::shared_ptr<Node>> children_;
+  Node::WeakPtr_t parent_;
+  std::vector<Node::SharedPtr_t> children_;
   bool visible_;
 };
 

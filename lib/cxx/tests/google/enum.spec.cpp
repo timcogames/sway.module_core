@@ -4,7 +4,7 @@
 
 using namespace sway;
 
-TEST(EnumTest, Unwrap) {
+TEST(EnumTest, unwrap) {
   ASSERT_TRUE(core::detail::toBase(core::ValueDataType::BYTE) == 0);
   ASSERT_TRUE(core::detail::toEnum<core::ValueDataType>(0) == core::ValueDataType::BYTE);
 }

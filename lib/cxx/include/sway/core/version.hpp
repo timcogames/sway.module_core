@@ -16,6 +16,8 @@ NAMESPACE_BEGIN(core)
  */
 class Version {
 public:
+#pragma region "Ctors/Dtor"
+
   Version();
 
   Version(const Version &version);
@@ -23,6 +25,8 @@ public:
   explicit Version(i32_t major, i32_t minor = DONT_CARE, i32_t patch = DONT_CARE, lpcstr_t extra = "\0");
 
   ~Version() = default;
+
+#pragma endregion
 
   void setMajor(i32_t major) { major_ = major; }
 

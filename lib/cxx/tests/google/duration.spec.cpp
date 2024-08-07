@@ -4,14 +4,14 @@
 
 using namespace sway;
 
-TEST(Duration, DefaultConstructor) {
+TEST(Duration, ctor_def) {
   core::time::Duration d0;
 
   EXPECT_DOUBLE_EQ(d0.asSeconds(), 0.0);
   EXPECT_DOUBLE_EQ(d0.asMillis(), 0.0);
 }
 
-TEST(Duration, ComponentConstructor) {
+TEST(Duration, ctor_comps) {
   core::time::Duration d0(1000);
   core::time::Duration d1(d0);
 

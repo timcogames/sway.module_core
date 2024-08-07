@@ -14,10 +14,13 @@ NAMESPACE_BEGIN(container)
 struct NodeEventData : public foundation::EventData {
   NodeIdx nodeidx;
 
-  // clang-format off
-  MTHD_OVERRIDE(auto serialize() const -> std::string) { return ""; }  // clang-format on
+#pragma region "Override EventData methods"
+
+  MTHD_OVERRIDE(auto serialize() const -> std::string) { return ""; }
 
   MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
+
+#pragma endregion
 };
 
 NAMESPACE_END(container)

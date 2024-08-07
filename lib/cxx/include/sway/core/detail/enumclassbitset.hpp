@@ -10,26 +10,26 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(detail)
 
-template <typename TEnumClass>
+template <typename ENUM>
 class EnumClassBitset {
 public:
   EnumClassBitset()
       : flags_() {}
 
-  auto set(TEnumClass flag) -> EnumClassBitset & {
+  auto set(ENUM flag) -> EnumClassBitset & {
     flags_.flip(toBase(flag));
     return *this;
   }
 
-  auto rem(TEnumClass flag) -> EnumClassBitset & {
+  auto rem(ENUM flag) -> EnumClassBitset & {
     flags_.reset(toBase(flag));
     return *this;
   }
 
-  auto has(TEnumClass flag) const -> bool { return flags_.test(toBase(flag)); }
+  auto has(ENUM flag) const -> bool { return flags_.test(toBase(flag)); }
 
 private:
-  std::bitset<toBase(TEnumClass::Latest)> flags_;
+  std::bitset<toBase(ENUM::Latest)> flags_;
 };
 
 NAMESPACE_END(detail)

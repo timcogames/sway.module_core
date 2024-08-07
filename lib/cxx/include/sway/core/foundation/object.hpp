@@ -2,6 +2,7 @@
 #define SWAY_CORE_FOUNDATION_OBJECT_HPP
 
 #include <sway/core/foundation/objectclassmetadata.hpp>
+#include <sway/core/foundation/types.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 
@@ -16,21 +17,25 @@ class Object {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
+#pragma region "Ctors/Dtor"
+
   Object()
       : context_(nullptr) {}
 
-  explicit Object(Context *ctx)
+  explicit Object(ContextPtr_t ctx)
       : context_(ctx) {}
 
-  auto getContext() -> Context * { return context_; }
+#pragma endregion
 
-  template <class TConcreteContext>
-  auto getContext() -> TConcreteContext * {
-    return static_cast<TConcreteContext *>(context_);
+  auto getContext() -> ContextPtr_t { return context_; }
+
+  template <class TYPE>
+  auto getContext() -> TYPE * {
+    return static_cast<TYPE *>(context_);
   }
 
 private:
-  Context *context_;
+  ContextPtr_t context_;
 };
 
 NAMESPACE_END(foundation)

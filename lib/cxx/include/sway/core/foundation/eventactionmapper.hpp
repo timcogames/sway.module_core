@@ -14,13 +14,19 @@ NAMESPACE_BEGIN(foundation)
 
 class ActionMapper {
 public:
+#pragma region "Pure virtual methods"
+
   PURE_VIRTUAL(void registerEvents(EventApplier *applier));
+
+#pragma endregion
 };
 
-template <typename... TEventArgs>
-class EventActionMapper : public ActionMapper, public TEventArgs... {
+template <typename... ARGS>
+class EventActionMapper : public ActionMapper, public ARGS... {
 public:
   virtual ~EventActionMapper() = default;
+
+#pragma region "Override ActionMapper methods"
 
   MTHD_OVERRIDE(void registerEvents(EventApplier *applier)) {
     auto self = this;
@@ -30,10 +36,12 @@ public:
     });
   }
 
+#pragma endregion
+
 private:
-  template <typename TVisitor>
-  void doForEachEvent(EventActionMapper *self, TVisitor &&visitor) {
-    (void(visitor(static_cast<TEventArgs *>(self))), ...);
+  template <typename VISITOR>
+  void doForEachEvent(EventActionMapper *self, VISITOR &&visitor) {
+    (void(visitor(static_cast<ARGS *>(self))), ...);
   }
 };
 

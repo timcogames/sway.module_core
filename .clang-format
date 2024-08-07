@@ -34,10 +34,15 @@ IncludeCategories:
     CaseSensitive:   true
 IndentPPDirectives: AfterHash
 AlignEscapedNewlines: Left
+Macros:
+  - PURE_VIRTUAL(x)=x
+  - MTHD_VIRTUAL(x)=x
+  - MTHD_OVERRIDE(x)=x
 TypenameMacros:
   - NAMESPACE_BEGIN
   - NAMESPACE_END
   - PURE_VIRTUAL
+  - MTHD_VIRTUAL
   - MTHD_OVERRIDE
   - DECLARE_SUPERCLASS
   - DECLARE_CLASS_METADATA
@@ -46,4 +51,6 @@ TypenameMacros:
   - DECLARE_EMSCRIPTEN_BINDING
   - EMSCRIPTEN_BINDING_BEGIN
   - EMSCRIPTEN_BINDING_END
+  - TEST
+  - TEST_F
 AlwaysBreakTemplateDeclarations: true

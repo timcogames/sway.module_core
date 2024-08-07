@@ -3,6 +3,7 @@
 
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeidx.hpp>
+#include <sway/core/container/types.hpp>
 #include <sway/coremacros.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
@@ -31,7 +32,7 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 struct NodeData {
-  std::vector<NodeIdx::index_t> nodeidx;
+  std::vector<NodeIdx::Index_t> nodeidx;
   std::string name;
 };
 
@@ -46,18 +47,33 @@ class Hierarchy {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-  static auto findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx) -> std::optional<std::shared_ptr<Node>>;
+#pragma region "Define aliases"
+
+  using Ptr_t = HierarchyPtr_t;
+  using SharedPtr_t = HierarchySharedPtr_t;
+
+#pragma endregion
+
+#pragma region "Static methods"
+
+  static auto findNode(Node::SharedPtr_t parent, const NodeIdx &nodeIdx) -> std::optional<Node::SharedPtr_t>;
+
+#pragma endregion
+
+#pragma region "Ctors/Dtor"
 
   Hierarchy();
 
   ~Hierarchy() = default;
 
-  auto getRootNode() -> std::shared_ptr<Node>;
+#pragma endregion
 
-  void setRootNode(std::shared_ptr<Node> root);
+  auto getRootNode() -> Node::SharedPtr_t;
+
+  void setRootNode(Node::SharedPtr_t root);
 
 private:
-  std::shared_ptr<Node> root_;
+  Node::SharedPtr_t root_;
 };
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)

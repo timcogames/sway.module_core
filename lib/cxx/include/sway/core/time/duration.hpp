@@ -11,10 +11,16 @@ NAMESPACE_BEGIN(time)
 
 class Duration {
 public:
-  template <ChronoUnit TUnit>
+#pragma region "Static methods"
+
+  template <ChronoUnit UNIT>
   static auto of(f64_t val) -> Duration {
-    return Duration(val * CHRONO_UNIT_TABLE.at(TUnit));
+    return Duration(val * CHRONO_UNIT_TABLE.at(UNIT));
   }
+
+#pragma endregion
+
+#pragma region "Ctors/Dtor"
 
   Duration()
       : ticks_(0) {}
@@ -26,6 +32,8 @@ public:
       : ticks_(rhs.getRaw()) {}
 
   ~Duration() = default;
+
+#pragma endregion
 
   [[nodiscard]]
   auto getRaw() const -> f64_t {

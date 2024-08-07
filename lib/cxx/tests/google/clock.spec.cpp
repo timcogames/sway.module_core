@@ -4,7 +4,7 @@
 
 using namespace sway;
 
-TEST(ClockTest, Since) {
+TEST(ClockTest, since) {
   const std::size_t NUM_ITERATIONS = 1000000;
   auto t = core::time::Clock::now();
 

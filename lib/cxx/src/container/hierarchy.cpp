@@ -28,9 +28,9 @@ EMSCRIPTEN_BINDING_END()
 
 Hierarchy::Hierarchy() { root_ = std::make_shared<Node>(); }
 
-auto Hierarchy::findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx) -> std::optional<std::shared_ptr<Node>> {
-  std::optional<std::shared_ptr<Node>> retrieved = parent;
-  for (int i = NODEIDX_ROOT_DEPTH; i < nodeIdx.getDepth(); ++i) {
+auto Hierarchy::findNode(Node::SharedPtr_t parent, const NodeIdx &nodeIdx) -> std::optional<Node::SharedPtr_t> {
+  std::optional<Node::SharedPtr_t> retrieved = parent;
+  for (auto i = NODEIDX_ROOT_DEPTH; i < nodeIdx.getDepth(); ++i) {
     if (nodeIdx.getIdxAt(i) >= retrieved->get()->getNumOfChildNodes()) {
       return std::nullopt;
     }
@@ -41,9 +41,9 @@ auto Hierarchy::findNode(std::shared_ptr<Node> parent, const NodeIdx &nodeIdx) -
   return retrieved;
 }
 
-auto Hierarchy::getRootNode() -> std::shared_ptr<Node> { return root_; }
+auto Hierarchy::getRootNode() -> Node::SharedPtr_t { return root_; }
 
-void Hierarchy::setRootNode(std::shared_ptr<Node> root) { root_ = root; }
+void Hierarchy::setRootNode(Node::SharedPtr_t root) { root_ = root; }
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 

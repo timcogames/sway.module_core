@@ -11,10 +11,7 @@ class EventDataWrapper : public emscripten::wrapper<EventData> {
 public:
   EMSCRIPTEN_WRAPPER(EventDataWrapper);
 
-  // clang-format off
-  MTHD_OVERRIDE(auto serialize() const -> std::string) {  // clang-format on
-    return call<std::string>("serialize");
-  }
+  MTHD_OVERRIDE(auto serialize() const -> std::string) { return call<std::string>("serialize"); }
 
   MTHD_OVERRIDE(void deserialize(const std::string &data)) { return call<void>("deserialize", data); }
 };

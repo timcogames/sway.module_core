@@ -6,7 +6,7 @@ using namespace sway;
 
 typedef core::binding::TFunction<void()> TestFunc_t;
 
-TEST(FunctionTest, Base) {
+TEST(FunctionTest, base) {
   TestFunc_t func;
   ASSERT_FALSE(func);
   func = (core::binding::ProcAddress_t)[](){};

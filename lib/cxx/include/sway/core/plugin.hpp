@@ -29,18 +29,24 @@ using PluginInitializeFunc_t = binding::TFunction<void(PluginFunctionSet *)>;
 
 class Plugin {
 public:
+#pragma region "Ctors/Dtor"
+
   Plugin(const generic::io::Path &filepath, int flags);
 
   ~Plugin();
 
-  [[nodiscard]] bool isLoaded() const;
+#pragma endregion
 
-  [[nodiscard]] auto getInfo() const -> PluginInfo;
+  [[nodiscard]]
+  auto isLoaded() const -> bool;
+
+  [[nodiscard]]
+  auto getInfo() const -> PluginInfo;
 
   void initialize(PluginFunctionSet *functions);
 
-  template <typename TCallbackFunc>
-  auto getMethod(lpcstr_t name) const -> TCallbackFunc {
+  template <typename CALLBACK>
+  auto getMethod(lpcstr_t name) const -> CALLBACK {
     auto func = (core::binding::ProcAddress_t)dlsym(handle_, name);
     if (!func) {
 #ifdef EMSCRIPTEN_PLATFORM
@@ -50,7 +56,7 @@ public:
 #endif
     }
 
-    return static_cast<TCallbackFunc>(func);
+    return static_cast<CALLBACK>(func);
   }
 
 private:

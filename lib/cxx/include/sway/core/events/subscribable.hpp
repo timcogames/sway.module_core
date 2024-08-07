@@ -14,20 +14,16 @@ NAMESPACE_BEGIN(evts)
 
 class Subscribable {
 protected:
-  std::vector<EventHandler *> subscriptions_;
+  std::vector<EventHandler::Ptr_t> subscriptions_;
 
 public:
-  using Subscriber = decltype(subscriptions_)::iterator;
+  using Subscriber_t = decltype(subscriptions_)::iterator;
 
-  auto subscribe(EventHandler *handler) -> Subscriber { return subscriptions_.insert(subscriptions_.end(), handler); }
+  auto subscribe(EventHandler::Ptr_t handler) -> Subscriber_t;
 
-  void unsubscribe(Subscriber subscriber) { subscriptions_.erase(subscriber); }
+  void unsubscribe(Subscriber_t subscriber);
 
-  void handle(const std::unique_ptr<foundation::Event> &event) {
-    for (auto &handler : this->subscriptions_) {
-      handler->invoke(event);
-    }
-  }
+  void handle(const foundation::Event::UniquePtr_t &evt);
 };
 
 NAMESPACE_END(evts)

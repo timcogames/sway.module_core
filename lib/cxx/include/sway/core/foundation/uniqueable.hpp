@@ -15,22 +15,29 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
-template <typename TValueType>
+template <typename VALUE_TYPE>
 class Uniqueable {
-public:
   DECLARE_EMSCRIPTEN_BINDING()
 
-  Uniqueable(const std::optional<TValueType> &uid)
+public:
+#pragma region "Ctors/Dtor"
+
+  Uniqueable(const std::optional<VALUE_TYPE> &uid)
       : uid_(uid) {}
 
   ~Uniqueable() = default;
 
-  [[nodiscard]] auto getUid() const -> std::optional<TValueType> { return uid_; }
+#pragma endregion
 
-  void setUid(const std::optional<TValueType> &uid) { uid_ = uid; }
+  [[nodiscard]]
+  auto getUid() const -> std::optional<VALUE_TYPE> {
+    return uid_;
+  }
+
+  void setUid(const std::optional<VALUE_TYPE> &uid) { uid_ = uid; }
 
 private:
-  std::optional<TValueType> uid_;  // Уникальный идентификатор.
+  std::optional<VALUE_TYPE> uid_;  // Уникальный идентификатор.
 };
 
 #include <sway/core/foundation/uniqueable_embind.inl>

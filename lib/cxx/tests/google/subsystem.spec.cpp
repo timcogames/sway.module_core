@@ -8,29 +8,41 @@ using namespace sway;
 using namespace sway::core;
 
 class MySubsystem : public foundation::Subsystem {
-public:
   DECLARE_CLASS_METADATA(MySubsystem, foundation::Subsystem)
 
-  explicit MySubsystem(foundation::Context *ctx)
+public:
+#pragma region "Ctors/Dtor"
+
+  explicit MySubsystem(foundation::Context::Ptr_t ctx)
       : foundation::Subsystem(ctx) {}
+
+#pragma endregion
+
+#pragma region "Override Subsystem methods"
 
   MTHD_OVERRIDE(bool initialize()) { return true; }
 
-  MTHD_OVERRIDE(void tick(float timestep)) {}
+  MTHD_OVERRIDE(void tick(float dtm)) {}
 
   MTHD_OVERRIDE(void shutdown()) {}
+
+#pragma endregion
 };
 
 class ContextTest : public testing::Test {
 public:
+#pragma region "Override Test methods"
+
   MTHD_OVERRIDE(void SetUp()) { context_ = new foundation::Context(); }
 
   MTHD_OVERRIDE(void TearDown()) { delete context_; }
 
-  foundation::Context *context_;
+#pragma endregion
+
+  foundation::Context::Ptr_t context_;
 };
 
-TEST_F(ContextTest, setRootNode) {
+TEST_F(ContextTest, get_subsystem) {
   context_->registerSubsystem(std::make_shared<MySubsystem>(context_));
   auto subsystem = context_->getSubsystem<MySubsystem>("MySubsystem");
   EXPECT_NE(subsystem, std::nullopt);

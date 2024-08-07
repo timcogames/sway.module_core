@@ -27,10 +27,10 @@ enum class ValueDataType : u32_t {
 
 NAMESPACE_BEGIN(detail)
 
-template <typename TValueType>
+template <typename TYPE>
 struct ValueDataTypeToEnum {};
 
-template <ValueDataType TKey>
+template <ValueDataType KEY>
 struct EnumToValueDataType {};
 
 #include <sway/core/detail/valuedatatypemacros.hpp>

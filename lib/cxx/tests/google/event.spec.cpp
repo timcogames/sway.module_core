@@ -23,14 +23,20 @@ using namespace sway::core;
 struct MyEventData : public foundation::EventData {
   std::string value;
 
-  MTHD_OVERRIDE(std::string serialize() const) { return ""; }
+#pragma region "Override EventData methods"
+
+  MTHD_OVERRIDE(auto serialize() const -> std::string) { return ""; }
 
   MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
+
+#pragma endregion
 };
 
 class BaseEvent : public foundation::Event {
-public:
   DECLARE_CLASS_METADATA(BaseEvent, foundation::Event)
+
+public:
+#pragma region "Ctors/Dtor"
 
   BaseEvent(u32_t type, MyEventData *data)
       : id_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))
@@ -39,20 +45,17 @@ public:
 
   virtual ~BaseEvent() = default;
 
-  // clang-format off
-  MTHD_OVERRIDE(auto id() const -> std::string) {  // clang-format on
-    return id_;
-  }
+#pragma endregion
 
-  // clang-format off
-  MTHD_OVERRIDE(auto type() const -> u32_t) {  // clang-format on
-    return type_;
-  }
+#pragma region "Override Event methods"
 
-  // clang-format off
-  MTHD_OVERRIDE(auto data() const -> foundation::EventData *) {  // clang-format on
-    return data_;
-  }
+  MTHD_OVERRIDE(auto id() const -> std::string) { return id_; }
+
+  MTHD_OVERRIDE(auto type() const -> u32_t) { return type_; }
+
+  MTHD_OVERRIDE(auto data() const -> foundation::EventData::Ptr_t) { return data_; }
+
+#pragma endregion
 
 private:
   std::string id_;
@@ -61,9 +64,9 @@ private:
 };
 
 class MyCreatedEvent : public BaseEvent {
-public:
   DECLARE_CLASS_METADATA(MyCreatedEvent, BaseEvent)
 
+public:
   MyCreatedEvent()
       : BaseEvent(EVT_CREATED, nullptr) {}
 
@@ -73,15 +76,24 @@ public:
 
 class MyModelState : public foundation::EventActionMapper<foundation::EventAction<MyCreatedEvent>> {
 public:
+#pragma region "Ctors/Dtor"
+
   MyModelState() = default;
 
   virtual ~MyModelState() = default;
 
-  MTHD_OVERRIDE(void apply(std::shared_ptr<MyCreatedEvent> vent)) {
-    myvalue_ = vent->getConcreteData<MyEventData>().value;
-  }
+#pragma endregion
 
-  [[nodiscard]] std::string getMyValue() const { return myvalue_; }
+#pragma region "Override EventActionMapper methods"
+
+  MTHD_OVERRIDE(void apply(std::shared_ptr<MyCreatedEvent> vent)) { myvalue_ = vent->getConcreteData<MyEventData>().value; }
+
+#pragma endregion
+
+  [[nodiscard]]
+  auto getMyValue() const -> std::string {
+    return myvalue_;
+  }
 
 private:
   std::string myvalue_;
@@ -89,6 +101,8 @@ private:
 
 class MyModel {
 public:
+#pragma region "Ctors/Dtor"
+
   MyModel() {
     applier_ = std::make_shared<foundation::EventApplier>();
     state_ = std::make_shared<MyModelState>();
@@ -97,9 +111,11 @@ public:
 
   ~MyModel() = default;
 
-  void raiseEvent(std::shared_ptr<foundation::Event> evt, bool &applied) { applier_->applyEvent(evt, applied); }
+#pragma endregion
 
-  std::shared_ptr<MyModelState> getState() { return state_; }
+  void raiseEvent(foundation::Event::SharedPtr_t evt, bool &applied) { applier_->applyEvent(evt, applied); }
+
+  auto getState() -> std::shared_ptr<MyModelState> { return state_; }
 
 private:
   std::shared_ptr<foundation::EventApplier> applier_;
@@ -108,14 +124,18 @@ private:
 
 class ModelTest : public ::testing::Test {
 protected:
-  void SetUp() override { model = std::make_shared<MyModel>(); }
+#pragma region "Override Test methods"
 
-  void TearDown() override {}
+  MTHD_OVERRIDE(void SetUp()) { model = std::make_shared<MyModel>(); }
+
+  MTHD_OVERRIDE(void TearDown()) {}
+
+#pragma endregion
 
   std::shared_ptr<MyModel> model;
 };
 
-TEST_F(ModelTest, Event) {
+TEST_F(ModelTest, reise_event) {
   bool applied;
 
   MyEventData userdata;
@@ -130,41 +150,46 @@ struct TestEventData : public foundation::EventData {
   i32_t prev;
   i32_t next;
 
-  MTHD_OVERRIDE(std::string serialize() const) { return ""; }
+#pragma region "Override EventData methods"
+
+  MTHD_OVERRIDE(auto serialize() const -> std::string) { return ""; }
 
   MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
+
+#pragma endregion
 };
 
 class TestSender : public core::foundation::Eventable {
-public:
   DECLARE_EVENT(VALUE_CHANGED, ValueChanged)
 
+public:
   TestSender() = default;
 
   void setValue() {
     TestEventData eventdata;
     eventdata.prev = 2;
     eventdata.next = 5;
-    emit(VALUE_CHANGED, new ValueChangedEvent(0, &eventdata), [&](core::foundation::EventHandler *handler) {
+    emit(VALUE_CHANGED, new ValueChangedEvent(0, &eventdata), [&](core::foundation::EventHandler::Ptr_t handler) {
       std::cout << "EXECUTE:" << std::endl;
       return true;
     });
   }
 
-  void handleValueChanged(core::foundation::Event *evt) {
+  void handleValueChanged(core::foundation::Event::Ptr_t evt) {
     std::cout << "TestReceiver handleValueChanged:" << std::endl;
   }
 };
 
 class TestReceiver : public core::foundation::Eventable {
-public:
   DECLARE_EVENT(VALUE_CHANGED, ValueChanged)
-  void handleValueChanged(core::foundation::Event *evt) {
+
+public:
+  void handleValueChanged(core::foundation::Event::Ptr_t evt) {
     std::cout << "TestReceiver handleValueChanged:" << std::endl;
   }
 };
 
-TEST(AttributeTest, Consumdfde) {
+TEST(AttributeTest, subscribe) {
   auto *testReceiver = new TestReceiver();
   auto *testSender = new TestSender();
 

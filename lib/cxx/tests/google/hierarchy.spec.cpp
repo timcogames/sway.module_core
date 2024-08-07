@@ -7,27 +7,35 @@ using namespace sway::core;
 
 class HierarchyTest : public testing::Test {
 public:
+#pragma region "Override Test methods"
+
   MTHD_OVERRIDE(void SetUp()) { hierarchy_ = new container::Hierarchy(); }
 
   MTHD_OVERRIDE(void TearDown()) { delete hierarchy_; }
 
-  container::Hierarchy *hierarchy_;
+#pragma endregion
+
+  container::Hierarchy::Ptr_t hierarchy_;
 };
 
 class HierarchyChildTraverser : public util::Traverser {
 public:
-  MTHD_OVERRIDE(u32_t visit([[maybe_unused]] util::Visitable *node)) {
+#pragma region "Override Traverser methods"
+
+  MTHD_OVERRIDE(auto visit([[maybe_unused]] util::Visitable::Ptr_t node) -> u32_t) {
     return detail::toBase(util::Traverser::Action::CONTINUE);
   }
+
+#pragma endregion
 };
 
-TEST_F(HierarchyTest, setRootNode) {
+TEST_F(HierarchyTest, set_root_node) {
   auto root = std::make_shared<container::Node>();
   hierarchy_->setRootNode(root);
   ASSERT_STREQ(hierarchy_->getRootNode()->getNodeIdx().toStr().c_str(), "[-1]");
 }
 
-TEST_F(HierarchyTest, addChildNode) {
+TEST_F(HierarchyTest, add_child_node) {
   auto child1 = std::make_shared<container::Node>();
   hierarchy_->getRootNode()->addChildNode(child1);
   ASSERT_STREQ(child1->getNodeIdx().toStr().c_str(), "[-1, 0]");
@@ -37,7 +45,7 @@ TEST_F(HierarchyTest, addChildNode) {
   ASSERT_STREQ(child2->getNodeIdx().toStr().c_str(), "[-1, 1]");
 }
 
-TEST_F(HierarchyTest, findNode) {
+TEST_F(HierarchyTest, find_node) {
   auto child = std::make_shared<container::Node>();
   hierarchy_->getRootNode()->addChildNode(child);
 

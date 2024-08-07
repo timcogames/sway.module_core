@@ -18,8 +18,11 @@ public:
     ABORT  // Прервать обход.
   };
 
-  // clang-format off
-  PURE_VIRTUAL(auto visit(Visitable *node) -> u32_t);  // clang-format on
+#pragma region "Pure virtual methods"
+
+  PURE_VIRTUAL(auto visit(Visitable *node) -> u32_t);
+
+#pragma endregion
 };
 
 NAMESPACE_END(util)

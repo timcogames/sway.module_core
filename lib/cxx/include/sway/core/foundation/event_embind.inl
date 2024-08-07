@@ -12,26 +12,15 @@ class EventWrapper : public emscripten::wrapper<Event> {
 public:
   EMSCRIPTEN_WRAPPER(EventWrapper);
 
-  MTHD_OVERRIDE(const ObjectClassMetadata *getSuperclass() const) {
-    return call<const ObjectClassMetadata *const>("getSuperclass");
-  }
+  MTHD_OVERRIDE(const ObjectClassMetadata *getSuperclass() const) { return call<const ObjectClassMetadata *const>("getSuperclass"); }
 
   MTHD_OVERRIDE(const std::string &getClassname() const) { return call<const std::string &>("getClassname"); }
 
-  // clang-format off
-  MTHD_OVERRIDE(auto id() const -> std::string) {  // clang-format on
-    return call<std::string>("id");
-  }
+  MTHD_OVERRIDE(auto id() const -> std::string) { return call<std::string>("id"); }
 
-  // clang-format off
-  MTHD_OVERRIDE(auto type() const -> u32_t) {  // clang-format on
-    return call<u32_t>("type");
-  }
+  MTHD_OVERRIDE(auto type() const -> u32_t) { return call<u32_t>("type"); }
 
-  // clang-format off
-  MTHD_OVERRIDE(auto data() const -> EventData *) {  // clang-format on
-    return call<EventData *const>("data");
-  }
+  MTHD_OVERRIDE(auto data() const -> EventData::Ptr_t) { return call<EventData::Ptr_t const>("data"); }
 };
 
 #endif

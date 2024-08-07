@@ -18,9 +18,13 @@ public:
   using Ptr_t = EventBus *;
   using SharedPtr_t = std::shared_ptr<EventBus>;
 
+#pragma region "Ctors/Dtor"
+
   ~EventBus() = default;
 
-  void addToQueue(std::unique_ptr<foundation::Event> event) { events_.emplace(std::move(event)); }
+#pragma endregion
+
+  void addToQueue(foundation::Event::UniquePtr_t event) { events_.emplace(std::move(event)); }
 
   void process() {
     while (!events_.empty()) {
@@ -32,7 +36,7 @@ public:
   }
 
 private:
-  std::queue<std::unique_ptr<foundation::Event>> events_{};
+  std::queue<foundation::Event::UniquePtr_t> events_{};
 };
 
 NAMESPACE_END(evts)

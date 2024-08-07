@@ -11,13 +11,17 @@ NAMESPACE_BEGIN(util)
 
 class Observable {
 public:
+#pragma region "Ctors/Dtor"
+
   Observable();
 
   ~Observable();
 
-  void registerObserver(IObserver *observer);
+#pragma endregion
 
-  void removeObserver(IObserver *observer);
+  void registerObserver(IObserver::Ptr_t observer);
+
+  void removeObserver(IObserver::Ptr_t observer);
 
   void notify();
 

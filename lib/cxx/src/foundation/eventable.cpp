@@ -24,7 +24,7 @@ emscripten::class_<Eventable>("Eventable")
 #endif
 EMSCRIPTEN_BINDING_END()
 
-void Eventable::subscribe(Eventable *sender, const std::string &eventname, EventHandler::Ptr_t handler) {
+void Eventable::subscribe(Eventable::Ptr_t sender, const std::string &eventname, EventHandler::Ptr_t handler) {
   handler->setSender(sender);
   handler->setEventName(eventname);
   eventHandlers_.push_back(handler);
@@ -32,12 +32,12 @@ void Eventable::subscribe(Eventable *sender, const std::string &eventname, Event
 
 void Eventable::unsubscribe(const std::string &eventname) {
   // clang-format off
-  eventHandlers_.erase(std::remove_if(eventHandlers_.begin(), eventHandlers_.end(), [eventname](EventHandler *handler) {
+  eventHandlers_.erase(std::remove_if(eventHandlers_.begin(), eventHandlers_.end(), [eventname](EventHandler::Ptr_t handler) {
     return handler->getEventName().compare(eventname);
   }), eventHandlers_.end());  // clang-format on
 }
 
-void Eventable::emit(const std::string &eventname, Event *event, EmitPredicate_t predicate) {
+void Eventable::emit(const std::string &eventname, Event::Ptr_t event, EmitPredicate_t predicate) {
   for (auto *handler : eventHandlers_) {
     if (handler->getEventName().compare(eventname) == 0 && predicate(handler)) {
       handler->invoke(event);

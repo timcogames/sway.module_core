@@ -16,10 +16,15 @@ struct EventData {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-  // clang-format off
-  PURE_VIRTUAL(auto serialize() const -> std::string);  // clang-format on
+  using Ptr_t = EventData *;
+
+#pragma region "Pure virtual methods"
+
+  PURE_VIRTUAL(auto serialize() const -> std::string);
 
   PURE_VIRTUAL(void deserialize(const std::string &data));
+
+#pragma endregion
 };
 
 #include <sway/core/foundation/eventdata_embind.inl>

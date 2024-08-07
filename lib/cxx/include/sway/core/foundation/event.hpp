@@ -4,6 +4,7 @@
 #include <sway/core/detail/valuedata.hpp>
 #include <sway/core/foundation/eventdata.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
+#include <sway/core/foundation/types.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -25,20 +26,33 @@ class Event {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
+#pragma region "Define aliases"
+
+  using Ptr_t = EventPtr_t;
+  using UniquePtr_t = EventUniquePtr_t;
+  using SharedPtr_t = EventSharedPtr_t;
+
+#pragma endregion
+
+#pragma region "Ctors/Dtor"
+
   DFLT_DTOR_VIRTUAL(Event);
 
-  // clang-format off
-  PURE_VIRTUAL(auto id() const -> std::string);  // clang-format on
+#pragma endregion
 
-  // clang-format off
-  PURE_VIRTUAL(auto type() const -> u32_t);  // clang-format on
+#pragma region "Pure virtual methods"
 
-  // clang-format off
-  PURE_VIRTUAL(auto data() const -> EventData *);  // clang-format on
+  PURE_VIRTUAL(auto id() const -> std::string);
 
-  template <typename TResult>
+  PURE_VIRTUAL(auto type() const -> u32_t);
+
+  PURE_VIRTUAL(auto data() const -> EventData::Ptr_t);
+
+#pragma endregion
+
+  template <typename RESULT>
   auto getConcreteData() {
-    return *static_cast<TResult *>(data());
+    return *static_cast<RESULT *>(data());
   }
 };
 

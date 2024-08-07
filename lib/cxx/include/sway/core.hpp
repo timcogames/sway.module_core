@@ -7,6 +7,7 @@
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeeventdata.hpp>
 #include <sway/core/container/nodeidx.hpp>
+#include <sway/core/container/types.hpp>
 #include <sway/core/detail/enumclassbitset.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/detail/rawtype.hpp>
@@ -26,6 +27,7 @@
 #include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/core/foundation/object.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
+#include <sway/core/foundation/types.hpp>
 #include <sway/core/foundation/uniqueable.hpp>
 #include <sway/core/generic/io/filesource.hpp>
 #include <sway/core/generic/io/path.hpp>
@@ -47,6 +49,7 @@
 #include <sway/core/time/timepoint.hpp>
 #include <sway/core/time/timer.hpp>
 #include <sway/core/time/timerstatus.hpp>
+#include <sway/core/time/timerutil.hpp>
 #include <sway/core/util/observable.hpp>
 #include <sway/core/util/observer.hpp>
 #include <sway/core/util/traverser.hpp>

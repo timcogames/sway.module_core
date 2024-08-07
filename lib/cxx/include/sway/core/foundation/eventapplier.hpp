@@ -18,14 +18,14 @@ NAMESPACE_BEGIN(foundation)
 
 class EventApplier {
 public:
-  template <class TConcreteEvent>
-  void registerEvent(EventAction<TConcreteEvent> *ctx) {
-    auto eventClassname = TConcreteEvent::getObjectClassMetadata()->getClassname();
-    auto func = [=](std::shared_ptr<Event> evt) { ctx->apply(std::static_pointer_cast<TConcreteEvent>(evt)); };
+  template <class EVENT>
+  void registerEvent(EventAction<EVENT> *ctx) {
+    auto eventClassname = EVENT::getObjectClassMetadata()->getClassname();
+    auto func = [=](Event::SharedPtr_t evt) { ctx->apply(std::static_pointer_cast<EVENT>(evt)); };
     appliers_.insert(std::make_pair(eventClassname, func));
   }
 
-  void applyEvent(std::shared_ptr<Event> evt, bool &applied) {
+  void applyEvent(Event::SharedPtr_t evt, bool &applied) {
     auto *data = evt->data();
     if (data == nullptr) {
       printf("ERROR: [EventApplier::applyEvent -> %s]\n\t- data is not valid\n", evt->getClassname().c_str());
@@ -44,10 +44,10 @@ public:
     applied = true;
   }
 
-  auto eventset() -> std::map<std::string, std::function<void(std::shared_ptr<Event>)>> { return appliers_; }
+  auto eventset() -> std::map<std::string, std::function<void(Event::SharedPtr_t)>> { return appliers_; }
 
 private:
-  std::map<std::string, std::function<void(std::shared_ptr<Event>)>> appliers_;
+  std::map<std::string, std::function<void(Event::SharedPtr_t)>> appliers_;
 };
 
 NAMESPACE_END(foundation)

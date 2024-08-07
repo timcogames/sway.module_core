@@ -14,8 +14,8 @@ NAMESPACE_BEGIN(binding)
 template <typename>
 class TFunction;
 
-template <typename ReturnType, typename... Arguments>
-class TFunction<ReturnType(Arguments...)> {
+template <typename RETURN_TYPE, typename... ARGS>
+class TFunction<RETURN_TYPE(ARGS...)> {
 public:
   TFunction()
       : invoker_(nullptr) {}
@@ -27,16 +27,16 @@ public:
 
   explicit operator bool() const { return invoker_ != nullptr; }
 
-  bool operator==(decltype(nullptr)) const { return (invoker_ == nullptr); }
+  auto operator==(decltype(nullptr)) const -> bool { return (invoker_ == nullptr); }
 
-  bool operator!=(decltype(nullptr)) const { return (invoker_ != nullptr); }
+  auto operator!=(decltype(nullptr)) const -> bool { return (invoker_ != nullptr); }
 
-  bool operator!=(const TFunction<ReturnType(Arguments...)> &function) const { return invoker_ != function.invoker_; }
+  auto operator!=(const TFunction<RETURN_TYPE(ARGS...)> &func) const -> bool { return invoker_ != func.invoker_; }
 
-  ReturnType operator()(Arguments... args) { return call(args...); }
+  auto operator()(ARGS... args) -> RETURN_TYPE { return call(args...); }
 
-  ReturnType call(Arguments... args) {
-    return (*reinterpret_cast<ReturnType (*)(Arguments...)>(invoker_))(std::forward<Arguments>(args)...);
+  auto call(ARGS... args) -> RETURN_TYPE {
+    return (*reinterpret_cast<RETURN_TYPE (*)(ARGS...)>(invoker_))(std::forward<ARGS>(args)...);
   }
 
 protected:

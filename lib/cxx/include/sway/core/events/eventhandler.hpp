@@ -13,10 +13,19 @@ NAMESPACE_BEGIN(evts)
 
 class EventHandler {
 public:
+  using Ptr_t = EventHandler *;
+
+#pragma region "Ctors/Dtor"
+
   virtual ~EventHandler() = default;
 
-  // clang-format off
-  PURE_VIRTUAL(auto invoke(const std::unique_ptr<foundation::Event> &event) -> bool);  // clang-format on
+#pragma endregion
+
+#pragma region "Pure virtual methods"
+
+  PURE_VIRTUAL(auto invoke(const foundation::Event::UniquePtr_t &event) -> bool);
+
+#pragma endregion
 };
 
 NAMESPACE_END(evts)

@@ -2,6 +2,7 @@
 #define SWAY_CORE_FOUNDATION_EVENTHANDLER_HPP
 
 #include <sway/core/foundation/event.hpp>
+#include <sway/core/foundation/types.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
@@ -31,21 +32,33 @@ class EventHandler {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-  using Ptr_t = EventHandler *;
+#pragma region "Define aliases"
 
-  EventHandler(Eventable *receiver);
+  using Ptr_t = EventHandlerPtr_t;
+
+#pragma endregion
+
+#pragma region "Ctors/Dtor"
+
+  EventHandler(EventablePtr_t receiver);
 
   virtual ~EventHandler() = default;
 
-  PURE_VIRTUAL(void invoke(Event *evt));
+#pragma endregion
+
+#pragma region "Pure virtual methods"
+
+  PURE_VIRTUAL(void invoke(Event::Ptr_t evt));
+
+#pragma endregion
 
   [[nodiscard]]
-  auto getSender() const -> Eventable *;
+  auto getSender() const -> EventablePtr_t;
 
-  void setSender(Eventable *sender);
+  void setSender(EventablePtr_t sender);
 
   [[nodiscard]]
-  auto getReceiver() const -> Eventable *;
+  auto getReceiver() const -> EventablePtr_t;
 
   [[nodiscard]]
   auto getEventName() const -> std::string {
@@ -55,8 +68,8 @@ public:
   void setEventName(const std::string &name) { eventname_ = name; }
 
 protected:
-  Eventable *sender_ = nullptr;  // Отправитель события.
-  Eventable *receiver_;  // Слушатель события.
+  EventablePtr_t sender_ = nullptr;  // Отправитель события.
+  EventablePtr_t receiver_;  // Слушатель события.
   std::string uniqueid_;  // Уникальный идентификатор, который будет связан с функцией обработчика событий.
   std::string eventname_;  // Название события.
 };
@@ -66,7 +79,7 @@ class EventHandlerWrapper : public emscripten::wrapper<EventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(EventHandlerWrapper);
 
-  MTHD_OVERRIDE(void invoke(Event *evt)) { return call<void>("invoke", evt); }
+  MTHD_OVERRIDE(void invoke(Event::Ptr_t evt)) { return call<void>("invoke", evt); }
 };
 #endif
 

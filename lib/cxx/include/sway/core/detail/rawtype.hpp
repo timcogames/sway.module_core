@@ -9,8 +9,8 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(detail)
 
-template <typename TDataType>
-using Unwrap_t = typename std::decay<TDataType>::type;
+template <typename DATA_TYPE>
+using Unwrap_t = typename std::decay<DATA_TYPE>::type;
 
 NAMESPACE_END(detail)
 NAMESPACE_END(core)

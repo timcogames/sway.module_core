@@ -15,64 +15,73 @@ using namespace sway::core;
 struct TestEventData : foundation::EventData {
   std::string value;
 
-  // clang-format off
-  MTHD_OVERRIDE(auto serialize() const -> std::string) { return ""; }  // clang-format on
+#pragma region "Override EventData methods"
+
+  MTHD_OVERRIDE(auto serialize() const -> std::string) { return ""; }
 
   MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
+
+#pragma endregion
 };
 
 class TestEvent : public foundation::Event {
-public:
   DECLARE_CLASS_METADATA(TestEvent, foundation::Event)
 
-  TestEvent(u32_t type, foundation::EventData *data)
+public:
+#pragma region "Ctors/Dtor"
+
+  TestEvent(u32_t type, foundation::EventData::Ptr_t data)
       : id_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))
       , type_(type)
       , data_(data) {}
 
   ~TestEvent() = default;
 
-  // clang-format off
-  MTHD_OVERRIDE(auto id() const -> std::string) {  // clang-format on
-    return id_;
-  }
+#pragma endregion
 
-  // clang-format off
-  MTHD_OVERRIDE(auto type() const -> u32_t) {  // clang-format on
-    return type_;
-  }
+#pragma region "Override Event methods"
 
-  // clang-format off
-  MTHD_OVERRIDE(auto data() const -> foundation::EventData *) {  // clang-format on
-    return data_;
-  }
+  MTHD_OVERRIDE(auto id() const -> std::string) { return id_; }
+
+  MTHD_OVERRIDE(auto type() const -> u32_t) { return type_; }
+
+  MTHD_OVERRIDE(auto data() const -> foundation::EventData::Ptr_t ) { return data_; }
+
+#pragma endregion
 
 private:
   std::string id_;
   u32_t type_;
-  foundation::EventData *data_;
+  foundation::EventData::Ptr_t data_;
 };
 
 struct TestEventHandler : public evts::EventHandler {
   ~TestEventHandler() override = default;
 
-  // clang-format off
-  MTHD_OVERRIDE(auto invoke(const std::unique_ptr<foundation::Event> &event) -> bool) final {  // clang-format on
+#pragma region "Override EventHandler methods"
+
+  MTHD_OVERRIDE(auto invoke(const foundation::Event::UniquePtr_t &event) -> bool) final {
     std::cout << static_cast<TestEventData *>(event->data())->value.c_str() << std::endl;
     return true;
   }
+
+#pragma endregion
 };
 
 class EventBusTest : public ::testing::Test {
 protected:
-  void SetUp() override { evtbus_ = new evts::EventBus(); }
+#pragma region "Override Test methods"
 
-  void TearDown() override { SAFE_DELETE_OBJECT(evtbus_); }
+  MTHD_OVERRIDE(void SetUp()) { evtbus_ = new evts::EventBus(); }
 
-  evts::EventBus *evtbus_;
+  MTHD_OVERRIDE(void TearDown()) { SAFE_DELETE_OBJECT(evtbus_); }
+
+#pragma endregion
+
+  evts::EventBus::Ptr_t evtbus_;
 };
 
-TEST_F(EventBusTest, AddEvent) {
+TEST_F(EventBusTest, add_event) {
   auto *eventdata = new TestEventData();
   eventdata->value = "test";
 

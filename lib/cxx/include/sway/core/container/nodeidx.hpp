@@ -23,46 +23,54 @@ class NodeIdx {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-  using index_t = i32_t;
-  using chain_t = std::vector<NodeIdx::index_t>;
+  using Index_t = i32_t;
+  using Chain_t = std::vector<NodeIdx::Index_t>;
 
-  static auto chainToStr(const NodeIdx::chain_t &chain) -> std::string;
+#pragma region "Static methods"
 
-  static auto getMatchDepth(const NodeIdx::chain_t &lhs, const NodeIdx::chain_t &rhs) -> int;
+  static auto chainToStr(const NodeIdx::Chain_t &chain) -> std::string;
+
+  static auto getMatchDepth(const NodeIdx::Chain_t &lhs, const NodeIdx::Chain_t &rhs) -> int;
+
+#pragma endregion
+
+#pragma region "Ctors/Dtor"
 
   NodeIdx();
 
-  explicit NodeIdx(const NodeIdx::chain_t &data);
+  explicit NodeIdx(const NodeIdx::Chain_t &data);
 
-  NodeIdx(NodeIdx parent, NodeIdx::index_t idx);
+  NodeIdx(NodeIdx parent, NodeIdx::Index_t idx);
 
   ~NodeIdx() = default;
 
+#pragma endregion
+
   void setAsRoot();
 
-  void setChain(const NodeIdx::chain_t &chain, NodeIdx::index_t idx);
+  void setChain(const NodeIdx::Chain_t &chain, NodeIdx::Index_t idx);
 
   [[nodiscard]]
-  auto getChain() const -> NodeIdx::chain_t;
+  auto getChain() const -> NodeIdx::Chain_t;
 
   [[nodiscard]]
-  auto getParent() const -> NodeIdx::chain_t;
+  auto getParent() const -> NodeIdx::Chain_t;
 
   [[nodiscard]]
   auto getDepth() const -> int;
 
   [[nodiscard]]
-  auto getIdxAt(int idx) const -> NodeIdx::index_t;
+  auto getIdxAt(int idx) const -> NodeIdx::Index_t;
 
   auto equal(const NodeIdx &other) -> bool;
 
-  auto chainEqual(const NodeIdx::chain_t &other) -> bool;
+  auto chainEqual(const NodeIdx::Chain_t &other) -> bool;
 
   [[nodiscard]]
   auto toStr() const -> std::string;
 
 private:
-  NodeIdx::chain_t chainLinks_;
+  NodeIdx::Chain_t chainLinks_;
 };
 
 NAMESPACE_END(container)

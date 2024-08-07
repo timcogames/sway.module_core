@@ -15,7 +15,9 @@ NAMESPACE_BEGIN(foundation)
 template <class TYPE>
 class TEventHandlerImpl : public EventHandler {
 public:
-  using HandlerFunction_t = void (TYPE::*)(Event *);
+  using HandlerFunction_t = void (TYPE::*)(Event::Ptr_t);
+
+#pragma region "Ctors/Dtor"
 
   TEventHandlerImpl(TYPE *receiver, HandlerFunction_t func)
       : EventHandler(receiver)
@@ -23,10 +25,16 @@ public:
 
   virtual ~TEventHandlerImpl() = default;
 
-  MTHD_OVERRIDE(void invoke(Event *evt)) {
+#pragma endregion
+
+#pragma region "Override EventHandler methods"
+
+  MTHD_OVERRIDE(void invoke(Event::Ptr_t evt)) {
     auto *receiver = static_cast<TYPE *>(receiver_);
     (receiver->*function_)(evt);
   }
+
+#pragma endregion
 
 private:
   HandlerFunction_t function_;  // Функцию обработчика событий.
@@ -49,7 +57,7 @@ public:
 
   virtual ~EventHandlerImpl() = default;
 
-  MTHD_OVERRIDE(void invoke(Event *evt)) {
+  MTHD_OVERRIDE(void invoke(Event::Ptr_t evt)) {
     if (function_.typeOf().as<std::string>() == "function") {
       function_(evt);
     } else {

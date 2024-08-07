@@ -12,6 +12,8 @@ using namespace sway::core::container;
 
 class NodeIdxTest : public ::testing::Test {
 public:
+#pragma region "Override Test methods"
+
   MTHD_OVERRIDE(void SetUp()) {
     /**
      *    ROOT (-1)
@@ -22,24 +24,27 @@ public:
     supervisor_ = NodeIdx(root_, NODE_IDX_SUPERVISOR);
     worker_ = NodeIdx(supervisor_, NODE_IDX_WORKER);
   }
+
   MTHD_OVERRIDE(void TearDown()) {}
+
+#pragma endregion
 
   NodeIdx root_;
   NodeIdx supervisor_;
   NodeIdx worker_;
 };
 
-TEST_F(NodeIdxTest, Equality) {
+TEST_F(NodeIdxTest, equality) {
   EXPECT_TRUE(worker_.equal(NodeIdx({NODEIDX_ROOT, NODE_IDX_SUPERVISOR, NODE_IDX_WORKER})));
 }
 
-TEST_F(NodeIdxTest, ToStr) {
+TEST_F(NodeIdxTest, to_str) {
   std::stringstream stream;
   stream << "[" << NODEIDX_ROOT << ", " << NODE_IDX_SUPERVISOR << ", " << NODE_IDX_WORKER << "]";
   ASSERT_STREQ(worker_.toStr().c_str(), stream.str().c_str());
 }
 
-TEST_F(NodeIdxTest, getMatchDepth) {
+TEST_F(NodeIdxTest, get_match_depth) {
   std::vector<int> v1 = {-1, 0, 2};
   std::vector<int> v2 = {-1, 0, 2, 1};
 

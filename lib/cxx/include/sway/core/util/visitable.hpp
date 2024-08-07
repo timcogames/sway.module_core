@@ -12,10 +12,19 @@ NAMESPACE_BEGIN(util)
 class Traverser;
 class Visitable {
 public:
+  using Ptr_t = Visitable *;
+
+#pragma region "Ctors/Dtor"
+
   virtual ~Visitable() = default;
 
-  // clang-format off
-  PURE_VIRTUAL(auto traverse(Traverser *traverser) -> u32_t);  // clang-format on
+#pragma endregion
+
+#pragma region "Pure virtual methods"
+
+  PURE_VIRTUAL(auto traverse(Traverser *traverser) -> u32_t);
+
+#pragma endregion
 };
 
 NAMESPACE_END(util)

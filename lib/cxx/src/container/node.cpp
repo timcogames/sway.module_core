@@ -58,8 +58,8 @@ auto Node::traverse(util::Traverser *traverser) -> u32_t {
   return detail::toBase(util::Traverser::Action::ABORT);
 }
 
-void Node::addChildNode(std::shared_ptr<Node> child) {
-  std::optional<std::shared_ptr<Node>> childParentNode = child->getParentNode();
+void Node::addChildNode(Node::SharedPtr_t child) {
+  std::optional<Node::SharedPtr_t> childParentNode = child->getParentNode();
   if (childParentNode) {
     printf("%s %s\n", childParentNode->get()->getNodeIdx().toStr().c_str(), "Node alread has parent");
     return;
@@ -76,14 +76,14 @@ void Node::addChildNode(std::shared_ptr<Node> child) {
 
   auto *eventdata = new NodeEventData();
   eventdata->nodeidx = child->getNodeIdx();
-  emit(EVT_ADDED, new NodeAddedEvent(0, eventdata), [&](foundation::EventHandler *handler) {
-    return static_cast<Node *>(handler->getSender())->getNodeIdx().equal(getNodeIdx());
+  emit(EVT_ADDED, new NodeAddedEvent(0, eventdata), [&](foundation::EventHandler::Ptr_t handler) {
+    return static_cast<Node::Ptr_t>(handler->getSender())->getNodeIdx().equal(getNodeIdx());
   });
 }
 
-void Node::recursiveAddChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx) {
-  NodeIdx::chain_t chain = child->getNodeIdx().getChain();
-  NodeIdx::chain_t parentChain = parentNodeIdx.getChain();
+void Node::recursiveAddChainLinks(Node::SharedPtr_t child, NodeIdx parentNodeIdx) {
+  NodeIdx::Chain_t chain = child->getNodeIdx().getChain();
+  NodeIdx::Chain_t parentChain = parentNodeIdx.getChain();
 
   chain.insert(chain.begin() + 1, parentChain.begin() + 1, parentChain.end());
   child->setNodeIdx(chain, NODEIDX_NEGATIVE);
@@ -93,16 +93,16 @@ void Node::recursiveAddChainLinks(std::shared_ptr<Node> child, NodeIdx parentNod
   }
 }
 
-void Node::removeChildNode(std::shared_ptr<Node> child) {
+void Node::removeChildNode(Node::SharedPtr_t child) {
   // clang-format off
-  children_.erase(std::remove_if(children_.begin(), children_.end(), [&](std::shared_ptr<Node> node) {
+  children_.erase(std::remove_if(children_.begin(), children_.end(), [&](Node::SharedPtr_t node) {
     auto const result = node->equal(child);
     if (result) {
       for (auto childNode : child->getChildNodes()) {
         recursiveRemoveChainLinks(childNode, getNodeIdx());
       }
 
-      child->setParentNode(std::weak_ptr<Node>());
+      child->setParentNode(Node::WeakPtr_t());
       child->setAsRoot();
     }
     return result;
@@ -111,10 +111,10 @@ void Node::removeChildNode(std::shared_ptr<Node> child) {
 
   auto *eventdata = new NodeEventData();
   eventdata->nodeidx = child->getNodeIdx();
-  emit(EVT_REMOVED, new NodeRemovedEvent(0, eventdata), [&](foundation::EventHandler *) { return true; });
+  emit(EVT_REMOVED, new NodeRemovedEvent(0, eventdata), [&](foundation::EventHandler::Ptr_t) { return true; });
 }
 
-void Node::recursiveRemoveChainLinks(std::shared_ptr<Node> child, NodeIdx parentNodeIdx) {
+void Node::recursiveRemoveChainLinks(Node::SharedPtr_t child, NodeIdx parentNodeIdx) {
   if (!parentNodeIdx.chainEqual({NODEIDX_NEGATIVE})) {
     auto chain = child->getNodeIdx().getChain();
     chain.erase(chain.begin(), chain.begin() + parentNodeIdx.getDepth());
@@ -127,9 +127,9 @@ void Node::recursiveRemoveChainLinks(std::shared_ptr<Node> child, NodeIdx parent
   }
 }
 
-auto Node::getChildNodes() -> std::vector<std::shared_ptr<Node>> { return children_; }
+auto Node::getChildNodes() -> std::vector<Node::SharedPtr_t> { return children_; }
 
-auto Node::getChildNode(const NodeIdx &idx) const -> std::shared_ptr<Node> {
+auto Node::getChildNode(const NodeIdx &idx) const -> Node::SharedPtr_t {
   auto iter = children_.begin();
   while (iter != children_.end()) {
     if ((*iter)->chainEqual(idx.getChain())) {
@@ -146,7 +146,7 @@ auto Node::getChildNode(const NodeIdx &idx) const -> std::shared_ptr<Node> {
   return std::make_shared<Node>();
 }
 
-auto Node::getChildAt(int targetIdx) const -> std::optional<std::shared_ptr<Node>> {
+auto Node::getChildAt(int targetIdx) const -> std::optional<Node::SharedPtr_t> {
   if (targetIdx >= 0 && targetIdx < getNumOfChildNodes()) {
     return children_[targetIdx];
   }
@@ -156,14 +156,14 @@ auto Node::getChildAt(int targetIdx) const -> std::optional<std::shared_ptr<Node
 
 auto Node::getNumOfChildNodes() const -> int { return static_cast<int>(children_.size()); }
 
-void Node::setNodeIdx(const NodeIdx::chain_t &chain, int last) { idx_.setChain(chain, last); }
+void Node::setNodeIdx(const NodeIdx::Chain_t &chain, int last) { idx_.setChain(chain, last); }
 
 auto Node::getNodeIdx() -> NodeIdx { return idx_; }
 
-void Node::setParentNode(std::weak_ptr<Node> parent) { parent_ = parent; }
+void Node::setParentNode(Node::WeakPtr_t parent) { parent_ = parent; }
 
-auto Node::getParentNode() -> std::optional<std::shared_ptr<Node>> {
-  std::shared_ptr<Node> ptr = parent_.lock();
+auto Node::getParentNode() -> std::optional<Node::SharedPtr_t> {
+  Node::SharedPtr_t ptr = parent_.lock();
   if (!ptr) {
     return std::nullopt;
   }
@@ -171,7 +171,7 @@ auto Node::getParentNode() -> std::optional<std::shared_ptr<Node>> {
   return ptr;
 }
 
-auto Node::getParentNodeByDepth(int depth) -> std::shared_ptr<Node> {
+auto Node::getParentNodeByDepth(int depth) -> Node::SharedPtr_t {
   auto node = shared_from_this();
   while (depth != 0 && node->getNodeIdx().getDepth() > depth) {
     node = getParentNode().value();
@@ -182,9 +182,9 @@ auto Node::getParentNodeByDepth(int depth) -> std::shared_ptr<Node> {
 
 void Node::setAsRoot() { idx_.setAsRoot(); }
 
-auto Node::equal(std::shared_ptr<Node> other) -> bool { return other->chainEqual(idx_.getChain()); }
+auto Node::equal(Node::SharedPtr_t other) -> bool { return other->chainEqual(idx_.getChain()); }
 
-auto Node::chainEqual(NodeIdx::chain_t other) -> bool { return idx_.chainEqual(other); }
+auto Node::chainEqual(NodeIdx::Chain_t other) -> bool { return idx_.chainEqual(other); }
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
@@ -201,7 +201,7 @@ void addChildNode(Node::JsPtr_t root, Node::JsPtr_t node) {
     // TODO
   }
 
-  return obj->addChildNode(std::shared_ptr<Node>(Node::fromJs(node)));
+  return obj->addChildNode(Node::SharedPtr_t(Node::fromJs(node)));
 }
 
 auto getNodeIdx(Node::JsPtr_t node) -> lpcstr_t {
