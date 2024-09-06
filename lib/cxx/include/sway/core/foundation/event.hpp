@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENT_HPP
 #define SWAY_CORE_FOUNDATION_EVENT_HPP
 
+#include <sway/classpointermacros.hpp>
 #include <sway/core/detail/valuedata.hpp>
 #include <sway/core/foundation/eventdata.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
@@ -9,9 +10,6 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#include <any>
-#include <map>
-#include <memory>
 #include <string>
 
 NAMESPACE_BEGIN(sway)
@@ -23,17 +21,10 @@ NAMESPACE_BEGIN(foundation)
  */
 class Event {
   DECLARE_SUPERCLASS()
+  DECLARE_CLASS_POINTER_ALIASES(Event)
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-#pragma region "Define aliases"
-
-  using Ptr_t = EventPtr_t;
-  using UniquePtr_t = EventUniquePtr_t;
-  using SharedPtr_t = EventSharedPtr_t;
-
-#pragma endregion
-
 #pragma region "Ctors/Dtor"
 
   DFLT_DTOR_VIRTUAL(Event);

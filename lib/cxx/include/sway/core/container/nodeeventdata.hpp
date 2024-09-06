@@ -7,6 +7,8 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
+#include <string>
+
 NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)

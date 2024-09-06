@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_FOUNDATION_SUBSYSTEM_HPP
 #define SWAY_CORE_FOUNDATION_SUBSYSTEM_HPP
 
+#include <sway/classpointermacros.hpp>
 #include <sway/core/foundation/object.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/core/foundation/types.hpp>
@@ -14,10 +15,9 @@ NAMESPACE_BEGIN(foundation)
 
 class Subsystem : public Object {
   DECLARE_CLASS_METADATA(Subsystem, Object)
+  DECLARE_CLASS_POINTER_ALIASES(Subsystem)
 
 public:
-  using SharedPtr_t = std::shared_ptr<Subsystem>;
-
 #pragma region "Ctors/Dtor"
 
   Subsystem() = default;

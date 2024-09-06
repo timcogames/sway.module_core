@@ -1,10 +1,12 @@
 #ifndef SWAY_CORE_HPP
 #define SWAY_CORE_HPP
 
+#include <sway/classpointermacros.hpp>
 #include <sway/core/binding/function.hpp>
 #include <sway/core/binding/procaddress.hpp>
 #include <sway/core/container/hierarchy.hpp>
 #include <sway/core/container/node.hpp>
+#include <sway/core/container/nodedata.hpp>
 #include <sway/core/container/nodeeventdata.hpp>
 #include <sway/core/container/nodeidx.hpp>
 #include <sway/core/container/types.hpp>

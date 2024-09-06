@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENTABLE_HPP
 #define SWAY_CORE_FOUNDATION_EVENTABLE_HPP
 
+#include <sway/classpointermacros.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
 #include <sway/core/foundation/types.hpp>
 #include <sway/emscriptenmacros.hpp>
@@ -19,15 +20,10 @@ NAMESPACE_BEGIN(foundation)
 using EmitPredicate_t = std::function<bool(EventHandler::Ptr_t)>;
 
 class Eventable {
+  DECLARE_CLASS_POINTER_ALIASES(Eventable)
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-#pragma region "Define aliases"
-
-  using Ptr_t = EventablePtr_t;
-
-#pragma endregion
-
 #pragma region "Ctors/Dtor"
 
   Eventable() = default;

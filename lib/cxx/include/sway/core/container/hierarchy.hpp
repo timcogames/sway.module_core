@@ -1,7 +1,9 @@
 #ifndef SWAY_CORE_CONTAINER_HIERARCHY_HPP
 #define SWAY_CORE_CONTAINER_HIERARCHY_HPP
 
+#include <sway/classpointermacros.hpp>
 #include <sway/core/container/node.hpp>
+#include <sway/core/container/nodedata.hpp>
 #include <sway/core/container/nodeidx.hpp>
 #include <sway/core/container/types.hpp>
 #include <sway/coremacros.hpp>
@@ -31,11 +33,6 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-struct NodeData {
-  std::vector<NodeIdx::Index_t> nodeidx;
-  std::string name;
-};
-
 #ifdef EMSCRIPTEN_PLATFORM
 using NodeDataList = emscripten::val;
 #else
@@ -43,17 +40,11 @@ using NodeDataList = std::vector<NodeData>;
 #endif
 
 class Hierarchy {
+  DECLARE_CLASS_POINTER_ALIASES(Hierarchy)
   DECLARE_EMSCRIPTEN(Hierarchy)
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-#pragma region "Define aliases"
-
-  using Ptr_t = HierarchyPtr_t;
-  using SharedPtr_t = HierarchySharedPtr_t;
-
-#pragma endregion
-
 #pragma region "Static methods"
 
   static auto findNode(Node::SharedPtr_t parent, const NodeIdx &nodeIdx) -> std::optional<Node::SharedPtr_t>;

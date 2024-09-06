@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_CONTAINER_NODEIDX_HPP
 #define SWAY_CORE_CONTAINER_NODEIDX_HPP
 
+#include <sway/defines.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -13,7 +14,7 @@ NAMESPACE_BEGIN(sway)
 NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
-constexpr i32_t NODEIDX_NEGATIVE = (-1);
+constexpr i32_t NODEIDX_NEGATIVE = GLOB_IDX_INVALID;
 constexpr i32_t NODEIDX_ROOT = NODEIDX_NEGATIVE;
 constexpr i32_t NODEIDX_ROOT_DEPTH = 1;
 

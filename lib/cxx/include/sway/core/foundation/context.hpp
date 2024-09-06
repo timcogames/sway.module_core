@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_FOUNDATION_CONTEXT_HPP
 #define SWAY_CORE_FOUNDATION_CONTEXT_HPP
 
+#include <sway/classpointermacros.hpp>
 #include <sway/core/foundation/subsystem.hpp>
 #include <sway/core/foundation/types.hpp>
 #include <sway/core/runtime/exceptions/argumentnullexception.hpp>
@@ -17,15 +18,10 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(foundation)
 
 class Context {
+  DECLARE_CLASS_POINTER_ALIASES(Context)
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-#pragma region "Define aliases"
-
-  using Ptr_t = ContextPtr_t;
-
-#pragma endregion
-
 #pragma region "Ctors/Dtor"
 
   Context() = default;

@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_CONTAINER_NODE_HPP
 #define SWAY_CORE_CONTAINER_NODE_HPP
 
+#include <sway/classpointermacros.hpp>
 #include <sway/core/container/nodeidx.hpp>
 #include <sway/core/container/types.hpp>
 #include <sway/core/foundation/declareeventmacros.hpp>
@@ -33,20 +34,13 @@ NAMESPACE_BEGIN(core)
 NAMESPACE_BEGIN(container)
 
 class Node : public std::enable_shared_from_this<Node>, public util::Visitable, public foundation::Eventable {
-  DECLARE_EMSCRIPTEN(Node)
-  DECLARE_EMSCRIPTEN_BINDING()
+  DECLARE_CLASS_POINTER_ALIASES(Node)
   DECLARE_EVENT(EVT_ADDED, NodeAdded)
   DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
+  DECLARE_EMSCRIPTEN(Node)
+  DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-#pragma region "Define aliases"
-
-  using Ptr_t = NodePtr_t;
-  using WeakPtr_t = NodeWeakPtr_t;
-  using SharedPtr_t = NodeSharedPtr_t;
-
-#pragma endregion
-
 #pragma region "Ctors/Dtor"
 
   Node();
