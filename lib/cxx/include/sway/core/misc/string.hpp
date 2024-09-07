@@ -42,7 +42,7 @@ inline auto toString(lpcstr_t str, const std::string &def) -> std::string {
   return str;
 }
 
-inline auto toInt(lpcstr_t str, i32_t def) -> i32_t {
+inline auto toInteger(lpcstr_t str, i32_t def) -> i32_t {
   if (str == nullptr) {
     return def;
   }
@@ -58,7 +58,7 @@ inline auto toFloat(lpcstr_t str, f32_t def) -> f32_t {
   return (f32_t)atof(str);
 }
 
-inline auto toBool(lpcstr_t str, bool def) -> bool {
+inline auto toBoolean(lpcstr_t str, bool def) -> bool {
   if (str == nullptr) {
     return def;
   }
