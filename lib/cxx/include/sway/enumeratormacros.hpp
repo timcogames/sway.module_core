@@ -13,6 +13,7 @@ NAMESPACE_BEGIN(sway)
     enum class Enum : TYPE {
 
 #define ENUM_END()             \
+      , Latest                 \
     };                         \
   }
 // clang-format on
