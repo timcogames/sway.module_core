@@ -60,6 +60,7 @@
 #include <sway/core/version.hpp>
 #include <sway/defines.hpp>
 #include <sway/emscriptenmacros.hpp>
+#include <sway/enumeratormacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/numeraltypes.hpp>
