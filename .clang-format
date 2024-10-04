@@ -34,8 +34,16 @@ IncludeCategories:
     CaseSensitive:   true
 IndentPPDirectives: AfterHash
 AlignEscapedNewlines: Left
-MacroBlockBegin: "NAMESPACE_BEGIN|ENUM_BEGIN"
-MacroBlockEnd: "NAMESPACE_END|ENUM_END"
+MacroBlockBegin:
+  "^NAMESPACE_BEGIN|\
+    ENUM_BEGIN|\
+    ENUM_.*_BEGIN|\
+    EMSCRIPTEN_BINDING_BEGIN$"
+MacroBlockEnd: 
+  "^NAMESPACE_END|\
+    ENUM_END|\
+    ENUM_.*_BEGIN|\
+    EMSCRIPTEN_BINDING_END$"
 Macros:
   - PURE_VIRTUAL(x)=x
   - MTHD_VIRTUAL(x)=x
@@ -44,6 +52,8 @@ TypenameMacros:
   - NAMESPACE_BEGIN
   - NAMESPACE_END
   - ENUM_BEGIN
+  - ENUM_DEF_BEGIN
+  - ENUM_IDX_BEGIN
   - ENUM_END
   - PURE_VIRTUAL
   - MTHD_VIRTUAL
