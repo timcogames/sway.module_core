@@ -42,7 +42,7 @@ MacroBlockBegin:
 MacroBlockEnd: 
   "^NAMESPACE_END|\
     ENUM_END|\
-    ENUM_.*_BEGIN|\
+    ENUM_.*_END|\
     EMSCRIPTEN_BINDING_END$"
 Macros:
   - PURE_VIRTUAL(x)=x
