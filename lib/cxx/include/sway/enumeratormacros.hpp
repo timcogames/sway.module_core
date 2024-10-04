@@ -1,26 +1,31 @@
 #ifndef SWAY_ENUMERATORMACROS_HPP
 #define SWAY_ENUMERATORMACROS_HPP
 
+#include <sway/core/detail/enumutils.hpp>
+#include <sway/defines.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/numeraltypes.hpp>
 
 NAMESPACE_BEGIN(sway)
 
+#define ENUM_BITMASK(x) (1 << (x))
+
 // clang-format off
-#define ENUM_BEGIN(NAME, TYPE, INITIAL_VALUE) \
-  namespace NAME {                            \
-    enum class Enum : TYPE {                  \
-      NONE = INITIAL_VALUE,
-
-#define ENUM_BEGIN_DEF(NAME) ENUM_BEGIN(NAME, u32_t, 0)
-#define ENUM_BEGIN_IDX(NAME) ENUM_BEGIN(NAME, i32_t, GLOB_IDX_INVALID)
-
-#define ENUM_END()             \
-      , Latest                 \
-    };                         \
-  }
+#define DECLARE_ENUM_EXT(NAME, TYPE, INITIAL_VALUE, ...)                            \
+  namespace NAME {                                                              \
+    enum class Enum : TYPE { NONE = INITIAL_VALUE, __VA_ARGS__, Latest };       \
+  }                                                                             \
+  static const u32_t NAME ## Latest = core::detail::toBase(NAME::Enum::Latest); \
+  static inline auto NAME ## CountWithoutNone = [] -> const size_t {            \
+    static TYPE __VA_ARGS__; return std::size({__VA_ARGS__});                   \
+  }();                                                                          \
+  static inline auto NAME ## Count = [] -> const size_t {                       \
+    static TYPE __VA_ARGS__; return std::size({__VA_ARGS__}) + 1;               \
+  }();
 // clang-format on
 
-#define ENUM_MAX_ELEMENTS(NAME) core::detail::toBase(NAME::Enum::Latest)
+#define DECLARE_ENUM(NAME, ...) DECLARE_ENUM_EXT(NAME, u32_t, GLOB_IDX_INITIAL, __VA_ARGS__)
+#define DECLARE_ENUM_IDX(NAME, ...) DECLARE_ENUM_EXT(NAME, i32_t, GLOB_IDX_INVALID, __VA_ARGS__)
 
 NAMESPACE_END(sway)
 
