@@ -11,8 +11,8 @@ NAMESPACE_BEGIN(sway)
     enum class Enum : TYPE {                  \
       NONE = INITIAL_VALUE,
 
-#define ENUM_DEF_BEGIN(NAME) ENUM_BEGIN(NAME, u32_t, 0)
-#define ENUM_IDX_BEGIN(NAME) ENUM_BEGIN(NAME, i32_t, GLOB_IDX_INVALID)
+#define ENUM_BEGIN_DEF(NAME) ENUM_BEGIN(NAME, u32_t, 0)
+#define ENUM_BEGIN_IDX(NAME) ENUM_BEGIN(NAME, i32_t, GLOB_IDX_INVALID)
 
 #define ENUM_END()             \
       , Latest                 \

@@ -36,13 +36,11 @@ IndentPPDirectives: AfterHash
 AlignEscapedNewlines: Left
 MacroBlockBegin:
   "^NAMESPACE_BEGIN|\
-    ENUM_BEGIN|\
-    ENUM_.*_BEGIN|\
+    ENUM_BEGIN(.*)|\
     EMSCRIPTEN_BINDING_BEGIN$"
 MacroBlockEnd: 
   "^NAMESPACE_END|\
     ENUM_END|\
-    ENUM_.*_END|\
     EMSCRIPTEN_BINDING_END$"
 Macros:
   - PURE_VIRTUAL(x)=x
