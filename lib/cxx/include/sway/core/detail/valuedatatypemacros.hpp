@@ -9,7 +9,7 @@
                                                         \
   template <>                                           \
   struct ValueDataTypeToEnum<VALUE_TYPE> {              \
-    static constexpr ValueDataType value = KEY;         \
+    static constexpr ValueDataType::Enum value = KEY;   \
   };
 
 #endif  // SWAY_CORE_DETAIL_VALUEDATATYPEMACROS_HPP

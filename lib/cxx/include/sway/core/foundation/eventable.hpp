@@ -13,9 +13,9 @@
 #include <string>
 #include <vector>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 using EmitPredicate_t = std::function<bool(EventHandler::Ptr_t)>;
 
@@ -44,8 +44,8 @@ protected:
   std::vector<EventHandler::Ptr_t> eventHandlers_;  // Обработчики событий.
 };
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_FOUNDATION_EVENTABLE_HPP

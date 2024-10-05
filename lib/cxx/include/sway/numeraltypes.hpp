@@ -5,7 +5,7 @@
 
 #include <stdint.h>
 
-NAMESPACE_BEGIN(sway)
+NS_BEGIN_SWAY()
 
 using i8_t = int8_t;  // Signed 8-bit integer
 using i16_t = int16_t;  // Signed 16-bit integer
@@ -20,6 +20,6 @@ using u64_t = uint64_t;  // Unsigned 64-bit integer
 using f32_t = float;  // 32-bit floating point
 using f64_t = double;  // 64-bit floating point
 
-NAMESPACE_END(sway)
+NS_END()
 
 #endif  // SWAY_NUMERALTYPES_HPP

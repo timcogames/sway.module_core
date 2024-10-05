@@ -19,8 +19,8 @@
 
 const std::initializer_list<std::string> InternNameList = {"intern_a", "intern_b", "intern_c"};
 
-using namespace sway;
-using namespace sway::core::container;
+NS_SHORT_SWAY()
+NS_SHORT(core::container)
 
 class NodeTest : public ::testing::Test, public core::foundation::Eventable {
 public:

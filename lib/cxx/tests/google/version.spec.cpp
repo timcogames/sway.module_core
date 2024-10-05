@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace sway;
+NS_SHORT_SWAY()
 
 /**
  * @brief Убеждаемся, что конструктор по умолчанию приводит все компоненты к нулю.

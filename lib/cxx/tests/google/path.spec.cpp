@@ -1,9 +1,12 @@
-#include <sway/core.hpp>
+#include <sway/core/generic/io/path.hpp>
+#include <sway/namespacemacros.hpp>
 
 #include <gtest/gtest.h>
 
-using namespace sway;
+NS_ALIAS(io_, core::generic::io)
 
-TEST(PathTest, getFilename) { ASSERT_STREQ(core::generic::io::Path("/foo/bar.txt").getFilename().c_str(), "bar.txt"); }
-
-TEST(PathTest, getExtension) { ASSERT_STREQ(core::generic::io::Path("/foo/bar.txt").getExt().c_str(), "txt"); }
+TEST(PathTest, get_filepath_info) {
+  const auto filepath = io_::Path("/foo/bar.txt");
+  ASSERT_STREQ(filepath.getFilename().c_str(), "bar.txt");
+  ASSERT_STREQ(filepath.getExt().c_str(), "txt");
+}

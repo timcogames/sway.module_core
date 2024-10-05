@@ -1,17 +1,17 @@
 #ifndef SWAY_CORE_INTRUSIVE_PRIORITIES_HPP
 #define SWAY_CORE_INTRUSIVE_PRIORITIES_HPP
 
+#include <sway/enumeratormacros.hpp>
 #include <sway/namespacemacros.hpp>
-#include <sway/types.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(intrusive)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(intrusive)
 
-enum class Priority : u32_t { VERY_LOW = 0, LOW, NORMAL, HIGH, VERY_HIGH };
+DECLARE_ENUM(Priority, LOW = 10, NORMAL = 20, HIGH = 30)
 
-NAMESPACE_END(intrusive)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace intrusive
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_INTRUSIVE_PRIORITIES_HPP

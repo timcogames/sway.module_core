@@ -5,9 +5,9 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(util)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(util)
 
 class Observable {
 public:
@@ -19,9 +19,9 @@ public:
 
 #pragma endregion
 
-  void registerObserver(IObserver::Ptr_t observer);
+  void registerObserver(Observer::Ptr_t obs);
 
-  void removeObserver(IObserver::Ptr_t observer);
+  void removeObserver(Observer::Ptr_t obs);
 
   void notify();
 
@@ -29,8 +29,8 @@ private:
   ObserverArray_t observers_;  // Массив наблюдателей, которые слушают этот наблюдаемый объект.
 };
 
-NAMESPACE_END(util)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace util
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_UTIL_OBSERVABLE_HPP

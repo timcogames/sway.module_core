@@ -13,9 +13,9 @@ constexpr sway::i32_t UUID_NBR_OF_GROUPS = 4;
 constexpr std::array<sway::i32_t, UUID_NBR_OF_GROUPS> UUID_MAGIC = {8, 4, 4, 12};
 constexpr std::string_view UUID_ZERO = "00000000-0000-0000-0000-000000000000";
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(misc)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(misc)
 
 template <std::size_t NBR>
 inline auto newGuid(const std::array<i32_t, NBR> &format) {
@@ -38,8 +38,8 @@ inline auto newGuid(const std::array<i32_t, NBR> &format) {
   return result;
 }
 
-NAMESPACE_END(misc)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace misc
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_MISC_GUID_HPP

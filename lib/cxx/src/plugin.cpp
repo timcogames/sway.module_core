@@ -1,7 +1,7 @@
 #include <sway/core/plugin.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
 
 Plugin::Plugin(const generic::io::Path &filepath, int flags) {
   if (filepath.isEmpty()) {
@@ -28,5 +28,5 @@ void Plugin::initialize(PluginFunctionSet *functions) {
   this->getMethod<PluginInitializeFunc_t>("pluginInitialize").call(functions);
 }
 
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace core
+NS_END()  // namespace sway

@@ -4,8 +4,8 @@
 
 #include <memory>
 
-using namespace sway;
-using namespace sway::core;
+NS_SHORT_SWAY()
+NS_SHORT(core)
 
 class MySubsystem : public foundation::Subsystem {
   DECLARE_CLASS_METADATA(MySubsystem, foundation::Subsystem)
@@ -20,11 +20,11 @@ public:
 
 #pragma region "Override Subsystem methods"
 
-  MTHD_OVERRIDE(bool initialize()) { return true; }
+  MTHD_VIRTUAL_OVERRIDE(bool initialize()) { return true; }
 
-  MTHD_OVERRIDE(void tick(float dtm)) {}
+  MTHD_VIRTUAL_OVERRIDE(void tick(float dtm)) {}
 
-  MTHD_OVERRIDE(void shutdown()) {}
+  MTHD_VIRTUAL_OVERRIDE(void shutdown()) {}
 
 #pragma endregion
 };

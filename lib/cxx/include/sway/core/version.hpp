@@ -8,8 +8,8 @@
 #include <string>
 #include <utility>  // std::move
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
 
 /**
  * @brief Класс для хранения информации о версии.
@@ -87,7 +87,7 @@ private:
   std::string extra_;  // Дополнительные символы.
 };
 
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_VERSION_HPP

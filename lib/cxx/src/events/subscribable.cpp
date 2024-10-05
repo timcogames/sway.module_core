@@ -1,8 +1,8 @@
 #include <sway/core/events/subscribable.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(evts)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(evts)
 
 auto Subscribable::subscribe(EventHandler::Ptr_t handler) -> Subscriber_t {
   return subscriptions_.insert(subscriptions_.end(), handler);
@@ -16,6 +16,6 @@ void Subscribable::handle(const foundation::Event::UniquePtr_t &evt) {
   }
 }
 
-NAMESPACE_END(evts)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace evts
+NS_END()  // namespace core
+NS_END()  // namespace sway

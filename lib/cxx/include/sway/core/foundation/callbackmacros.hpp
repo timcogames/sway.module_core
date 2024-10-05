@@ -4,9 +4,9 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 #define RUN_CALLBACK(FUNC, ARGS...) \
   [=]() {                           \
@@ -16,8 +16,8 @@ NAMESPACE_BEGIN(foundation)
     FUNC(ARGS);                     \
   }()
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_BINDING_CALLBACKMACROS_HPP

@@ -1,29 +1,30 @@
 #ifndef SWAY_CORE_UTIL_OBSERVER_HPP
 #define SWAY_CORE_UTIL_OBSERVER_HPP
 
+#include <sway/core/util/typedefs.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 
 #include <vector>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(util)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(util)
 
-using ObserverArray_t = std::vector<class IObserver *>;
+using ObserverArray_t = std::vector<ObserverPtr_t>;
 using ObserverArrayIterator_t = ObserverArray_t::const_iterator;
 
 /**
- * @class IObserver
+ * @class Observer
  * @brief Интерфейс наблюдателя.
  */
-class IObserver {
-public:
-  using Ptr_t = IObserver *;
+class Observer {
+  DECLARE_CLASS_POINTER_ALIASES(Observer)
 
+public:
 #pragma region "Ctors/Dtor"
 
-  virtual ~IObserver() = default;
+  DTOR_VIRTUAL_DEFAULT(Observer);
 
 #pragma endregion
 
@@ -34,8 +35,8 @@ public:
 #pragma endregion
 };
 
-NAMESPACE_END(util)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace util
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_UTIL_OBSERVER_HPP

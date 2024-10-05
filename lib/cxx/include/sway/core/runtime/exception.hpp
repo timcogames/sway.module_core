@@ -7,9 +7,9 @@
 #include <exception>  // std::exception
 #include <string>  // std::string
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(runtime)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(runtime)
 
 class Exception : public std::exception {
 public:
@@ -27,8 +27,8 @@ private:
   std::string message_;  // Сообщение об ошибке.
 };
 
-NAMESPACE_END(runtime)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace runtime
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_RUNTIME_EXCEPTION_HPP

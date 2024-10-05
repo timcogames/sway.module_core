@@ -13,9 +13,9 @@
 #include <string>
 #include <unordered_map>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 class Context {
   DECLARE_CLASS_POINTER_ALIASES(Context)
@@ -80,8 +80,8 @@ private:
   std::unordered_map<std::string, Subsystem::SharedPtr_t> subsystems_;  // Контейнер объектов.
 };
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_FOUNDATION_CONTEXT_HPP

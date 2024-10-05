@@ -1,8 +1,8 @@
 #include <sway/core/foundation/objectclassmetadata.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 EMSCRIPTEN_BINDING_BEGIN(ObjectClassMetadata)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
@@ -13,6 +13,6 @@ emscripten::class_<ObjectClassMetadata>("ObjectClassMetadata")
 #endif
 EMSCRIPTEN_BINDING_END()
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway

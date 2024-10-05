@@ -2,6 +2,7 @@
 #include <sway/core/container/nodeeventdata.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/foundation/context.hpp>
+#include <sway/core/util/traverseractions.hpp>
 
 #include <algorithm>  // std::remove_if
 #include <functional>
@@ -14,9 +15,9 @@
 #  endif
 #endif
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(container)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(Node)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
@@ -39,23 +40,24 @@ Node::Node()
 
 Node::~Node() { children_.clear(); }
 
-auto Node::traverse(util::Traverser *traverser) -> u32_t {
-  switch (static_cast<util::Traverser::Action>(traverser->visit(this))) {
-    case util::Traverser::Action::CONTINUE:
+auto Node::traverse(util::TraverserPtr_t traverser) -> u32_t {
+  switch (static_cast<util::TraverserAction::Enum>(traverser->visit(this))) {
+    case util::TraverserAction::Enum::CONTINUE:
       for (const auto &node : getChildNodes()) {
-        if (node->traverse(traverser) == detail::toBase(util::Traverser::Action::ABORT)) {
-          return detail::toBase(util::Traverser::Action::ABORT);
+        if (node->traverse(traverser) == detail::toBase(util::TraverserAction::Enum::ABORT)) {
+          return detail::toBase(util::TraverserAction::Enum::ABORT);
         }
       }
 
-    case util::Traverser::Action::PRUNE:
-      return detail::toBase(util::Traverser::Action::CONTINUE);
+    case util::TraverserAction::Enum::PRUNE:
+      return detail::toBase(util::TraverserAction::Enum::CONTINUE);
 
-    case util::Traverser::Action::ABORT:
+    case util::TraverserAction::Enum::ABORT:
+    default:
       break;
   }
 
-  return detail::toBase(util::Traverser::Action::ABORT);
+  return detail::toBase(util::TraverserAction::Enum::NONE);
 }
 
 void Node::addChildNode(Node::SharedPtr_t child) {
@@ -188,14 +190,14 @@ auto Node::chainEqual(NodeIdx::Chain_t other) -> bool { return idx_.chainEqual(o
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
-auto createNode() -> Node::JsPtr_t { return Node::toJs(new Node()); }
+auto createNode() -> Node::JavaScriptPtr_t { return Node::toJs(new Node()); }
 
-void deleteNode(Node::JsPtr_t node) {
+void deleteNode(Node::JavaScriptPtr_t node) {
   auto obj = Node::fromJs(node);
   SAFE_DELETE_OBJECT(obj);
 }
 
-void addChildNode(Node::JsPtr_t root, Node::JsPtr_t node) {
+void addChildNode(Node::JavaScriptPtr_t root, Node::JavaScriptPtr_t node) {
   auto obj = Node::fromJs(root);
   if (!obj) {
     // TODO
@@ -204,7 +206,7 @@ void addChildNode(Node::JsPtr_t root, Node::JsPtr_t node) {
   return obj->addChildNode(Node::SharedPtr_t(Node::fromJs(node)));
 }
 
-auto getNodeIdx(Node::JsPtr_t node) -> lpcstr_t {
+auto getNodeIdx(Node::JavaScriptPtr_t node) -> lpcstr_t {
   auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO
@@ -217,24 +219,24 @@ auto getNodeIdx(Node::JsPtr_t node) -> lpcstr_t {
   return result;
 }
 
-auto getChildNodes(Node::JsPtr_t node) -> Node::JsPtr_t * {
+auto getChildNodes(Node::JavaScriptPtr_t node) -> Node::JavaScriptPtr_t * {
   auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO
   }
 
   auto nodes = obj->getChildNodes();
-  Node::JsPtr_t arr[nodes.size()];
+  Node::JavaScriptPtr_t arr[nodes.size()];
 
   for (auto i = 0; i < nodes.size(); i++) {
-    arr[i] = Node::toJs(nodes[i].get());
+    arr[i] = Node::toJs(nodes[i]);
   }
 
   auto *result = &arr[0];
   return result;
 }
 
-auto getNumOfChildNodes(Node::JsPtr_t node) -> i32_t {
+auto getNumOfChildNodes(Node::JavaScriptPtr_t node) -> i32_t {
   auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO
@@ -245,6 +247,6 @@ auto getNumOfChildNodes(Node::JsPtr_t node) -> i32_t {
 
 #endif
 
-NAMESPACE_END(container)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace container
+NS_END()  // namespace core
+NS_END()  // namespace sway

@@ -4,7 +4,7 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/numeraltypes.hpp>
 
-NAMESPACE_BEGIN(sway)
+NS_BEGIN_SWAY()
 
 using s8_t = char;
 
@@ -14,6 +14,6 @@ using byte_t = s8_t;
 using lpstr_t = s8_t *;
 using lpcstr_t = const s8_t *;
 
-NAMESPACE_END(sway)
+NS_END()
 
 #endif  // SWAY_TYPES_HPP

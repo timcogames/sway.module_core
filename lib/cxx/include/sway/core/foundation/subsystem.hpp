@@ -9,9 +9,9 @@
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 class Subsystem : public Object {
   DECLARE_CLASS_METADATA(Subsystem, Object)
@@ -38,8 +38,8 @@ public:
 #pragma endregion
 };
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_FOUNDATION_SUBSYSTEM_HPP

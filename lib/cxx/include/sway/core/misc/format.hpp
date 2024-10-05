@@ -9,9 +9,9 @@
 #include <string>
 #include <vector>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(misc)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(misc)
 
 inline auto format(lpcstr_t const fmt, ...) -> std::string {
   auto temp = std::vector<s8_t>();
@@ -33,8 +33,8 @@ inline auto format(lpcstr_t const fmt, ...) -> std::string {
   return std::string(temp.data(), size);
 }
 
-NAMESPACE_END(misc)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace misc
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_MISC_FORMAT_HPP

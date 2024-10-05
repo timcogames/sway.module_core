@@ -6,8 +6,8 @@
 
 #include <string>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
 
 /**
  * @brief Общедоступная информация плагина.
@@ -21,7 +21,7 @@ struct PluginInfo {
   core::Version version;  // Версия плагина.
 };
 
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_PLUGININFO_HPP

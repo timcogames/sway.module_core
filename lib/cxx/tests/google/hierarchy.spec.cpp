@@ -1,9 +1,21 @@
-#include <sway/core.hpp>
+#include <sway/core/container/hierarchy.hpp>
+#include <sway/core/container/node.hpp>
+#include <sway/core/container/nodeidx.hpp>
+#include <sway/core/detail/enumutils.hpp>
+#include <sway/core/util/traverser.hpp>
+#include <sway/core/util/traverseractions.hpp>
+#include <sway/core/util/visitable.hpp>
+#include <sway/keywords.hpp>
+#include <sway/namespacemacros.hpp>
 
 #include <gtest/gtest.h>
 
-using namespace sway;
-using namespace sway::core;
+#include <memory>
+#include <string>
+#include <vector>
+
+NS_SHORT_SWAY()
+NS_SHORT(core)
 
 class HierarchyTest : public testing::Test {
 public:
@@ -22,8 +34,8 @@ class HierarchyChildTraverser : public util::Traverser {
 public:
 #pragma region "Override Traverser methods"
 
-  MTHD_OVERRIDE(auto visit([[maybe_unused]] util::Visitable::Ptr_t node) -> u32_t) {
-    return detail::toBase(util::Traverser::Action::CONTINUE);
+  MTHD_VIRTUAL_OVERRIDE(auto visit([[maybe_unused]] util::Visitable::Ptr_t node) -> u32_t) {
+    return detail::toBase(util::TraverserAction::Enum::CONTINUE);
   }
 
 #pragma endregion

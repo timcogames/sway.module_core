@@ -1,14 +1,16 @@
 #ifndef SWAY_KEYWORDS_HPP
 #define SWAY_KEYWORDS_HPP
 
-#define DFLT_DTOR(OBJ_CLASS) ~OBJ_CLASS() = default
+#define MTHD_VIRTUAL(SIG) virtual SIG
 
-#define DFLT_DTOR_VIRTUAL(OBJ_CLASS) virtual DFLT_DTOR(OBJ_CLASS)
+#define PURE_VIRTUAL(SIG) MTHD_VIRTUAL(SIG) = 0
 
-#define PURE_VIRTUAL(...) virtual __VA_ARGS__ = 0
+#define MTHD_OVERRIDE(SIG) SIG override
 
-#define MTHD_VIRTUAL(...) virtual __VA_ARGS__
+#define MTHD_VIRTUAL_OVERRIDE(SIG) virtual MTHD_OVERRIDE(SIG)
 
-#define MTHD_OVERRIDE(...) MTHD_VIRTUAL(__VA_ARGS__ override)
+#define DTOR_DEFAULT(OBJ) ~OBJ() = default
+
+#define DTOR_VIRTUAL_DEFAULT(OBJ) virtual DTOR_DEFAULT(OBJ)
 
 #endif  // SWAY_KEYWORDS_HPP

@@ -37,6 +37,7 @@
 #include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
+#include <sway/core/util/traverseractions.hpp>
 // #include <sway/core/misc/optional.hpp>
 #include <sway/core/misc/dictionary.hpp>
 #include <sway/core/misc/string.hpp>
@@ -56,6 +57,7 @@
 #include <sway/core/util/observable.hpp>
 #include <sway/core/util/observer.hpp>
 #include <sway/core/util/traverser.hpp>
+#include <sway/core/util/typedefs.hpp>
 #include <sway/core/util/visitable.hpp>
 #include <sway/core/version.hpp>
 #include <sway/defines.hpp>

@@ -29,9 +29,9 @@
 #include <string>
 #include <vector>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(container)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(container)
 
 class Node : public std::enable_shared_from_this<Node>, public util::Visitable, public foundation::Eventable {
   DECLARE_CLASS_POINTER_ALIASES(Node)
@@ -51,7 +51,7 @@ public:
 
 #pragma region "Override Visitable methods"
 
-  MTHD_OVERRIDE(auto traverse(util::Traverser *traverser) -> u32_t);
+  MTHD_VIRTUAL_OVERRIDE(auto traverse(util::TraverserPtr_t traverser) -> u32_t);
 
 #pragma endregion
 
@@ -113,23 +113,23 @@ private:
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 EXTERN_C_BEGIN
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto createNode() -> Node::JsPtr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto createNode() -> Node::JavaScriptPtr_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API void deleteNode(Node::JsPtr_t node);
+D_MODULE_CORE_INTERFACE_EXPORT_API void deleteNode(Node::JavaScriptPtr_t node);
 
-D_MODULE_CORE_INTERFACE_EXPORT_API void addChildNode(Node::JsPtr_t root, Node::JsPtr_t node);
+D_MODULE_CORE_INTERFACE_EXPORT_API void addChildNode(Node::JavaScriptPtr_t root, Node::JavaScriptPtr_t node);
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getNodeIdx(Node::JsPtr_t node) -> lpcstr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getNodeIdx(Node::JavaScriptPtr_t node) -> lpcstr_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getChildNodes(Node::JsPtr_t node) -> Node::JsPtr_t *;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getChildNodes(Node::JavaScriptPtr_t node) -> Node::JavaScriptPtr_t *;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getNumOfChildNodes(Node::JsPtr_t node) -> i32_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getNumOfChildNodes(Node::JavaScriptPtr_t node) -> i32_t;
 
 EXTERN_C_END
 #endif
 
-NAMESPACE_END(container)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace container
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_CONTAINER_NODE_HPP

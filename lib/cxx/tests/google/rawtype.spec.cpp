@@ -4,7 +4,7 @@
 
 #include <type_traits>  // std::is_same
 
-using namespace sway;
+NS_SHORT_SWAY()
 
 template <typename T, typename U>
 struct DecayEquiv : std::is_same<core::detail::Unwrap_t<T>, U>::type {};

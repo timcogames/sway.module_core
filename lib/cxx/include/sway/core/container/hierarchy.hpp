@@ -29,9 +29,9 @@
 #  endif
 #endif
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(container)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(container)
 
 #ifdef EMSCRIPTEN_PLATFORM
 using NodeDataList = emscripten::val;
@@ -70,17 +70,17 @@ private:
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 EXTERN_C_BEGIN
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto createHierarchy() -> Hierarchy::JsPtr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto createHierarchy() -> Hierarchy::JavaScriptPtr_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API void deleteHierarchy(Hierarchy::JsPtr_t hierarchy);
+D_MODULE_CORE_INTERFACE_EXPORT_API void deleteHierarchy(Hierarchy::JavaScriptPtr_t hierarchy);
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getRootNode(Hierarchy::JsPtr_t hierarchy) -> Node::JsPtr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getRootNode(Hierarchy::JavaScriptPtr_t hierarchy) -> Node::JavaScriptPtr_t;
 
 EXTERN_C_END
 #endif
 
-NAMESPACE_END(container)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace container
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_CONTAINER_HIERARCHY_HPP

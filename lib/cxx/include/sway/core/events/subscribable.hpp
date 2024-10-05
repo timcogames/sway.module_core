@@ -8,9 +8,9 @@
 #include <memory>
 #include <vector>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(evts)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(evts)
 
 class Subscribable {
 protected:
@@ -26,8 +26,8 @@ public:
   void handle(const foundation::Event::UniquePtr_t &evt);
 };
 
-NAMESPACE_END(evts)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace evts
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_EVTS_SUBSCRIBABLE_HPP

@@ -10,9 +10,9 @@
 #  endif
 #endif
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(container)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(NodeIdx)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
@@ -102,6 +102,6 @@ auto NodeIdx::toStr() const -> std::string {
   return str;
 }
 
-NAMESPACE_END(container)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace container
+NS_END()  // namespace core
+NS_END()  // namespace sway

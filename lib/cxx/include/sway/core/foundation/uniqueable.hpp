@@ -11,9 +11,9 @@
 #include <string>
 #include <vector>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 template <typename VALUE_TYPE>
 class Uniqueable {
@@ -42,8 +42,8 @@ private:
 
 #include <sway/core/foundation/uniqueable_embind.inl>
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_FOUNDATION_UNIQUEABLE_HPP

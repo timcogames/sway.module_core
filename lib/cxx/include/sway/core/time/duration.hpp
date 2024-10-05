@@ -5,9 +5,9 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(time)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(time)
 
 class Duration {
 public:
@@ -64,8 +64,8 @@ private:
   f64_t ticks_;
 };
 
-NAMESPACE_END(time)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace time
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_TIME_DURATION_HPP

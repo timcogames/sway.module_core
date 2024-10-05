@@ -9,9 +9,9 @@
 #include <memory>
 #include <queue>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(evts)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(evts)
 
 class EventBus : public Subscribable {
 public:
@@ -39,8 +39,8 @@ private:
   std::queue<foundation::Event::UniquePtr_t> events_{};
 };
 
-NAMESPACE_END(evts)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace evts
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_EVTS_EVENTBUS_HPP

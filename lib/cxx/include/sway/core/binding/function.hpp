@@ -7,9 +7,9 @@
 
 #include <utility>  // std::forward
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(binding)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(binding)
 
 template <typename>
 class TFunction;
@@ -43,8 +43,8 @@ protected:
   ProcAddress_t invoker_;  // Указатель на функции.
 };
 
-NAMESPACE_END(binding)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace binding
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_BINDING_FUNCTION_HPP

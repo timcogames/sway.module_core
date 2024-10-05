@@ -2,29 +2,29 @@
 
 #include <algorithm>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(util)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(util)
 
-Observable::Observable() { observers_ = std::vector<IObserver::Ptr_t>(); }
+Observable::Observable() { observers_ = std::vector<Observer::Ptr_t>(); }
 
 Observable::~Observable() { observers_.clear(); }
 
-void Observable::registerObserver(IObserver::Ptr_t observer) { observers_.push_back(observer); }
+void Observable::registerObserver(Observer::Ptr_t obs) { observers_.push_back(obs); }
 
-void Observable::removeObserver(IObserver::Ptr_t observer) {
-  auto iter = std::find(observers_.begin(), observers_.end(), observer);
+void Observable::removeObserver(Observer::Ptr_t obs) {
+  auto iter = std::find(observers_.begin(), observers_.end(), obs);
   if (iter != observers_.end()) {
     observers_.erase(iter);
   }
 }
 
 void Observable::notify() {
-  for (auto &observer : observers_) {
-    observer->update();
+  for (auto &obs : observers_) {
+    obs->update();
   }
 }
 
-NAMESPACE_END(util)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace util
+NS_END()  // namespace core
+NS_END()  // namespace sway

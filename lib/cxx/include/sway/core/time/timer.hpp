@@ -6,9 +6,9 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(time)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(time)
 
 class Timer {
 public:
@@ -20,7 +20,7 @@ public:
   void start() {
     started_ = Clock::now();
     paused_ = {0};
-    status_ = TimerStatusUtil::as(TimerStatus::RUNNING);
+    status_ = TimerStatusUtil::as(TimerStatus::Enum::RUNNING);
   }
 
   void pause() {
@@ -29,7 +29,7 @@ public:
     }
 
     paused_ = Clock::now();
-    status_ = TimerStatusUtil::as(TimerStatus::PAUSED);
+    status_ = TimerStatusUtil::as(TimerStatus::Enum::PAUSED);
   }
 
   void resume() {
@@ -38,7 +38,7 @@ public:
     }
 
     started_ = started_ + Clock::since(paused_);
-    status_ = TimerStatusUtil::as(TimerStatus::RUNNING);
+    status_ = TimerStatusUtil::as(TimerStatus::Enum::RUNNING);
   }
 
   void stop() {
@@ -46,7 +46,7 @@ public:
       return;
     }
 
-    status_ = TimerStatusUtil::as(TimerStatus::STOPPED);
+    status_ = TimerStatusUtil::as(TimerStatus::Enum::STOPPED);
   }
 
   [[nodiscard]]
@@ -73,8 +73,8 @@ private:
   u32_t status_;
 };
 
-NAMESPACE_END(time)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace time
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_TIME_TIMER_HPP

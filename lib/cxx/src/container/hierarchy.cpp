@@ -8,9 +8,9 @@
 #  endif
 #endif
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(container)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(Hierarchy)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
@@ -47,20 +47,20 @@ void Hierarchy::setRootNode(Node::SharedPtr_t root) { root_ = root; }
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
-auto createHierarchy() -> Hierarchy::JsPtr_t { return Hierarchy::toJs(new Hierarchy()); }
+auto createHierarchy() -> Hierarchy::JavaScriptPtr_t { return Hierarchy::toJs(new Hierarchy()); }
 
-void deleteHierarchy(Hierarchy::JsPtr_t hierarchy) {
+void deleteHierarchy(Hierarchy::JavaScriptPtr_t hierarchy) {
   auto obj = Hierarchy::fromJs(hierarchy);
   SAFE_DELETE_OBJECT(obj);
 }
 
-auto getRootNode(Hierarchy::JsPtr_t hierarchy) -> Node::JsPtr_t {
+auto getRootNode(Hierarchy::JavaScriptPtr_t hierarchy) -> Node::JavaScriptPtr_t {
   auto obj = Hierarchy::fromJs(hierarchy);
-  return Node::toJs(obj->getRootNode().get());
+  return Node::toJs(obj->getRootNode());
 }
 
 #endif
 
-NAMESPACE_END(container)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace container
+NS_END()  // namespace core
+NS_END()  // namespace sway

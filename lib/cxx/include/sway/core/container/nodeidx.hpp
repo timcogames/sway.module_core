@@ -10,9 +10,9 @@
 #include <string>
 #include <vector>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(container)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(container)
 
 constexpr i32_t NODEIDX_NEGATIVE = GLOB_IDX_INVALID;
 constexpr i32_t NODEIDX_ROOT = NODEIDX_NEGATIVE;
@@ -74,8 +74,8 @@ private:
   NodeIdx::Chain_t chainLinks_;
 };
 
-NAMESPACE_END(container)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace container
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_CONTAINER_NODEIDX_HPP

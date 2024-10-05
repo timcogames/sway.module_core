@@ -4,10 +4,10 @@
 #include <sway/core/misc/format.hpp>
 #include <sway/core/runtime/exception.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(runtime)
-NAMESPACE_BEGIN(exceptions)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(runtime)
+NS_BEGIN(exceptions)
 
 class ArgumentNullException : public Exception {
 public:
@@ -27,9 +27,9 @@ private:
   std::string argname_;
 };
 
-NAMESPACE_END(exceptions)
-NAMESPACE_END(runtime)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace exceptions
+NS_END()  // namespace runtime
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_RUNTIME_EXCEPTIONS_ARGUMENTNULLEXCEPTION_HPP

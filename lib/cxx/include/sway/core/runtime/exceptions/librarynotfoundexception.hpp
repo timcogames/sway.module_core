@@ -3,10 +3,10 @@
 
 #include <sway/core/runtime/exception.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(runtime)
-NAMESPACE_BEGIN(exceptions)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(runtime)
+NS_BEGIN(exceptions)
 
 class LibraryNotFoundException : public Exception {
 public:
@@ -30,9 +30,9 @@ private:
   std::string dlError_;  // Текст, подробно описывающий ошибку.
 };
 
-NAMESPACE_END(exceptions)
-NAMESPACE_END(runtime)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace exceptions
+NS_END()  // namespace runtime
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_RUNTIME_EXCEPTIONS_LIBRARYNOTFOUNDEXCEPTION_HPP

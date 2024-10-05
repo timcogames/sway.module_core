@@ -1,18 +1,21 @@
-#include <sway/core.hpp>
+#include <sway/core/time/clock.hpp>
+#include <sway/namespacemacros.hpp>
 
 #include <gtest/gtest.h>
 
-using namespace sway;
+#include <cstdio>
+
+NS_ALIAS(tm_, core::time)
 
 TEST(ClockTest, since) {
   const std::size_t NUM_ITERATIONS = 1000000;
-  auto t = core::time::Clock::now();
+  auto now = tm_::Clock::now();
 
-  for (int i = 0; i < NUM_ITERATIONS; i++) {
+  for (auto i = 0; i < NUM_ITERATIONS; i++) {
     // TODO
   }
 
-  auto d = core::time::Clock::since(t);
-  printf("duration (us): %f\n", d.getRaw());
-  printf("duration (ms): %f\n", d.asMillis());
+  auto dur = tm_::Clock::since(now);
+  printf("duration (us): %f\n", dur.getRaw());
+  printf("duration (ms): %f\n", dur.asMillis());
 }

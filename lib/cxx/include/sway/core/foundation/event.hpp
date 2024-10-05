@@ -12,9 +12,9 @@
 
 #include <string>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 /**
  * @brief Базовый интерфейс для описания всех типов событий.
@@ -27,7 +27,7 @@ class Event {
 public:
 #pragma region "Ctors/Dtor"
 
-  DFLT_DTOR_VIRTUAL(Event);
+  DTOR_VIRTUAL_DEFAULT(Event);
 
 #pragma endregion
 
@@ -49,8 +49,8 @@ public:
 
 #include <sway/core/foundation/event_embind.inl>
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_FOUNDATION_EVENT_HPP

@@ -8,9 +8,9 @@
 #include <iostream>
 #include <string>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 class ActionMapper {
 public:
@@ -28,7 +28,7 @@ public:
 
 #pragma region "Override ActionMapper methods"
 
-  MTHD_OVERRIDE(void registerEvents(EventApplier *applier)) {
+  MTHD_VIRTUAL_OVERRIDE(void registerEvents(EventApplier *applier)) {
     auto self = this;
     doForEachEvent(self, [&](auto *base) {
       using ConcreteEventType_t = typename std::decay_t<decltype(*base)>::EventType_t;
@@ -45,8 +45,8 @@ private:
   }
 };
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_FOUNDATION_EVENACTIONMAPPER_HPP

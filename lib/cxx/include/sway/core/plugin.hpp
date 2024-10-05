@@ -16,8 +16,8 @@
 #  include <emscripten/emscripten.h>
 #endif
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
 
 struct PluginFunctionSet {
   virtual ~PluginFunctionSet() = default;
@@ -63,7 +63,7 @@ private:
   DlibHandle_t handle_;
 };
 
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_PLUGIN_HPP

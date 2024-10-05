@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-using namespace sway;
+NS_SHORT_SWAY()
 
 typedef core::binding::TFunction<void()> TestFunc_t;
 

@@ -5,15 +5,15 @@
 
 #include <type_traits>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(detail)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(detail)
 
 template <typename DATA_TYPE>
 using Unwrap_t = typename std::decay<DATA_TYPE>::type;
 
-NAMESPACE_END(detail)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace detail
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_DETAIL_RAWTYPE_HPP

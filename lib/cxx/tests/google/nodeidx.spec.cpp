@@ -1,4 +1,7 @@
 #include <sway/core/container/node.hpp>
+#include <sway/core/container/nodeidx.hpp>
+#include <sway/keywords.hpp>
+#include <sway/namespacemacros.hpp>
 
 #include <gtest/gtest.h>
 
@@ -8,7 +11,8 @@
 #define NODE_IDX_SUPERVISOR (0)
 #define NODE_IDX_WORKER (1)
 
-using namespace sway::core::container;
+NS_SHORT_SWAY()
+NS_SHORT(core::container)
 
 class NodeIdxTest : public ::testing::Test {
 public:
@@ -45,8 +49,8 @@ TEST_F(NodeIdxTest, to_str) {
 }
 
 TEST_F(NodeIdxTest, get_match_depth) {
-  std::vector<int> v1 = {-1, 0, 2};
-  std::vector<int> v2 = {-1, 0, 2, 1};
+  std::vector<i32_t> v1 = {-1, 0, 2};
+  std::vector<i32_t> v2 = {-1, 0, 2, 1};
 
   auto result = NodeIdx::getMatchDepth(v1, v2);
   ASSERT_EQ(result, 3);

@@ -17,17 +17,17 @@
 
 #define EVT_CREATED (0)
 
-using namespace sway;
-using namespace sway::core;
+NS_SHORT_SWAY()
+NS_SHORT(core)
 
 struct MyEventData : public foundation::EventData {
   std::string value;
 
 #pragma region "Override EventData methods"
 
-  MTHD_OVERRIDE(auto serialize() const -> std::string) { return ""; }
+  MTHD_VIRTUAL_OVERRIDE(auto serialize() const -> std::string) { return ""; }
 
-  MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
+  MTHD_VIRTUAL_OVERRIDE(void deserialize(const std::string &jdata)) {}
 
 #pragma endregion
 };
@@ -49,11 +49,11 @@ public:
 
 #pragma region "Override Event methods"
 
-  MTHD_OVERRIDE(auto id() const -> std::string) { return id_; }
+  MTHD_VIRTUAL_OVERRIDE(auto id() const -> std::string) { return id_; }
 
-  MTHD_OVERRIDE(auto type() const -> u32_t) { return type_; }
+  MTHD_VIRTUAL_OVERRIDE(auto type() const -> u32_t) { return type_; }
 
-  MTHD_OVERRIDE(auto data() const -> foundation::EventData::Ptr_t) { return data_; }
+  MTHD_VIRTUAL_OVERRIDE(auto data() const -> foundation::EventData::Ptr_t) { return data_; }
 
 #pragma endregion
 
@@ -86,7 +86,7 @@ public:
 
 #pragma region "Override EventActionMapper methods"
 
-  MTHD_OVERRIDE(void apply(std::shared_ptr<MyCreatedEvent> vent)) { myvalue_ = vent->getConcreteData<MyEventData>().value; }
+  MTHD_VIRTUAL_OVERRIDE(void apply(std::shared_ptr<MyCreatedEvent> vent)) { myvalue_ = vent->getConcreteData<MyEventData>().value; }
 
 #pragma endregion
 
@@ -152,9 +152,9 @@ struct TestEventData : public foundation::EventData {
 
 #pragma region "Override EventData methods"
 
-  MTHD_OVERRIDE(auto serialize() const -> std::string) { return ""; }
+  MTHD_VIRTUAL_OVERRIDE(auto serialize() const -> std::string) { return ""; }
 
-  MTHD_OVERRIDE(void deserialize(const std::string &jdata)) {}
+  MTHD_VIRTUAL_OVERRIDE(void deserialize(const std::string &jdata)) {}
 
 #pragma endregion
 };

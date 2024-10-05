@@ -6,9 +6,9 @@
 
 #include <map>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(time)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(time)
 
 enum class ChronoUnit : u32_t { MILLIS, SECONDS, MINUTES, HOURS, Latest };
 
@@ -21,8 +21,8 @@ static inline std::map<ChronoUnit, f64_t> CHRONO_UNIT_TABLE {{
 }};
 // clang-format on
 
-NAMESPACE_END(time)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace time
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_TIME_CHRONOUNITS_HPP

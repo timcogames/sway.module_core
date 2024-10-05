@@ -10,9 +10,9 @@
 #include <cstdlib>  // atoi, atof
 #include <string>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(misc)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(misc)
 
 inline auto toLowerCase(const std::string &str) -> std::string {
   std::string result = str;
@@ -66,8 +66,8 @@ inline auto toBoolean(lpcstr_t str, bool def) -> bool {
   return toLowerCase(str) == "true" ? true : false;
 }
 
-NAMESPACE_END(misc)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace misc
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_MISC_STRING_HPP

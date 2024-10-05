@@ -6,10 +6,10 @@
 
 #include <fstream>  // std::ifstream
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(generic)
-NAMESPACE_BEGIN(io)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(generic)
+NS_BEGIN(io)
 
 class FileSource {
 public:
@@ -34,9 +34,9 @@ protected:
   bool opened_;  // Открыт ли файл в данный момент.
 };
 
-NAMESPACE_END(io)
-NAMESPACE_END(generic)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace io
+NS_END()  // namespace generic
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_GENERIC_IO_FILESOURCE_HPP

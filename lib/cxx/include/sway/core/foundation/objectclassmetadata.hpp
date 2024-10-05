@@ -19,9 +19,9 @@
 #include <memory>
 #include <string>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 class ObjectClassname {
 public:
@@ -64,9 +64,9 @@ private:
   std::string classname_;
 };
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 // clang-format off
 #define DECLARE_SUPERCLASS()                                                                                \
@@ -84,10 +84,10 @@ public:                                                                         
     static const sway::core::foundation::ObjectClassMetadata metadata(#OBJ_CLASS, super_t::getObjectClassMetadata()); \
     return &metadata;                                                                                                 \
   }                                                                                                                   \
-  MTHD_OVERRIDE(auto getSuperclass() const -> const sway::core::foundation::ObjectClassMetadata *) {                  \
+  MTHD_VIRTUAL_OVERRIDE(auto getSuperclass() const -> const sway::core::foundation::ObjectClassMetadata *) {                  \
     return getObjectClassMetadata()->getSuperclass();                                                                 \
   }                                                                                                                   \
-  MTHD_OVERRIDE(auto getClassname() const -> const std::string &) {                                                   \
+  MTHD_VIRTUAL_OVERRIDE(auto getClassname() const -> const std::string &) {                                                   \
     return getObjectClassMetadata()->getClassname();                                                                  \
   }
 // clang-format on

@@ -2,11 +2,12 @@
 
 #include <algorithm>
 #include <fstream>
+#include <unistd.h>  // access
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(generic)
-NAMESPACE_BEGIN(io)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(generic)
+NS_BEGIN(io)
 
 Path::Path(const std::string &path)
     : path_(path) {}
@@ -30,7 +31,7 @@ auto Path::getFilename() const -> std::string {
 }
 
 auto Path::getExt() const -> std::string {
-  const std::string &filename = getFilename();
+  const auto &filename = getFilename();
   size_t position = filename.find_last_of(".");
 
   if (position == std::string::npos) {
@@ -40,8 +41,13 @@ auto Path::getExt() const -> std::string {
   return filename.substr(position + 1);
 }
 
+auto Path::isFileExists(const std::string &filename) const -> bool {
+  auto const mode = 0;  // проверяет существование файла
+  return access(filename.c_str(), mode) == 0;
+}
+
 auto Path::isExists(const std::string &filename) const -> bool {
-  bool existed = false;
+  auto existed = false;
   std::ifstream file(filename.c_str());
   if (file.good()) {
     existed = true;
@@ -55,7 +61,7 @@ auto Path::isEmpty() const -> bool { return path_.empty(); }
 
 auto Path::toString() const -> std::string { return path_; }
 
-NAMESPACE_END(io)
-NAMESPACE_END(generic)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace io
+NS_END()  // namespace generic
+NS_END()  // namespace core
+NS_END()  // namespace sway

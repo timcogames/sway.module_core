@@ -9,8 +9,8 @@
 
 #include <string>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
 
 struct ValueData {
   PURE_VIRTUAL(auto type() const -> u32_t);
@@ -25,12 +25,12 @@ struct GenericValueData : public ValueData {
 
 #pragma region "Override ValueData methods"
 
-  MTHD_OVERRIDE(auto type() const -> u32_t) { return detail::toBase(detail::ValueDataTypeToEnum<VALUE_TYPE>::value); }
+  MTHD_VIRTUAL_OVERRIDE(auto type() const -> u32_t) { return detail::toBase(detail::ValueDataTypeToEnum<VALUE_TYPE>::value); }
 
 #pragma endregion
 };
 
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_DETAIL_VALUEDATA_HPP

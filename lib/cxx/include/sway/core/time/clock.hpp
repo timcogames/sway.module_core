@@ -13,9 +13,9 @@
 using namespace std::chrono;
 #endif
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(time)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(time)
 
 class Clock {
 public:
@@ -31,8 +31,8 @@ public:
   static auto since(const TimePoint &pnt) -> Duration { return Clock::now().since(pnt); }
 };
 
-NAMESPACE_END(time)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace time
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_TIME_CLOCK_HPP

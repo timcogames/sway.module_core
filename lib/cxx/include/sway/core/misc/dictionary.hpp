@@ -9,9 +9,9 @@
 #include <string_view>
 #include <unordered_map>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(misc)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(misc)
 
 class Dictionary {
 public:
@@ -88,8 +88,8 @@ private:
   Dictionary::Container_t variables_;
 };
 
-NAMESPACE_END(misc)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace misc
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_MISC_DICTIONARY_HPP

@@ -6,9 +6,9 @@
 
 #include <bitset>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(detail)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(detail)
 
 template <typename ENUM>
 class EnumClassBitset {
@@ -32,8 +32,8 @@ private:
   std::bitset<toBase(ENUM::Latest)> flags_;
 };
 
-NAMESPACE_END(detail)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace detail
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_DETAIL_ENUMCLASSBITSET_HPP

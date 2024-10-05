@@ -8,9 +8,9 @@
 #include <algorithm>  // std::remove_if
 #include <vector>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 template <class TYPE>
 class TEventHandlerImpl : public EventHandler {
@@ -29,7 +29,7 @@ public:
 
 #pragma region "Override EventHandler methods"
 
-  MTHD_OVERRIDE(void invoke(Event::Ptr_t evt)) {
+  MTHD_VIRTUAL_OVERRIDE(void invoke(Event::Ptr_t evt)) {
     auto *receiver = static_cast<TYPE *>(receiver_);
     (receiver->*function_)(evt);
   }
@@ -57,7 +57,7 @@ public:
 
   virtual ~EventHandlerImpl() = default;
 
-  MTHD_OVERRIDE(void invoke(Event::Ptr_t evt)) {
+  MTHD_VIRTUAL_OVERRIDE(void invoke(Event::Ptr_t evt)) {
     if (function_.typeOf().as<std::string>() == "function") {
       function_(evt);
     } else {
@@ -70,9 +70,9 @@ private:
 };
 #endif
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #define EVENT_HANDLER(CLASS_NAME, FUNC) \
   (new sway::core::foundation::TEventHandlerImpl<CLASS_NAME>(this, &CLASS_NAME::FUNC))

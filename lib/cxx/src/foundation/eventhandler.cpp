@@ -1,9 +1,9 @@
 #include <sway/core/foundation/eventable.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 EMSCRIPTEN_BINDING_BEGIN(EventHandler)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
@@ -25,6 +25,6 @@ void EventHandler::setSender(EventablePtr_t sender) { sender_ = sender; }
 
 auto EventHandler::getReceiver() const -> EventablePtr_t { return receiver_; }
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway

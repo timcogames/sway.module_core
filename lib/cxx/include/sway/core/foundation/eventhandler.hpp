@@ -19,9 +19,9 @@
 #  endif
 #endif
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(foundation)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(foundation)
 
 class Eventable;
 
@@ -75,12 +75,12 @@ class EventHandlerWrapper : public emscripten::wrapper<EventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(EventHandlerWrapper);
 
-  MTHD_OVERRIDE(void invoke(Event::Ptr_t evt)) { return call<void>("invoke", evt); }
+  MTHD_VIRTUAL_OVERRIDE(void invoke(Event::Ptr_t evt)) { return call<void>("invoke", evt); }
 };
 #endif
 
-NAMESPACE_END(foundation)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace foundation
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_FOUNDATION_EVENTHANDLER_HPP

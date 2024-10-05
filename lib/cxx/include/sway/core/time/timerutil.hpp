@@ -7,9 +7,9 @@
 
 #include <string>
 
-NAMESPACE_BEGIN(sway)
-NAMESPACE_BEGIN(core)
-NAMESPACE_BEGIN(time)
+NS_BEGIN_SWAY()
+NS_BEGIN(core)
+NS_BEGIN(time)
 
 struct TimerUtil {
   static auto toStr(f64_t ticks) -> std::string {
@@ -25,8 +25,8 @@ struct TimerUtil {
   }
 };
 
-NAMESPACE_END(time)
-NAMESPACE_END(core)
-NAMESPACE_END(sway)
+NS_END()  // namespace time
+NS_END()  // namespace core
+NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_TIME_TIMERUTIL_HPP
