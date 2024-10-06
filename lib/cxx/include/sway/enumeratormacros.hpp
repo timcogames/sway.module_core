@@ -6,6 +6,8 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/numeraltypes.hpp>
 
+#include <iterator>  // std::size
+
 #define ENUM_BITMASK(x) (1 << (x))
 
 // clang-format off
