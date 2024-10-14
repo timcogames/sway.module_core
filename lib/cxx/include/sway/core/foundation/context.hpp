@@ -1,12 +1,12 @@
 #ifndef SWAY_CORE_FOUNDATION_CONTEXT_HPP
 #define SWAY_CORE_FOUNDATION_CONTEXT_HPP
 
-#include <sway/classpointermacros.hpp>
 #include <sway/core/foundation/subsystem.hpp>
 #include <sway/core/foundation/types.hpp>
 #include <sway/core/runtime/exceptions/argumentnullexception.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/pointermacros.hpp>
 #include <sway/types.hpp>
 
 #include <optional>
@@ -18,7 +18,7 @@ NS_BEGIN(core)
 NS_BEGIN(foundation)
 
 class Context {
-  DECLARE_CLASS_POINTER_ALIASES(Context)
+  DECLARE_PTR_ALIASES(Context)
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:

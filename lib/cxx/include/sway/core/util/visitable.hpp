@@ -12,7 +12,7 @@ NS_BEGIN(util)
 
 class Traverser;
 class Visitable {
-  DECLARE_CLASS_POINTER_ALIASES(Visitable)
+  DECLARE_PTR_ALIASES(Visitable)
 
 public:
 #pragma region "Ctors/Dtor"

@@ -11,6 +11,8 @@
 
 #define DTOR_DEFAULT(OBJ) ~OBJ() = default
 
+#define DTOR_VIRTUAL(OBJ) virtual ~OBJ()
+
 #define DTOR_VIRTUAL_DEFAULT(OBJ) virtual DTOR_DEFAULT(OBJ)
 
 #endif  // SWAY_KEYWORDS_HPP

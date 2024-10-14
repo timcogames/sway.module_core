@@ -12,7 +12,7 @@ NS_BEGIN(core)
 NS_BEGIN(container)
 
 struct NodeData {
-  std::vector<NodeIdx::Index_t> nodeidx;
+  std::vector<NodeIdx::ChainItemIndex_t> nodeidx;
   std::string name;
 };
 

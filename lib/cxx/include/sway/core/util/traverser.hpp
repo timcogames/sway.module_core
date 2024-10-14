@@ -12,7 +12,7 @@ NS_BEGIN(util)
 
 class Visitable;
 class Traverser {
-  DECLARE_CLASS_POINTER_ALIASES(Traverser)
+  DECLARE_PTR_ALIASES(Traverser)
 
 public:
 #pragma region "Pure virtual methods"

@@ -84,8 +84,8 @@ void Node::addChildNode(Node::SharedPtr_t child) {
 }
 
 void Node::recursiveAddChainLinks(Node::SharedPtr_t child, NodeIdx parentNodeIdx) {
-  NodeIdx::Chain_t chain = child->getNodeIdx().getChain();
-  NodeIdx::Chain_t parentChain = parentNodeIdx.getChain();
+  NodeIdx::ChainVec_t chain = child->getNodeIdx().getChain();
+  NodeIdx::ChainVec_t parentChain = parentNodeIdx.getChain();
 
   chain.insert(chain.begin() + 1, parentChain.begin() + 1, parentChain.end());
   child->setNodeIdx(chain, NODEIDX_NEGATIVE);
@@ -129,7 +129,7 @@ void Node::recursiveRemoveChainLinks(Node::SharedPtr_t child, NodeIdx parentNode
   }
 }
 
-auto Node::getChildNodes() -> std::vector<Node::SharedPtr_t> { return children_; }
+auto Node::getChildNodes() -> Node::SharedPtrVec_t { return children_; }
 
 auto Node::getChildNode(const NodeIdx &idx) const -> Node::SharedPtr_t {
   auto iter = children_.begin();
@@ -158,7 +158,7 @@ auto Node::getChildAt(int targetIdx) const -> std::optional<Node::SharedPtr_t> {
 
 auto Node::getNumOfChildNodes() const -> int { return static_cast<int>(children_.size()); }
 
-void Node::setNodeIdx(const NodeIdx::Chain_t &chain, int last) { idx_.setChain(chain, last); }
+void Node::setNodeIdx(const NodeIdx::ChainVec_t &chain, int last) { idx_.setChain(chain, last); }
 
 auto Node::getNodeIdx() -> NodeIdx { return idx_; }
 
@@ -186,7 +186,7 @@ void Node::setAsRoot() { idx_.setAsRoot(); }
 
 auto Node::equal(Node::SharedPtr_t other) -> bool { return other->chainEqual(idx_.getChain()); }
 
-auto Node::chainEqual(NodeIdx::Chain_t other) -> bool { return idx_.chainEqual(other); }
+auto Node::chainEqual(NodeIdx::ChainVec_t other) -> bool { return idx_.chainEqual(other); }
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 

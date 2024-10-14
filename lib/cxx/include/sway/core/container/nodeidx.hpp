@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_CONTAINER_NODEIDX_HPP
 #define SWAY_CORE_CONTAINER_NODEIDX_HPP
 
+#include <sway/containermacros.hpp>
 #include <sway/defines.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
@@ -18,20 +19,18 @@ constexpr i32_t NODEIDX_NEGATIVE = GLOB_IDX_INVALID;
 constexpr i32_t NODEIDX_ROOT = NODEIDX_NEGATIVE;
 constexpr i32_t NODEIDX_ROOT_DEPTH = 1;
 
-#define NODEIDX_CHAIN_INITIALROOT std::vector<int>({NODEIDX_ROOT})
+#define NODEIDX_CHAIN_INITIALROOT std::vector<i32_t>({NODEIDX_ROOT})
 
 class NodeIdx {
   DECLARE_EMSCRIPTEN_BINDING()
+  DECLARE_VECTOR(Chain, i32_t)
 
 public:
-  using Index_t = i32_t;
-  using Chain_t = std::vector<NodeIdx::Index_t>;
-
 #pragma region "Static methods"
 
-  static auto chainToStr(const NodeIdx::Chain_t &chain) -> std::string;
+  static auto chainToStr(const NodeIdx::ChainVec_t &chain) -> std::string;
 
-  static auto getMatchDepth(const NodeIdx::Chain_t &lhs, const NodeIdx::Chain_t &rhs) -> int;
+  static auto getMatchDepth(const NodeIdx::ChainVec_t &lhs, const NodeIdx::ChainVec_t &rhs) -> int;
 
 #pragma endregion
 
@@ -39,9 +38,9 @@ public:
 
   NodeIdx();
 
-  explicit NodeIdx(const NodeIdx::Chain_t &data);
+  explicit NodeIdx(const NodeIdx::ChainVec_t &data);
 
-  NodeIdx(NodeIdx parent, NodeIdx::Index_t idx);
+  NodeIdx(NodeIdx parent, NodeIdx::ChainItemIndex_t idx);
 
   ~NodeIdx() = default;
 
@@ -49,29 +48,29 @@ public:
 
   void setAsRoot();
 
-  void setChain(const NodeIdx::Chain_t &chain, NodeIdx::Index_t idx);
+  void setChain(const NodeIdx::ChainVec_t &chain, NodeIdx::ChainItemIndex_t idx);
 
   [[nodiscard]]
-  auto getChain() const -> NodeIdx::Chain_t;
+  auto getChain() const -> NodeIdx::ChainVec_t;
 
   [[nodiscard]]
-  auto getParent() const -> NodeIdx::Chain_t;
+  auto getParent() const -> NodeIdx::ChainVec_t;
 
   [[nodiscard]]
   auto getDepth() const -> int;
 
   [[nodiscard]]
-  auto getIdxAt(int idx) const -> NodeIdx::Index_t;
+  auto getIdxAt(int idx) const -> NodeIdx::ChainItemIndex_t;
 
   auto equal(const NodeIdx &other) -> bool;
 
-  auto chainEqual(const NodeIdx::Chain_t &other) -> bool;
+  auto chainEqual(const NodeIdx::ChainVec_t &other) -> bool;
 
   [[nodiscard]]
   auto toStr() const -> std::string;
 
 private:
-  NodeIdx::Chain_t chainLinks_;
+  NodeIdx::ChainVec_t chainLinks_;
 };
 
 NS_END()  // namespace container

@@ -1,12 +1,12 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENTHANDLER_HPP
 #define SWAY_CORE_FOUNDATION_EVENTHANDLER_HPP
 
-#include <sway/classpointermacros.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/types.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/pointermacros.hpp>
 #include <sway/types.hpp>
 
 #include <string>
@@ -30,7 +30,7 @@ class Eventable;
  * @brief Описывает обработчик для события.
  */
 class EventHandler {
-  DECLARE_CLASS_POINTER_ALIASES(EventHandler)
+  DECLARE_PTR_ALIASES(EventHandler)
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:

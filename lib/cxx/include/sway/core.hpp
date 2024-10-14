@@ -1,7 +1,6 @@
 #ifndef SWAY_CORE_HPP
 #define SWAY_CORE_HPP
 
-#include <sway/classpointermacros.hpp>
 #include <sway/core/binding/function.hpp>
 #include <sway/core/binding/procaddress.hpp>
 #include <sway/core/container/hierarchy.hpp>
@@ -38,7 +37,9 @@
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
 #include <sway/core/util/traverseractions.hpp>
+#include <sway/pointermacros.hpp>
 // #include <sway/core/misc/optional.hpp>
+#include <sway/containermacros.hpp>
 #include <sway/core/misc/dictionary.hpp>
 #include <sway/core/misc/string.hpp>
 #include <sway/core/plugin.hpp>

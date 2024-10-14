@@ -1,7 +1,6 @@
 #ifndef SWAY_CORE_CONTAINER_NODE_HPP
 #define SWAY_CORE_CONTAINER_NODE_HPP
 
-#include <sway/classpointermacros.hpp>
 #include <sway/core/container/nodeidx.hpp>
 #include <sway/core/container/types.hpp>
 #include <sway/core/foundation/declareeventmacros.hpp>
@@ -16,6 +15,7 @@
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/pointermacros.hpp>
 #include <sway/types.hpp>
 #include <sway/visibilitymacros.hpp>
 
@@ -34,7 +34,8 @@ NS_BEGIN(core)
 NS_BEGIN(container)
 
 class Node : public std::enable_shared_from_this<Node>, public util::Visitable, public foundation::Eventable {
-  DECLARE_CLASS_POINTER_ALIASES(Node)
+  DECLARE_PTR_ALIASES(Node)
+  DECLARE_SHARED_PTR_VECTOR(Node)
   DECLARE_EVENT(EVT_ADDED, NodeAdded)
   DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
   DECLARE_EMSCRIPTEN(Node)
@@ -45,7 +46,7 @@ public:
 
   Node();
 
-  virtual ~Node();
+  DTOR_VIRTUAL(Node);
 
 #pragma endregion
 
@@ -59,7 +60,7 @@ public:
 
   void removeChildNode(Node::SharedPtr_t child);
 
-  auto getChildNodes() -> std::vector<Node::SharedPtr_t>;
+  auto getChildNodes() -> Node::SharedPtrVec_t;
 
   [[nodiscard]]
   auto getChildNode(const NodeIdx &idx) const -> Node::SharedPtr_t;
@@ -70,7 +71,7 @@ public:
   [[nodiscard]]
   auto getNumOfChildNodes() const -> int;
 
-  void setNodeIdx(const NodeIdx::Chain_t &chain, int last);
+  void setNodeIdx(const NodeIdx::ChainVec_t &chain, int last);
 
   auto getNodeIdx() -> NodeIdx;
 
@@ -82,7 +83,7 @@ public:
 
   auto equal(Node::SharedPtr_t other) -> bool;
 
-  auto chainEqual(NodeIdx::Chain_t other) -> bool;
+  auto chainEqual(NodeIdx::ChainVec_t other) -> bool;
 
   void setAsRoot();
 
@@ -106,7 +107,7 @@ private:
 
   NodeIdx idx_;
   Node::WeakPtr_t parent_;
-  std::vector<Node::SharedPtr_t> children_;
+  Node::SharedPtrVec_t children_;
   bool visible_;
 };
 

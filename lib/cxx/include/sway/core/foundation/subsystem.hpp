@@ -1,13 +1,13 @@
 #ifndef SWAY_CORE_FOUNDATION_SUBSYSTEM_HPP
 #define SWAY_CORE_FOUNDATION_SUBSYSTEM_HPP
 
-#include <sway/classpointermacros.hpp>
 #include <sway/core/foundation/object.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/core/foundation/types.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/pointermacros.hpp>
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)
@@ -15,7 +15,7 @@ NS_BEGIN(foundation)
 
 class Subsystem : public Object {
   DECLARE_CLASS_METADATA(Subsystem, Object)
-  DECLARE_CLASS_POINTER_ALIASES(Subsystem)
+  DECLARE_PTR_ALIASES(Subsystem)
 
 public:
 #pragma region "Ctors/Dtor"

@@ -28,14 +28,14 @@ emscripten::class_<NodeIdx>("NodeIdx")
 #endif
 EMSCRIPTEN_BINDING_END()
 
-auto NodeIdx::chainToStr(const NodeIdx::Chain_t &chain) -> std::string {
+auto NodeIdx::chainToStr(const NodeIdx::ChainVec_t &chain) -> std::string {
   std::ostringstream oss;
   std::copy(chain.begin(), chain.end() - 1, std::ostream_iterator<int>(oss, ", "));
   oss << "[" << chain.back() << "]";
   return oss.str();
 }
 
-auto NodeIdx::getMatchDepth(const NodeIdx::Chain_t &lhs, const NodeIdx::Chain_t &rhs) -> int {
+auto NodeIdx::getMatchDepth(const NodeIdx::ChainVec_t &lhs, const NodeIdx::ChainVec_t &rhs) -> int {
   auto lhs_temp = lhs;
   auto rhs_temp = rhs;
   auto rhs_size = (int)rhs_temp.size();
@@ -54,16 +54,16 @@ auto NodeIdx::getMatchDepth(const NodeIdx::Chain_t &lhs, const NodeIdx::Chain_t 
 
 NodeIdx::NodeIdx() { setAsRoot(); }
 
-NodeIdx::NodeIdx(const NodeIdx::Chain_t &data) { setChain(data, NODEIDX_NEGATIVE); }
+NodeIdx::NodeIdx(const NodeIdx::ChainVec_t &data) { setChain(data, NODEIDX_NEGATIVE); }
 
-NodeIdx::NodeIdx(NodeIdx parent, NodeIdx::Index_t idx) { setChain(parent.getChain(), idx); }
+NodeIdx::NodeIdx(NodeIdx parent, NodeIdx::ChainItemIndex_t idx) { setChain(parent.getChain(), idx); }
 
 void NodeIdx::setAsRoot() {
   chainLinks_.clear();
   chainLinks_ = NODEIDX_CHAIN_INITIALROOT;
 }
 
-void NodeIdx::setChain(const NodeIdx::Chain_t &chain, NodeIdx::Index_t idx) {
+void NodeIdx::setChain(const NodeIdx::ChainVec_t &chain, NodeIdx::ChainItemIndex_t idx) {
   chainLinks_ = chain;
 
   if (idx != NODEIDX_NEGATIVE) {
@@ -71,10 +71,10 @@ void NodeIdx::setChain(const NodeIdx::Chain_t &chain, NodeIdx::Index_t idx) {
   }
 }
 
-auto NodeIdx::getChain() const -> NodeIdx::Chain_t { return chainLinks_; }
+auto NodeIdx::getChain() const -> NodeIdx::ChainVec_t { return chainLinks_; }
 
-auto NodeIdx::getParent() const -> NodeIdx::Chain_t {
-  NodeIdx::Chain_t parent = getChain();
+auto NodeIdx::getParent() const -> NodeIdx::ChainVec_t {
+  NodeIdx::ChainVec_t parent = getChain();
   parent.pop_back();
 
   return parent;
@@ -82,11 +82,11 @@ auto NodeIdx::getParent() const -> NodeIdx::Chain_t {
 
 auto NodeIdx::getDepth() const -> int { return (int)chainLinks_.size(); }
 
-auto NodeIdx::getIdxAt(int idx) const -> NodeIdx::Index_t { return chainLinks_[idx]; }
+auto NodeIdx::getIdxAt(int idx) const -> NodeIdx::ChainItemIndex_t { return chainLinks_[idx]; }
 
 auto NodeIdx::equal(const NodeIdx &other) -> bool { return chainEqual(other.getChain()); }
 
-auto NodeIdx::chainEqual(const NodeIdx::Chain_t &other) -> bool {
+auto NodeIdx::chainEqual(const NodeIdx::ChainVec_t &other) -> bool {
   return chainLinks_.size() == other.size() && std::equal(chainLinks_.begin(), chainLinks_.end(), other.begin());
 }
 

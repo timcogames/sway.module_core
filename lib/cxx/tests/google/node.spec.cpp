@@ -76,7 +76,7 @@ public:
   Node::SharedPtr_t root_;
   Node::SharedPtr_t supervisor_;
   Node::SharedPtr_t doctor_;
-  std::vector<Node::SharedPtr_t> internCollection_;
+  Node::SharedPtrVec_t internCollection_;
 };
 
 TEST_F(NodeTest, AddChildNode_Twice_ThatAlreadyHasParent) {

@@ -5,7 +5,9 @@
 #define DECLARE_EMSCRIPTEN(OBJ)                                                                                    \
 public:                                                                                                            \
   static auto fromJs(OBJ::JavaScriptPtr_t ptr) -> OBJ::Ptr_t { return reinterpret_cast<OBJ::Ptr_t>(ptr); }         \
+                                                                                                                   \
   static auto toJs(OBJ::Ptr_t ptr) -> OBJ::JavaScriptPtr_t { return reinterpret_cast<OBJ::JavaScriptPtr_t>(ptr); } \
+                                                                                                                   \
   static auto toJs(OBJ::SharedPtr_t ptr) -> OBJ::JavaScriptPtr_t { return OBJ::toJs(ptr.get()); }
 // clang-format on
 

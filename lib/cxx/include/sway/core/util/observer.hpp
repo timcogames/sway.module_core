@@ -19,7 +19,7 @@ using ObserverArrayIterator_t = ObserverArray_t::const_iterator;
  * @brief Интерфейс наблюдателя.
  */
 class Observer {
-  DECLARE_CLASS_POINTER_ALIASES(Observer)
+  DECLARE_PTR_ALIASES(Observer)
 
 public:
 #pragma region "Ctors/Dtor"

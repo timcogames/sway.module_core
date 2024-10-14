@@ -1,11 +1,11 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENTABLE_HPP
 #define SWAY_CORE_FOUNDATION_EVENTABLE_HPP
 
-#include <sway/classpointermacros.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
 #include <sway/core/foundation/types.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/pointermacros.hpp>
 #include <sway/types.hpp>
 
 #include <algorithm>  // std::remove_if
@@ -20,7 +20,7 @@ NS_BEGIN(foundation)
 using EmitPredicate_t = std::function<bool(EventHandler::Ptr_t)>;
 
 class Eventable {
-  DECLARE_CLASS_POINTER_ALIASES(Eventable)
+  DECLARE_PTR_ALIASES(Eventable)
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:

@@ -1,7 +1,6 @@
 #ifndef SWAY_CORE_CONTAINER_HIERARCHY_HPP
 #define SWAY_CORE_CONTAINER_HIERARCHY_HPP
 
-#include <sway/classpointermacros.hpp>
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodedata.hpp>
 #include <sway/core/container/nodeidx.hpp>
@@ -9,6 +8,7 @@
 #include <sway/coremacros.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/pointermacros.hpp>
 #include <sway/types.hpp>
 #include <sway/visibilitymacros.hpp>
 
@@ -40,7 +40,7 @@ using NodeDataList = std::vector<NodeData>;
 #endif
 
 class Hierarchy {
-  DECLARE_CLASS_POINTER_ALIASES(Hierarchy)
+  DECLARE_PTR_ALIASES(Hierarchy)
   DECLARE_EMSCRIPTEN(Hierarchy)
   DECLARE_EMSCRIPTEN_BINDING()
 

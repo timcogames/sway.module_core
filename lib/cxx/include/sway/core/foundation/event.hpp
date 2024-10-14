@@ -1,13 +1,13 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENT_HPP
 #define SWAY_CORE_FOUNDATION_EVENT_HPP
 
-#include <sway/classpointermacros.hpp>
 #include <sway/core/detail/valuedata.hpp>
 #include <sway/core/foundation/eventdata.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/core/foundation/types.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
+#include <sway/pointermacros.hpp>
 #include <sway/types.hpp>
 
 #include <string>
@@ -21,7 +21,7 @@ NS_BEGIN(foundation)
  */
 class Event {
   DECLARE_SUPERCLASS()
-  DECLARE_CLASS_POINTER_ALIASES(Event)
+  DECLARE_PTR_ALIASES(Event)
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
