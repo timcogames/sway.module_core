@@ -30,7 +30,7 @@ struct OptionalAccess {
 };
 
 template <typename T>
-emscripten::class_<std::optional<T>> register_optional(lpcstr_t name) {
+auto register_optional(lpcstr_t name) -> emscripten::class_<std::optional<T>> {
   using OptionalType = std::optional<T>;
 
   return emscripten::class_<OptionalType>(name)
@@ -52,7 +52,7 @@ public:
 #endif
   }
 
-  static auto set(std::string val) -> std::optional<std::string> {
+  static auto set(const std::string &val) -> std::optional<std::string> {
     if (val.empty()) {
       return std::nullopt;
     }

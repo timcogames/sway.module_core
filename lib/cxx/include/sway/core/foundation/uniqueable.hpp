@@ -23,21 +23,18 @@ public:
 #pragma region "Ctors/Dtor"
 
   Uniqueable(const std::optional<VALUE_TYPE> &uid)
-      : uid_(uid) {}
+      : uniqId_(uid) {}
 
   ~Uniqueable() = default;
 
 #pragma endregion
 
-  [[nodiscard]]
-  auto getUid() const -> std::optional<VALUE_TYPE> {
-    return uid_;
-  }
+  [[nodiscard]] auto getUid() const -> std::optional<VALUE_TYPE> { return uniqId_; }
 
-  void setUid(const std::optional<VALUE_TYPE> &uid) { uid_ = uid; }
+  void setUid(const std::optional<VALUE_TYPE> &uid) { uniqId_ = uid; }
 
 private:
-  std::optional<VALUE_TYPE> uid_;  // Уникальный идентификатор.
+  std::optional<VALUE_TYPE> uniqId_;
 };
 
 #include <sway/core/foundation/uniqueable_embind.inl>

@@ -9,9 +9,11 @@
 
 #define MTHD_VIRTUAL_OVERRIDE(SIG) virtual MTHD_OVERRIDE(SIG)
 
-#define DTOR_DEFAULT(OBJ) ~OBJ() = default
+#define DTOR(OBJ) ~OBJ()
 
-#define DTOR_VIRTUAL(OBJ) virtual ~OBJ()
+#define DTOR_DEFAULT(OBJ) DTOR(OBJ) = default
+
+#define DTOR_VIRTUAL(OBJ) virtual DTOR(OBJ)
 
 #define DTOR_VIRTUAL_DEFAULT(OBJ) virtual DTOR_DEFAULT(OBJ)
 

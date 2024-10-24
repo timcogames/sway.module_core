@@ -10,9 +10,9 @@ NS_SHORT_SWAY()
 TEST(VersionTest, ctor_def) {
   const core::Version version;
 
-  ASSERT_EQ(version.getMajor(), DONT_CARE);
-  ASSERT_EQ(version.getMinor(), DONT_CARE);
-  ASSERT_EQ(version.getPatch(), DONT_CARE);
+  ASSERT_EQ(version.getMajor(), GLOB_DONT_CARE);
+  ASSERT_EQ(version.getMinor(), GLOB_DONT_CARE);
+  ASSERT_EQ(version.getPatch(), GLOB_DONT_CARE);
   ASSERT_TRUE(version.getExtra().empty());
 }
 

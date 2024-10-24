@@ -4,7 +4,7 @@ NS_BEGIN_SWAY()
 NS_BEGIN(core)
 
 Version::Version() {
-  major_ = minor_ = patch_ = DONT_CARE;
+  major_ = minor_ = patch_ = GLOB_DONT_CARE;
   extra_ = "\0";
 }
 

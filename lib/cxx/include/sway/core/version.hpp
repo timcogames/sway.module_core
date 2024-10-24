@@ -22,7 +22,7 @@ public:
 
   Version(const Version &version);
 
-  explicit Version(i32_t major, i32_t minor = DONT_CARE, i32_t patch = DONT_CARE, lpcstr_t extra = "\0");
+  explicit Version(i32_t major, i32_t minor = GLOB_DONT_CARE, i32_t patch = GLOB_DONT_CARE, lpcstr_t extra = "\0");
 
   ~Version() = default;
 

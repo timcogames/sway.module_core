@@ -39,8 +39,11 @@
 #include <sway/core/util/traverseractions.hpp>
 #include <sway/pointermacros.hpp>
 // #include <sway/core/misc/optional.hpp>
-#include <sway/containermacros.hpp>
+#include <sway/core/misc/atomicidgen.hpp>
+#include <sway/core/misc/atomicidgenbuffer.hpp>
+#include <sway/core/misc/atomicidgenmanager.hpp>
 #include <sway/core/misc/dictionary.hpp>
+#include <sway/core/misc/enableable.hpp>
 #include <sway/core/misc/string.hpp>
 #include <sway/core/plugin.hpp>
 #include <sway/core/plugininfo.hpp>
