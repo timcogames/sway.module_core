@@ -42,8 +42,9 @@
 #include <sway/core/misc/atomicidgen.hpp>
 #include <sway/core/misc/atomicidgenbuffer.hpp>
 #include <sway/core/misc/atomicidgenmanager.hpp>
+#include <sway/core/misc/design/enableable.hpp>
+#include <sway/core/misc/design/nameable.hpp>
 #include <sway/core/misc/dictionary.hpp>
-#include <sway/core/misc/enableable.hpp>
 #include <sway/core/misc/string.hpp>
 #include <sway/core/plugin.hpp>
 #include <sway/core/plugininfo.hpp>

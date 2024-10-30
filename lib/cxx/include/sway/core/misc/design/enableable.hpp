@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_MISC_ENABLEABLE_HPP
-#define SWAY_CORE_MISC_ENABLEABLE_HPP
+#ifndef SWAY_CORE_MISC_DESIGN_ENABLEABLE_HPP
+#define SWAY_CORE_MISC_DESIGN_ENABLEABLE_HPP
 
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
@@ -35,4 +35,4 @@ NS_END()  // namespace misc
 NS_END()  // namespace core
 NS_END()  // namespace sway
 
-#endif  // SWAY_CORE_MISC_ENABLEABLE_HPP
+#endif  // SWAY_CORE_MISC_DESIGN_ENABLEABLE_HPP

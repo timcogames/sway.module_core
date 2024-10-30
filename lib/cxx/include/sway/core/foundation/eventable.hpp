@@ -32,13 +32,13 @@ public:
 
 #pragma endregion
 
-  void subscribe(Eventable::Ptr_t sender, const std::string &eventname, EventHandler::Ptr_t handler);
+  void subscribe(Eventable::Ptr_t sender, const std::string &evtname, EventHandler::Ptr_t handler);
 
-  void unsubscribe(const std::string &eventname);
+  void unsubscribe(const std::string &evtname);
 
-  void emit(const std::string &eventname, Event::Ptr_t event, EmitPredicate_t predicate);
+  void emit(const std::string &evtname, Event::Ptr_t event, EmitPredicate_t predicate);
 
-  auto findEventHandler(const std::string &eventname) -> EventHandler::Ptr_t;
+  auto findEventHandler(const std::string &evtname) -> EventHandler::Ptr_t;
 
 protected:
   std::vector<EventHandler::Ptr_t> eventHandlers_;  // Обработчики событий.
