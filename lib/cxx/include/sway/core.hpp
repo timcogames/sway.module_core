@@ -33,6 +33,7 @@
 #include <sway/core/generic/io/filesource.hpp>
 #include <sway/core/generic/io/path.hpp>
 #include <sway/core/intrusive/priorities.hpp>
+#include <sway/core/memory/pointercast.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
@@ -45,6 +46,7 @@
 #include <sway/core/misc/design/enableable.hpp>
 #include <sway/core/misc/design/nameable.hpp>
 #include <sway/core/misc/dictionary.hpp>
+#include <sway/core/misc/hash.hpp>
 #include <sway/core/misc/string.hpp>
 #include <sway/core/plugin.hpp>
 #include <sway/core/plugininfo.hpp>
