@@ -6,6 +6,7 @@
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
+#include <iostream>  // cout
 #include <string>
 #include <utility>  // forward
 
@@ -22,7 +23,7 @@ NS_BEGIN(runtime)
  */
 template <class... ARGS>
 FORCE_NOINLINE void LOG(const std::string &frmt, ARGS &&...args) {
-  std::cout << core::misc::format(frmt.c_str(), std::forward<ARGS>(args)...) << std::endl;
+  std::cout << misc::format(frmt.c_str(), std::forward<ARGS>(args)...) << std::endl;
 }
 
 NS_END()  // namespace runtime
