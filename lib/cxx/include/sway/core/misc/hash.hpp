@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_MISC_HASH_HPP
 #define SWAY_CORE_MISC_HASH_HPP
 
+#include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 
 #include <cstddef>
@@ -14,13 +15,13 @@ NS_BEGIN(misc)
 #define HASH_GOLDEN_RATIO 0x9e3779b9
 
 template <typename TYPE, typename... REST>
-inline void hashCombine(std::size_t &seed, const TYPE &val, REST &&...rest) {
+FORCE_INLINE void hashCombine(std::size_t &seed, const TYPE &val, REST &&...rest) {
   seed ^= std::hash<TYPE>{}(val) + HASH_GOLDEN_RATIO + (seed << 6) + (seed >> 2);
   (hashCombine(seed, rest), ...);
 }
 
 template <typename... REST>
-inline auto hashValue(REST &&...rest) -> std::size_t {
+FORCE_INLINE auto hashValue(REST &&...rest) -> std::size_t {
   std::size_t seed{0};
   (hashCombine(seed, rest), ...);
   return seed;

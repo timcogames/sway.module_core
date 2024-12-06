@@ -1,3 +1,5 @@
+#include <sway/inlinemacros.hpp>
+
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
 #  include <emscripten/val.h>
@@ -17,7 +19,7 @@ public:
 };
 #endif
 
-inline void EventData::bindEmscriptenClass() {
+FORCE_INLINE void EventData::bindEmscriptenClass() {
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
   emscripten::class_<EventData>("EventData")
       .allow_subclass<EventDataWrapper>("EventDataWrapper")

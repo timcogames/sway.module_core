@@ -2,6 +2,7 @@
 #define SWAY_CORE_MISC_DICTIONARY_HPP
 
 #include <sway/core/misc/string.hpp>
+#include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
@@ -13,14 +14,12 @@ NS_BEGIN_SWAY()
 NS_BEGIN(core)
 NS_BEGIN(misc)
 
+namespace DictionaryValueTypedefs {
+using Container_t = std::unordered_map<std::string, std::string>;
+}  // namespace DictionaryValueTypedefs
+
 class Dictionary {
 public:
-#pragma region "Aliases"
-
-  using Container_t = std::unordered_map<std::string, std::string>;
-
-#pragma endregion
-
 #pragma region "Static variables"
 
   static constexpr std::string_view BLANK = "";
@@ -32,23 +31,19 @@ public:
 
   Dictionary() = default;
 
-  ~Dictionary() = default;
+  DTOR_DEFAULT(Dictionary);
 
 #pragma endregion
 
   void addString(const std::string &name, const std::string &val) {
-    Dictionary::Container_t::value_type value(name, val);
+    DictionaryValueTypedefs::Container_t::value_type value(name, val);
     variables_.insert(value);
   }
 
   auto getString(const std::string &name) -> const std::string & {
-    auto iter = variables_.find(name);
-    if (iter != variables_.end()) {
-      return iter->second;
-    }
-
-    static const auto val = std::string(UNDEF.data(), UNDEF.size());
-    return val;
+    static const std::string undef(UNDEF.data(), UNDEF.size());
+    const auto iter = variables_.find(name);
+    return (iter != variables_.end()) ? iter->second : undef;
   }
 
   void addInteger(const std::string &name, i32_t val) { addString(name, toString(val)); }
@@ -85,7 +80,7 @@ public:
   }
 
 private:
-  Dictionary::Container_t variables_;
+  DictionaryValueTypedefs::Container_t variables_;
 };
 
 NS_END()  // namespace misc

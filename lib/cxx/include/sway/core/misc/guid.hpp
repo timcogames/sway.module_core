@@ -2,6 +2,7 @@
 #define SWAY_CORE_MISC_GUID_HPP
 
 #include <sway/core/misc/format.hpp>
+#include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
@@ -18,7 +19,7 @@ NS_BEGIN(core)
 NS_BEGIN(misc)
 
 template <std::size_t NBR>
-inline auto newGuid(const std::array<i32_t, NBR> &format) {
+FORCE_INLINE auto newGuid(const std::array<i32_t, NBR> &format) {
   static const std::string bucket = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   std::string result;

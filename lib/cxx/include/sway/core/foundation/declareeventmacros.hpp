@@ -4,6 +4,7 @@
 #include <sway/core/detail/valuedata.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/misc/guid.hpp>
+#include <sway/inlinemacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
@@ -16,7 +17,7 @@ NS_BEGIN(foundation)
 
 // clang-format off
 #define DECLARE_EVENT(VAR_NAME, EVENT_NAME)                                                                \
-  static inline const std::string VAR_NAME = #EVENT_NAME;                                                  \
+  static FORCE_INLINE const std::string VAR_NAME = #EVENT_NAME;                                            \
   class EVENT_NAME##Event final : public sway::core::foundation::Event {                                   \
   public:                                                                                                  \
     DECLARE_CLASS_METADATA(EVENT_NAME##Event, sway::core::foundation::Event)                               \

@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_MISC_FORMAT_HPP
 #define SWAY_CORE_MISC_FORMAT_HPP
 
+#include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
@@ -13,7 +14,7 @@ NS_BEGIN_SWAY()
 NS_BEGIN(core)
 NS_BEGIN(misc)
 
-inline auto format(lpcstr_t const fmt, ...) -> std::string {
+FORCE_INLINE auto format(lpcstr_t const fmt, ...) -> std::string {
   auto temp = std::vector<s8_t>();
   auto size = std::size_t(100);
   std::va_list args;

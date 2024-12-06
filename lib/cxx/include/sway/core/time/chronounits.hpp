@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_TIME_CHRONOUNITS_HPP
 #define SWAY_CORE_TIME_CHRONOUNITS_HPP
 
+#include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
@@ -13,7 +14,7 @@ NS_BEGIN(time)
 enum class ChronoUnit : u32_t { MILLIS, SECONDS, MINUTES, HOURS, Latest };
 
 // clang-format off
-static inline std::map<ChronoUnit, f64_t> CHRONO_UNIT_TABLE {{
+static FORCE_INLINE std::map<ChronoUnit, f64_t> CHRONO_UNIT_TABLE {{
   {ChronoUnit::MILLIS,  1e+3},
   {ChronoUnit::SECONDS, 1e+6},
   {ChronoUnit::MINUTES, 1e+6 * 60.0},

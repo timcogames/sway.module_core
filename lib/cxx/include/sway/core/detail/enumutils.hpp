@@ -1,6 +1,7 @@
 #ifndef SWAY_CORE_DETAIL_ENUMUTILS_HPP
 #define SWAY_CORE_DETAIL_ENUMUTILS_HPP
 
+#include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 
 #include <type_traits>
@@ -21,13 +22,13 @@ template <typename ENUM>
 using BaseEnumType_t = typename std::underlying_type<ENUM>::type;
 
 template <typename ENUM>
-constexpr inline auto toBase(ENUM key) noexcept -> EnableIf_t<IsEnum_t<ENUM>::value, BaseEnumType_t<ENUM>> {
+constexpr FORCE_INLINE auto toBase(ENUM key) noexcept -> EnableIf_t<IsEnum_t<ENUM>::value, BaseEnumType_t<ENUM>> {
   return static_cast<BaseEnumType_t<ENUM>>(key);
 }
 
 template <typename ENUM, typename DATA_TYPE>
-constexpr inline auto toEnum(
-    DATA_TYPE val) noexcept -> EnableIf_t<IsEnum_t<ENUM>::value && IsIntegral_t<DATA_TYPE>::value, ENUM> {
+constexpr FORCE_INLINE auto toEnum(DATA_TYPE val) noexcept
+    -> EnableIf_t<IsEnum_t<ENUM>::value && IsIntegral_t<DATA_TYPE>::value, ENUM> {
   return static_cast<ENUM>(val);
 }
 

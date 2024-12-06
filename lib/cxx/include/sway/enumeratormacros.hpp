@@ -3,10 +3,11 @@
 
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/defines.hpp>
+#include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/numeraltypes.hpp>
 
-#include <iterator>  // std::size
+#include <iterator>  // size
 
 #define ENUM_BITMASK(x) (1 << (x))
 
@@ -16,11 +17,11 @@
     enum class Enum : TYPE { NONE = INITIAL_VALUE, __VA_ARGS__, Latest };                       \
   }                                                                                             \
                                                                                                 \
-  static inline auto NAME##CountWithoutNone = []() -> const size_t {                            \
+  static FORCE_INLINE auto NAME##CountWithoutNone = []() -> const size_t {                      \
     static TYPE __VA_ARGS__; return std::size({__VA_ARGS__});                                   \
   }();                                                                                          \
                                                                                                 \
-  static inline auto NAME##Count = []() -> const size_t {                                       \
+  static FORCE_INLINE auto NAME##Count = []() -> const size_t {                                 \
     static TYPE __VA_ARGS__; return std::size({__VA_ARGS__}) + 1;                               \
   }();                                                                                          \
                                                                                                 \
