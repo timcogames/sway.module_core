@@ -34,10 +34,11 @@ public:
 #pragma endregion
 
   /**
-   * \~russian @brief Включает объект и возвращает предыдущее состояние.
+   * \~russian
+   * @brief Включает объект и возвращает предыдущее состояние.
    * @return true - если объект ранее был выключен, false - если включен.
    *
-   * @example @code
+   * @example @code{c++}
    *   auto wasEnabled = enableable.enable();
    * @endcode
    */
@@ -49,9 +50,9 @@ public:
 
   /**
    * \~russian @brief Выключает объект и возвращает предыдущее состояние.
-   * @return true - если объект ранее был включен, false - если выключен.
+   * \~russian @return true - если объект ранее был включен, false - если выключен.
    *
-   * @example @code
+   * @code
    *   auto wasDisabled = enableable.disable();
    * @endcode
    */
