@@ -50,24 +50,19 @@ public:
 
   void setChain(const NodeIdx::ChainVec_t &chain, NodeIdx::ChainItemIndex_t idx);
 
-  [[nodiscard]]
-  auto getChain() const -> NodeIdx::ChainVec_t;
+  [[nodiscard]] auto getChain() const -> NodeIdx::ChainVec_t;
 
-  [[nodiscard]]
-  auto getParent() const -> NodeIdx::ChainVec_t;
+  [[nodiscard]] auto getParent() const -> NodeIdx::ChainVec_t;
 
-  [[nodiscard]]
-  auto getDepth() const -> int;
+  [[nodiscard]] auto getDepth() const -> int;
 
-  [[nodiscard]]
-  auto getIdxAt(int idx) const -> NodeIdx::ChainItemIndex_t;
+  [[nodiscard]] auto getIdxAt(int idx) const -> NodeIdx::ChainItemIndex_t;
 
   auto equal(const NodeIdx &other) -> bool;
 
   auto chainEqual(const NodeIdx::ChainVec_t &other) -> bool;
 
-  [[nodiscard]]
-  auto toStr() const -> std::string;
+  [[nodiscard]] auto toStr() const -> std::string;
 
 private:
   NodeIdx::ChainVec_t chainLinks_;

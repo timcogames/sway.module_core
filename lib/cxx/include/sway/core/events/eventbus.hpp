@@ -20,7 +20,7 @@ public:
 
 #pragma region "Ctors/Dtor"
 
-  ~EventBus() = default;
+  DTOR_DEFAULT(EventBus);
 
 #pragma endregion
 

@@ -27,7 +27,6 @@
 #include <optional>
 #include <sstream>
 #include <string>
-#include <vector>
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)
@@ -62,14 +61,11 @@ public:
 
   auto getChildNodes() -> Node::SharedPtrVec_t;
 
-  [[nodiscard]]
-  auto getChildNode(const NodeIdx &idx) const -> Node::SharedPtr_t;
+  [[nodiscard]] auto getChildNode(const NodeIdx &idx) const -> Node::SharedPtr_t;
 
-  [[nodiscard]]
-  auto getChildAt(int targetIdx) const -> std::optional<Node::SharedPtr_t>;
+  [[nodiscard]] auto getChildAt(int targetIdx) const -> std::optional<Node::SharedPtr_t>;
 
-  [[nodiscard]]
-  auto getNumOfChildNodes() const -> int;
+  [[nodiscard]] auto getNumOfChildNodes() const -> int;
 
   void setNodeIdx(const NodeIdx::ChainVec_t &chain, int last);
 
@@ -87,13 +83,6 @@ public:
 
   void setAsRoot();
 
-  void setVisible(bool value) { visible_ = value; }
-
-  [[nodiscard]]
-  auto isVisible() const -> bool {
-    return visible_;
-  }
-
 protected:
   template <typename TYPE>
   auto getSharedFrom(TYPE *ptr) -> std::shared_ptr<TYPE> {
@@ -108,7 +97,6 @@ private:
   NodeIdx idx_;
   Node::WeakPtr_t parent_;
   Node::SharedPtrVec_t children_;
-  bool visible_;
 };
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)

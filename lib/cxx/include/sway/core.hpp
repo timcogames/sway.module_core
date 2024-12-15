@@ -40,11 +40,10 @@
 #include <sway/core/util/traverseractions.hpp>
 #include <sway/pointermacros.hpp>
 // #include <sway/core/misc/optional.hpp>
+#include <sway/core/misc/_design.hpp>
 #include <sway/core/misc/atomicidgen.hpp>
 #include <sway/core/misc/atomicidgenbuffer.hpp>
 #include <sway/core/misc/atomicidgenmanager.hpp>
-#include <sway/core/misc/design/enableable.hpp>
-#include <sway/core/misc/design/nameable.hpp>
 #include <sway/core/misc/dictionary.hpp>
 #include <sway/core/misc/hash.hpp>
 #include <sway/core/misc/string.hpp>

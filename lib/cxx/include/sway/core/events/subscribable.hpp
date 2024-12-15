@@ -19,6 +19,8 @@ protected:
 public:
   using Subscriber_t = decltype(subscriptions_)::iterator;
 
+  DTOR(Subscribable) { subscriptions_.clear(); }
+
   auto subscribe(EventHandler::Ptr_t handler) -> Subscriber_t;
 
   void unsubscribe(Subscriber_t subscriber);

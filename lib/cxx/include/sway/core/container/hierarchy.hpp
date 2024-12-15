@@ -19,7 +19,6 @@
 #include <optional>
 #include <sstream>
 #include <string>
-#include <vector>
 
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>

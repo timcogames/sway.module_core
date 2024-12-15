@@ -35,8 +35,7 @@ EMSCRIPTEN_BINDING_END()
 
 Node::Node()
     : idx_(NodeIdx())
-    , parent_({})
-    , visible_(true) {}
+    , parent_({}) {}
 
 Node::~Node() { children_.clear(); }
 
