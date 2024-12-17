@@ -4,14 +4,7 @@
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 
-/**
- * @namespace sway::core::misc
- * {@
- */
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(misc)
+namespace sway::core {
 
 /**
  * @ingroup design
@@ -21,6 +14,8 @@ NS_BEGIN(misc)
 /**
  * @class Enableable
  * \~russian @brief Вспомогательный класс для включения/выключения условного объекта.
+ *
+ * \~english @brief Helper class for enabling/disabling conditional objects.
  */
 class Enableable {
 public:
@@ -34,11 +29,15 @@ public:
 #pragma endregion
 
   /**
-   * \~russian
-   * @brief Включает объект и возвращает предыдущее состояние.
+   * \~russian @brief Включает объект и возвращает предыдущее состояние.
    * @return true - если объект ранее был выключен, false - если включен.
    *
-   * @example @code{c++}
+   * \~english @brief Enables the object and returns the previous state.
+   * @return true - if the object was previously disabled, false - if enabled.
+   *
+   * @sa sway::core::misc::disable()
+   *
+   * @code
    *   auto wasEnabled = enableable.enable();
    * @endcode
    */
@@ -50,7 +49,12 @@ public:
 
   /**
    * \~russian @brief Выключает объект и возвращает предыдущее состояние.
-   * \~russian @return true - если объект ранее был включен, false - если выключен.
+   * @return true - если объект ранее был включен, false - если выключен.
+   *
+   * \~english @brief Disables the object and returns the previous state.
+   * @return true - if the object was previously enabled, false - if disabled.
+   *
+   * \sa enable()
    *
    * @code
    *   auto wasDisabled = enableable.disable();
@@ -62,10 +66,19 @@ public:
     return result;
   }
 
+  /**
+   * \~russian @brief Проверяет, включен ли объект.
+   * @return true - если объект включен, false - если выключен.
+   *
+   * \~english @brief Checks if the object is enabled.
+   * @return true - if the object is enabled, false - if disabled.
+   */
   [[nodiscard]] auto isEnabled() const -> bool { return enabled_; }
 
   /**
    * \~russian @brief Переключает состояние.
+   *
+   * \~english @brief Switches the state.
    */
   void toggle() { enabled_ = !enabled_; }
 
@@ -78,13 +91,6 @@ private:
  * @}
  */
 
-NS_END()  // namespace misc
-NS_END()  // namespace core
-NS_END()  // namespace sway
-
-/**
- * ends namespace
- * @}
- */
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_MISC_DESIGN_ENABLEABLE_HPP

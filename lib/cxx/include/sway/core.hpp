@@ -1,6 +1,13 @@
 #ifndef SWAY_CORE_HPP
 #define SWAY_CORE_HPP
 
+/**
+ * @namespace sway::core
+ * \~russian @brief Корневое пространство имен данной библиотеки.
+ *
+ * \~english @brief Root namespace of this library.
+ */
+
 #include <sway/core/binding/function.hpp>
 #include <sway/core/binding/procaddress.hpp>
 #include <sway/core/container/hierarchy.hpp>

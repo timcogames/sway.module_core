@@ -4,14 +4,7 @@
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 
-/**
- * @namespace sway::core::misc
- * {@
- */
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(misc)
+namespace sway::core {
 
 /**
  * @ingroup design
@@ -42,13 +35,6 @@ private:
  * @}
  */
 
-NS_END()  // namespace misc
-NS_END()  // namespace core
-NS_END()  // namespace sway
-
-/**
- * ends namespace
- * @}
- */
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_MISC_DESIGN_VISIBLEABLE_HPP

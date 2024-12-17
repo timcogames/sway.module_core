@@ -20,5 +20,10 @@ profile
 *.xcworkspacedata
 *.xcuserstate
 
+#doxygen, moxygen
+docs/generated/html/*
+docs/generated/xml/*
+docs/doxygen.log
+
 # note‑taking app settings
 .obsidian
