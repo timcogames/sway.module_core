@@ -9,19 +9,17 @@
 NS_SHORT_SWAY()
 NS_SHORT(core);
 
-class Obj {
-public:
-};
+class Obj {};
 
 TEST(IdGen, temp) {
-  misc::IdGen gen;
+  IdGen gen;
   EXPECT_EQ(gen.next(), 1);
   EXPECT_EQ(gen.next(), 2);
   EXPECT_EQ(gen.next(), 3);
 }
 
 TEST(AtomicIdGenManager, next) {
-  misc::AtomicIdGenManager<Obj> gen;
+  AtomicIdGenManager<Obj> gen;
   auto id_1 = gen.next();
   gen.increment(id_1);
   std::cout << "id_1 " << id_1 << std::endl;
@@ -47,7 +45,7 @@ TEST(AtomicIdGenManager, next) {
 }
 
 TEST(AtomicIdGenManager, add) {
-  misc::AtomicIdGenManager<Obj> gen;
+  AtomicIdGenManager<Obj> gen;
   auto obj_1 = gen.add("obj_1", std::make_unique<Obj>());
   std::cout << "obj_1 " << obj_1 << std::endl;
 

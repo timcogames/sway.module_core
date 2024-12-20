@@ -11,6 +11,10 @@ namespace sway::core {
  * @{
  */
 
+/**
+ * @class Visibleable
+ * \~english @brief Helper class for setting and checking the visibility of an object.
+ */
 class Visibleable {
 public:
 #pragma region "Ctors/Dtor"

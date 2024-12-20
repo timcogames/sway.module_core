@@ -1,7 +1,7 @@
 #ifndef SWAY_CORE_CONTAINER_NODEEVENTDATA_HPP
 #define SWAY_CORE_CONTAINER_NODEEVENTDATA_HPP
 
-#include <sway/core/container/nodeidx.hpp>
+#include <sway/core/container/nodeindex.hpp>
 #include <sway/core/foundation/eventdata.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
@@ -11,10 +11,9 @@
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)
-NS_BEGIN(container)
 
 struct NodeEventData : public foundation::EventData {
-  NodeIdx nodeidx;
+  NodeIndex nodeidx;
 
 #pragma region "Override EventData methods"
 
@@ -25,7 +24,6 @@ struct NodeEventData : public foundation::EventData {
 #pragma endregion
 };
 
-NS_END()  // namespace container
 NS_END()  // namespace core
 NS_END()  // namespace sway
 

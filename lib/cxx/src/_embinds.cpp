@@ -1,6 +1,6 @@
 #include <sway/core/container/hierarchy.hpp>
 #include <sway/core/container/node.hpp>
-#include <sway/core/container/nodeidx.hpp>
+#include <sway/core/container/nodeindex.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventdata.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
@@ -41,7 +41,7 @@ EMSCRIPTEN_BINDINGS(sway_core_container) {
   ObjectClassMetadata::bindEmscriptenClass();
   Event::bindEmscriptenClass();
   EventData::bindEmscriptenClass();
-  NodeIdx::bindEmscriptenClass();
+  NodeIndex::bindEmscriptenClass();
   Node::bindEmscriptenClass();
   Hierarchy::bindEmscriptenClass();
 }

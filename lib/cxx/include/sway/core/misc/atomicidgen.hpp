@@ -1,15 +1,12 @@
 #ifndef SWAY_CORE_MISC_ATOMICIDGEN_HPP
 #define SWAY_CORE_MISC_ATOMICIDGEN_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/defines.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/numeraltypes.hpp>
 
-#include <atomic>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(misc)
+namespace sway::core {
 
 class IdGen {
 public:
@@ -37,8 +34,6 @@ public:
   }
 };
 
-NS_END()  // namespace misc
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_MISC_ATOMICIDGEN_HPP

@@ -1,8 +1,10 @@
 #ifndef SWAY_CORE_CONTAINER_NODE_HPP
 #define SWAY_CORE_CONTAINER_NODE_HPP
 
-#include <sway/core/container/nodeidx.hpp>
-#include <sway/core/container/types.hpp>
+#include <sway/_stdafx.hpp>
+#include <sway/core/container/_typedefs.hpp>
+#include <sway/core/container/nodeindex.hpp>
+#include <sway/core/container/nodeutil.hpp>
 #include <sway/core/foundation/declareeventmacros.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventable.hpp>
@@ -14,111 +16,107 @@
 #include <sway/coremacros.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
-#include <sway/pointermacros.hpp>
 #include <sway/types.hpp>
 #include <sway/visibilitymacros.hpp>
 
-#include <algorithm>
-#include <any>
-#include <iostream>
-#include <iterator>
-#include <memory>
-#include <optional>
-#include <sstream>
-#include <string>
+namespace sway::core {
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(container)
-
-class Node : public std::enable_shared_from_this<Node>, public util::Visitable, public foundation::Eventable {
-  DECLARE_PTR_ALIASES(Node)
-  DECLARE_SHARED_PTR_VECTOR(Node)
+class Node : public std::enable_shared_from_this<Node>,
+             public util::Visitable,
+             public foundation::Eventable,
+             public Emscripteable<Node> {
   DECLARE_EVENT(EVT_ADDED, NodeAdded)
   DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
-  DECLARE_EMSCRIPTEN(Node)
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
+#pragma region "Static methods"
+
+  template <typename TYPE>
+  static auto getChild(NodeTypedefs::Ptr_t parent, const NodeIndex &idx) -> std::shared_ptr<TYPE>;
+
+  template <typename TYPE>
+  static auto getChild(NodeTypedefs::Ptr_t parent, const NodeIndexTypedefs::Optional_t &idxOpt)
+      -> std::shared_ptr<TYPE>;
+
+#pragma endregion
+
 #pragma region "Ctors/Dtor"
 
   Node();
 
-  DTOR_VIRTUAL(Node);
+  virtual ~Node();
 
 #pragma endregion
 
 #pragma region "Override Visitable methods"
 
-  MTHD_VIRTUAL_OVERRIDE(auto traverse(util::TraverserPtr_t traverser) -> u32_t);
+  virtual auto traverse(util::TraverserPtr_t traverser) -> u32_t override;
 
 #pragma endregion
 
-  void addChildNode(Node::SharedPtr_t child);
+  void addChildNode(NodeTypedefs::SharedPtr_t child);
 
-  void removeChildNode(Node::SharedPtr_t child);
+  void removeChildNode(NodeTypedefs::SharedPtr_t child);
 
-  auto getChildNodes() -> Node::SharedPtrVec_t;
+  auto getChildNodes() -> NodeTypedefs::Container_t;
 
-  [[nodiscard]] auto getChildNode(const NodeIdx &idx) const -> Node::SharedPtr_t;
+  [[nodiscard]] auto getChildNode(const NodeIndex &idx) const -> NodeTypedefs::SharedPtr_t;
 
-  [[nodiscard]] auto getChildAt(int targetIdx) const -> std::optional<Node::SharedPtr_t>;
+  [[nodiscard]] auto getChildAt(i32_t targetIdx) const -> NodeTypedefs::OptionalSharedPtr_t;
 
-  [[nodiscard]] auto getNumOfChildNodes() const -> int;
+  [[nodiscard]] auto getNumOfChildNodes() const -> i32_t;
 
-  void setNodeIdx(const NodeIdx::ChainVec_t &chain, int last);
+  void setNodeIndex(const NodeIndex::ChainVec_t &chain, int last);
 
-  auto getNodeIdx() -> NodeIdx;
+  auto getNodeIndex() -> NodeIndex;
 
-  void setParentNode(Node::WeakPtr_t parent);
+  void setParentNode(NodeTypedefs::WeakPtr_t parent);
 
-  auto getParentNode() -> std::optional<Node::SharedPtr_t>;
+  auto getParentNode() -> NodeTypedefs::OptionalSharedPtr_t;
 
-  auto getParentNodeByDepth(int depth) -> Node::SharedPtr_t;
+  auto getParentNodeByDepth(i32_t depth) -> NodeTypedefs::SharedPtr_t;
 
-  auto equal(Node::SharedPtr_t other) -> bool;
+  auto equal(NodeTypedefs::SharedPtr_t other) -> bool;
 
-  auto chainEqual(NodeIdx::ChainVec_t other) -> bool;
+  auto chainEqual(NodeIndex::ChainVec_t other) -> bool;
 
   void setAsRoot();
 
 protected:
   template <typename TYPE>
-  auto getSharedFrom(TYPE *ptr) -> std::shared_ptr<TYPE> {
-    return std::static_pointer_cast<TYPE>(static_cast<Node::Ptr_t>(ptr)->shared_from_this());
-  }
+  auto getSharedFrom(TYPE *ptr) -> std::shared_ptr<TYPE>;
 
 private:
-  void recursiveAddChainLinks(Node::SharedPtr_t child, NodeIdx parentNodeIdx);
+  void recursiveAddChainLinks(NodeTypedefs::SharedPtr_t child, NodeIndex parentIdx);
 
-  void recursiveRemoveChainLinks(Node::SharedPtr_t child, NodeIdx parentNodeIdx);
+  void recursiveRemoveChainLinks(NodeTypedefs::SharedPtr_t child, NodeIndex parentIdx);
 
-  NodeIdx idx_;
-  Node::WeakPtr_t parent_;
-  Node::SharedPtrVec_t children_;
+  NodeIndex idx_;
+  NodeTypedefs::WeakPtr_t parent_;
+  NodeTypedefs::Container_t children_;
 };
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 EXTERN_C_BEGIN
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto createNode() -> Node::JavaScriptPtr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto createNode() -> NodeTypedefs::JsPtr_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API void deleteNode(Node::JavaScriptPtr_t node);
+D_MODULE_CORE_INTERFACE_EXPORT_API void deleteNode(NodeTypedefs::JsPtr_t node);
 
-D_MODULE_CORE_INTERFACE_EXPORT_API void addChildNode(Node::JavaScriptPtr_t root, Node::JavaScriptPtr_t node);
+D_MODULE_CORE_INTERFACE_EXPORT_API void addChildNode(NodeTypedefs::JsPtr_t root, NodeTypedefs::JsPtr_t node);
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getNodeIdx(Node::JavaScriptPtr_t node) -> lpcstr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getNodeIndex(NodeTypedefs::JsPtr_t node) -> lpcstr_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getChildNodes(Node::JavaScriptPtr_t node) -> Node::JavaScriptPtr_t *;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getChildNodes(NodeTypedefs::JsPtr_t node) -> NodeTypedefs::JsPtrArray_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getNumOfChildNodes(Node::JavaScriptPtr_t node) -> i32_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getNumOfChildNodes(NodeTypedefs::JsPtr_t node) -> i32_t;
 
 EXTERN_C_END
 #endif
 
-NS_END()  // namespace container
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
+
+#include <sway/core/container/node.inl>
 
 #endif  // SWAY_CORE_CONTAINER_NODE_HPP

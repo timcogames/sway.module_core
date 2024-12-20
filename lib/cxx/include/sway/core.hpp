@@ -14,8 +14,8 @@
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodedata.hpp>
 #include <sway/core/container/nodeeventdata.hpp>
-#include <sway/core/container/nodeidx.hpp>
-#include <sway/core/container/types.hpp>
+#include <sway/core/container/nodeindex.hpp>
+#include <sway/core/container/nodeutil.hpp>
 #include <sway/core/detail/enumclassbitset.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/detail/rawtype.hpp>

@@ -1,7 +1,7 @@
 #ifndef SWAY_CORE_CONTAINER_NODEDATA_HPP
 #define SWAY_CORE_CONTAINER_NODEDATA_HPP
 
-#include <sway/core/container/nodeidx.hpp>
+#include <sway/core/container/nodeindex.hpp>
 #include <sway/namespacemacros.hpp>
 
 #include <string>
@@ -9,14 +9,12 @@
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)
-NS_BEGIN(container)
 
 struct NodeData {
-  std::vector<NodeIdx::ChainItemIndex_t> nodeidx;
+  std::vector<NodeIndex::ChainItemIndex_t> nodeidx;
   std::string name;
 };
 
-NS_END()  // namespace container
 NS_END()  // namespace core
 NS_END()  // namespace sway
 

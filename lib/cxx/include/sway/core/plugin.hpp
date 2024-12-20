@@ -37,11 +37,9 @@ public:
 
 #pragma endregion
 
-  [[nodiscard]]
-  auto isLoaded() const -> bool;
+  [[nodiscard]] auto isLoaded() const -> bool;
 
-  [[nodiscard]]
-  auto getInfo() const -> PluginInfo;
+  [[nodiscard]] auto getInfo() const -> PluginInfo;
 
   void initialize(PluginFunctionSet *functions);
 

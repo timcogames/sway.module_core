@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { useBridge } from "@core/bridge";
 import { BridgeModule } from "@core/bridgemodule";
 
-describe("NodeIdx", () => {
+describe("NodeIndex", () => {
   let module: BridgeModule;
 
   beforeAll(async () => {

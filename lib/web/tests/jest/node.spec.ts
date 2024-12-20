@@ -18,7 +18,7 @@ describe("Node", () => {
 
     const charArr = new Int8Array(
       module.memory.buffer, // WASM's memory
-      module.getNodeIdx(node), // char's pointer
+      module.getNodeIndex(node), // char's pointer
       7 // The string's length
     );
 

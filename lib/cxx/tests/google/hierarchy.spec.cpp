@@ -1,6 +1,6 @@
 #include <sway/core/container/hierarchy.hpp>
 #include <sway/core/container/node.hpp>
-#include <sway/core/container/nodeidx.hpp>
+#include <sway/core/container/nodeindex.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/util/traverser.hpp>
 #include <sway/core/util/traverseractions.hpp>
@@ -21,13 +21,13 @@ class HierarchyTest : public testing::Test {
 public:
 #pragma region "Override Test methods"
 
-  MTHD_OVERRIDE(void SetUp()) { hierarchy_ = new container::Hierarchy(); }
+  void SetUp() override { hierarchy_ = new Hierarchy(); }
 
-  MTHD_OVERRIDE(void TearDown()) { delete hierarchy_; }
+  void TearDown() override { delete hierarchy_; }
 
 #pragma endregion
 
-  container::Hierarchy::Ptr_t hierarchy_;
+  HierarchyTypedefs::Ptr_t hierarchy_;
 };
 
 class HierarchyChildTraverser : public util::Traverser {
@@ -42,25 +42,25 @@ public:
 };
 
 TEST_F(HierarchyTest, set_root_node) {
-  auto root = std::make_shared<container::Node>();
+  auto root = std::make_shared<Node>();
   hierarchy_->setRootNode(root);
-  ASSERT_STREQ(hierarchy_->getRootNode()->getNodeIdx().toStr().c_str(), "[-1]");
+  ASSERT_STREQ(hierarchy_->getRootNode()->getNodeIndex().toStr().c_str(), "[-1]");
 }
 
 TEST_F(HierarchyTest, add_child_node) {
-  auto child1 = std::make_shared<container::Node>();
+  auto child1 = std::make_shared<Node>();
   hierarchy_->getRootNode()->addChildNode(child1);
-  ASSERT_STREQ(child1->getNodeIdx().toStr().c_str(), "[-1, 0]");
+  ASSERT_STREQ(child1->getNodeIndex().toStr().c_str(), "[-1, 0]");
 
-  auto child2 = std::make_shared<container::Node>();
+  auto child2 = std::make_shared<Node>();
   hierarchy_->getRootNode()->addChildNode(child2);
-  ASSERT_STREQ(child2->getNodeIdx().toStr().c_str(), "[-1, 1]");
+  ASSERT_STREQ(child2->getNodeIndex().toStr().c_str(), "[-1, 1]");
 }
 
 TEST_F(HierarchyTest, find_node) {
-  auto child = std::make_shared<container::Node>();
+  auto child = std::make_shared<Node>();
   hierarchy_->getRootNode()->addChildNode(child);
 
-  auto found = hierarchy_->findNode(hierarchy_->getRootNode(), container::NodeIdx(std::vector<int>({-1, 0})));
-  ASSERT_STREQ(found->get()->getNodeIdx().toStr().c_str(), "[-1, 0]");
+  auto found = hierarchy_->findNode(hierarchy_->getRootNode(), NodeIndex(std::vector<int>({-1, 0})));
+  ASSERT_STREQ(found->get()->getNodeIndex().toStr().c_str(), "[-1, 0]");
 }

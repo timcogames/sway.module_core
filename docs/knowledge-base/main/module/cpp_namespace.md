@@ -9,7 +9,7 @@ namespace sway::NAME {
 } // namespace sway::NAME
 ```
 
-###### На макросах:
+###### На макросах (deprecated):
 
 ```
 /**

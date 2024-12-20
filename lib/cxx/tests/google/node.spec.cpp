@@ -20,9 +20,9 @@
 const std::initializer_list<std::string> InternNameList = {"intern_a", "intern_b", "intern_c"};
 
 NS_SHORT_SWAY()
-NS_SHORT(core::container)
+NS_SHORT(core)
 
-class NodeTest : public ::testing::Test, public core::foundation::Eventable {
+class NodeTest : public testing::Test, public core::foundation::Eventable {
 public:
 #pragma region "Ctors/Dtor"
 
@@ -34,13 +34,13 @@ public:
 
 #pragma region "Override Subsystem methods"
 
-  MTHD_OVERRIDE(void SetUp()) {
+  void SetUp() override {
     srand(static_cast<unsigned int>(time(nullptr)));
 
     root_ = std::make_shared<Node>();
   }
 
-  MTHD_OVERRIDE(void TearDown()) {}
+  void TearDown() override {}
 
 #pragma endregion
 
@@ -66,17 +66,16 @@ public:
     }
   }
 
-  [[nodiscard]]
-  auto addInternToDoctor() const -> Node::SharedPtr_t {
-    Node::SharedPtr_t intern = std::make_shared<Node>();
+  [[nodiscard]] auto addInternToDoctor() const -> NodeTypedefs::SharedPtr_t {
+    auto intern = std::make_shared<Node>();
     doctor_->addChildNode(intern);
     return intern;
   }
 
-  Node::SharedPtr_t root_;
-  Node::SharedPtr_t supervisor_;
-  Node::SharedPtr_t doctor_;
-  Node::SharedPtrVec_t internCollection_;
+  NodeTypedefs::SharedPtr_t root_;
+  NodeTypedefs::SharedPtr_t supervisor_;
+  NodeTypedefs::SharedPtr_t doctor_;
+  NodeTypedefs::Container_t internCollection_;
 };
 
 TEST_F(NodeTest, AddChildNode_Twice_ThatAlreadyHasParent) {
@@ -102,10 +101,10 @@ TEST_F(NodeTest, add_remove) {
   ASSERT_EQ(doctor_->getNumOfChildNodes(), 3);
 
   supervisor_->removeChildNode(doctor_);
-  EXPECT_TRUE(internCollection_[IDX_INTERN_B]->getNodeIdx().equal(NodeIdx({NODEIDX_ROOT, IDX_INTERN_B})));
+  EXPECT_TRUE(internCollection_[IDX_INTERN_B]->getNodeIndex().equal(NodeIndex({NODEIDX_ROOT, IDX_INTERN_B})));
 
   root_->addChildNode(doctor_);
-  EXPECT_TRUE(internCollection_[IDX_INTERN_B]->getNodeIdx().equal(NodeIdx({NODEIDX_ROOT, 1, IDX_INTERN_B})));
+  EXPECT_TRUE(internCollection_[IDX_INTERN_B]->getNodeIndex().equal(NodeIndex({NODEIDX_ROOT, 1, IDX_INTERN_B})));
 }
 
 TEST_F(NodeTest, get_child_node) {
@@ -113,9 +112,9 @@ TEST_F(NodeTest, get_child_node) {
   addDoctorToSupervisor();
   addInternCollectionToDoctor();
 
-  auto internIdx = NodeIdx({NODEIDX_ROOT, 0, 0, IDX_INTERN_C});
+  auto internIdx = NodeIndex({NODEIDX_ROOT, 0, 0, IDX_INTERN_C});
   auto intern = doctor_->getChildNode(internIdx);
-  EXPECT_TRUE(internIdx.equal(intern->getNodeIdx()));
+  EXPECT_TRUE(internIdx.equal(intern->getNodeIndex()));
 }
 
 TEST_F(NodeTest, get_child_node__non_existent) {
@@ -123,7 +122,7 @@ TEST_F(NodeTest, get_child_node__non_existent) {
   addDoctorToSupervisor();
   addInternCollectionToDoctor();
 
-  auto internIdx = NodeIdx({NODEIDX_ROOT, 0, 0, IDX_INTERN_B});
+  auto internIdx = NodeIndex({NODEIDX_ROOT, 0, 0, IDX_INTERN_B});
   auto intern = doctor_->getChildNode(internIdx);
-  EXPECT_TRUE(internIdx.equal(intern->getNodeIdx()));
+  EXPECT_TRUE(internIdx.equal(intern->getNodeIndex()));
 }

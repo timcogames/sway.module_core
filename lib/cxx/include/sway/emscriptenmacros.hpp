@@ -1,6 +1,18 @@
 #ifndef SWAY_EMSCRIPTENMACROS_HPP
 #define SWAY_EMSCRIPTENMACROS_HPP
 
+#include <memory>
+
+template <typename TYPE>
+class Emscripteable {
+public:
+  static auto fromJs(intptr_t ptr) -> TYPE * { return reinterpret_cast<TYPE *>(ptr); }
+
+  static auto toJs(TYPE *ptr) -> intptr_t { return reinterpret_cast<intptr_t>(ptr); }
+
+  static auto toJs(const std::shared_ptr<TYPE> &ptr) -> intptr_t { return TYPE::toJs(ptr.get()); }
+};
+
 // clang-format off
 #define DECLARE_EMSCRIPTEN(OBJ)                                                                                    \
 public:                                                                                                            \

@@ -1,10 +1,11 @@
 #ifndef SWAY_CORE_CONTAINER_HIERARCHY_HPP
 #define SWAY_CORE_CONTAINER_HIERARCHY_HPP
 
+#include <sway/_stdafx.hpp>
+#include <sway/core/container/_typedefs.hpp>
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodedata.hpp>
-#include <sway/core/container/nodeidx.hpp>
-#include <sway/core/container/types.hpp>
+#include <sway/core/container/nodeindex.hpp>
 #include <sway/coremacros.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
@@ -12,25 +13,7 @@
 #include <sway/types.hpp>
 #include <sway/visibilitymacros.hpp>
 
-#include <algorithm>
-#include <iostream>
-#include <iterator>
-#include <memory>
-#include <optional>
-#include <sstream>
-#include <string>
-
-#ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/emscripten.h>
-#  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_BINDINGS
-#    include <emscripten/bind.h>
-#  endif
-#endif
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(container)
+namespace sway::core {
 
 #ifdef EMSCRIPTEN_PLATFORM
 using NodeDataList = emscripten::val;
@@ -38,15 +21,13 @@ using NodeDataList = emscripten::val;
 using NodeDataList = std::vector<NodeData>;
 #endif
 
-class Hierarchy {
-  DECLARE_PTR_ALIASES(Hierarchy)
-  DECLARE_EMSCRIPTEN(Hierarchy)
+class Hierarchy : public Emscripteable<Hierarchy> {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
 #pragma region "Static methods"
 
-  static auto findNode(Node::SharedPtr_t parent, const NodeIdx &nodeIdx) -> std::optional<Node::SharedPtr_t>;
+  static auto findNode(NodeTypedefs::SharedPtr_t parent, const NodeIndex &nodeIdx) -> NodeTypedefs::OptionalSharedPtr_t;
 
 #pragma endregion
 
@@ -58,28 +39,26 @@ public:
 
 #pragma endregion
 
-  auto getRootNode() -> Node::SharedPtr_t;
+  auto getRootNode() -> NodeTypedefs::SharedPtr_t;
 
-  void setRootNode(Node::SharedPtr_t root);
+  void setRootNode(NodeTypedefs::SharedPtr_t root);
 
 private:
-  Node::SharedPtr_t root_;
+  NodeTypedefs::SharedPtr_t root_;
 };
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 EXTERN_C_BEGIN
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto createHierarchy() -> Hierarchy::JavaScriptPtr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto createHierarchy() -> HierarchyTypedefs::JsPtr_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API void deleteHierarchy(Hierarchy::JavaScriptPtr_t hierarchy);
+D_MODULE_CORE_INTERFACE_EXPORT_API void deleteHierarchy(HierarchyTypedefs::JsPtr_t hierarchy);
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getRootNode(Hierarchy::JavaScriptPtr_t hierarchy) -> Node::JavaScriptPtr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getRootNode(HierarchyTypedefs::JsPtr_t hierarchy) -> NodeTypedefs::JsPtr_t;
 
 EXTERN_C_END
 #endif
 
-NS_END()  // namespace container
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_CONTAINER_HIERARCHY_HPP

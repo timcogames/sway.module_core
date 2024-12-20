@@ -1,26 +1,50 @@
 #ifndef SWAY_CORE_MISC_DESIGN_NAMEABLE_HPP
 #define SWAY_CORE_MISC_DESIGN_NAMEABLE_HPP
 
-#include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
-
-#include <utility>
+#include <sway/_stdafx.hpp>
+#include <sway/types.hpp>
 
 namespace sway::core {
 
-template <typename TYPE>
+/**
+ * @ingroup design
+ * @{
+ */
+
+/**
+ * @class Nameable
+ * \~english @brief Helper class with a name.
+ */
 class Nameable {
 public:
-  explicit Nameable(TYPE name)
+#pragma region "Ctors/Dtor"
+
+  Nameable(lpcstr_t name)
+      : name_(name) {}
+
+  Nameable(const std::string &name)
       : name_(std::move(name)) {}
 
-  auto getName() const -> TYPE const & { return name_; }
+  Nameable(const Nameable &obj)
+      : name_(obj.name_) {}
 
-  void rename(TYPE name) { name_ = std::move(name); }
+  ~Nameable() = default;
+
+#pragma endregion
+
+  void setName(lpcstr_t name) { name_ = name; }
+
+  [[nodiscard]] auto getName() const -> std::string const & { return name_; }
+
+  [[nodiscard]] auto hasName() const -> bool { return !name_.empty(); }
 
 protected:
-  TYPE name_;
+  std::string name_;
 };
+
+/**
+ * @}
+ */
 
 }  // namespace sway::core
 

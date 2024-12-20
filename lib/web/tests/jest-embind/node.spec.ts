@@ -15,6 +15,6 @@ describe("Node", () => {
     const node = new module.Node();
     root.addChildNode(node);
 
-    expect(node.getNodeIdx().toStr()).toEqual("[-1, 0]");
+    expect(node.getNodeIndex().toStr()).toEqual("[-1, 0]");
   });
 });

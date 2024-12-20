@@ -12,7 +12,7 @@ NS_BEGIN_SWAY()
 NS_BEGIN(core)
 
 /**
- * @brief Класс для хранения информации о версии.
+ * @brief \~english Class for storing version information. \~russian Класс для хранения информации о версии.
  */
 class Version {
 public:
@@ -30,34 +30,21 @@ public:
 
   void setMajor(i32_t major) { major_ = major; }
 
-  [[nodiscard]]
-  auto getMajor() const -> i32_t {
-    return major_;
-  }
+  [[nodiscard]] auto getMajor() const -> i32_t { return major_; }
 
   void setMinor(i32_t minor) { minor_ = minor; }
 
-  [[nodiscard]]
-  auto getMinor() const -> i32_t {
-    return minor_;
-  }
+  [[nodiscard]] auto getMinor() const -> i32_t { return minor_; }
 
   void setPatch(i32_t patch) { patch_ = patch; }
 
-  [[nodiscard]]
-  auto getPatch() const -> i32_t {
-    return patch_;
-  }
+  [[nodiscard]] auto getPatch() const -> i32_t { return patch_; }
 
   void setExtra(lpcstr_t extra) { extra_ = extra; }
 
-  [[nodiscard]]
-  auto getExtra() const -> std::string {
-    return extra_;
-  }
+  [[nodiscard]] auto getExtra() const -> std::string { return extra_; }
 
-  [[nodiscard]]
-  auto compare(const Version &version) const -> i32_t;
+  [[nodiscard]] auto compare(const Version &version) const -> i32_t;
 
   Version &operator=(const Version &version) {
     major_ = version.getMajor();
@@ -81,10 +68,10 @@ public:
   auto operator<=(const Version &version) const -> bool { return *this < version || *this == version; }
 
 private:
-  i32_t major_;  // Главный номер версии.
-  i32_t minor_;  // Вспомогательный номер версии.
-  i32_t patch_;  // Уровень исправлений.
-  std::string extra_;  // Дополнительные символы.
+  i32_t major_;  //!< ~english Main version number. \~russian Главный номер версии.
+  i32_t minor_;  //!< ~english Secondary version number. \~russian Вспомогательный номер версии.
+  i32_t patch_;  //!< ~english Revision level. \~russian Уровень исправлений.
+  std::string extra_;  //!< ~english Additional characters. \~russian Дополнительные символы.
 };
 
 NS_END()  // namespace core

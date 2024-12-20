@@ -3,13 +3,14 @@
 
 /**
  * @defgroup design Design
- * \~russian @brief Различные вспомогательные классы.
- *
- * @defgroup design Design
- * \~english @brief Various helper classes.
+ * @brief \~english Various helper classes. \~russian Различные вспомогательные классы.
  */
 
 #include <sway/core/misc/design/enableable.hpp>
 #include <sway/core/misc/design/nameable.hpp>
+#include <sway/core/misc/design/ownable.hpp>
+#include <sway/core/misc/design/ownabledeleter.hpp>
+#include <sway/core/misc/design/owner.hpp>
+#include <sway/core/misc/design/visibleable.hpp>
 
 #endif  // SWAY_CORE_MISC_DESIGN_HPP

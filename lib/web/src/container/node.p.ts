@@ -1,14 +1,14 @@
 "use strict";
 
 import { Optional } from "../misc/optional";
-import { NodeIdx } from "./nodeidx";
+import { NodeIndex } from "./nodeindex";
 
 export interface BaseIface<T> {
   addChildNode(child: T): void;
   removeChildNode(child: T): void;
   getChildAt(idx: number): Optional<EmscriptenClass>;
   getNumOfChildNodes(): number;
-  getNodeIdx(): NodeIdx.BaseIface;
+  getNodeIndex(): NodeIndex.BaseIface;
   getParentNode(): Optional<EmscriptenClass>;
 }
 
@@ -23,6 +23,6 @@ export declare class EmscriptenClass implements BaseIface<EmscriptenClass> {
   removeChildNode(child: EmscriptenClass): void;
   getChildAt(idx: number): Optional<EmscriptenClass>;
   getNumOfChildNodes(): number;
-  getNodeIdx(): NodeIdx.BaseIface;
+  getNodeIndex(): NodeIndex.BaseIface;
   getParentNode(): Optional<EmscriptenClass>;
 }

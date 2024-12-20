@@ -7,5 +7,5 @@
   "_deleteNode",
   "_addChildNode",
   "_getChildNodes",
-  "_getNodeIdx"
+  "_getNodeIndex"
 ]

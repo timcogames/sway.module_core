@@ -1,10 +1,10 @@
 "use strict";
 
 import { useBridge } from "@core/bridge";
-import { INodeIdx } from "@core/core";
+import { INodeIndex } from "@core/core";
 import { BridgeModule } from "@core/bridgemodule";
 
-describe("NodeIdx", () => {
+describe("NodeIndex", () => {
   let module: BridgeModule;
 
   beforeAll(async () => {
@@ -17,9 +17,9 @@ describe("NodeIdx", () => {
     integerVec.push_back(1);
     integerVec.push_back(2);
 
-    const nodeidx: INodeIdx = new module.NodeIdx(integerVec);
+    const nodeidx: INodeIndex = new module.NodeIndex(integerVec);
     // or
-    // const nodeidx: INodeIdx = new module.NodeIdx(module.toIntegerVec([0, 1, 2]));
+    // const nodeidx: INodeIndex = new module.NodeIndex(module.toIntegerVec([0, 1, 2]));
     expect(nodeidx.toStr()).toEqual("[0, 1, 2]");
   });
 });

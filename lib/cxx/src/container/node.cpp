@@ -17,7 +17,6 @@
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)
-NS_BEGIN(container)
 
 EMSCRIPTEN_BINDING_BEGIN(Node)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
@@ -28,13 +27,13 @@ emscripten::class_<Node>("Node")
     .function("getNumOfChildNodes", &Node::getNumOfChildNodes)
     .function("getParentNode", &Node::getParentNode, emscripten::allow_raw_pointers())
     .function("getChildAt", &Node::getChildAt, emscripten::allow_raw_pointers())
-    .function("getNodeIdx", &Node::getNodeIdx)
+    .function("getNodeIndex", &Node::getNodeIndex)
     .property("visible", &Node::isVisible, &Node::setVisible);
 #endif
 EMSCRIPTEN_BINDING_END()
 
 Node::Node()
-    : idx_(NodeIdx())
+    : idx_(NodeIndex())
     , parent_({}) {}
 
 Node::~Node() { children_.clear(); }
@@ -59,51 +58,51 @@ auto Node::traverse(util::TraverserPtr_t traverser) -> u32_t {
   return detail::toBase(util::TraverserAction::Enum::NONE);
 }
 
-void Node::addChildNode(Node::SharedPtr_t child) {
-  std::optional<Node::SharedPtr_t> childParentNode = child->getParentNode();
+void Node::addChildNode(NodeTypedefs::SharedPtr_t child) {
+  auto childParentNode = child->getParentNode();
   if (childParentNode) {
-    printf("%s %s\n", childParentNode->get()->getNodeIdx().toStr().c_str(), "Node alread has parent");
+    printf("%s %s\n", childParentNode->get()->getNodeIndex().toStr().c_str(), "Node alread has parent");
     return;
   }
 
   child->setParentNode(weak_from_this());
 
-  child->setNodeIdx(idx_.getChain(), getNumOfChildNodes());
+  child->setNodeIndex(idx_.getChain(), getNumOfChildNodes());
   for (const auto &childNode : child->getChildNodes()) {
-    recursiveAddChainLinks(childNode, child->getNodeIdx());
+    recursiveAddChainLinks(childNode, child->getNodeIndex());
   }
 
   children_.push_back(child);
 
   auto *eventdata = new NodeEventData();
-  eventdata->nodeidx = child->getNodeIdx();
+  eventdata->nodeidx = child->getNodeIndex();
   emit(EVT_ADDED, new NodeAddedEvent(0, eventdata), [&](foundation::EventHandler::Ptr_t handler) {
-    return static_cast<Node::Ptr_t>(handler->getSender())->getNodeIdx().equal(getNodeIdx());
+    return static_cast<NodeTypedefs::Ptr_t>(handler->getSender())->getNodeIndex().equal(getNodeIndex());
   });
 }
 
-void Node::recursiveAddChainLinks(Node::SharedPtr_t child, NodeIdx parentNodeIdx) {
-  NodeIdx::ChainVec_t chain = child->getNodeIdx().getChain();
-  NodeIdx::ChainVec_t parentChain = parentNodeIdx.getChain();
+void Node::recursiveAddChainLinks(NodeTypedefs::SharedPtr_t child, NodeIndex parentIdx) {
+  auto chain = child->getNodeIndex().getChain();
+  auto parentChain = parentIdx.getChain();
 
   chain.insert(chain.begin() + 1, parentChain.begin() + 1, parentChain.end());
-  child->setNodeIdx(chain, NODEIDX_NEGATIVE);
+  child->setNodeIndex(chain, NODEIDX_NEGATIVE);
 
   for (const auto &childNode : child->getChildNodes()) {
-    recursiveAddChainLinks(childNode, child->getNodeIdx());
+    recursiveAddChainLinks(childNode, child->getNodeIndex());
   }
 }
 
-void Node::removeChildNode(Node::SharedPtr_t child) {
+void Node::removeChildNode(NodeTypedefs::SharedPtr_t child) {
   // clang-format off
-  children_.erase(std::remove_if(children_.begin(), children_.end(), [&](Node::SharedPtr_t node) {
+  children_.erase(std::remove_if(children_.begin(), children_.end(), [&](NodeTypedefs::SharedPtr_t node) {
     auto const result = node->equal(child);
     if (result) {
       for (auto childNode : child->getChildNodes()) {
-        recursiveRemoveChainLinks(childNode, getNodeIdx());
+        recursiveRemoveChainLinks(childNode, getNodeIndex());
       }
 
-      child->setParentNode(Node::WeakPtr_t());
+      child->setParentNode(NodeTypedefs::WeakPtr_t());
       child->setAsRoot();
     }
     return result;
@@ -111,26 +110,26 @@ void Node::removeChildNode(Node::SharedPtr_t child) {
   // clang-format on
 
   auto *eventdata = new NodeEventData();
-  eventdata->nodeidx = child->getNodeIdx();
+  eventdata->nodeidx = child->getNodeIndex();
   emit(EVT_REMOVED, new NodeRemovedEvent(0, eventdata), [&](foundation::EventHandler::Ptr_t) { return true; });
 }
 
-void Node::recursiveRemoveChainLinks(Node::SharedPtr_t child, NodeIdx parentNodeIdx) {
-  if (!parentNodeIdx.chainEqual({NODEIDX_NEGATIVE})) {
-    auto chain = child->getNodeIdx().getChain();
-    chain.erase(chain.begin(), chain.begin() + parentNodeIdx.getDepth());
+void Node::recursiveRemoveChainLinks(NodeTypedefs::SharedPtr_t child, NodeIndex parentIdx) {
+  if (!parentIdx.chainEqual({NODEIDX_NEGATIVE})) {
+    auto chain = child->getNodeIndex().getChain();
+    chain.erase(chain.begin(), chain.begin() + parentIdx.getDepth());
     chain.at(0) = NODEIDX_ROOT;
-    child->setNodeIdx(chain, NODEIDX_NEGATIVE);
+    child->setNodeIndex(chain, NODEIDX_NEGATIVE);
   }
 
   for (const auto &childNode : child->getChildNodes()) {
-    recursiveRemoveChainLinks(childNode, parentNodeIdx);
+    recursiveRemoveChainLinks(childNode, parentIdx);
   }
 }
 
-auto Node::getChildNodes() -> Node::SharedPtrVec_t { return children_; }
+auto Node::getChildNodes() -> NodeTypedefs::Container_t { return children_; }
 
-auto Node::getChildNode(const NodeIdx &idx) const -> Node::SharedPtr_t {
+auto Node::getChildNode(const NodeIndex &idx) const -> NodeTypedefs::SharedPtr_t {
   auto iter = children_.begin();
   while (iter != children_.end()) {
     if ((*iter)->chainEqual(idx.getChain())) {
@@ -147,7 +146,7 @@ auto Node::getChildNode(const NodeIdx &idx) const -> Node::SharedPtr_t {
   return std::make_shared<Node>();
 }
 
-auto Node::getChildAt(int targetIdx) const -> std::optional<Node::SharedPtr_t> {
+auto Node::getChildAt(int targetIdx) const -> NodeTypedefs::OptionalSharedPtr_t {
   if (targetIdx >= 0 && targetIdx < getNumOfChildNodes()) {
     return children_[targetIdx];
   }
@@ -157,14 +156,14 @@ auto Node::getChildAt(int targetIdx) const -> std::optional<Node::SharedPtr_t> {
 
 auto Node::getNumOfChildNodes() const -> int { return static_cast<int>(children_.size()); }
 
-void Node::setNodeIdx(const NodeIdx::ChainVec_t &chain, int last) { idx_.setChain(chain, last); }
+void Node::setNodeIndex(const NodeIndex::ChainVec_t &chain, int last) { idx_.setChain(chain, last); }
 
-auto Node::getNodeIdx() -> NodeIdx { return idx_; }
+auto Node::getNodeIndex() -> NodeIndex { return idx_; }
 
-void Node::setParentNode(Node::WeakPtr_t parent) { parent_ = parent; }
+void Node::setParentNode(NodeTypedefs::WeakPtr_t parent) { parent_ = parent; }
 
-auto Node::getParentNode() -> std::optional<Node::SharedPtr_t> {
-  Node::SharedPtr_t ptr = parent_.lock();
+auto Node::getParentNode() -> NodeTypedefs::OptionalSharedPtr_t {
+  auto ptr = parent_.lock();
   if (!ptr) {
     return std::nullopt;
   }
@@ -172,9 +171,9 @@ auto Node::getParentNode() -> std::optional<Node::SharedPtr_t> {
   return ptr;
 }
 
-auto Node::getParentNodeByDepth(int depth) -> Node::SharedPtr_t {
+auto Node::getParentNodeByDepth(int depth) -> NodeTypedefs::SharedPtr_t {
   auto node = shared_from_this();
-  while (depth != 0 && node->getNodeIdx().getDepth() > depth) {
+  while (depth != 0 && node->getNodeIndex().getDepth() > depth) {
     node = getParentNode().value();
   }
 
@@ -183,49 +182,49 @@ auto Node::getParentNodeByDepth(int depth) -> Node::SharedPtr_t {
 
 void Node::setAsRoot() { idx_.setAsRoot(); }
 
-auto Node::equal(Node::SharedPtr_t other) -> bool { return other->chainEqual(idx_.getChain()); }
+auto Node::equal(NodeTypedefs::SharedPtr_t other) -> bool { return other->chainEqual(idx_.getChain()); }
 
-auto Node::chainEqual(NodeIdx::ChainVec_t other) -> bool { return idx_.chainEqual(other); }
+auto Node::chainEqual(NodeIndex::ChainVec_t other) -> bool { return idx_.chainEqual(other); }
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
-auto createNode() -> Node::JavaScriptPtr_t { return Node::toJs(new Node()); }
+auto createNode() -> NodeTypedefs::JsPtr_t { return Node::toJs(new Node()); }
 
-void deleteNode(Node::JavaScriptPtr_t node) {
+void deleteNode(NodeTypedefs::JsPtr_t node) {
   auto obj = Node::fromJs(node);
   SAFE_DELETE_OBJECT(obj);
 }
 
-void addChildNode(Node::JavaScriptPtr_t root, Node::JavaScriptPtr_t node) {
+void addChildNode(NodeTypedefs::JsPtr_t root, NodeTypedefs::JsPtr_t node) {
   auto obj = Node::fromJs(root);
   if (!obj) {
     // TODO
   }
 
-  return obj->addChildNode(Node::SharedPtr_t(Node::fromJs(node)));
+  return obj->addChildNode(NodeTypedefs::SharedPtr_t(Node::fromJs(node)));
 }
 
-auto getNodeIdx(Node::JavaScriptPtr_t node) -> lpcstr_t {
+auto getNodeIndex(NodeTypedefs::JsPtr_t node) -> lpcstr_t {
   auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO
   }
 
-  auto idxStr = obj->getNodeIdx().toStr();
+  auto idxStr = obj->getNodeIndex().toStr();
   auto result = new s8_t[idxStr.size() + 1];
   strcpy(result, idxStr.c_str());
 
   return result;
 }
 
-auto getChildNodes(Node::JavaScriptPtr_t node) -> Node::JavaScriptPtr_t * {
+auto getChildNodes(NodeTypedefs::JsPtr_t node) -> NodeTypedefs::JsPtrArray_t {
   auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO
   }
 
   auto nodes = obj->getChildNodes();
-  Node::JavaScriptPtr_t arr[nodes.size()];
+  NodeTypedefs::JsPtr_t arr[nodes.size()];
 
   for (auto i = 0; i < nodes.size(); i++) {
     arr[i] = Node::toJs(nodes[i]);
@@ -235,7 +234,7 @@ auto getChildNodes(Node::JavaScriptPtr_t node) -> Node::JavaScriptPtr_t * {
   return result;
 }
 
-auto getNumOfChildNodes(Node::JavaScriptPtr_t node) -> i32_t {
+auto getNumOfChildNodes(NodeTypedefs::JsPtr_t node) -> i32_t {
   auto obj = Node::fromJs(node);
   if (!obj) {
     // TODO
@@ -246,6 +245,5 @@ auto getNumOfChildNodes(Node::JavaScriptPtr_t node) -> i32_t {
 
 #endif
 
-NS_END()  // namespace container
 NS_END()  // namespace core
 NS_END()  // namespace sway

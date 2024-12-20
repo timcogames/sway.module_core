@@ -1,6 +1,6 @@
 "use strict";
 
-import { NodeIdx } from "./container/nodeidx";
+import { NodeIndex } from "./container/nodeindex";
 import { Node } from "./container/node";
 import { Hierarchy } from "./container/hierarchy";
 
@@ -13,12 +13,12 @@ export interface IObjectWrap {
   __destruct(): void;
 }
 
-export type INodeIdx = NodeIdx.BaseIface;
+export type INodeIndex = NodeIndex.BaseIface;
 export type INode = Node.BaseIface<Node.EmscriptenIface>;
 export type IHierarchy = Hierarchy.BaseIface;
 
 export interface ICoreSubmodule {
-  NodeIdx: NodeIdx.EmscriptenIface;
+  NodeIndex: NodeIndex.EmscriptenIface;
   Node: Node.EmscriptenIface;
   Hierarchy: Hierarchy.EmscriptenIface;
 }
