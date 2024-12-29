@@ -27,7 +27,7 @@ public:
 
 #pragma endregion
 
-#pragma region "Override EventHandler methods"
+#pragma region "Overridden EventHandler methods"
 
   MTHD_VIRTUAL_OVERRIDE(void invoke(Event::Ptr_t evt)) {
     auto *receiver = static_cast<TYPE *>(receiver_);

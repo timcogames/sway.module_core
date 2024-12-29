@@ -4,7 +4,6 @@
 /**
  * @namespace sway::core
  * \~russian @brief Корневое пространство имен данной библиотеки.
- *
  * \~english @brief Root namespace of this library.
  */
 
@@ -23,6 +22,10 @@
 #include <sway/core/detail/valuedatatypes.hpp>
 #include <sway/core/events/eventbus.hpp>
 #include <sway/core/events/eventhandler.hpp>
+#include <sway/core/events/models/messagebody.hpp>
+#include <sway/core/events/models/messagebodyserializable.hpp>
+#include <sway/core/events/models/messagecontent.hpp>
+#include <sway/core/events/models/messageformats.hpp>
 #include <sway/core/events/subscribable.hpp>
 #include <sway/core/foundation/callbackmacros.hpp>
 #include <sway/core/foundation/context.hpp>
@@ -35,6 +38,7 @@
 #include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/core/foundation/object.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
+#include <sway/core/foundation/objectclassname.hpp>
 #include <sway/core/foundation/types.hpp>
 #include <sway/core/foundation/uniqueable.hpp>
 #include <sway/core/generic/io/filesource.hpp>

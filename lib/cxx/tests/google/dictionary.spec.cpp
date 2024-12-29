@@ -6,7 +6,7 @@
 NS_SHORT_SWAY()
 
 TEST(Dictionary, add_string) {
-  core::misc::Dictionary dict;
+  core::Dictionary dict;
 
   dict.addString("key", "value");
   EXPECT_EQ(dict.getString("key"), "value");

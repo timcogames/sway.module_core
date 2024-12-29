@@ -12,7 +12,8 @@ NS_BEGIN_SWAY()
 NS_BEGIN(core)
 
 /**
- * @brief \~english Class for storing version information. \~russian Класс для хранения информации о версии.
+ * \~english @brief Class for storing version information.
+ * \~russian @brief Класс для хранения информации о версии.
  */
 class Version {
 public:
@@ -68,10 +69,10 @@ public:
   auto operator<=(const Version &version) const -> bool { return *this < version || *this == version; }
 
 private:
-  i32_t major_;  //!< ~english Main version number. \~russian Главный номер версии.
-  i32_t minor_;  //!< ~english Secondary version number. \~russian Вспомогательный номер версии.
-  i32_t patch_;  //!< ~english Revision level. \~russian Уровень исправлений.
-  std::string extra_;  //!< ~english Additional characters. \~russian Дополнительные символы.
+  i32_t major_;  //!< \~english Main version number. \~russian Главный номер версии.
+  i32_t minor_;  //!< \~english Secondary version number. \~russian Вспомогательный номер версии.
+  i32_t patch_;  //!< \~english Revision level. \~russian Уровень исправлений.
+  std::string extra_;  //!< \~english Additional characters. \~russian Дополнительные символы.
 };
 
 NS_END()  // namespace core

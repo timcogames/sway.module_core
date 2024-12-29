@@ -23,7 +23,7 @@ struct GenericValueData : public ValueData {
   GenericValueData(VALUE_TYPE val)
       : value(val) {}
 
-#pragma region "Override ValueData methods"
+#pragma region "Overridden ValueData methods"
 
   MTHD_VIRTUAL_OVERRIDE(auto type() const -> u32_t) { return detail::toBase(detail::ValueDataTypeToEnum<VALUE_TYPE>::value); }
 

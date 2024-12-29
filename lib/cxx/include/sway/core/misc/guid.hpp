@@ -1,25 +1,20 @@
 #ifndef SWAY_CORE_MISC_GUID_HPP
 #define SWAY_CORE_MISC_GUID_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#include <array>
-#include <cstdlib>  // rand
-#include <string>  // std::string
-
 constexpr sway::i32_t UUID_NBR_OF_GROUPS = 4;
 constexpr std::array<sway::i32_t, UUID_NBR_OF_GROUPS> UUID_MAGIC = {8, 4, 4, 12};
 constexpr std::string_view UUID_ZERO = "00000000-0000-0000-0000-000000000000";
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(misc)
+namespace sway::core {
 
-template <std::size_t NBR>
-FORCE_INLINE auto newGuid(const std::array<i32_t, NBR> &format) {
+template <std::size_t SIZE>
+FORCE_INLINE auto newGuid(const std::array<i32_t, SIZE> &format) -> std::string {
   static const std::string bucket = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
   std::string result;
@@ -39,8 +34,6 @@ FORCE_INLINE auto newGuid(const std::array<i32_t, NBR> &format) {
   return result;
 }
 
-NS_END()  // namespace misc
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_MISC_GUID_HPP

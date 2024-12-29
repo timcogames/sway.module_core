@@ -14,7 +14,9 @@ class EventWrapper : public emscripten::wrapper<Event> {
 public:
   EMSCRIPTEN_WRAPPER(EventWrapper);
 
-  MTHD_VIRTUAL_OVERRIDE(const ObjectClassMetadata *getSuperclass() const) { return call<const ObjectClassMetadata *const>("getSuperclass"); }
+  MTHD_VIRTUAL_OVERRIDE(const ObjectClassMetadataTypedefs::Ptr_t getSuperclass() const) {
+    return call<const ObjectClassMetadataTypedefs::Ptr_t const>("getSuperclass");
+  }
 
   MTHD_VIRTUAL_OVERRIDE(const std::string &getClassname() const) { return call<const std::string &>("getClassname"); }
 
@@ -22,7 +24,7 @@ public:
 
   MTHD_VIRTUAL_OVERRIDE(auto type() const -> u32_t) { return call<u32_t>("type"); }
 
-  MTHD_VIRTUAL_OVERRIDE(auto data() const -> EventData::Ptr_t) { return call<EventData::Ptr_t const>("data"); }
+  MTHD_VIRTUAL_OVERRIDE(auto data() const -> EventDataTypedefs::Ptr_t) { return call<EventDataTypedefs::Ptr_t const>("data"); }
 };
 
 #endif

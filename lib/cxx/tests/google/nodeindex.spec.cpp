@@ -16,7 +16,7 @@ NS_SHORT(core)
 
 class NodeIndexTest : public testing::Test {
 public:
-#pragma region "Override Test methods"
+#pragma region "Overridden Test methods"
 
   void SetUp() override {
     /**

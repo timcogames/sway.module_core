@@ -12,16 +12,8 @@
 NS_SHORT_SWAY()
 NS_SHORT(core)
 
-struct TestEventData : foundation::EventData {
+struct TestEventData : EventData {
   std::string value;
-
-#pragma region "Override EventData methods"
-
-  MTHD_VIRTUAL_OVERRIDE(auto serialize() const -> std::string) { return ""; }
-
-  MTHD_VIRTUAL_OVERRIDE(void deserialize(const std::string &jdata)) {}
-
-#pragma endregion
 };
 
 class TestEvent : public foundation::Event {
@@ -30,8 +22,8 @@ class TestEvent : public foundation::Event {
 public:
 #pragma region "Ctors/Dtor"
 
-  TestEvent(u32_t type, foundation::EventData::Ptr_t data)
-      : id_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))
+  TestEvent(u32_t type, EventDataTypedefs::Ptr_t data)
+      : id_(newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))
       , type_(type)
       , data_(data) {}
 
@@ -39,26 +31,26 @@ public:
 
 #pragma endregion
 
-#pragma region "Override Event methods"
+#pragma region "Overridden Event methods"
 
   MTHD_VIRTUAL_OVERRIDE(auto id() const -> std::string) { return id_; }
 
   MTHD_VIRTUAL_OVERRIDE(auto type() const -> u32_t) { return type_; }
 
-  MTHD_VIRTUAL_OVERRIDE(auto data() const -> foundation::EventData::Ptr_t ) { return data_; }
+  MTHD_VIRTUAL_OVERRIDE(auto data() const -> EventDataTypedefs::Ptr_t ) { return data_; }
 
 #pragma endregion
 
 private:
   std::string id_;
   u32_t type_;
-  foundation::EventData::Ptr_t data_;
+  EventDataTypedefs::Ptr_t data_;
 };
 
 struct TestEventHandler : public evts::EventHandler {
   ~TestEventHandler() override = default;
 
-#pragma region "Override EventHandler methods"
+#pragma region "Overridden EventHandler methods"
 
   MTHD_VIRTUAL_OVERRIDE(auto invoke(const foundation::Event::UniquePtr_t &event) -> bool) final {
     std::cout << static_cast<TestEventData *>(event->data())->value.c_str() << std::endl;
@@ -70,7 +62,7 @@ struct TestEventHandler : public evts::EventHandler {
 
 class EventBusTest : public ::testing::Test {
 protected:
-#pragma region "Override Test methods"
+#pragma region "Overridden Test methods"
 
   MTHD_OVERRIDE(void SetUp()) { evtbus_ = new evts::EventBus(); }
 

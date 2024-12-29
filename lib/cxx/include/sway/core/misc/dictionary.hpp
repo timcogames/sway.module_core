@@ -1,18 +1,12 @@
 #ifndef SWAY_CORE_MISC_DICTIONARY_HPP
 #define SWAY_CORE_MISC_DICTIONARY_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/misc/string.hpp>
 #include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#include <string>
-#include <string_view>
-#include <unordered_map>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(misc)
+namespace sway::core {
 
 namespace DictionaryValueTypedefs {
 using Container_t = std::unordered_map<std::string, std::string>;
@@ -31,7 +25,7 @@ public:
 
   Dictionary() = default;
 
-  DTOR_DEFAULT(Dictionary);
+  ~Dictionary() = default;
 
 #pragma endregion
 
@@ -46,7 +40,7 @@ public:
     return (iter != variables_.end()) ? iter->second : undef;
   }
 
-  void addInteger(const std::string &name, i32_t val) { addString(name, toString(val)); }
+  void addInteger(const std::string &name, i32_t val) { addString(name, misc::toString(val)); }
 
   auto getIntegerOrDefault(const std::string &name, i32_t def) -> i32_t {
     const auto &value = getString(name);
@@ -54,10 +48,10 @@ public:
       return def;
     }
 
-    return toInteger(value.c_str(), def);
+    return misc::toInteger(value.c_str(), def);
   }
 
-  void addFloat(const std::string &name, f32_t val) { addString(name, toString(val)); }
+  void addFloat(const std::string &name, f32_t val) { addString(name, misc::toString(val)); }
 
   auto getFloatOrDefault(const std::string &name, f32_t def) -> f32_t {
     const auto &value = getString(name);
@@ -65,7 +59,7 @@ public:
       return def;
     }
 
-    return toFloat(value.c_str(), def);
+    return misc::toFloat(value.c_str(), def);
   }
 
   void addBoolean(const std::string &name, bool val) { addString(name, val ? "true" : "false"); }
@@ -76,15 +70,13 @@ public:
       return def;
     }
 
-    return toBoolean(value.c_str(), def);
+    return misc::toBoolean(value.c_str(), def);
   }
 
 private:
   DictionaryValueTypedefs::Container_t variables_;
 };
 
-NS_END()  // namespace misc
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_MISC_DICTIONARY_HPP

@@ -20,16 +20,8 @@
 NS_SHORT_SWAY()
 NS_SHORT(core)
 
-struct MyEventData : public foundation::EventData {
+struct MyEventData : public EventData {
   std::string value;
-
-#pragma region "Override EventData methods"
-
-  MTHD_VIRTUAL_OVERRIDE(auto serialize() const -> std::string) { return ""; }
-
-  MTHD_VIRTUAL_OVERRIDE(void deserialize(const std::string &jdata)) {}
-
-#pragma endregion
 };
 
 class BaseEvent : public foundation::Event {
@@ -39,7 +31,7 @@ public:
 #pragma region "Ctors/Dtor"
 
   BaseEvent(u32_t type, MyEventData *data)
-      : id_(misc::newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))
+      : id_(newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))
       , type_(type)
       , data_(data) {}
 
@@ -47,13 +39,13 @@ public:
 
 #pragma endregion
 
-#pragma region "Override Event methods"
+#pragma region "Overridden Event methods"
 
   MTHD_VIRTUAL_OVERRIDE(auto id() const -> std::string) { return id_; }
 
   MTHD_VIRTUAL_OVERRIDE(auto type() const -> u32_t) { return type_; }
 
-  MTHD_VIRTUAL_OVERRIDE(auto data() const -> foundation::EventData::Ptr_t) { return data_; }
+  MTHD_VIRTUAL_OVERRIDE(auto data() const -> EventDataTypedefs::Ptr_t) { return data_; }
 
 #pragma endregion
 
@@ -84,16 +76,13 @@ public:
 
 #pragma endregion
 
-#pragma region "Override EventActionMapper methods"
+#pragma region "Overridden EventActionMapper methods"
 
   MTHD_VIRTUAL_OVERRIDE(void apply(std::shared_ptr<MyCreatedEvent> vent)) { myvalue_ = vent->getConcreteData<MyEventData>().value; }
 
 #pragma endregion
 
-  [[nodiscard]]
-  auto getMyValue() const -> std::string {
-    return myvalue_;
-  }
+  [[nodiscard]] auto getMyValue() const -> std::string { return myvalue_; }
 
 private:
   std::string myvalue_;
@@ -124,7 +113,7 @@ private:
 
 class ModelTest : public ::testing::Test {
 protected:
-#pragma region "Override Test methods"
+#pragma region "Overridden Test methods"
 
   MTHD_OVERRIDE(void SetUp()) { model = std::make_shared<MyModel>(); }
 
@@ -146,17 +135,9 @@ TEST_F(ModelTest, reise_event) {
 
 //-------------------------------------------
 
-struct TestEventData : public foundation::EventData {
+struct TestEventData : public EventData {
   i32_t prev;
   i32_t next;
-
-#pragma region "Override EventData methods"
-
-  MTHD_VIRTUAL_OVERRIDE(auto serialize() const -> std::string) { return ""; }
-
-  MTHD_VIRTUAL_OVERRIDE(void deserialize(const std::string &jdata)) {}
-
-#pragma endregion
 };
 
 class TestSender : public core::foundation::Eventable {

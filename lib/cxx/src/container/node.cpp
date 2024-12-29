@@ -1,6 +1,7 @@
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeeventdata.hpp>
 #include <sway/core/detail/enumutils.hpp>
+#include <sway/core/foundation/_typedefs.hpp>
 #include <sway/core/foundation/context.hpp>
 #include <sway/core/util/traverseractions.hpp>
 
@@ -15,8 +16,7 @@
 #  endif
 #endif
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
 EMSCRIPTEN_BINDING_BEGIN(Node)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
@@ -245,5 +245,4 @@ auto getNumOfChildNodes(NodeTypedefs::JsPtr_t node) -> i32_t {
 
 #endif
 
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core

@@ -18,7 +18,7 @@ public:
 
 #pragma endregion
 
-#pragma region "Override Subsystem methods"
+#pragma region "Overridden Subsystem methods"
 
   MTHD_VIRTUAL_OVERRIDE(bool initialize()) { return true; }
 
@@ -31,7 +31,7 @@ public:
 
 class ContextTest : public testing::Test {
 public:
-#pragma region "Override Test methods"
+#pragma region "Overridden Test methods"
 
   MTHD_OVERRIDE(void SetUp()) { context_ = new foundation::Context(); }
 

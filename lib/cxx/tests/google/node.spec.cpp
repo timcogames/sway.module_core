@@ -32,10 +32,10 @@ public:
 
 #pragma endregion
 
-#pragma region "Override Subsystem methods"
+#pragma region "Overridden Subsystem methods"
 
   void SetUp() override {
-    srand(static_cast<unsigned int>(time(nullptr)));
+    srand(static_cast<u32_t>(time(nullptr)));
 
     root_ = std::make_shared<Node>();
   }

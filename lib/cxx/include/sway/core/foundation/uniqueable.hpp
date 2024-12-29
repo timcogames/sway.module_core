@@ -1,46 +1,37 @@
 #ifndef SWAY_CORE_FOUNDATION_UNIQUEABLE_HPP
 #define SWAY_CORE_FOUNDATION_UNIQUEABLE_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/misc/guid.hpp>
 #include <sway/emscriptenmacros.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#include <algorithm>  // std::remove_if
-#include <optional>
-#include <string>
-#include <vector>
+namespace sway::core {
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(foundation)
-
-template <typename VALUE_TYPE>
+template <typename TYPE>
 class Uniqueable {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
 #pragma region "Ctors/Dtor"
 
-  Uniqueable(const std::optional<VALUE_TYPE> &uid)
-      : uniqId_(uid) {}
+  Uniqueable(const std::optional<TYPE> &uid)
+      : uniqueId_(uid) {}
 
   ~Uniqueable() = default;
 
 #pragma endregion
 
-  [[nodiscard]] auto getUid() const -> std::optional<VALUE_TYPE> { return uniqId_; }
+  [[nodiscard]] auto getUniqueId() const -> std::optional<TYPE> { return uniqueId_; }
 
-  void setUid(const std::optional<VALUE_TYPE> &uid) { uniqId_ = uid; }
+  void setUniqueId(const std::optional<TYPE> &uid) { uniqueId_ = uid; }
 
 private:
-  std::optional<VALUE_TYPE> uniqId_;
+  std::optional<TYPE> uniqueId_;
 };
 
 #include <sway/core/foundation/uniqueable_embind.inl>
 
-NS_END()  // namespace foundation
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_FOUNDATION_UNIQUEABLE_HPP

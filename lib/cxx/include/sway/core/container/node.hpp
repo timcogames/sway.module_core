@@ -49,7 +49,7 @@ public:
 
 #pragma endregion
 
-#pragma region "Override Visitable methods"
+#pragma region "Overridden Visitable methods"
 
   virtual auto traverse(util::TraverserPtr_t traverser) -> u32_t override;
 

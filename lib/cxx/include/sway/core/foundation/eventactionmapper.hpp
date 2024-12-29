@@ -26,7 +26,7 @@ class EventActionMapper : public ActionMapper, public ARGS... {
 public:
   virtual ~EventActionMapper() = default;
 
-#pragma region "Override ActionMapper methods"
+#pragma region "Overridden ActionMapper methods"
 
   MTHD_VIRTUAL_OVERRIDE(void registerEvents(EventApplier *applier)) {
     auto self = this;

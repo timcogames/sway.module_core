@@ -2,6 +2,7 @@
 #define SWAY_CORE_FOUNDATION_EVENT_HPP
 
 #include <sway/core/detail/valuedata.hpp>
+#include <sway/core/foundation/_typedefs.hpp>
 #include <sway/core/foundation/eventdata.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/core/foundation/types.hpp>
@@ -17,7 +18,8 @@ NS_BEGIN(core)
 NS_BEGIN(foundation)
 
 /**
- * @brief Базовый интерфейс для описания всех типов событий.
+ * \~english @brief Base interface for all event types.
+ * \~russian @brief Базовый интерфейс для описания всех типов событий.
  */
 class Event {
   DECLARE_SUPERCLASS()
@@ -27,17 +29,17 @@ class Event {
 public:
 #pragma region "Ctors/Dtor"
 
-  DTOR_VIRTUAL_DEFAULT(Event);
+  virtual ~Event() = default;
 
 #pragma endregion
 
 #pragma region "Pure virtual methods"
 
-  PURE_VIRTUAL(auto id() const -> std::string);
+  virtual auto id() const -> std::string = 0;
 
-  PURE_VIRTUAL(auto type() const -> u32_t);
+  virtual auto type() const -> u32_t = 0;
 
-  PURE_VIRTUAL(auto data() const -> EventData::Ptr_t);
+  virtual auto data() const -> EventDataTypedefs::Ptr_t = 0;
 
 #pragma endregion
 

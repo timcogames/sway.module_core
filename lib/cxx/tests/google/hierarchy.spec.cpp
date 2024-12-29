@@ -19,7 +19,7 @@ NS_SHORT(core)
 
 class HierarchyTest : public testing::Test {
 public:
-#pragma region "Override Test methods"
+#pragma region "Overridden Test methods"
 
   void SetUp() override { hierarchy_ = new Hierarchy(); }
 
@@ -32,7 +32,7 @@ public:
 
 class HierarchyChildTraverser : public util::Traverser {
 public:
-#pragma region "Override Traverser methods"
+#pragma region "Overridden Traverser methods"
 
   MTHD_VIRTUAL_OVERRIDE(auto visit([[maybe_unused]] util::Visitable::Ptr_t node) -> u32_t) {
     return detail::toBase(util::TraverserAction::Enum::CONTINUE);
