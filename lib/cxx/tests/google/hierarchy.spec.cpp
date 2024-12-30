@@ -10,10 +10,6 @@
 
 #include <gtest/gtest.h>
 
-#include <memory>
-#include <string>
-#include <vector>
-
 NS_SHORT_SWAY()
 NS_SHORT(core)
 

@@ -1,13 +1,5 @@
 #include <sway/inlinemacros.hpp>
 
-#ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/emscripten.h>
-#  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_BINDINGS
-#    include <emscripten/bind.h>
-#  endif
-#endif
-
 template <>
 FORCE_INLINE void Uniqueable<std::string>::bindEmscriptenClass() {
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)

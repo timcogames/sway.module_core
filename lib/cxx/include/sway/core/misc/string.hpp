@@ -1,15 +1,10 @@
 #ifndef SWAY_CORE_MISC_STRING_HPP
 #define SWAY_CORE_MISC_STRING_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
-
-#include <algorithm>  // std::transform
-#include <cctype>  // std::tolower
-#include <cstdio>  // snprintf
-#include <cstdlib>  // atoi, atof
-#include <string>
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)

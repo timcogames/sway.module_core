@@ -1,35 +1,29 @@
 #ifndef SWAY_CORE_EVTS_SUBSCRIBABLE_HPP
 #define SWAY_CORE_EVTS_SUBSCRIBABLE_HPP
 
-#include <sway/core/events/eventhandler.hpp>
+#include <sway/_stdafx.hpp>
+#include <sway/core/events/_typedefs.hpp>
 #include <sway/core/foundation/event.hpp>
-#include <sway/namespacemacros.hpp>
+#include <sway/core/foundation/eventhandler.hpp>
 
-#include <memory>
-#include <vector>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(evts)
+namespace sway::core {
 
 class Subscribable {
 protected:
-  std::vector<EventHandler::Ptr_t> subscriptions_;
+  EventHandlerTypedefs::Container_t subscriptions_;
 
 public:
   using Subscriber_t = decltype(subscriptions_)::iterator;
 
   ~Subscribable() { subscriptions_.clear(); }
 
-  auto subscribe(EventHandler::Ptr_t handler) -> Subscriber_t;
+  auto subscribe(EventHandlerTypedefs::Ptr_t handler) -> Subscriber_t;
 
   void unsubscribe(Subscriber_t subscriber);
 
-  void handle(const foundation::Event::UniquePtr_t &evt);
+  void handle(const EventTypedefs::UniquePtr_t &evt);
 };
 
-NS_END()  // namespace evts
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_EVTS_SUBSCRIBABLE_HPP

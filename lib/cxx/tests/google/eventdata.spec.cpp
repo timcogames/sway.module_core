@@ -29,7 +29,7 @@ TEST(EventData, deserializer) {
   jsonEventData.body->data = "{\"test\": \"value\"}";
 
   auto jsonBody = std::static_pointer_cast<MessageBodySerializable>(jsonEventData.body);
-  auto testEventData = jsonBody->toObject<CustomEventData>();
+  auto testEventData = jsonBody->toConcreteObject<CustomEventData>();
 
   EXPECT_EQ(testEventData.value, "test");
 }

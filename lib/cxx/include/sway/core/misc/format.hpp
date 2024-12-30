@@ -1,14 +1,10 @@
 #ifndef SWAY_CORE_MISC_FORMAT_HPP
 #define SWAY_CORE_MISC_FORMAT_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
-
-#include <cstdarg>  // va_start, va_end, std::va_list
-#include <stdio.h>  // vsnprintf
-#include <string>
-#include <vector>
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)

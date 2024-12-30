@@ -10,8 +10,7 @@
 #  endif
 #endif
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
 EMSCRIPTEN_BINDING_BEGIN(NodeIndex)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
@@ -101,5 +100,4 @@ auto NodeIndex::toStr() const -> std::string {
   return str;
 }
 
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core

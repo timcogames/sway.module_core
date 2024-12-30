@@ -3,10 +3,8 @@
 
 #include <sway/_stdafx.hpp>
 #include <sway/core/events/models/_typedefs.hpp>
-#include <sway/core/events/models/io/serializer.hpp>
+#include <sway/core/events/models/io/serialization/deserializer.hpp>
 #include <sway/core/events/models/messagebody.hpp>
-
-#include <type_traits>
 
 namespace sway::core {
 
@@ -25,7 +23,7 @@ struct MessageBodySerializable final : public MessageBody {
       : deserializer(deserializer) {}
 
   template <typename TYPE, std::enable_if_t<IsAggregateStruct<TYPE>::value, i32_t> = 0>
-  auto toObject() -> TYPE {
+  auto toConcreteObject() -> TYPE {
     return *reinterpret_cast<TYPE *>(deserializer->deserialize(data));
   }
 };

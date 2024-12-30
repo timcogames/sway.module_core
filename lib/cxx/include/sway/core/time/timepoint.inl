@@ -1,4 +1,3 @@
-#include <sway/core/time/timepoint.hpp>
 #include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 

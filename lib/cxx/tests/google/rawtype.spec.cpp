@@ -2,8 +2,6 @@
 
 #include <gtest/gtest.h>
 
-#include <type_traits>  // std::is_same
-
 NS_SHORT_SWAY()
 
 template <typename T, typename U>

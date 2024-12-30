@@ -1,24 +1,14 @@
 #ifndef SWAY_CORE_FOUNDATION_CONTEXT_HPP
 #define SWAY_CORE_FOUNDATION_CONTEXT_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/foundation/subsystem.hpp>
-#include <sway/core/foundation/types.hpp>
 #include <sway/core/runtime/exceptions/argumentnullexception.hpp>
 #include <sway/emscriptenmacros.hpp>
-#include <sway/namespacemacros.hpp>
-#include <sway/pointermacros.hpp>
-#include <sway/types.hpp>
 
-#include <optional>
-#include <string>
-#include <unordered_map>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(foundation)
+namespace sway::core {
 
 class Context {
-  DECLARE_PTR_ALIASES(Context)
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
@@ -26,62 +16,32 @@ public:
 
   Context() = default;
 
-  ~Context() { subsystems_.clear(); }
+  ~Context();
 
 #pragma endregion
 
-  void registerSubsystem(Subsystem::SharedPtr_t obj) { subsystems_.insert(std::make_pair(obj->getClassname(), obj)); }
+  void registerSubsystem(SubsystemTypedefs::SharedPtr_t obj);
 
-  void unregisterSubsystem(const std::string &classname) {
-    auto iter = subsystems_.find(classname);
-    if (iter != subsystems_.end()) {
-      subsystems_.erase(iter);
-    }
-  }
+  void unregisterSubsystem(const std::string &classname);
 
   template <class TYPE>
-  auto getSubsystem(const std::string &classname) const -> std::optional<std::shared_ptr<TYPE>> {
-    static_assert(std::is_base_of<Subsystem, TYPE>::value, "Provided type does not implement Subsystem");
-
-    auto iter = subsystems_.find(classname);
-    if (iter != subsystems_.end()) {
-      return std::static_pointer_cast<TYPE>(iter->second);
-    }
-
-    return std::nullopt;
-  }
+  auto getSubsystem(const std::string &classname) const -> SubsystemTypedefs::OptionalSharedPtr_t<TYPE>;
 
   template <class TYPE>
-  auto getSubsystem() const -> std::optional<std::shared_ptr<TYPE>> {
-    return this->getSubsystem<TYPE>(TYPE::getObjectClassMetadata()->getClassname());
-  }
+  auto getSubsystem() const -> SubsystemTypedefs::OptionalSharedPtr_t<TYPE>;
 
-  void initialize() {
-    for (const auto &[_, subsystem] : subsystems_) {
-      auto initialized = subsystem->initialize();
-      if (!initialized) {
-      }
-    }
-  }
+  void initialize();
 
-  void tick(f32_t timestep) {
-    for (const auto &[_, subsystem] : subsystems_) {
-      subsystem->tick(timestep);
-    }
-  }
+  void tick(f32_t timestep);
 
-  void shutdown() {
-    for (const auto &[_, subsystem] : subsystems_) {
-      subsystem->shutdown();
-    }
-  }
+  void shutdown();
 
 private:
-  std::unordered_map<std::string, Subsystem::SharedPtr_t> subsystems_;  // Контейнер объектов.
+  SubsystemTypedefs::Container_t subsystems_;
 };
 
-NS_END()  // namespace foundation
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
+
+#include <sway/core/foundation/context.inl>
 
 #endif  // SWAY_CORE_FOUNDATION_CONTEXT_HPP

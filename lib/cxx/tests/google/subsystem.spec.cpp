@@ -2,19 +2,17 @@
 
 #include <gtest/gtest.h>
 
-#include <memory>
-
 NS_SHORT_SWAY()
 NS_SHORT(core)
 
-class MySubsystem : public foundation::Subsystem {
-  DECLARE_CLASS_METADATA(MySubsystem, foundation::Subsystem)
+class MySubsystem : public Subsystem {
+  DECLARE_CLASS_METADATA(MySubsystem, Subsystem)
 
 public:
 #pragma region "Ctors/Dtor"
 
-  explicit MySubsystem(foundation::Context::Ptr_t ctx)
-      : foundation::Subsystem(ctx) {}
+  explicit MySubsystem(ContextTypedefs::Ptr_t ctx)
+      : Subsystem(ctx) {}
 
 #pragma endregion
 
@@ -33,13 +31,13 @@ class ContextTest : public testing::Test {
 public:
 #pragma region "Overridden Test methods"
 
-  MTHD_OVERRIDE(void SetUp()) { context_ = new foundation::Context(); }
+  MTHD_OVERRIDE(void SetUp()) { context_ = new Context(); }
 
   MTHD_OVERRIDE(void TearDown()) { delete context_; }
 
 #pragma endregion
 
-  foundation::Context::Ptr_t context_;
+  ContextTypedefs::Ptr_t context_;
 };
 
 TEST_F(ContextTest, get_subsystem) {

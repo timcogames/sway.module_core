@@ -3,8 +3,6 @@
 
 #include <gtest/gtest.h>
 
-#include <cstdio>
-
 NS_SHORT_SWAY()
 NS_SHORT(core)
 

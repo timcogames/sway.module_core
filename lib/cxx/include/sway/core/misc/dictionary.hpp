@@ -2,15 +2,12 @@
 #define SWAY_CORE_MISC_DICTIONARY_HPP
 
 #include <sway/_stdafx.hpp>
+#include <sway/core/misc/_typedefs.hpp>
 #include <sway/core/misc/string.hpp>
 #include <sway/keywords.hpp>
 #include <sway/types.hpp>
 
 namespace sway::core {
-
-namespace DictionaryValueTypedefs {
-using Container_t = std::unordered_map<std::string, std::string>;
-}  // namespace DictionaryValueTypedefs
 
 class Dictionary {
 public:

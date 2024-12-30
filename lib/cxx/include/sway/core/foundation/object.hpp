@@ -1,14 +1,11 @@
 #ifndef SWAY_CORE_FOUNDATION_OBJECT_HPP
 #define SWAY_CORE_FOUNDATION_OBJECT_HPP
 
+#include <sway/core/foundation/_typedefs.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
-#include <sway/core/foundation/types.hpp>
 #include <sway/emscriptenmacros.hpp>
-#include <sway/namespacemacros.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(foundation)
+namespace sway::core {
 
 class Context;
 
@@ -22,12 +19,12 @@ public:
   Object()
       : context_(nullptr) {}
 
-  explicit Object(ContextPtr_t ctx)
+  explicit Object(ContextTypedefs::Ptr_t ctx)
       : context_(ctx) {}
 
 #pragma endregion
 
-  auto getContext() -> ContextPtr_t { return context_; }
+  auto getContext() -> ContextTypedefs::Ptr_t { return context_; }
 
   template <class TYPE>
   auto getContext() -> TYPE * {
@@ -35,11 +32,9 @@ public:
   }
 
 private:
-  ContextPtr_t context_;
+  ContextTypedefs::Ptr_t context_;
 };
 
-NS_END()  // namespace foundation
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_FOUNDATION_OBJECT_HPP

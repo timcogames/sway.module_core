@@ -1,15 +1,11 @@
 #ifndef SWAY_CORE_VERSION_HPP
 #define SWAY_CORE_VERSION_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/defines.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#include <string>
-#include <utility>  // std::move
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
 /**
  * \~english @brief Class for storing version information.
@@ -75,7 +71,6 @@ private:
   std::string extra_;  //!< \~english Additional characters. \~russian Дополнительные символы.
 };
 
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_VERSION_HPP

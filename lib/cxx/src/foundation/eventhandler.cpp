@@ -1,9 +1,7 @@
 #include <sway/core/foundation/eventable.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(foundation)
+namespace sway::core {
 
 EMSCRIPTEN_BINDING_BEGIN(EventHandler)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
@@ -16,15 +14,13 @@ emscripten::class_<EventHandler>("EventHandler")
 #endif
 EMSCRIPTEN_BINDING_END()
 
-EventHandler::EventHandler(EventablePtr_t receiver)
+EventHandler::EventHandler(EventableTypedefs::Ptr_t receiver)
     : receiver_(receiver) {}
 
-auto EventHandler::getSender() const -> EventablePtr_t { return sender_; }
+auto EventHandler::getSender() const -> EventableTypedefs::Ptr_t { return sender_; }
 
-void EventHandler::setSender(EventablePtr_t sender) { sender_ = sender; }
+void EventHandler::setSender(EventableTypedefs::Ptr_t sender) { sender_ = sender; }
 
-auto EventHandler::getReceiver() const -> EventablePtr_t { return receiver_; }
+auto EventHandler::getReceiver() const -> EventableTypedefs::Ptr_t { return receiver_; }
 
-NS_END()  // namespace foundation
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core

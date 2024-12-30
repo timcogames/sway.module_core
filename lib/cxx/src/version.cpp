@@ -1,7 +1,6 @@
 #include <sway/core/version.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
 Version::Version() {
   major_ = minor_ = patch_ = GLOB_DONT_CARE;
@@ -43,5 +42,4 @@ auto Version::compare(const Version &version) const -> i32_t {
   return 0;
 }
 
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core

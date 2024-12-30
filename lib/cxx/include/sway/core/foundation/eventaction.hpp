@@ -1,12 +1,11 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENTACTION_HPP
 #define SWAY_CORE_FOUNDATION_EVENTACTION_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
-
-#include <memory>
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)

@@ -6,6 +6,10 @@
 
 namespace sway::core {
 
+namespace DictionaryValueTypedefs {
+using Container_t = std::unordered_map<std::string, std::string>;
+}  // namespace DictionaryValueTypedefs
+
 class AtomicIdGenBuffer;
 namespace AtomicIdGenBufferTypedefs {
 using DisposeFunc_t = std::function<void(bool)>;

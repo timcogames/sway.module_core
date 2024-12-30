@@ -18,10 +18,7 @@ struct TimePoint {
   TimePoint(f64_t val)
       : raw(val) {}
 
-  [[nodiscard]]
-  auto since(const TimePoint &rhs) const -> Duration {
-    return {raw - rhs.raw};
-  }
+  [[nodiscard]] auto since(const TimePoint &rhs) const -> Duration { return {raw - rhs.raw}; }
 
   void operator+=(const Duration &rhs) { raw += rhs.getRaw(); }
 

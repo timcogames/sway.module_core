@@ -21,7 +21,6 @@
 #include <sway/core/detail/valuedata.hpp>
 #include <sway/core/detail/valuedatatypes.hpp>
 #include <sway/core/events/eventbus.hpp>
-#include <sway/core/events/eventhandler.hpp>
 #include <sway/core/events/models/messagebody.hpp>
 #include <sway/core/events/models/messagebodyserializable.hpp>
 #include <sway/core/events/models/messagecontent.hpp>
@@ -39,7 +38,6 @@
 #include <sway/core/foundation/object.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/core/foundation/objectclassname.hpp>
-#include <sway/core/foundation/types.hpp>
 #include <sway/core/foundation/uniqueable.hpp>
 #include <sway/core/generic/io/filesource.hpp>
 #include <sway/core/generic/io/path.hpp>

@@ -1,12 +1,11 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENTDATA_HPP
 #define SWAY_CORE_FOUNDATION_EVENTDATA_HPP
 
-#include <sway/core/events/models/io/serializer.hpp>
+#include <sway/_stdafx.hpp>
+#include <sway/core/events/models/io/serialization/deserializer.hpp>
+#include <sway/core/events/models/io/serialization/serializer.hpp>
 #include <sway/core/events/models/messagebodyserializable.hpp>
 #include <sway/core/events/models/messagecontent.hpp>
-#include <sway/core/foundation/objectclassmetadata.hpp>
-#include <sway/keywords.hpp>
-#include <sway/types.hpp>
 
 namespace sway::core {
 
@@ -16,7 +15,7 @@ struct EventData : public MessageContent, public Serializer, public Deserializer
 public:
   static auto create(MessageFormat format, DeserializerTypedefs::SharedPtr_t deserializer) -> EventData {
     EventData data;
-    data.format = MessageFormat::JSON;
+    data.format = format;
     data.body = std::make_shared<MessageBodySerializable>(deserializer);
     return data;
   }

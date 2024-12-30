@@ -1,11 +1,9 @@
 #ifndef SWAY_CORE_MISC_HASH_HPP
 #define SWAY_CORE_MISC_HASH_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
-
-#include <cstddef>
-#include <functional>
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)

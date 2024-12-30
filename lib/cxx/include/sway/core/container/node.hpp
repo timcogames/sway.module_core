@@ -5,6 +5,7 @@
 #include <sway/core/container/_typedefs.hpp>
 #include <sway/core/container/nodeindex.hpp>
 #include <sway/core/container/nodeutil.hpp>
+#include <sway/core/events/_typedefs.hpp>
 #include <sway/core/foundation/declareeventmacros.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventable.hpp>
@@ -23,7 +24,7 @@ namespace sway::core {
 
 class Node : public std::enable_shared_from_this<Node>,
              public util::Visitable,
-             public foundation::Eventable,
+             public Eventable,
              public Emscripteable<Node> {
   DECLARE_EVENT(EVT_ADDED, NodeAdded)
   DECLARE_EVENT(EVT_REMOVED, NodeRemoved)

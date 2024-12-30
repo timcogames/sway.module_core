@@ -5,7 +5,6 @@
 #include <sway/core/misc/_typedefs.hpp>
 #include <sway/core/misc/atomicidgen.hpp>
 #include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/numeraltypes.hpp>
 
 namespace sway::core {

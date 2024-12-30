@@ -8,8 +8,7 @@
 #  endif
 #endif
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
 EMSCRIPTEN_BINDING_BEGIN(Hierarchy)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
@@ -61,5 +60,4 @@ auto getRootNode(HierarchyTypedefs::JsPtr_t hierarchy) -> NodeTypedefs::JsPtr_t 
 
 #endif
 
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core

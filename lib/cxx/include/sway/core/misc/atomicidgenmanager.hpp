@@ -6,7 +6,6 @@
 #include <sway/core/misc/atomicidgenbuffer.hpp>
 #include <sway/defines.hpp>
 #include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/numeraltypes.hpp>
 
 namespace sway::core {

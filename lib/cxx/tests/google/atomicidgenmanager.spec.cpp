@@ -4,8 +4,6 @@
 
 #include <gtest/gtest.h>
 
-#include <functional>
-
 NS_SHORT_SWAY()
 NS_SHORT(core);
 

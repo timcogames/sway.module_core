@@ -3,18 +3,9 @@
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/foundation/_typedefs.hpp>
 #include <sway/core/foundation/context.hpp>
+#include <sway/core/foundation/eventable.hpp>
+#include <sway/core/foundation/eventhandler.hpp>
 #include <sway/core/util/traverseractions.hpp>
-
-#include <algorithm>  // std::remove_if
-#include <functional>
-
-#ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/emscripten.h>
-#  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_BINDINGS
-#    include <emscripten/bind.h>
-#  endif
-#endif
 
 namespace sway::core {
 
@@ -76,7 +67,7 @@ void Node::addChildNode(NodeTypedefs::SharedPtr_t child) {
 
   auto *eventdata = new NodeEventData();
   eventdata->nodeidx = child->getNodeIndex();
-  emit(EVT_ADDED, new NodeAddedEvent(0, eventdata), [&](foundation::EventHandler::Ptr_t handler) {
+  emit(EVT_ADDED, std::make_unique<NodeAddedEvent>(0, eventdata), [&](EventHandlerTypedefs::Ptr_t handler) {
     return static_cast<NodeTypedefs::Ptr_t>(handler->getSender())->getNodeIndex().equal(getNodeIndex());
   });
 }
@@ -111,7 +102,8 @@ void Node::removeChildNode(NodeTypedefs::SharedPtr_t child) {
 
   auto *eventdata = new NodeEventData();
   eventdata->nodeidx = child->getNodeIndex();
-  emit(EVT_REMOVED, new NodeRemovedEvent(0, eventdata), [&](foundation::EventHandler::Ptr_t) { return true; });
+  emit(
+      EVT_REMOVED, std::make_unique<NodeRemovedEvent>(0, eventdata), [&](EventHandlerTypedefs::Ptr_t) { return true; });
 }
 
 void Node::recursiveRemoveChainLinks(NodeTypedefs::SharedPtr_t child, NodeIndex parentIdx) {

@@ -1,12 +1,10 @@
 #ifndef SWAY_CORE_FOUNDATION_EVENACTIONMAPPER_HPP
 #define SWAY_CORE_FOUNDATION_EVENACTIONMAPPER_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/foundation/eventapplier.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/namespacemacros.hpp>
-
-#include <iostream>
-#include <string>
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)

@@ -1,13 +1,5 @@
 #include <sway/inlinemacros.hpp>
 
-#ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/emscripten.h>
-#  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_BINDINGS
-#    include <emscripten/bind.h>
-#  endif
-#endif
-
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
 
 class EventWrapper : public emscripten::wrapper<Event> {
@@ -20,11 +12,11 @@ public:
 
   MTHD_VIRTUAL_OVERRIDE(const std::string &getClassname() const) { return call<const std::string &>("getClassname"); }
 
-  MTHD_VIRTUAL_OVERRIDE(auto id() const -> std::string) { return call<std::string>("id"); }
+  MTHD_VIRTUAL_OVERRIDE(auto getId() const -> std::string) { return call<std::string>("getId"); }
 
-  MTHD_VIRTUAL_OVERRIDE(auto type() const -> u32_t) { return call<u32_t>("type"); }
+  MTHD_VIRTUAL_OVERRIDE(auto getType() const -> u32_t) { return call<u32_t>("getType"); }
 
-  MTHD_VIRTUAL_OVERRIDE(auto data() const -> EventDataTypedefs::Ptr_t) { return call<EventDataTypedefs::Ptr_t const>("data"); }
+  MTHD_VIRTUAL_OVERRIDE(auto getData() const -> EventDataTypedefs::Ptr_t) { return call<EventDataTypedefs::Ptr_t const>("getData"); }
 };
 
 #endif
@@ -35,8 +27,8 @@ FORCE_INLINE void Event::bindEmscriptenClass() {
       .allow_subclass<EventWrapper>("EventWrapper")
       .function("getSuperclass", &Event::getSuperclass, emscripten::allow_raw_pointers(), emscripten::pure_virtual())
       .function("getClassname", &Event::getClassname, emscripten::pure_virtual())
-      .function("id", &Event::id, emscripten::pure_virtual())
-      .function("type", &Event::type, emscripten::pure_virtual())
-      .function("data", &Event::data, emscripten::allow_raw_pointers(), emscripten::pure_virtual());
+      .function("getId", &Event::getId, emscripten::pure_virtual())
+      .function("getType", &Event::getType, emscripten::pure_virtual())
+      .function("getData", &Event::getData, emscripten::allow_raw_pointers(), emscripten::pure_virtual());
 #endif
 }

@@ -3,7 +3,6 @@
 
 #include <sway/_stdafx.hpp>
 #include <sway/defines.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/numeraltypes.hpp>
 
 namespace sway::core {

@@ -1,17 +1,10 @@
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeeventdata.hpp>
+#include <sway/core/foundation/eventable.hpp>
 #include <sway/core/foundation/eventhandlerimpl.hpp>
 #include <sway/keywords.hpp>
 
 #include <gtest/gtest.h>
-
-#include <initializer_list>
-#include <memory>
-#include <sstream>  // std::stringstream
-#include <stdlib.h>  // srand
-#include <string>
-#include <time.h>  // time
-#include <vector>
 
 #define IDX_INTERN_A (0)
 #define IDX_INTERN_B (1)
@@ -22,7 +15,7 @@ const std::initializer_list<std::string> InternNameList = {"intern_a", "intern_b
 NS_SHORT_SWAY()
 NS_SHORT(core)
 
-class NodeTest : public testing::Test, public core::foundation::Eventable {
+class NodeTest : public testing::Test, public Eventable {
 public:
 #pragma region "Ctors/Dtor"
 
@@ -51,9 +44,9 @@ public:
     root_->addChildNode(supervisor_);
   }
 
-  void handleAddNode(core::foundation::Event::Ptr_t evt) {}
+  auto handleAddNode(const EventTypedefs::UniquePtr_t &evt) -> bool { return true; }
 
-  void handleRemoveNode(core::foundation::Event::Ptr_t evt) {}
+  auto handleRemoveNode(const EventTypedefs::UniquePtr_t &evt) -> bool { return true; }
 
   void addDoctorToSupervisor() {
     doctor_ = std::make_shared<Node>();

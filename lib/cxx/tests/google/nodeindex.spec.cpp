@@ -5,9 +5,6 @@
 
 #include <gtest/gtest.h>
 
-#include <sstream>  // std::stringstream
-#include <vector>
-
 #define NODE_IDX_SUPERVISOR (0)
 #define NODE_IDX_WORKER (1)
 

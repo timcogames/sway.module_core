@@ -3,26 +3,20 @@
 
 #include <sway/core/foundation/object.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
-#include <sway/core/foundation/types.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
-#include <sway/pointermacros.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(foundation)
+namespace sway::core {
 
 class Subsystem : public Object {
   DECLARE_CLASS_METADATA(Subsystem, Object)
-  DECLARE_PTR_ALIASES(Subsystem)
 
 public:
 #pragma region "Ctors/Dtor"
 
   Subsystem() = default;
 
-  explicit Subsystem(ContextPtr_t ctx)
+  explicit Subsystem(ContextTypedefs::Ptr_t ctx)
       : Object(ctx) {}
 
 #pragma endregion
@@ -38,8 +32,6 @@ public:
 #pragma endregion
 };
 
-NS_END()  // namespace foundation
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_FOUNDATION_SUBSYSTEM_HPP

@@ -1,11 +1,10 @@
 #ifndef SWAY_CORE_TIME_CHRONOUNITS_HPP
 #define SWAY_CORE_TIME_CHRONOUNITS_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/inlinemacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
-
-#include <map>
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)

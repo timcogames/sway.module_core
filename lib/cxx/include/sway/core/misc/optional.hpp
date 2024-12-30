@@ -1,20 +1,10 @@
 #ifndef SWAY_CORE_MISC_OPTIONAL_HPP
 #define SWAY_CORE_MISC_OPTIONAL_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
-
-#include <optional>
-#include <string>
-
-#ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/emscripten.h>
-#  include <emscripten/val.h>
-#  ifdef EMSCRIPTEN_USE_BINDINGS
-#    include <emscripten/bind.h>
-#  endif
-#endif
 
 NS_BEGIN_SWAY()
 NS_BEGIN(core)
