@@ -1,9 +1,6 @@
 #ifndef SWAY_CORE_MISC_DESIGN_ENABLEABLE_HPP
 #define SWAY_CORE_MISC_DESIGN_ENABLEABLE_HPP
 
-#include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
-
 namespace sway::core {
 
 /**

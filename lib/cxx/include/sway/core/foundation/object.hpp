@@ -19,12 +19,12 @@ public:
   Object()
       : context_(nullptr) {}
 
-  explicit Object(ContextTypedefs::Ptr_t ctx)
+  explicit Object(typedefs::context::Ptr_t ctx)
       : context_(ctx) {}
 
 #pragma endregion
 
-  auto getContext() -> ContextTypedefs::Ptr_t { return context_; }
+  auto getContext() -> typedefs::context::Ptr_t { return context_; }
 
   template <class TYPE>
   auto getContext() -> TYPE * {
@@ -32,7 +32,7 @@ public:
   }
 
 private:
-  ContextTypedefs::Ptr_t context_;
+  typedefs::context::Ptr_t context_;
 };
 
 }  // namespace sway::core

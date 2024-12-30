@@ -16,7 +16,7 @@ public:
 
   Subsystem() = default;
 
-  explicit Subsystem(ContextTypedefs::Ptr_t ctx)
+  explicit Subsystem(typedefs::context::Ptr_t ctx)
       : Object(ctx) {}
 
 #pragma endregion

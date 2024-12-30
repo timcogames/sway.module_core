@@ -1,14 +1,10 @@
 #ifndef SWAY_CORE_DETAIL_ENUMCLASSBITSET_HPP
 #define SWAY_CORE_DETAIL_ENUMCLASSBITSET_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/detail/enumutils.hpp>
-#include <sway/namespacemacros.hpp>
 
-#include <bitset>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(detail)
+namespace sway::core {
 
 template <typename ENUM>
 class EnumClassBitset {
@@ -32,8 +28,6 @@ private:
   std::bitset<toBase(ENUM::Latest)> flags_;
 };
 
-NS_END()  // namespace detail
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_DETAIL_ENUMCLASSBITSET_HPP

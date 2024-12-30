@@ -8,8 +8,7 @@
 namespace sway::core {
 
 /**
- * \~english @brief Class for storing version information.
- * \~russian @brief Класс для хранения информации о версии.
+ * @brief \~english Class for storing version information. \~russian Класс для хранения информации о версии.
  */
 class Version {
 public:

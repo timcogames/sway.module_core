@@ -5,11 +5,8 @@
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/emscriptenmacros.hpp>
-#include <sway/namespacemacros.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(foundation)
+namespace sway::core {
 
 template <typename TYPE>
 class EventAction {
@@ -18,13 +15,11 @@ public:
 
 #pragma region "Pure virtual methods"
 
-  PURE_VIRTUAL(void apply(std::shared_ptr<TYPE> evt));
+  virtual void apply(std::shared_ptr<TYPE> evt) = 0;
 
 #pragma endregion
 };
 
-NS_END()  // namespace foundation
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_FOUNDATION_EVENTACTION_HPP

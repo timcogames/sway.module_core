@@ -2,11 +2,8 @@
 #define SWAY_CORE_UTIL_TRAVERSERACTIONS_HPP
 
 #include <sway/enumeratormacros.hpp>
-#include <sway/namespacemacros.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(util)
+namespace sway::core {
 
 /**
  * @enum TraverserAction::Enum
@@ -30,8 +27,6 @@ NS_BEGIN(util)
 
 DECLARE_ENUM(TraverserAction, CONTINUE, PRUNE, ABORT)
 
-NS_END()  // namespace util
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_UTIL_TRAVERSERACTIONS_HPP

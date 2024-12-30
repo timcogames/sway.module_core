@@ -12,8 +12,7 @@
 namespace sway::core {
 
 /**
- * \~english @brief Base interface for all event types.
- * \~russian @brief Базовый интерфейс для описания всех типов событий.
+ * @brief \~english Base interface for all event types. \~russian Базовый интерфейс для описания всех типов событий.
  */
 class Event {
   DECLARE_SUPERCLASS()
@@ -37,7 +36,7 @@ public:
 #pragma endregion
 
   template <typename RESULT>
-  auto getConcreteData() {
+  auto getConcreteData() const {
     return *static_cast<RESULT *>(getData());
   }
 };

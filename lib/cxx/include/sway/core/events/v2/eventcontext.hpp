@@ -5,6 +5,11 @@
 #include <sway/core/events/models/messagemetadata.hpp>
 #include <sway/core/foundation/eventdata.hpp>
 
+/**
+ * @namespace sway::core::v2
+ * @brief \~english Namespace for version 2 of the event system. \~russian Пространство имен версии 2 системы событий.
+ */
+
 namespace sway::core {
 namespace v2 {
 

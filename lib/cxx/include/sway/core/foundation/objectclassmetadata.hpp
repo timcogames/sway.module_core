@@ -14,30 +14,29 @@ class ObjectClassMetadata {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-  ObjectClassMetadata(lpcstr_t classname, const ObjectClassMetadata *superclass)
+  ObjectClassMetadata(lpcstr_t classname, ObjectClassMetadataTypedefs::ConstPtr_t superclass)
       : superclass_(superclass)
       , classname_(classname) {}
 
-  [[nodiscard]] auto getSuperclass() const -> const ObjectClassMetadata * { return superclass_; }
+  [[nodiscard]] auto getSuperclass() const -> ObjectClassMetadataTypedefs::ConstPtr_t { return superclass_; }
 
   [[nodiscard]] auto getClassname() const -> const std::string & { return classname_; }
 
 private:
-  const ObjectClassMetadata *superclass_;
+  ObjectClassMetadataTypedefs::ConstPtr_t superclass_;
   std::string classname_;
 };
 
 }  // namespace sway::core
 
 // clang-format off
+
 #define DECLARE_SUPERCLASS()                                                                                \
 public:                                                                                                     \
   static auto getObjectClassMetadata() -> const sway::core::ObjectClassMetadata * { return 0; } \
   PURE_VIRTUAL(auto getSuperclass() const -> const sway::core::ObjectClassMetadata *);          \
   PURE_VIRTUAL(auto getClassname() const -> const std::string &);
-// clang-format on
 
-// clang-format off
 #define DECLARE_CLASS_METADATA(OBJ_CLASS, OBJ_SUPER)                                                             \
 public:                                                                                                               \
   typedef OBJ_SUPER super_t;                                                                                     \
@@ -51,6 +50,7 @@ public:                                                                         
   MTHD_VIRTUAL_OVERRIDE(auto getClassname() const -> const std::string &) {                                                   \
     return getObjectClassMetadata()->getClassname();                                                                  \
   }
+
 // clang-format on
 
 #endif  // SWAY_CORE_FOUNDATION_OBJECTCLASSMETADATA_HPP

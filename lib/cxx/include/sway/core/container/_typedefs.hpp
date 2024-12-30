@@ -1,17 +1,29 @@
 #ifndef SWAY_CORE_CONTAINER_TYPEDEFS_HPP
 #define SWAY_CORE_CONTAINER_TYPEDEFS_HPP
 
-#include <sway/namespacemacros.hpp>
-#include <sway/pointermacros.hpp>
-
-#include <optional>
+#include <sway/_stdafx.hpp>
+#include <sway/numeraltypes.hpp>
 
 namespace sway::core {
+
+class NodeData;
+namespace NodeDataTypedefs {}  // namespace NodeDataTypedefs
+
+#ifdef EMSCRIPTEN_PLATFORM
+using NodeDataList = emscripten::val;
+#else
+using NodeDataList = std::vector<NodeData>;
+#endif
 
 class NodeIndex;
 namespace NodeIndexTypedefs {
 using Optional_t = std::optional<NodeIndex>;
 }  // namespace NodeIndexTypedefs
+
+namespace NodeIndexChainTypedefs {
+using Item_t = i32_t;
+using Container_t = std::vector<Item_t>;
+}  // namespace NodeIndexChainTypedefs
 
 class Node;
 namespace NodeTypedefs {
@@ -31,16 +43,5 @@ using JsPtr_t = intptr_t;
 }  // namespace HierarchyTypedefs
 
 }  // namespace sway::core
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(container)
-
-DECLARE_PTR_TYPES(Node)
-DECLARE_PTR_TYPES(Hierarchy)
-
-NS_END()  // namespace container
-NS_END()  // namespace core
-NS_END()  // namespace sway
 
 #endif  // SWAY_CORE_CONTAINER_TYPEDEFS_HPP

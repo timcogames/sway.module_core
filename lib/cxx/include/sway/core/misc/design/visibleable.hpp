@@ -1,9 +1,6 @@
 #ifndef SWAY_CORE_MISC_DESIGN_VISIBLEABLE_HPP
 #define SWAY_CORE_MISC_DESIGN_VISIBLEABLE_HPP
 
-#include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
-
 namespace sway::core {
 
 /**

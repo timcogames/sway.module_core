@@ -1,9 +1,9 @@
 #ifndef SWAY_CORE_TIME_CLOCK_HPP
 #define SWAY_CORE_TIME_CLOCK_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/time/duration.hpp>
 #include <sway/core/time/timepoint.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
 #ifdef EMSCRIPTEN_PLATFORM
@@ -13,9 +13,7 @@
 using namespace std::chrono;
 #endif
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(time)
+namespace sway::core {
 
 class Clock {
 public:
@@ -31,8 +29,6 @@ public:
   static auto since(const TimePoint &pnt) -> Duration { return Clock::now().since(pnt); }
 };
 
-NS_END()  // namespace time
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_TIME_CLOCK_HPP

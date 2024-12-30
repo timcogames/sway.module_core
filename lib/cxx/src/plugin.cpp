@@ -1,11 +1,10 @@
 #include <sway/core/plugin.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
-Plugin::Plugin(const generic::io::Path &filepath, int flags) {
+Plugin::Plugin(const Path &filepath, int flags) {
   if (filepath.isEmpty()) {
-    throw runtime::exceptions::ArgumentNullException("filepath");
+    throw ArgumentNullException("filepath");
   }
 
   handle_ = dlopen(filepath.toString().c_str(), flags);
@@ -13,7 +12,7 @@ Plugin::Plugin(const generic::io::Path &filepath, int flags) {
 #ifdef EMSCRIPTEN_PLATFORM
     EM_ASM({ console.error(UTF8ToString($0)); }, dlerror());
 #else
-    throw runtime::exceptions::LibraryNotFoundException(filepath.getFilename(), dlerror());
+    throw LibraryNotFoundException(filepath.getFilename(), dlerror());
 #endif
   }
 }
@@ -28,5 +27,4 @@ void Plugin::initialize(PluginFunctionSet *functions) {
   this->getMethod<PluginInitializeFunc_t>("pluginInitialize").call(functions);
 }
 
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core

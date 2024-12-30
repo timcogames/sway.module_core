@@ -10,7 +10,7 @@ namespace sway::core {
 
 /**
  * @class EventHandler
- * @brief Описывает обработчик для события.
+ * @brief \~english Describes an event handler. \~russian Описывает обработчик для события.
  */
 class EventHandler {
   DECLARE_EMSCRIPTEN_BINDING()
@@ -41,19 +41,25 @@ public:
   void setEventName(const std::string &name) { eventname_ = name; }
 
 protected:
-  EventableTypedefs::Ptr_t sender_ = nullptr;  // Отправитель события.
-  EventableTypedefs::Ptr_t receiver_;  // Слушатель события.
-  std::string uniqueid_;  // Уникальный идентификатор, который будет связан с функцией обработчика событий.
-  std::string eventname_;  // Название события.
+  EventableTypedefs::Ptr_t sender_ = nullptr;  //!< \~english Sender of the event. \~russian Отправитель события.
+  EventableTypedefs::Ptr_t receiver_;  //!< \~english Event receiver. \~russian Слушатель события.
+  std::string uniqueid_;  //!< \~english Unique identifier. \~russian Уникальный идентификатор.
+  std::string eventname_;  //!< \~english Event name. \~russian Название события.
 };
 
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
+
+/// @cond internal
+
 class EventHandlerWrapper : public emscripten::wrapper<EventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(EventHandlerWrapper);
 
   virtual auto invoke(const EventTypedefs::UniquePtr_t &event) -> bool override { return call<bool>("invoke", evt); }
 };
+
+/// @endcond
+
 #endif
 
 }  // namespace sway::core

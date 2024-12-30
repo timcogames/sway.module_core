@@ -1,12 +1,7 @@
 #ifndef SWAY_CORE_BINDING_CALLBACKMACROS_HPP
 #define SWAY_CORE_BINDING_CALLBACKMACROS_HPP
 
-#include <sway/namespacemacros.hpp>
-#include <sway/types.hpp>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(foundation)
+namespace sway::core {
 
 #define RUN_CALLBACK(FUNC, ARGS...) \
   [=]() {                           \
@@ -16,8 +11,6 @@ NS_BEGIN(foundation)
     FUNC(ARGS);                     \
   }()
 
-NS_END()  // namespace foundation
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_BINDING_CALLBACKMACROS_HPP

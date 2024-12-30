@@ -29,24 +29,24 @@ Node::Node()
 
 Node::~Node() { children_.clear(); }
 
-auto Node::traverse(util::TraverserPtr_t traverser) -> u32_t {
-  switch (static_cast<util::TraverserAction::Enum>(traverser->visit(this))) {
-    case util::TraverserAction::Enum::CONTINUE:
+auto Node::traverse(TraverserTypedefs::Ptr_t traverser) -> u32_t {
+  switch (static_cast<TraverserAction::Enum>(traverser->visit(this))) {
+    case TraverserAction::Enum::CONTINUE:
       for (const auto &node : getChildNodes()) {
-        if (node->traverse(traverser) == detail::toBase(util::TraverserAction::Enum::ABORT)) {
-          return detail::toBase(util::TraverserAction::Enum::ABORT);
+        if (node->traverse(traverser) == toBase(TraverserAction::Enum::ABORT)) {
+          return toBase(TraverserAction::Enum::ABORT);
         }
       }
 
-    case util::TraverserAction::Enum::PRUNE:
-      return detail::toBase(util::TraverserAction::Enum::CONTINUE);
+    case TraverserAction::Enum::PRUNE:
+      return toBase(TraverserAction::Enum::CONTINUE);
 
-    case util::TraverserAction::Enum::ABORT:
+    case TraverserAction::Enum::ABORT:
     default:
       break;
   }
 
-  return detail::toBase(util::TraverserAction::Enum::NONE);
+  return toBase(TraverserAction::Enum::NONE);
 }
 
 void Node::addChildNode(NodeTypedefs::SharedPtr_t child) {
@@ -148,7 +148,7 @@ auto Node::getChildAt(int targetIdx) const -> NodeTypedefs::OptionalSharedPtr_t 
 
 auto Node::getNumOfChildNodes() const -> int { return static_cast<int>(children_.size()); }
 
-void Node::setNodeIndex(const NodeIndex::ChainVec_t &chain, int last) { idx_.setChain(chain, last); }
+void Node::setNodeIndex(const NodeIndexChainTypedefs::Container_t &chain, int last) { idx_.setChain(chain, last); }
 
 auto Node::getNodeIndex() -> NodeIndex { return idx_; }
 
@@ -176,7 +176,7 @@ void Node::setAsRoot() { idx_.setAsRoot(); }
 
 auto Node::equal(NodeTypedefs::SharedPtr_t other) -> bool { return other->chainEqual(idx_.getChain()); }
 
-auto Node::chainEqual(NodeIndex::ChainVec_t other) -> bool { return idx_.chainEqual(other); }
+auto Node::chainEqual(NodeIndexChainTypedefs::Container_t other) -> bool { return idx_.chainEqual(other); }
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 

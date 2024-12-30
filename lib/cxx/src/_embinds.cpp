@@ -8,8 +8,6 @@
 #include <sway/core/misc/optional.hpp>
 
 using namespace sway;
-using namespace sway::core::misc;
-using namespace sway::core::container;
 
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
 

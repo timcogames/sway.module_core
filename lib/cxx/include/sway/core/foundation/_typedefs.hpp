@@ -17,14 +17,14 @@ template <class TYPE> using OptionalSharedPtr_t = std::optional<std::shared_ptr<
 // clang-format on
 
 class Context;
-namespace ContextTypedefs {
+namespace typedefs::context {
 using Ptr_t = Context *;
-}  // namespace ContextTypedefs
+}  // namespace typedefs::context
 
 class Object;
-namespace ObjectTypedefs {
+namespace typedefs::object {
 using Ptr_t = Object *;
-}  // namespace ObjectTypedefs
+}  // namespace typedefs::object
 
 class ObjectClassMetadata;
 namespace ObjectClassMetadataTypedefs {

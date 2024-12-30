@@ -1,15 +1,10 @@
 #ifndef SWAY_CORE_RUNTIME_EXCEPTION_HPP
 #define SWAY_CORE_RUNTIME_EXCEPTION_HPP
 
-#include <sway/namespacemacros.hpp>
+#include <sway/_stdafx.hpp>
 #include <sway/types.hpp>
 
-#include <exception>  // std::exception
-#include <string>  // std::string
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(runtime)
+namespace sway::core {
 
 class Exception : public std::exception {
 public:
@@ -18,17 +13,12 @@ public:
 
   virtual ~Exception() throw() = default;
 
-  [[nodiscard]]
-  virtual auto what() const throw() -> lpcstr_t {
-    return message_.c_str();
-  }
+  [[nodiscard]] virtual auto what() const throw() -> lpcstr_t { return message_.c_str(); }
 
 private:
-  std::string message_;  // Сообщение об ошибке.
+  std::string message_;  //!< \~english Error message. \~russian Сообщение об ошибке.
 };
 
-NS_END()  // namespace runtime
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_RUNTIME_EXCEPTION_HPP

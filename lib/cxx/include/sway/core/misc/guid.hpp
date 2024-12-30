@@ -4,7 +4,6 @@
 #include <sway/_stdafx.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/inlinemacros.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
 constexpr sway::i32_t UUID_NBR_OF_GROUPS = 4;

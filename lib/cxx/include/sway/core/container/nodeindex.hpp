@@ -2,7 +2,7 @@
 #define SWAY_CORE_CONTAINER_NODEINDEX_HPP
 
 #include <sway/_stdafx.hpp>
-#include <sway/containermacros.hpp>
+#include <sway/core/container/_typedefs.hpp>
 #include <sway/defines.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/types.hpp>
@@ -17,14 +17,14 @@ constexpr i32_t NODEIDX_ROOT_DEPTH = 1;
 
 class NodeIndex {
   DECLARE_EMSCRIPTEN_BINDING()
-  DECLARE_VECTOR(Chain, i32_t)
 
 public:
 #pragma region "Static methods"
 
-  static auto chainToStr(const NodeIndex::ChainVec_t &chain) -> std::string;
+  static auto chainToStr(const NodeIndexChainTypedefs::Container_t &chain) -> std::string;
 
-  static auto getMatchDepth(const NodeIndex::ChainVec_t &lhs, const NodeIndex::ChainVec_t &rhs) -> int;
+  static auto getMatchDepth(
+      const NodeIndexChainTypedefs::Container_t &lhs, const NodeIndexChainTypedefs::Container_t &rhs) -> int;
 
   /**
    * \~english @brief Returns the last segment in the target node index.
@@ -33,9 +33,9 @@ public:
    * \~russian @brief Возвращает последний сегмент в индексе целевого узла.
    * @param[in] target Целевой индекс узла.
    *
-   * @return NodeIndex::ChainItemIndex_t
+   * @return NodeIndexChainTypedefs::Item_t
    */
-  static auto getLastSegment(const NodeIndex &target) -> NodeIndex::ChainItemIndex_t {
+  static auto getLastSegment(const NodeIndex &target) -> NodeIndexChainTypedefs::Item_t {
     return target.getIdxAt(target.getDepth() - 1);
   }
 
@@ -45,9 +45,9 @@ public:
 
   NodeIndex();
 
-  explicit NodeIndex(const NodeIndex::ChainVec_t &data);
+  explicit NodeIndex(const NodeIndexChainTypedefs::Container_t &data);
 
-  NodeIndex(NodeIndex parent, NodeIndex::ChainItemIndex_t idx);
+  NodeIndex(NodeIndex parent, NodeIndexChainTypedefs::Item_t idx);
 
   ~NodeIndex() = default;
 
@@ -55,24 +55,24 @@ public:
 
   void setAsRoot();
 
-  void setChain(const NodeIndex::ChainVec_t &chain, NodeIndex::ChainItemIndex_t idx);
+  void setChain(const NodeIndexChainTypedefs::Container_t &chain, NodeIndexChainTypedefs::Item_t idx);
 
-  [[nodiscard]] auto getChain() const -> NodeIndex::ChainVec_t;
+  [[nodiscard]] auto getChain() const -> NodeIndexChainTypedefs::Container_t;
 
-  [[nodiscard]] auto getParent() const -> NodeIndex::ChainVec_t;
+  [[nodiscard]] auto getParent() const -> NodeIndexChainTypedefs::Container_t;
 
   [[nodiscard]] auto getDepth() const -> int;
 
-  [[nodiscard]] auto getIdxAt(int idx) const -> NodeIndex::ChainItemIndex_t;
+  [[nodiscard]] auto getIdxAt(int idx) const -> NodeIndexChainTypedefs::Item_t;
 
   auto equal(const NodeIndex &other) -> bool;
 
-  auto chainEqual(const NodeIndex::ChainVec_t &other) -> bool;
+  auto chainEqual(const NodeIndexChainTypedefs::Container_t &other) -> bool;
 
   [[nodiscard]] auto toStr() const -> std::string;
 
 private:
-  NodeIndex::ChainVec_t chainLinks_;
+  NodeIndexChainTypedefs::Container_t chainLinks_;
 };
 
 }  // namespace sway::core

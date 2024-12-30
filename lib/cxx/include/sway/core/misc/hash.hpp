@@ -3,11 +3,8 @@
 
 #include <sway/_stdafx.hpp>
 #include <sway/inlinemacros.hpp>
-#include <sway/namespacemacros.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(misc)
+namespace sway::core {
 
 // Golden ratio constant for hashing
 #define HASH_GOLDEN_RATIO 0x9e3779b9
@@ -25,8 +22,6 @@ FORCE_INLINE auto hashValue(REST &&...rest) -> std::size_t {
   return seed;
 }
 
-NS_END()  // namespace misc
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_MISC_HASH_HPP

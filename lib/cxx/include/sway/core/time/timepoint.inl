@@ -1,9 +1,6 @@
 #include <sway/inlinemacros.hpp>
-#include <sway/namespacemacros.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(time)
+namespace sway::core {
 
 FORCE_INLINE auto operator-(const TimePoint &lhs, const TimePoint &rhs) -> Duration { return {lhs.raw - rhs.raw}; }
 
@@ -29,6 +26,4 @@ FORCE_INLINE auto operator-(const Duration &lhs, TimePoint rhs) -> TimePoint {
   return rhs;
 }
 
-NS_END()  // namespace time
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core

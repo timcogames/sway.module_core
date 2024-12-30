@@ -1,13 +1,11 @@
 #ifndef SWAY_CORE_TIME_DURATION_HPP
 #define SWAY_CORE_TIME_DURATION_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/time/chronounits.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(time)
+namespace sway::core {
 
 class Duration {
 public:
@@ -35,37 +33,20 @@ public:
 
 #pragma endregion
 
-  [[nodiscard]]
-  auto getRaw() const -> f64_t {
-    return ticks_;
-  }
+  [[nodiscard]] auto getRaw() const -> f64_t { return ticks_; }
 
-  [[nodiscard]]
-  auto asMillis() const -> f64_t {
-    return ticks_ / CHRONO_UNIT_TABLE.at(ChronoUnit::MILLIS);
-  }
+  [[nodiscard]] auto asMillis() const -> f64_t { return ticks_ / CHRONO_UNIT_TABLE.at(ChronoUnit::MILLIS); }
 
-  [[nodiscard]]
-  auto asSeconds() const -> f64_t {
-    return ticks_ / CHRONO_UNIT_TABLE.at(ChronoUnit::SECONDS);
-  }
+  [[nodiscard]] auto asSeconds() const -> f64_t { return ticks_ / CHRONO_UNIT_TABLE.at(ChronoUnit::SECONDS); }
 
-  [[nodiscard]]
-  auto asMinutes() const -> f64_t {
-    return ticks_ / CHRONO_UNIT_TABLE.at(ChronoUnit::MINUTES);
-  }
+  [[nodiscard]] auto asMinutes() const -> f64_t { return ticks_ / CHRONO_UNIT_TABLE.at(ChronoUnit::MINUTES); }
 
-  [[nodiscard]]
-  auto asHours() const -> f64_t {
-    return ticks_ / CHRONO_UNIT_TABLE.at(ChronoUnit::HOURS);
-  }
+  [[nodiscard]] auto asHours() const -> f64_t { return ticks_ / CHRONO_UNIT_TABLE.at(ChronoUnit::HOURS); }
 
 private:
   f64_t ticks_;
 };
 
-NS_END()  // namespace time
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_TIME_DURATION_HPP

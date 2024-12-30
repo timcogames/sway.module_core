@@ -1,14 +1,11 @@
 #ifndef SWAY_CORE_DETAIL_VALUEDATATYPES_HPP
 #define SWAY_CORE_DETAIL_VALUEDATATYPES_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/enumeratormacros.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#include <string>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
 // clang-format off
 DECLARE_ENUM(ValueDataType, 
@@ -25,8 +22,6 @@ DECLARE_ENUM(ValueDataType,
   STRING
 )
 // clang-format on
-
-NS_BEGIN(detail)
 
 template <typename TYPE>
 struct ValueDataTypeToEnum {};
@@ -50,8 +45,6 @@ DECLARE_VALUEDATA_TYPE_RELATSP(ValueDataType::Enum::STRING, std::string)
 
 #undef DECLARE_VALUEDATA_TYPE_RELATSP
 
-NS_END()  // namespace detail
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_DETAIL_VALUEDATATYPES_HPP

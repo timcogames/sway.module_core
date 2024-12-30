@@ -1,14 +1,10 @@
 #ifndef SWAY_CORE_DETAIL_ENUMUTILS_HPP
 #define SWAY_CORE_DETAIL_ENUMUTILS_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/inlinemacros.hpp>
-#include <sway/namespacemacros.hpp>
 
-#include <type_traits>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(detail)
+namespace sway::core {
 
 // clang-format off
 template <typename DATA_TYPE> using IsEnum_t = std::is_enum<DATA_TYPE>;
@@ -32,8 +28,6 @@ constexpr FORCE_INLINE auto toEnum(DATA_TYPE val) noexcept
   return static_cast<ENUM>(val);
 }
 
-NS_END()  // namespace detail
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_DETAIL_ENUMUTILS_HPP

@@ -3,12 +3,9 @@
 
 #include <sway/_stdafx.hpp>
 #include <sway/inlinemacros.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(misc)
+namespace sway::core {
 
 FORCE_INLINE auto toLowerCase(const std::string &str) -> std::string {
   std::string result = str;
@@ -62,8 +59,6 @@ FORCE_INLINE auto toBoolean(lpcstr_t str, bool def) -> bool {
   return toLowerCase(str) == "true" ? true : false;
 }
 
-NS_END()  // namespace misc
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_MISC_STRING_HPP

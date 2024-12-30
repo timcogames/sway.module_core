@@ -1,13 +1,11 @@
 #ifndef SWAY_CORE_UTIL_OBSERVABLE_HPP
 #define SWAY_CORE_UTIL_OBSERVABLE_HPP
 
+#include <sway/_stdafx.hpp>
+#include <sway/core/util/_typedefs.hpp>
 #include <sway/core/util/observer.hpp>
-#include <sway/namespacemacros.hpp>
-#include <sway/types.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(util)
+namespace sway::core {
 
 class Observable {
 public:
@@ -19,18 +17,18 @@ public:
 
 #pragma endregion
 
-  void registerObserver(Observer::Ptr_t obs);
+  void registerObserver(ObserverTypedefs::Ptr_t obs);
 
-  void removeObserver(Observer::Ptr_t obs);
+  void removeObserver(ObserverTypedefs::Ptr_t obs);
 
   void notify();
 
 private:
-  ObserverArray_t observers_;  // Массив наблюдателей, которые слушают этот наблюдаемый объект.
+  ObserverTypedefs::Container_t
+      observers_; /*!< \~english Array of observers listening to this observable object. \~russian Массив наблюдателей,
+                     которые слушают этот наблюдаемый объект. */
 };
 
-NS_END()  // namespace util
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_UTIL_OBSERVABLE_HPP

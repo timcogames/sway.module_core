@@ -22,10 +22,7 @@
 
 namespace sway::core {
 
-class Node : public std::enable_shared_from_this<Node>,
-             public util::Visitable,
-             public Eventable,
-             public Emscripteable<Node> {
+class Node : public std::enable_shared_from_this<Node>, public Visitable, public Eventable, public Emscripteable<Node> {
   DECLARE_EVENT(EVT_ADDED, NodeAdded)
   DECLARE_EVENT(EVT_REMOVED, NodeRemoved)
   DECLARE_EMSCRIPTEN_BINDING()
@@ -52,7 +49,7 @@ public:
 
 #pragma region "Overridden Visitable methods"
 
-  virtual auto traverse(util::TraverserPtr_t traverser) -> u32_t override;
+  virtual auto traverse(TraverserTypedefs::Ptr_t traverser) -> u32_t override;
 
 #pragma endregion
 
@@ -68,7 +65,7 @@ public:
 
   [[nodiscard]] auto getNumOfChildNodes() const -> i32_t;
 
-  void setNodeIndex(const NodeIndex::ChainVec_t &chain, int last);
+  void setNodeIndex(const NodeIndexChainTypedefs::Container_t &chain, int last);
 
   auto getNodeIndex() -> NodeIndex;
 
@@ -80,7 +77,7 @@ public:
 
   auto equal(NodeTypedefs::SharedPtr_t other) -> bool;
 
-  auto chainEqual(NodeIndex::ChainVec_t other) -> bool;
+  auto chainEqual(NodeIndexChainTypedefs::Container_t other) -> bool;
 
   void setAsRoot();
 

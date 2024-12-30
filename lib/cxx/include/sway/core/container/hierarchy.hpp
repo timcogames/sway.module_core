@@ -8,18 +8,10 @@
 #include <sway/core/container/nodeindex.hpp>
 #include <sway/coremacros.hpp>
 #include <sway/emscriptenmacros.hpp>
-#include <sway/namespacemacros.hpp>
-#include <sway/pointermacros.hpp>
 #include <sway/types.hpp>
 #include <sway/visibilitymacros.hpp>
 
 namespace sway::core {
-
-#ifdef EMSCRIPTEN_PLATFORM
-using NodeDataList = emscripten::val;
-#else
-using NodeDataList = std::vector<NodeData>;
-#endif
 
 class Hierarchy : public Emscripteable<Hierarchy> {
   DECLARE_EMSCRIPTEN_BINDING()

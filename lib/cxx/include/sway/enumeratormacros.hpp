@@ -4,7 +4,6 @@
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/defines.hpp>
 #include <sway/inlinemacros.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/numeraltypes.hpp>
 
 #include <iterator>  // size
@@ -25,7 +24,7 @@
     static TYPE __VA_ARGS__; return std::size({__VA_ARGS__}) + 1;                               \
   }();                                                                                          \
                                                                                                 \
-  static constexpr sway::u32_t NAME##Latest = sway::core::detail::toBase(NAME::Enum::Latest);
+  static constexpr sway::u32_t NAME##Latest = sway::core::toBase(NAME::Enum::Latest);
 // clang-format on
 
 #define DECLARE_ENUM(NAME, ...) DECLARE_ENUM_EXT(NAME, sway::u32_t, GLOB_IDX_INITIAL, __VA_ARGS__)

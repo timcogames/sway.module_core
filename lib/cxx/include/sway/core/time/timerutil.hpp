@@ -1,15 +1,11 @@
 #ifndef SWAY_CORE_TIME_TIMERUTIL_HPP
 #define SWAY_CORE_TIME_TIMERUTIL_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/misc/format.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#include <string>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(time)
+namespace sway::core {
 
 struct TimerUtil {
   static auto toStr(f64_t ticks) -> std::string {
@@ -20,13 +16,11 @@ struct TimerUtil {
     ticks /= 60;
     u32_t hours = ticks;
 
-    // return misc::format("%d:%02d:%02d", hours, minutes, seconds);
-    return misc::format("%02d:%02d", minutes, seconds);
+    // return format("%d:%02d:%02d", hours, minutes, seconds);
+    return format("%02d:%02d", minutes, seconds);
   }
 };
 
-NS_END()  // namespace time
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_TIME_TIMERUTIL_HPP

@@ -7,6 +7,7 @@
 #include <vector>
 
 // clang-format off
+
 #define CONTAINER_TYPE_(PRE, TYPE) PRE##TYPE##_t
 
 #define CONTAINER_ITEM_INDEX_TYPE_(PRE) PRE##ItemIndex_t
@@ -23,6 +24,7 @@
 public:                                                \
   using CONTAINER_ITEM_INDEX_TYPE_(PRE) = i32_t;       \
   using CONTAINER_TYPE_(PRE, Vec) = std::vector<TYPE>;
+
 // clang-format on
 
 #endif  // SWAY_CONTAINERMACROS_HPP

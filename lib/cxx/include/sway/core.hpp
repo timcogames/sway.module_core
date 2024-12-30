@@ -3,8 +3,7 @@
 
 /**
  * @namespace sway::core
- * \~russian @brief Корневое пространство имен данной библиотеки.
- * \~english @brief Root namespace of this library.
+ * @brief \~english Root namespace of this library. \~russian Корневое пространство имен данной библиотеки.
  */
 
 #include <sway/core/binding/function.hpp>
@@ -47,7 +46,6 @@
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
 #include <sway/core/util/traverseractions.hpp>
-#include <sway/pointermacros.hpp>
 // #include <sway/core/misc/optional.hpp>
 #include <sway/core/misc/_design.hpp>
 #include <sway/core/misc/atomicidgen.hpp>
@@ -72,7 +70,6 @@
 #include <sway/core/util/observable.hpp>
 #include <sway/core/util/observer.hpp>
 #include <sway/core/util/traverser.hpp>
-#include <sway/core/util/typedefs.hpp>
 #include <sway/core/util/visitable.hpp>
 #include <sway/core/version.hpp>
 #include <sway/defines.hpp>

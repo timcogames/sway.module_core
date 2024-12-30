@@ -1,37 +1,29 @@
 #ifndef SWAY_CORE_PLUGIN_HPP
 #define SWAY_CORE_PLUGIN_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/binding/function.hpp>
 #include <sway/core/generic/io/path.hpp>
 #include <sway/core/plugininfo.hpp>
 #include <sway/core/runtime/exceptions/argumentnullexception.hpp>
 #include <sway/core/runtime/exceptions/librarynotfoundexception.hpp>
 #include <sway/core/runtime/exceptions/symbolnotfoundexception.hpp>
-#include <sway/namespacemacros.hpp>
 
-#include <dlfcn.h>  // dlopen, dlclose, dlsym
-#include <string>
-
-#ifdef EMSCRIPTEN_PLATFORM
-#  include <emscripten/emscripten.h>
-#endif
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
 struct PluginFunctionSet {
   virtual ~PluginFunctionSet() = default;
 };
 
 using DlibHandle_t = void *;
-using PluginGetInfoFunc_t = binding::TFunction<PluginInfo()>;
-using PluginInitializeFunc_t = binding::TFunction<void(PluginFunctionSet *)>;
+using PluginGetInfoFunc_t = TFunction<PluginInfo()>;
+using PluginInitializeFunc_t = TFunction<void(PluginFunctionSet *)>;
 
 class Plugin {
 public:
 #pragma region "Ctors/Dtor"
 
-  Plugin(const generic::io::Path &filepath, int flags);
+  Plugin(const Path &filepath, int flags);
 
   ~Plugin();
 
@@ -45,12 +37,12 @@ public:
 
   template <typename CALLBACK>
   auto getMethod(lpcstr_t name) const -> CALLBACK {
-    auto func = (core::binding::ProcAddress_t)dlsym(handle_, name);
+    auto func = (ProcAddress_t)dlsym(handle_, name);
     if (!func) {
 #ifdef EMSCRIPTEN_PLATFORM
       EM_ASM({ console.error(UTF8ToString($0)); }, dlerror());
 #else
-      throw runtime::exceptions::SymbolNotFoundException(name, dlerror());
+      throw SymbolNotFoundException(name, dlerror());
 #endif
     }
 
@@ -61,7 +53,6 @@ private:
   DlibHandle_t handle_;
 };
 
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_PLUGIN_HPP

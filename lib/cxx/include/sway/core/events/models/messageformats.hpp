@@ -5,7 +5,14 @@
 
 namespace sway::core {
 
-enum class MessageFormat : u32_t { NONE = 0, PLAIN_TEXT, JSON, XML, HTML, Latest };
+enum class MessageFormat : u32_t {
+  NONE = 0,  //!< \~english None. \~russian Ничего.
+  PLAIN_TEXT,  //!< \~english Plain text. \~russian Обычный текст.
+  JSON,  //!< \~english JSON format. \~russian Формат JSON.
+  XML,  //!< \~english XML format. \~russian Формат XML.
+  HTML,  //!< \~english HTML format. \~russian Формат HTML.
+  Latest  //!< \~english Latest element. \~russian Последний элемент.
+};
 
 }  // namespace sway::core
 

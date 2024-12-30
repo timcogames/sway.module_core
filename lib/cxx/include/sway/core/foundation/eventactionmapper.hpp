@@ -4,11 +4,8 @@
 #include <sway/_stdafx.hpp>
 #include <sway/core/foundation/eventapplier.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
-#include <sway/namespacemacros.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(foundation)
+namespace sway::core {
 
 class ActionMapper {
 public:
@@ -43,8 +40,6 @@ private:
   }
 };
 
-NS_END()  // namespace foundation
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_FOUNDATION_EVENACTIONMAPPER_HPP

@@ -3,12 +3,9 @@
 
 #include <sway/_stdafx.hpp>
 #include <sway/inlinemacros.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(time)
+namespace sway::core {
 
 enum class ChronoUnit : u32_t { MILLIS, SECONDS, MINUTES, HOURS, Latest };
 
@@ -21,8 +18,6 @@ static FORCE_INLINE std::map<ChronoUnit, f64_t> CHRONO_UNIT_TABLE {{
 }};
 // clang-format on
 
-NS_END()  // namespace time
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_TIME_CHRONOUNITS_HPP

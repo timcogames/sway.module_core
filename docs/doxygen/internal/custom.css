@@ -1,0 +1,33 @@
+/** Globals */
+
+:root {
+  --main-bg: #fbf8f3;
+  --main-fg: #9f846b;
+  --accent-font-color: #de774d;
+}
+
+body {
+  background-color: var(--main-bg);
+  color: var(--main-fg);
+  margin: 0;
+}
+
+body, table, div, p, dl {
+	font: 13px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
+}
+
+/** Header */
+
+#projectname {
+	color: var(--accent-font-color);
+  font-size: 24px;
+	font-weight: bold;
+}
+
+#projectbrief {
+  font-size: 0.9em;
+}
+
+#projectnumber {
+  font-size: 0.5em;
+}

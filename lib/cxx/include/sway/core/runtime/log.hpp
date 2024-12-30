@@ -1,18 +1,12 @@
 #ifndef SWAY_CORE_RUNTIME_LOG_HPP
 #define SWAY_CORE_RUNTIME_LOG_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/inlinemacros.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#include <iostream>  // cout
-#include <string>
-#include <utility>  // forward
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(runtime)
+namespace sway::core {
 
 /**
  * \~english @brief Macro for logging into console.
@@ -26,8 +20,6 @@ FORCE_NOINLINE void LOG(const std::string &frmt, ARGS &&...args) {
   std::cout << misc::format(frmt.c_str(), std::forward<ARGS>(args)...) << std::endl;
 }
 
-NS_END()  // namespace runtime
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_RUNTIME_LOG_HPP

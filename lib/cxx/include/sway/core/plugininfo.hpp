@@ -2,26 +2,23 @@
 #define SWAY_CORE_PLUGININFO_HPP
 
 #include <sway/core/version.hpp>
-#include <sway/namespacemacros.hpp>
 
 #include <string>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
 /**
- * @brief Общедоступная информация плагина.
+ * @brief \~english Plugin information. \~russian Общедоступная информация плагина.
  */
 struct PluginInfo {
-  lpcstr_t name;  // Имя плагина.
-  lpcstr_t author;  // Автор плагина.
-  lpcstr_t description;  // Описание плагина.
-  lpcstr_t url;  // URL плагина.
-  lpcstr_t license;  // Лицензия плагина.
-  core::Version version;  // Версия плагина.
+  lpcstr_t name;  //!< \~english Plugin name. \~russian Имя плагина.
+  lpcstr_t author;  //!< \~english Plugin author. \~russian Автор плагина.
+  lpcstr_t description;  //!< \~english Plugin description. \~russian Описание плагина.
+  lpcstr_t url;  //!< \~english Plugin URL. \~russian URL плагина.
+  lpcstr_t license;  //!< \~english Plugin license. \~russian Лицензия плагина.
+  core::Version version;  //!< \~english Plugin version. \~russian Версия плагина.
 };
 
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_PLUGININFO_HPP

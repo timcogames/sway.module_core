@@ -61,7 +61,7 @@ public:
       : BaseEvent(EVT_CREATED, userdata) {}
 };
 
-class MyModelState : public foundation::EventActionMapper<foundation::EventAction<MyCreatedEvent>> {
+class MyModelState : public EventActionMapper<EventAction<MyCreatedEvent>> {
 public:
 #pragma region "Ctors/Dtor"
 
@@ -88,7 +88,7 @@ public:
 #pragma region "Ctors/Dtor"
 
   MyModel() {
-    applier_ = std::make_shared<foundation::EventApplier>();
+    applier_ = std::make_shared<EventApplier>();
     state_ = std::make_shared<MyModelState>();
     state_->registerEvents(applier_.get());
   }
@@ -102,7 +102,7 @@ public:
   auto getState() -> std::shared_ptr<MyModelState> { return state_; }
 
 private:
-  std::shared_ptr<foundation::EventApplier> applier_;
+  std::shared_ptr<EventApplier> applier_;
   std::shared_ptr<MyModelState> state_;
 };
 

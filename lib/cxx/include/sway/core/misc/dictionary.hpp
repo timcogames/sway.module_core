@@ -37,7 +37,7 @@ public:
     return (iter != variables_.end()) ? iter->second : undef;
   }
 
-  void addInteger(const std::string &name, i32_t val) { addString(name, misc::toString(val)); }
+  void addInteger(const std::string &name, i32_t val) { addString(name, toString(val)); }
 
   auto getIntegerOrDefault(const std::string &name, i32_t def) -> i32_t {
     const auto &value = getString(name);
@@ -45,10 +45,10 @@ public:
       return def;
     }
 
-    return misc::toInteger(value.c_str(), def);
+    return toInteger(value.c_str(), def);
   }
 
-  void addFloat(const std::string &name, f32_t val) { addString(name, misc::toString(val)); }
+  void addFloat(const std::string &name, f32_t val) { addString(name, toString(val)); }
 
   auto getFloatOrDefault(const std::string &name, f32_t def) -> f32_t {
     const auto &value = getString(name);
@@ -56,7 +56,7 @@ public:
       return def;
     }
 
-    return misc::toFloat(value.c_str(), def);
+    return toFloat(value.c_str(), def);
   }
 
   void addBoolean(const std::string &name, bool val) { addString(name, val ? "true" : "false"); }
@@ -67,7 +67,7 @@ public:
       return def;
     }
 
-    return misc::toBoolean(value.c_str(), def);
+    return toBoolean(value.c_str(), def);
   }
 
 private:

@@ -3,12 +3,9 @@
 
 #include <sway/_stdafx.hpp>
 #include <sway/inlinemacros.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(misc)
+namespace sway::core {
 
 FORCE_INLINE auto format(lpcstr_t const fmt, ...) -> std::string {
   auto temp = std::vector<s8_t>();
@@ -30,8 +27,6 @@ FORCE_INLINE auto format(lpcstr_t const fmt, ...) -> std::string {
   return std::string(temp.data(), size);
 }
 
-NS_END()  // namespace misc
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_MISC_FORMAT_HPP

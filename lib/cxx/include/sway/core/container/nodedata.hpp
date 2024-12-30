@@ -1,21 +1,17 @@
 #ifndef SWAY_CORE_CONTAINER_NODEDATA_HPP
 #define SWAY_CORE_CONTAINER_NODEDATA_HPP
 
+#include <sway/_stdafx.hpp>
+#include <sway/core/container/_typedefs.hpp>
 #include <sway/core/container/nodeindex.hpp>
-#include <sway/namespacemacros.hpp>
 
-#include <string>
-#include <vector>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
 struct NodeData {
-  std::vector<NodeIndex::ChainItemIndex_t> nodeidx;
+  NodeIndexChainTypedefs::Container_t nodeidx;
   std::string name;
 };
 
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_CONTAINER_NODEDATA_HPP

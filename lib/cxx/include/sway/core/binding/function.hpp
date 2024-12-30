@@ -1,15 +1,11 @@
 #ifndef SWAY_CORE_BINDING_FUNCTION_HPP
 #define SWAY_CORE_BINDING_FUNCTION_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/binding/procaddress.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#include <utility>  // std::forward
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(binding)
+namespace sway::core {
 
 template <typename>
 class TFunction;
@@ -43,8 +39,6 @@ protected:
   ProcAddress_t invoker_;  // Указатель на функции.
 };
 
-NS_END()  // namespace binding
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_BINDING_FUNCTION_HPP

@@ -1,19 +1,16 @@
 #ifndef SWAY_CORE_DETAIL_VALUEDATA_HPP
 #define SWAY_CORE_DETAIL_VALUEDATA_HPP
 
+#include <sway/_stdafx.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/detail/valuedatatypes.hpp>
 #include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
 #include <sway/types.hpp>
 
-#include <string>
-
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
+namespace sway::core {
 
 struct ValueData {
-  PURE_VIRTUAL(auto type() const -> u32_t);
+  virtual auto type() const -> u32_t = 0;
 };
 
 template <typename VALUE_TYPE>
@@ -25,12 +22,11 @@ struct GenericValueData : public ValueData {
 
 #pragma region "Overridden ValueData methods"
 
-  MTHD_VIRTUAL_OVERRIDE(auto type() const -> u32_t) { return detail::toBase(detail::ValueDataTypeToEnum<VALUE_TYPE>::value); }
+  virtual auto type() const -> u32_t override { return toBase(ValueDataTypeToEnum<VALUE_TYPE>::value); }
 
 #pragma endregion
 };
 
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_DETAIL_VALUEDATA_HPP

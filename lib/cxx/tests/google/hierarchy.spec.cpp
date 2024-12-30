@@ -26,12 +26,12 @@ public:
   HierarchyTypedefs::Ptr_t hierarchy_;
 };
 
-class HierarchyChildTraverser : public util::Traverser {
+class HierarchyChildTraverser : public Traverser {
 public:
 #pragma region "Overridden Traverser methods"
 
-  MTHD_VIRTUAL_OVERRIDE(auto visit([[maybe_unused]] util::Visitable::Ptr_t node) -> u32_t) {
-    return detail::toBase(util::TraverserAction::Enum::CONTINUE);
+  MTHD_VIRTUAL_OVERRIDE(auto visit([[maybe_unused]] VisitableTypedefs::Ptr_t node) -> u32_t) {
+    return toBase(TraverserAction::Enum::CONTINUE);
   }
 
 #pragma endregion

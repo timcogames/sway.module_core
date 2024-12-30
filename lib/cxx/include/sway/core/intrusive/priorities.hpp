@@ -2,16 +2,11 @@
 #define SWAY_CORE_INTRUSIVE_PRIORITIES_HPP
 
 #include <sway/enumeratormacros.hpp>
-#include <sway/namespacemacros.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(intrusive)
+namespace sway::core {
 
 DECLARE_ENUM(Priority, LOW = 10, NORMAL = 20, HIGH = 30)
 
-NS_END()  // namespace intrusive
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_INTRUSIVE_PRIORITIES_HPP

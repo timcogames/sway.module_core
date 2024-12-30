@@ -1,1 +1,7 @@
-\page Добро пожаловать в документацию
+/** @mainpage Documentation
+
+@anchor mainpage
+
+Welcome to the SWAY documentation.
+
+*/

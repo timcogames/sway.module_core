@@ -25,17 +25,17 @@ public:
       , type_(type)
       , data_(data) {}
 
-  ~TestEvent() = default;
+  ~TestEvent() override = default;
 
 #pragma endregion
 
 #pragma region "Implementation Event methods"
 
-  [[nodiscard]] virtual auto getId() const -> std::string { return id_; }
+  [[nodiscard]] auto getId() const -> std::string { return id_; }
 
-  [[nodiscard]] virtual auto getType() const -> u32_t { return type_; }
+  [[nodiscard]] auto getType() const -> u32_t { return type_; }
 
-  [[nodiscard]] virtual auto getData() const -> EventDataTypedefs::Ptr_t { return data_; }
+  [[nodiscard]] auto getData() const -> EventDataTypedefs::Ptr_t { return data_; }
 
 #pragma endregion
 

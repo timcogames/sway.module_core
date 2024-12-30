@@ -6,11 +6,8 @@
 #include <sway/core/foundation/eventaction.hpp>
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/emscriptenmacros.hpp>
-#include <sway/namespacemacros.hpp>
 
-NS_BEGIN_SWAY()
-NS_BEGIN(core)
-NS_BEGIN(foundation)
+namespace sway::core {
 
 class EventApplier {
 public:
@@ -46,8 +43,6 @@ private:
   std::map<std::string, std::function<void(EventTypedefs::SharedPtr_t)>> appliers_;
 };
 
-NS_END()  // namespace foundation
-NS_END()  // namespace core
-NS_END()  // namespace sway
+}  // namespace sway::core
 
 #endif  // SWAY_CORE_FOUNDATION_EVENTAPPLIER_HPP

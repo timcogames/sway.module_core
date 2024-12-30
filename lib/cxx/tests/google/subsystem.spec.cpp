@@ -11,7 +11,7 @@ class MySubsystem : public Subsystem {
 public:
 #pragma region "Ctors/Dtor"
 
-  explicit MySubsystem(ContextTypedefs::Ptr_t ctx)
+  explicit MySubsystem(typedefs::context::Ptr_t ctx)
       : Subsystem(ctx) {}
 
 #pragma endregion
@@ -37,7 +37,7 @@ public:
 
 #pragma endregion
 
-  ContextTypedefs::Ptr_t context_;
+  typedefs::context::Ptr_t context_;
 };
 
 TEST_F(ContextTest, get_subsystem) {
