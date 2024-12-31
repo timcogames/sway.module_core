@@ -17,16 +17,15 @@ public:
 
 #pragma endregion
 
-  void registerObserver(ObserverTypedefs::Ptr_t obs);
+  void addObserver(ObserverTypedefs::Ptr_t obs);
 
   void removeObserver(ObserverTypedefs::Ptr_t obs);
 
   void notify();
 
 private:
-  ObserverTypedefs::Container_t
-      observers_; /*!< \~english Array of observers listening to this observable object. \~russian Массив наблюдателей,
-                     которые слушают этот наблюдаемый объект. */
+  ObserverTypedefs::Container_t observers_; /*!< \~english Array of observers listening to this observable object.
+    \~russian Массив наблюдателей, которые слушают этот наблюдаемый объект. */
 };
 
 }  // namespace sway::core

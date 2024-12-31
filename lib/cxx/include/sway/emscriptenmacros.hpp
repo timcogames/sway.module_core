@@ -1,7 +1,9 @@
 #ifndef SWAY_EMSCRIPTENMACROS_HPP
 #define SWAY_EMSCRIPTENMACROS_HPP
 
-#include <memory>
+#include <sway/_stdafx.hpp>
+
+namespace sway::core {
 
 template <typename TYPE>
 class Emscripteable {
@@ -12,6 +14,8 @@ public:
 
   static auto toJs(const std::shared_ptr<TYPE> &ptr) -> intptr_t { return TYPE::toJs(ptr.get()); }
 };
+
+}  // namespace sway::core
 
 // clang-format off
 #define DECLARE_EMSCRIPTEN(OBJ)                                                                                    \

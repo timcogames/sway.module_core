@@ -8,6 +8,7 @@
 namespace sway::core {
 
 class Traverser;
+
 class Visitable {
 public:
 #pragma region "Ctors/Dtor"

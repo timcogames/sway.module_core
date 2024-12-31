@@ -36,7 +36,7 @@ public:
   }
 
 protected:
-  ProcAddress_t invoker_;  // Указатель на функции.
+  ProcAddress_t invoker_;  //!< \~english Pointer to functions. \~russian Указатель на функции.
 };
 
 }  // namespace sway::core

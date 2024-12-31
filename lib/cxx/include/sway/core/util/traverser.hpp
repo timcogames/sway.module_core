@@ -8,6 +8,7 @@
 namespace sway::core {
 
 class Visitable;
+
 class Traverser {
 public:
 #pragma region "Pure virtual methods"

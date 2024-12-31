@@ -29,7 +29,7 @@ public:
   [[nodiscard]] auto toString() const -> std::string;
 
 private:
-  std::string path_;  // Путь к файлу или каталогу.
+  std::string path_;  //!< \~english Path to file or directory. \~russian Путь к файлу или каталогу.
 };
 
 }  // namespace sway::core

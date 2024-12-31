@@ -1,14 +1,26 @@
-/** Globals */
+/** 
+ * Globals 
+ */
 
 :root {
-  --main-bg: #fbf8f3;
-  --main-fg: #9f846b;
-  --accent-font-color: #de774d;
+  /* Brand colors */
+
+  --accent-color: #b54;
+
+  /* Reset colors */
+
+  --page-background-color: #fbf8f3;
+  --page-foreground-color: #9f846b;
+  --page-link-color: var(--accent-color);
+  --page-visited-link-color: var(--accent-color);
+
+  --index-even-item-bg-color: #fbf8f3;
+  --index-odd-item-bg-color: #f2efe9;
+  --memdecl-background-color: #ece7de;
+  --memdecl-separator-color: #fff;
 }
 
 body {
-  background-color: var(--main-bg);
-  color: var(--main-fg);
   margin: 0;
 }
 
@@ -16,10 +28,12 @@ body, table, div, p, dl {
 	font: 13px "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, Verdana, sans-serif;
 }
 
-/** Header */
+/** 
+ * Header 
+ */
 
 #projectname {
-	color: var(--accent-font-color);
+	color: var(--accent-color);
   font-size: 24px;
 	font-weight: bold;
 }

@@ -32,7 +32,7 @@ public:
   auto findEventHandler(const std::string &evtname) -> EventHandlerTypedefs::Ptr_t;
 
 protected:
-  EventHandlerTypedefs::Container_t eventHandlers_;  // Обработчики событий.
+  EventHandlerTypedefs::Container_t eventHandlers_;  //!< \~english Event handlers. \~russian Обработчики событий.
 };
 
 }  // namespace sway::core

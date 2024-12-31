@@ -2,7 +2,6 @@
 #define SWAY_CORE_GENERIC_IO_FILESOURCE_HPP
 
 #include <sway/_stdafx.hpp>
-#include <sway/keywords.hpp>
 
 namespace sway::core {
 
@@ -18,14 +17,14 @@ public:
 
 #pragma region "Pure virtual methods"
 
-  PURE_VIRTUAL(auto loadFromStream(std::ifstream &source) -> void *);
+  virtual auto loadFromStream(std::ifstream &source) -> void * = 0;
 
 #pragma endregion
 
   [[nodiscard]] auto isFileOpened() const -> bool;
 
 protected:
-  bool opened_;  // Открыт ли файл в данный момент.
+  bool opened_;  //!< \~english Is file opened. \~russian Открыт ли файл в данный момент.
 };
 
 }  // namespace sway::core

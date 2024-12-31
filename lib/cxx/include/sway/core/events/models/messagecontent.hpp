@@ -5,9 +5,6 @@
 #include <sway/core/events/models/_typedefs.hpp>
 #include <sway/core/events/models/messagebody.hpp>
 #include <sway/core/events/models/messageformats.hpp>
-#include <sway/core/foundation/uniqueable.hpp>
-#include <sway/core/misc/dictionary.hpp>
-#include <sway/core/util/date/timestamp.hpp>
 
 namespace sway::core {
 

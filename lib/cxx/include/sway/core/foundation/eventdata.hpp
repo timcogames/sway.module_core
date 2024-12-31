@@ -6,10 +6,11 @@
 #include <sway/core/events/models/io/serialization/serializer.hpp>
 #include <sway/core/events/models/messagebodyserializable.hpp>
 #include <sway/core/events/models/messagecontent.hpp>
+#include <sway/emscriptenmacros.hpp>
 
 namespace sway::core {
 
-struct EventData : public MessageContent, public Serializer, public Deserializer {
+class EventData : public MessageContent, public Serializer, public Deserializer {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
