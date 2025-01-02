@@ -1,5 +1,6 @@
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeeventdata.hpp>
+#include <sway/core/container/nodeindexrepresentation.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/foundation/_typedefs.hpp>
 #include <sway/core/foundation/context.hpp>
@@ -24,7 +25,7 @@ emscripten::class_<Node>("Node")
 EMSCRIPTEN_BINDING_END()
 
 Node::Node()
-    : idx_(NodeIndex())
+    : index_(NodeIndex())
     , parent_({}) {}
 
 Node::~Node() { children_.clear(); }
@@ -52,13 +53,14 @@ auto Node::traverse(TraverserTypedefs::Ptr_t traverser) -> u32_t {
 void Node::addChildNode(NodeTypedefs::SharedPtr_t child) {
   auto childParentNode = child->getParentNode();
   if (childParentNode) {
-    printf("%s %s\n", childParentNode->get()->getNodeIndex().toStr().c_str(), "Node alread has parent");
+    printf("%s %s\n", Representation<NodeIndex>::get(childParentNode->get()->getNodeIndex()).c_str(),
+        "Node alread has parent");
     return;
   }
 
   child->setParentNode(weak_from_this());
 
-  child->setNodeIndex(idx_.getChain(), getNumOfChildNodes());
+  child->setNodeIndex(index_.getChain(), getNumOfChildNodes());
   for (const auto &childNode : child->getChildNodes()) {
     recursiveAddChainLinks(childNode, child->getNodeIndex());
   }
@@ -148,9 +150,9 @@ auto Node::getChildAt(int targetIdx) const -> NodeTypedefs::OptionalSharedPtr_t 
 
 auto Node::getNumOfChildNodes() const -> int { return static_cast<int>(children_.size()); }
 
-void Node::setNodeIndex(const NodeIndexChainTypedefs::Container_t &chain, int last) { idx_.setChain(chain, last); }
+void Node::setNodeIndex(const NodeIndexChainTypedefs::Container_t &chain, int last) { index_.setChain(chain, last); }
 
-auto Node::getNodeIndex() -> NodeIndex { return idx_; }
+auto Node::getNodeIndex() -> NodeIndex { return index_; }
 
 void Node::setParentNode(NodeTypedefs::WeakPtr_t parent) { parent_ = parent; }
 
@@ -172,11 +174,11 @@ auto Node::getParentNodeByDepth(int depth) -> NodeTypedefs::SharedPtr_t {
   return node;
 }
 
-void Node::setAsRoot() { idx_.setAsRoot(); }
+void Node::setAsRoot() { index_.setAsRoot(); }
 
-auto Node::equal(NodeTypedefs::SharedPtr_t other) -> bool { return other->chainEqual(idx_.getChain()); }
+auto Node::equal(NodeTypedefs::SharedPtr_t other) -> bool { return other->chainEqual(index_.getChain()); }
 
-auto Node::chainEqual(NodeIndexChainTypedefs::Container_t other) -> bool { return idx_.chainEqual(other); }
+auto Node::chainEqual(NodeIndexChainTypedefs::Container_t other) -> bool { return index_.chainEqual(other); }
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 

@@ -17,12 +17,12 @@ template <class TYPE> using OptionalSharedPtr_t = std::optional<std::shared_ptr<
 // clang-format on
 
 /**
- * @defgroup foundation The foundation group
+ * @defgroup foundation The Foundation group
  * @brief \~english Definition of various types. \~russian Определение различных типов.
  */
 
 /**
- * @defgroup context The context typedefs
+ * @defgroup context The Context typedefs
  * @ingroup foundation
  * @brief \~english Definition of context types. \~russian Определение типов контекста.
  */
@@ -30,7 +30,7 @@ template <class TYPE> using OptionalSharedPtr_t = std::optional<std::shared_ptr<
 class Context;
 
 /**
- * @defgroup object The object typedefs
+ * @defgroup object The Object typedefs
  * @ingroup foundation
  * @brief \~english Definition of object types. \~russian Определение типов объекта.
  */

@@ -1,6 +1,7 @@
 #include <sway/core/container/hierarchy.hpp>
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeindex.hpp>
+#include <sway/core/container/nodeindexrepresentation.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/util/traverser.hpp>
 #include <sway/core/util/traverseractions.hpp>
@@ -40,17 +41,17 @@ public:
 TEST_F(HierarchyTest, set_root_node) {
   auto root = std::make_shared<Node>();
   hierarchy_->setRootNode(root);
-  ASSERT_STREQ(hierarchy_->getRootNode()->getNodeIndex().toStr().c_str(), "[-1]");
+  ASSERT_STREQ(Representation<NodeIndex>::get(hierarchy_->getRootNode()->getNodeIndex()).c_str(), "[-1]");
 }
 
 TEST_F(HierarchyTest, add_child_node) {
   auto child1 = std::make_shared<Node>();
   hierarchy_->getRootNode()->addChildNode(child1);
-  ASSERT_STREQ(child1->getNodeIndex().toStr().c_str(), "[-1, 0]");
+  ASSERT_STREQ(Representation<NodeIndex>::get(child1->getNodeIndex()).c_str(), "[-1, 0]");
 
   auto child2 = std::make_shared<Node>();
   hierarchy_->getRootNode()->addChildNode(child2);
-  ASSERT_STREQ(child2->getNodeIndex().toStr().c_str(), "[-1, 1]");
+  ASSERT_STREQ(Representation<NodeIndex>::get(child2->getNodeIndex()).c_str(), "[-1, 1]");
 }
 
 TEST_F(HierarchyTest, find_node) {
@@ -58,5 +59,5 @@ TEST_F(HierarchyTest, find_node) {
   hierarchy_->getRootNode()->addChildNode(child);
 
   auto found = hierarchy_->findNode(hierarchy_->getRootNode(), NodeIndex(std::vector<int>({-1, 0})));
-  ASSERT_STREQ(found->get()->getNodeIndex().toStr().c_str(), "[-1, 0]");
+  ASSERT_STREQ(Representation<NodeIndex>::get(found->get()->getNodeIndex()).c_str(), "[-1, 0]");
 }

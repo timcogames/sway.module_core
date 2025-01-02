@@ -7,7 +7,14 @@
 NS_SHORT_SWAY()
 NS_SHORT(core)
 
-TEST(NewEvent, get_context) {
-  auto event = v2::Event(v2::EventContext(EventData(), MessageMetadata()));
-  auto eventContext = event.getContext();
+TEST(Event_v2, get_context) {
+  auto eventData = EventData();
+  auto eventContext = v2::EventContext(eventData, MessageMetadata());
+  auto event = v2::Event(eventContext);
+
+  auto ctx = event.getContext();
+  auto data = ctx.getEventData();
+  auto meta = ctx.getMessageMetadata();
+
+  std::cout << meta.getUniqueId().value() << std::endl;
 }

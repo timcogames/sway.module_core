@@ -1,5 +1,6 @@
 #include <sway/core/container/node.hpp>
 #include <sway/core/container/nodeindex.hpp>
+#include <sway/core/container/nodeindexrepresentation.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 
@@ -42,7 +43,7 @@ TEST_F(NodeIndexTest, equality) {
 TEST_F(NodeIndexTest, to_str) {
   std::stringstream stream;
   stream << "[" << NODEIDX_ROOT << ", " << NODE_IDX_SUPERVISOR << ", " << NODE_IDX_WORKER << "]";
-  ASSERT_STREQ(worker_.toStr().c_str(), stream.str().c_str());
+  ASSERT_STREQ(Representation<NodeIndex>::get(worker_).c_str(), stream.str().c_str());
 }
 
 TEST_F(NodeIndexTest, get_match_depth) {

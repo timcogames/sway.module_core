@@ -21,17 +21,11 @@ emscripten::class_<NodeIndex>("NodeIndex")
     .function("getChain", &NodeIndex::getChain)
     .function("getParent", &NodeIndex::getParent, emscripten::allow_raw_pointers())
     .function("getDepth", &NodeIndex::getDepth)
-    .function("getIdxAt", &NodeIndex::getIdxAt)
-    .function("toStr", &NodeIndex::toStr);
+    .function("getIndexAt", &NodeIndex::getIndexAt)
+    // .function("toStr", &NodeIndex::toStr)
+    ;
 #endif
 EMSCRIPTEN_BINDING_END()
-
-auto NodeIndex::chainToStr(const NodeIndexChainTypedefs::Container_t &chain) -> std::string {
-  std::ostringstream oss;
-  std::copy(chain.begin(), chain.end() - 1, std::ostream_iterator<int>(oss, ", "));
-  oss << "[" << chain.back() << "]";
-  return oss.str();
-}
 
 auto NodeIndex::getMatchDepth(
     const NodeIndexChainTypedefs::Container_t &lhs, const NodeIndexChainTypedefs::Container_t &rhs) -> int {
@@ -81,24 +75,12 @@ auto NodeIndex::getParent() const -> NodeIndexChainTypedefs::Container_t {
 
 auto NodeIndex::getDepth() const -> int { return (int)chainLinks_.size(); }
 
-auto NodeIndex::getIdxAt(int idx) const -> NodeIndexChainTypedefs::Item_t { return chainLinks_[idx]; }
+auto NodeIndex::getIndexAt(int idx) const -> NodeIndexChainTypedefs::Item_t { return chainLinks_[idx]; }
 
 auto NodeIndex::equal(const NodeIndex &other) -> bool { return chainEqual(other.getChain()); }
 
 auto NodeIndex::chainEqual(const NodeIndexChainTypedefs::Container_t &other) -> bool {
   return chainLinks_.size() == other.size() && std::equal(chainLinks_.begin(), chainLinks_.end(), other.begin());
-}
-
-auto NodeIndex::toStr() const -> std::string {
-  std::string str = "[";
-  for (int i = 0; i < getDepth(); ++i) {
-    str += std::to_string(getIdxAt(i));
-    if (i < getDepth() - 1) {
-      str += ", ";
-    }
-  }
-  str += "]";
-  return str;
 }
 
 }  // namespace sway::core

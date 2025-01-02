@@ -6,8 +6,8 @@ export interface BaseIface {
   getChain(): List;
   getParent(): EmscriptenClass;
   getDepth(): number;
-  getIdxAt(idx: number): number;
-  toStr(): string;
+  getIndexAt(idx: number): number;
+  // toStr(): string;
 }
 
 export interface EmscriptenIface extends BaseIface {
@@ -24,6 +24,6 @@ export declare class EmscriptenClass implements BaseIface {
   getChain(): List;
   getParent(): EmscriptenClass;
   getDepth(): number;
-  getIdxAt(idx: number): number;
-  toStr(): string;
+  getIndexAt(idx: number): number;
+  // toStr(): string;
 }

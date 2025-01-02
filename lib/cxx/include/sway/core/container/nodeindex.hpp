@@ -21,8 +21,6 @@ class NodeIndex {
 public:
 #pragma region "Static methods"
 
-  static auto chainToStr(const NodeIndexChainTypedefs::Container_t &chain) -> std::string;
-
   static auto getMatchDepth(
       const NodeIndexChainTypedefs::Container_t &lhs, const NodeIndexChainTypedefs::Container_t &rhs) -> int;
 
@@ -36,7 +34,7 @@ public:
    * @return NodeIndexChainTypedefs::Item_t
    */
   static auto getLastSegment(const NodeIndex &target) -> NodeIndexChainTypedefs::Item_t {
-    return target.getIdxAt(target.getDepth() - 1);
+    return target.getIndexAt(target.getDepth() - 1);
   }
 
 #pragma endregion
@@ -63,13 +61,11 @@ public:
 
   [[nodiscard]] auto getDepth() const -> int;
 
-  [[nodiscard]] auto getIdxAt(int idx) const -> NodeIndexChainTypedefs::Item_t;
+  [[nodiscard]] auto getIndexAt(int idx) const -> NodeIndexChainTypedefs::Item_t;
 
   auto equal(const NodeIndex &other) -> bool;
 
   auto chainEqual(const NodeIndexChainTypedefs::Container_t &other) -> bool;
-
-  [[nodiscard]] auto toStr() const -> std::string;
 
 private:
   NodeIndexChainTypedefs::Container_t chainLinks_;

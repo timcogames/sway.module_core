@@ -30,11 +30,11 @@ auto Hierarchy::findNode(NodeTypedefs::SharedPtr_t parent, const NodeIndex &node
     -> NodeTypedefs::OptionalSharedPtr_t {
   NodeTypedefs::OptionalSharedPtr_t retrieved = parent;
   for (auto i = NODEIDX_ROOT_DEPTH; i < nodeIdx.getDepth(); ++i) {
-    if (nodeIdx.getIdxAt(i) >= retrieved->get()->getNumOfChildNodes()) {
+    if (nodeIdx.getIndexAt(i) >= retrieved->get()->getNumOfChildNodes()) {
       return std::nullopt;
     }
 
-    retrieved = retrieved->get()->getChildAt(nodeIdx.getIdxAt(i)).value();
+    retrieved = retrieved->get()->getChildAt(nodeIdx.getIndexAt(i)).value();
   }
 
   return retrieved;

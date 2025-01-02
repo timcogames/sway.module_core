@@ -2,7 +2,7 @@
 #define SWAY_CORE_MISC_DESIGN_HPP
 
 /**
- * @defgroup design Design
+ * @defgroup design The Design Group
  * @brief \~english Various helper classes. \~russian Различные вспомогательные классы.
  */
 

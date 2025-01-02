@@ -5,14 +5,12 @@
 #include <sway/core/events/models/messagemetadata.hpp>
 #include <sway/core/foundation/eventdata.hpp>
 
+namespace sway::core::v2 {
+
 /**
- * @namespace sway::core::v2
- * @brief \~english Namespace for version 2 of the event system. \~russian Пространство имен версии 2 системы событий.
+ * @brief \~english Represents the context in which the event occurred. \~russian Представляет контекст, в котором
+ *   произошло событие.
  */
-
-namespace sway::core {
-namespace v2 {
-
 class EventContext {
 public:
 #pragma region "Ctors/Dtor"
@@ -34,7 +32,6 @@ private:
   MessageMetadata meta_;
 };
 
-}  // namespace v2
-}  // namespace sway::core
+}  // namespace sway::core::v2
 
 #endif  // SWAY_CORE_EVENTS_V2_EVENTCONTEXT_HPP

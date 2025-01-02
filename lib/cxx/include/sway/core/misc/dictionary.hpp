@@ -3,7 +3,7 @@
 
 #include <sway/_stdafx.hpp>
 #include <sway/core/misc/_typedefs.hpp>
-#include <sway/core/misc/string.hpp>
+#include <sway/core/misc/string/string.hpp>
 #include <sway/keywords.hpp>
 #include <sway/types.hpp>
 

@@ -13,6 +13,7 @@
 #include <sway/core/container/nodedata.hpp>
 #include <sway/core/container/nodeeventdata.hpp>
 #include <sway/core/container/nodeindex.hpp>
+#include <sway/core/container/nodeindexrepresentation.hpp>
 #include <sway/core/container/nodeutil.hpp>
 #include <sway/core/detail/enumclassbitset.hpp>
 #include <sway/core/detail/enumutils.hpp>
@@ -53,7 +54,7 @@
 #include <sway/core/misc/atomicidgenmanager.hpp>
 #include <sway/core/misc/dictionary.hpp>
 #include <sway/core/misc/hash.hpp>
-#include <sway/core/misc/string.hpp>
+#include <sway/core/misc/string/string.hpp>
 #include <sway/core/plugin.hpp>
 #include <sway/core/plugininfo.hpp>
 #include <sway/core/runtime/exception.hpp>

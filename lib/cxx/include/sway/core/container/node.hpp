@@ -90,7 +90,7 @@ private:
 
   void recursiveRemoveChainLinks(NodeTypedefs::SharedPtr_t child, NodeIndex parentIdx);
 
-  NodeIndex idx_;
+  NodeIndex index_;
   NodeTypedefs::WeakPtr_t parent_;
   NodeTypedefs::Container_t children_;
 };
