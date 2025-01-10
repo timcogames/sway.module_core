@@ -10,8 +10,8 @@ namespace sway::core {
 
 /**
  * @class Enableable
- * @brief \~english Helper class for enabling/disabling conditional objects.
- *   \~russian Вспомогательный класс для включения/выключения условного объекта.
+ * @brief \~english Helper class for enabling/disabling conditional objects. \~russian Вспомогательный класс для
+ * включения/выключения условного объекта.
  */
 class Enableable {
 public:
@@ -25,10 +25,12 @@ public:
 #pragma endregion
 
   /**
-   * \~english @brief Enables the object and returns the previous state.
+   * \~english
+   * @brief Enables the object and returns the previous state.
    * @return true - if the object was previously disabled, false - if enabled.
    *
-   * \~russian @brief Включает объект и возвращает предыдущее состояние.
+   * \~russian
+   * @brief Включает объект и возвращает предыдущее состояние.
    * @return true - если объект ранее был выключен, false - если включен.
    *
    * @code
@@ -42,10 +44,12 @@ public:
   }
 
   /**
-   * \~english @brief Disables the object and returns the previous state.
+   * \~english
+   * @brief Disables the object and returns the previous state.
    * @return true - if the object was previously enabled, false - if disabled.
    *
-   * \~russian @brief Выключает объект и возвращает предыдущее состояние.
+   * \~russian
+   * @brief Выключает объект и возвращает предыдущее состояние.
    * @return true - если объект ранее был включен, false - если выключен.
    *
    * @code
@@ -59,10 +63,12 @@ public:
   }
 
   /**
-   * \~english @brief Checks if the object is enabled.
+   * \~english
+   * @brief Checks if the object is enabled.
    * @return true - if the object is enabled, false - if disabled.
    *
-   * \~russian @brief Проверяет, включен ли объект.
+   * \~russian
+   * @brief Проверяет, включен ли объект.
    * @return true - если объект включен, false - если выключен.
    */
   [[nodiscard]] auto isEnabled() const -> bool { return enabled_; }

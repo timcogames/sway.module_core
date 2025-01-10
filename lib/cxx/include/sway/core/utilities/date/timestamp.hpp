@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_UTIL_DATE_TIMESTAMP_HPP
-#define SWAY_CORE_UTIL_DATE_TIMESTAMP_HPP
+#ifndef SWAY_CORE_UTILITIES_DATE_TIMESTAMP_HPP
+#define SWAY_CORE_UTILITIES_DATE_TIMESTAMP_HPP
 
 #include <sway/_stdafx.hpp>
 #include <sway/types.hpp>
@@ -8,11 +8,13 @@ namespace sway::core {
 
 struct Timestamp {
   /**
-   * \~english @brief Converts timestamp to string.
+   * \~english
+   * @brief Converts timestamp to string.
    * @param[in] timestamp Time to convert.
    * @param[in] utc Convert to UTC time.
    *
-   * \~russian @brief Конвертирует время в строку.
+   * \~russian
+   * @brief Конвертирует время в строку.
    * @param[in] timestamp Время для конвертации.
    * @param[in] utc Конвертировать в UTC-время.
    *
@@ -47,4 +49,4 @@ struct Timestamp {
 
 }  // namespace sway::core
 
-#endif  // SWAY_CORE_UTIL_DATE_TIMESTAMP_HPP
+#endif  // SWAY_CORE_UTILITIES_DATE_TIMESTAMP_HPP

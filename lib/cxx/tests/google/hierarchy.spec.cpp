@@ -3,9 +3,9 @@
 #include <sway/core/container/nodeindex.hpp>
 #include <sway/core/container/nodeindexrepresentation.hpp>
 #include <sway/core/detail/enumutils.hpp>
-#include <sway/core/util/traverser.hpp>
-#include <sway/core/util/traverseractions.hpp>
-#include <sway/core/util/visitable.hpp>
+#include <sway/core/utilities/visitor/traverser.hpp>
+#include <sway/core/utilities/visitor/traverseractions.hpp>
+#include <sway/core/utilities/visitor/visitable.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
 
@@ -31,7 +31,7 @@ class HierarchyChildTraverser : public Traverser {
 public:
 #pragma region "Overridden Traverser methods"
 
-  MTHD_VIRTUAL_OVERRIDE(auto visit([[maybe_unused]] VisitableTypedefs::Ptr_t node) -> u32_t) {
+  MTHD_VIRTUAL_OVERRIDE(auto visit([[maybe_unused]] typedefs::VisitablePtr_t node) -> u32_t) {
     return toBase(TraverserAction::Enum::CONTINUE);
   }
 

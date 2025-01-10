@@ -25,10 +25,12 @@ public:
       const NodeIndexChainTypedefs::Container_t &lhs, const NodeIndexChainTypedefs::Container_t &rhs) -> int;
 
   /**
-   * \~english @brief Returns the last segment in the target node index.
+   * \~english
+   * @brief Returns the last segment in the target node index.
    * @param[in] target Target node index.
    *
-   * \~russian @brief Возвращает последний сегмент в индексе целевого узла.
+   * \~russian
+   * @brief Возвращает последний сегмент в индексе целевого узла.
    * @param[in] target Целевой индекс узла.
    *
    * @return NodeIndexChainTypedefs::Item_t

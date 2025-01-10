@@ -6,16 +6,25 @@
 #include <sway/inlinemacros.hpp>
 #include <sway/types.hpp>
 
-constexpr sway::i32_t UUID_NBR_OF_GROUPS = 4;
-constexpr std::array<sway::i32_t, UUID_NBR_OF_GROUPS> UUID_MAGIC = {8, 4, 4, 12};
-constexpr std::string_view UUID_ZERO = "00000000-0000-0000-0000-000000000000";
-
 namespace sway::core {
+
+namespace constans {
+
+constexpr std::string_view UID_BUCKET = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+constexpr i32_t UUID_MAGIC_SIZE = 4;
+constexpr std::array<i32_t, UUID_MAGIC_SIZE> UUID_MAGIC = {8, 4, 4, 12};
+
+/**
+ * @brief \~english The "nil" UUID is a UUID in which all 128 bits are set to zero. \~russian "Нулевой" UUID - UUID, в
+ * котором все 128 битов установлены в ноль.
+ */
+constexpr std::string_view UUID_MAGIC_ZERO = "00000000-0000-0000-0000-000000000000";
+
+}  // namespace constans
 
 template <std::size_t SIZE>
 FORCE_INLINE auto newGuid(const std::array<i32_t, SIZE> &format) -> std::string {
-  static const std::string bucket = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
   std::string result;
   auto iter = format.begin();
   while (iter != format.end()) {
@@ -24,7 +33,7 @@ FORCE_INLINE auto newGuid(const std::array<i32_t, SIZE> &format) -> std::string 
     }
 
     for (auto i = 0; i < *iter; ++i) {
-      result += bucket[rand() % bucket.size()];
+      result += constans::UID_BUCKET[rand() % constans::UID_BUCKET.size()];
     }
 
     ++iter;

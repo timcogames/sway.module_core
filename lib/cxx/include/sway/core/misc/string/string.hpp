@@ -2,16 +2,11 @@
 #define SWAY_CORE_MISC_STRING_HPP
 
 #include <sway/_stdafx.hpp>
+#include <sway/core/std/string/extensions/cases.hpp>
 #include <sway/inlinemacros.hpp>
 #include <sway/types.hpp>
 
 namespace sway::core {
-
-FORCE_INLINE auto toLowerCase(const std::string &str) -> std::string {
-  std::string result = str;
-  std::transform(str.cbegin(), str.cend(), result.begin(), [=](u8_t chr) { return std::tolower(chr); });
-  return result;
-}
 
 FORCE_INLINE auto toString(i32_t val) -> std::string {
   char buff[256];
@@ -56,7 +51,7 @@ FORCE_INLINE auto toBoolean(lpcstr_t str, bool def) -> bool {
     return def;
   }
 
-  return toLowerCase(str) == "true" ? true : false;
+  return toLower(str) == "true" ? true : false;
 }
 
 }  // namespace sway::core

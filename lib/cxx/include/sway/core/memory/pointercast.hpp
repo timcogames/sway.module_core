@@ -6,13 +6,15 @@
 namespace sway::core {
 
 /**
- * \~english @brief Static conversion of a smart pointer.
+ * \~english
+ * @brief Static conversion of a smart pointer.
  * @tparam TO The type to which the conversion is performed.
  * @tparam FROM The type from which to convert.
  * @param[in] ptr The pointer to convert.
  * @return std::unique_ptr<TO> Result of the conversion.
  *
- * \~russian @brief Статическое преобразование смарт-указателя.
+ * \~russian
+ * @brief Статическое преобразование смарт-указателя.
  * @tparam TO Тип, в который осуществляется преобразование.
  * @tparam FROM Тип, из которого осуществляется преобразование.
  * @param[in] ptr Указатель для преобразования.

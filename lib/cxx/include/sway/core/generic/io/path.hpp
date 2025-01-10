@@ -9,11 +9,14 @@ namespace sway::core {
 class Path {
 public:
 #pragma region "Ctors/Dtor"
+  /** \~english @name Constructor & Destructor */ /** \~russian @name Конструктор и Деструктор */
+  /** @{ */
 
   Path(const std::string &path);
 
   ~Path() = default;
 
+  /** @} */
 #pragma endregion
 
   [[nodiscard]] auto getFilename() const -> std::string;

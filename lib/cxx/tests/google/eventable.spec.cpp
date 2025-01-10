@@ -26,7 +26,7 @@ public:
 #pragma region "Ctors/Dtor"
 
   BaseEvent(u32_t type, MyEventData *data)
-      : id_(newGuid<UUID_NBR_OF_GROUPS>(UUID_MAGIC))
+      : id_(newGuid<constans::UUID_MAGIC_SIZE>(constans::UUID_MAGIC))
       , type_(type)
       , data_(data) {}
 

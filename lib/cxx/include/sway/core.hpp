@@ -2,8 +2,21 @@
 #define SWAY_CORE_HPP
 
 /**
+ * @namespace sway
+ * @brief \~english This is the root namespace for the Sway framework. To avoid prefixing every class and function call
+ * with the namespace name, the @ref Tutorial includes a <code>using namespace sway;</code> directive at the top.
+ * Throughout this documentation, the namespace prefix is suppressed for brevity. \~russian Это корневое пространство
+ * имен для фреймворка Sway. Чтобы избежать префиксирования каждого вызова класса и функции с именем пространства, в
+ * @ref Tutorial есть директива <code>using namespace sway;</code> в начале. По всей документации пространство имен не
+ * подчеркивается.
+ */
+
+/**
  * @namespace sway::core
- * @brief \~english Root namespace of this library. \~russian Корневое пространство имен данной библиотеки.
+ * @brief \~english The core module includes essential classes and functions that form the backbone
+ * of the Sway framework, such as configuration management, logging utilities,
+ * and event handling mechanisms. \~russian Модуль core включает в себя основные классы и функции, которые формируют
+ * основу фреймворка Sway, такие как управление конфигурацией, утилиты логирования и механизмы обработки событий.
  */
 
 #include <sway/core/binding/function.hpp>
@@ -44,15 +57,13 @@
 #include <sway/core/intrusive/priorities.hpp>
 #include <sway/core/memory/pointercast.hpp>
 #include <sway/core/memory/safedeletemacros.hpp>
-#include <sway/core/misc/format.hpp>
-#include <sway/core/misc/guid.hpp>
-#include <sway/core/util/traverseractions.hpp>
-// #include <sway/core/misc/optional.hpp>
 #include <sway/core/misc/_design.hpp>
 #include <sway/core/misc/atomicidgen.hpp>
 #include <sway/core/misc/atomicidgenbuffer.hpp>
 #include <sway/core/misc/atomicidgenmanager.hpp>
 #include <sway/core/misc/dictionary.hpp>
+#include <sway/core/misc/format.hpp>
+#include <sway/core/misc/guid.hpp>
 #include <sway/core/misc/hash.hpp>
 #include <sway/core/misc/string/string.hpp>
 #include <sway/core/plugin.hpp>
@@ -61,6 +72,7 @@
 #include <sway/core/runtime/exceptions/argumentnullexception.hpp>
 #include <sway/core/runtime/exceptions/librarynotfoundexception.hpp>
 #include <sway/core/runtime/exceptions/symbolnotfoundexception.hpp>
+#include <sway/core/std/string/extensions/cases.hpp>
 #include <sway/core/time/chronounits.hpp>
 #include <sway/core/time/clock.hpp>
 #include <sway/core/time/duration.hpp>
@@ -68,10 +80,7 @@
 #include <sway/core/time/timer.hpp>
 #include <sway/core/time/timerstatus.hpp>
 #include <sway/core/time/timerutil.hpp>
-#include <sway/core/util/observable.hpp>
-#include <sway/core/util/observer.hpp>
-#include <sway/core/util/traverser.hpp>
-#include <sway/core/util/visitable.hpp>
+#include <sway/core/utilities.hpp>
 #include <sway/core/version.hpp>
 #include <sway/defines.hpp>
 #include <sway/emscriptenmacros.hpp>

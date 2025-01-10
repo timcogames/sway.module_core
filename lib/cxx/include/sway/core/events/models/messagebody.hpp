@@ -6,10 +6,9 @@
 namespace sway::core {
 
 /**
- * \~english @brief Data associated with the content of a message, providing support for various transformations and
- *   integration with different serializers and deserializers.
- * \~russian @brief Данные, связанные с содержимым сообщения, обеспечивающие поддержку различных преобразований и
- *   интеграцию с различными сериализаторами и десериализаторами.
+ * @brief \~english Data associated with the content of a message, providing support for various transformations and
+ * integration with different serializers and deserializers. \~russian Данные, связанные с содержимым сообщения,
+ * обеспечивающие поддержку различных преобразований и интеграцию с различными сериализаторами и десериализаторами.
  */
 struct MessageBody {
   std::string data;

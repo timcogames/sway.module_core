@@ -6,7 +6,7 @@
 #include <sway/core/foundation/context.hpp>
 #include <sway/core/foundation/eventable.hpp>
 #include <sway/core/foundation/eventhandler.hpp>
-#include <sway/core/util/traverseractions.hpp>
+#include <sway/core/utilities/visitor/traverseractions.hpp>
 
 namespace sway::core {
 
@@ -30,7 +30,7 @@ Node::Node()
 
 Node::~Node() { children_.clear(); }
 
-auto Node::traverse(TraverserTypedefs::Ptr_t traverser) -> u32_t {
+auto Node::traverse(typedefs::TraverserPtr_t traverser) -> u32_t {
   switch (static_cast<TraverserAction::Enum>(traverser->visit(this))) {
     case TraverserAction::Enum::CONTINUE:
       for (const auto &node : getChildNodes()) {

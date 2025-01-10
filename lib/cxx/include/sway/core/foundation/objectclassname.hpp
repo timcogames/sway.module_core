@@ -9,7 +9,7 @@
 
 namespace sway::core {
 
-class ObjectClassname {
+class ObjectClassName {
 public:
   static auto demangle(lpcstr_t name) -> std::string {
     i32_t status;
@@ -20,7 +20,7 @@ public:
 
   template <typename T>
   static auto toStr() -> std::string {
-    std::string classname = ObjectClassname::demangle(typeid(T).name());
+    std::string classname = ObjectClassName::demangle(typeid(T).name());
     std::string delimiter = "::";
 
     return classname.substr(classname.rfind(delimiter) + 2);

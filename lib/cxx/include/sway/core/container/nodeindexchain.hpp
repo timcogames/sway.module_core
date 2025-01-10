@@ -10,10 +10,12 @@ namespace sway::core {
 
 struct NodeIndexChain {
   /**
-   * \~english @brief Returns the index of the previous node in the chain.
+   * \~english
+   * @brief Returns the index of the previous node in the chain.
    * @param[in] target Target node index.
    *
-   * \~russian @brief Возвращает индекс предыдущего узла в цепочке.
+   * \~russian
+   * @brief Возвращает индекс предыдущего узла в цепочке.
    * @param[in] target Целевой индекс узла.
    *
    * @return NodeIndexTypedefs::Optional_t

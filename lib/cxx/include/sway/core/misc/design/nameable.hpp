@@ -13,11 +13,13 @@ namespace sway::core {
 
 /**
  * @class Nameable
- * \~english @brief Helper class with a name.
+ * @brief \~english Helper class with a name. \~russian Вспомогательный класс с именем.
  */
 class Nameable {
 public:
 #pragma region "Ctors/Dtor"
+  /** \~english @name Constructor & Destructor */ /** \~russian @name Конструктор и Деструктор */
+  /** @{ */
 
   Nameable(lpcstr_t name)
       : name_(name) {}
@@ -30,7 +32,12 @@ public:
 
   ~Nameable() = default;
 
+  /** @} */
 #pragma endregion
+
+#pragma region "Getters/Setters"
+  /** \~english @name Getters & Setters */ /** \~russian @name Геттеры и Сеттеры */
+  /** @{ */
 
   void setName(lpcstr_t name) { name_ = name; }
 
@@ -38,6 +45,8 @@ public:
 
   [[nodiscard]] auto hasName() const -> bool { return !name_.empty(); }
 
+  /** @} */
+#pragma endregion
 protected:
   std::string name_;
 };

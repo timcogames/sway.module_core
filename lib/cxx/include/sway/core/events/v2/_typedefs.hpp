@@ -23,14 +23,14 @@ namespace typedefs {
 
 /**
  * @ingroup events_v2 event
- * @brief \~english class Event in @link events_v2 the events_v2 group@endlink. \~russian Класс Event в @link
- *   events_v2 the events_v2 group@endlink.
+ * @brief \~english Class Event in @link events_v2 the events_v2 group@endlink. \~russian Класс Event в @link events_v2
+ * the events_v2 group@endlink.
  */
 using EventPtr_t = Event *;
 
 /**
  * @ingroup events_v2 event_target
- * @brief \~english class EventTarget in @link events_v2 the events_v2 group@endlink. \~russian Класс EventTarget в
+ * @brief \~english Class EventTarget in @link events_v2 the events_v2 group@endlink. \~russian Класс EventTarget в
  * @link events_v2 the events_v2 group@endlink.
  */
 using EventTargetPtr_t = EventTarget *;

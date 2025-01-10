@@ -9,7 +9,8 @@
 namespace sway::core {
 
 /**
- * \~english @brief Macro for logging into console.
+ * \~english
+ * @brief Macro for logging into console.
  * @tparam ARGS
  * @param[in] frmt Format string.
  * @param[in] args Arguments for formatting the string.

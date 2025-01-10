@@ -10,7 +10,8 @@ namespace sway::core {
 
 /**
  * @class Visibleable
- * \~english @brief Helper class for setting and checking the visibility of an object.
+ * @brief \~english Helper class for setting and checking the visibility of an object. \~russian Вспомогательный класс
+ * для установки и проверки видимости объекта.
  */
 class Visibleable {
 public:

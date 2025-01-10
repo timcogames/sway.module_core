@@ -9,8 +9,7 @@
 namespace sway::core {
 
 /**
- * \~english @brief Describes the content of a message.
- * \~russian @brief Описывает содержимое сообщения.
+ * @brief \~english Describes the content of a message. \~russian Описывает содержимое сообщения.
  */
 struct MessageContent {
   MessageFormat format;

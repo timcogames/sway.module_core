@@ -40,15 +40,15 @@ class Object;
 namespace typedefs {
 /**
  * @ingroup foundation context
- * @brief \~english class Context in @link foundation the foundation group@endlink. \~russian Класс Context в @link
- *   foundation the foundation group@endlink.
+ * @brief \~english Class Context in @link foundation the foundation group@endlink. \~russian Класс Context в @link
+ * foundation the foundation group@endlink.
  */
 using ContextPtr_t = Context *;
 
 /**
  * @ingroup foundation object
- * @brief \~english class Object in @link foundation the foundation group@endlink. \~russian Класс Object в @link
- *   foundation the foundation group@endlink.
+ * @brief \~english Class Object in @link foundation the foundation group@endlink. \~russian Класс Object в @link
+ * foundation the foundation group@endlink.
  */
 using ObjectPtr_t = Object *;
 }  // namespace typedefs

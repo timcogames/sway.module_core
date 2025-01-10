@@ -1,8 +1,8 @@
-#ifndef SWAY_CORE_UTIL_OBSERVER_HPP
-#define SWAY_CORE_UTIL_OBSERVER_HPP
+#ifndef SWAY_CORE_UTILITIES_OBSERVER_HPP
+#define SWAY_CORE_UTILITIES_OBSERVER_HPP
 
 #include <sway/_stdafx.hpp>
-#include <sway/core/util/_typedefs.hpp>
+#include <sway/core/utilities/_typedefs.hpp>
 #include <sway/keywords.hpp>
 
 namespace sway::core {
@@ -28,4 +28,4 @@ public:
 
 }  // namespace sway::core
 
-#endif  // SWAY_CORE_UTIL_OBSERVER_HPP
+#endif  // SWAY_CORE_UTILITIES_OBSERVER_HPP

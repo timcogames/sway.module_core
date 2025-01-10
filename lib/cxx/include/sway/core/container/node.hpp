@@ -12,8 +12,8 @@
 #include <sway/core/memory/safedeletemacros.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
-#include <sway/core/util/traverser.hpp>
-#include <sway/core/util/visitable.hpp>
+#include <sway/core/utilities/visitor/traverser.hpp>
+#include <sway/core/utilities/visitor/visitable.hpp>
 #include <sway/coremacros.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
@@ -40,16 +40,19 @@ public:
 #pragma endregion
 
 #pragma region "Ctors/Dtor"
+  /** \~english @name Constructor & Destructor */ /** \~russian @name Конструктор и Деструктор */
+  /** @{ */
 
   Node();
 
   virtual ~Node();
 
+  /** @} */
 #pragma endregion
 
 #pragma region "Overridden Visitable methods"
 
-  virtual auto traverse(TraverserTypedefs::Ptr_t traverser) -> u32_t override;
+  virtual auto traverse(typedefs::TraverserPtr_t traverser) -> u32_t override;
 
 #pragma endregion
 

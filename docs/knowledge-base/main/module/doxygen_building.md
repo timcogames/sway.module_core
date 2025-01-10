@@ -11,7 +11,7 @@ doxygen doxygen/doxyfile.doxy
 Генерация md
 
 ```console
-moxygen --anchors --templates ../moxygen/templates/cpp --output api-%s.md ../doxygen/generated/xml
+moxygen --anchors --groups --templates ./moxygen/templates/cpp --output ./generated/md/api-%s.md ./generated/xml
 ```
 
 <p align='right'><sub><sup><i>terminal: PATH/docs %</i></sup></sub></p>

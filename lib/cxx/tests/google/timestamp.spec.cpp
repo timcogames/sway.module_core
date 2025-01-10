@@ -1,4 +1,4 @@
-#include <sway/core/util/date/timestamp.hpp>
+#include <sway/core/utilities/date/timestamp.hpp>
 #include <sway/namespacemacros.hpp>
 
 #include <gtest/gtest.h>

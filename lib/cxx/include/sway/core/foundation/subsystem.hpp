@@ -23,11 +23,11 @@ public:
 
 #pragma region "Pure virtual methods"
 
-  PURE_VIRTUAL(bool initialize());
+  virtual auto initialize() -> bool = 0;
 
-  PURE_VIRTUAL(void tick(f32_t dtm));
+  virtual void tick(f32_t dtm) = 0;
 
-  PURE_VIRTUAL(void shutdown());
+  virtual void shutdown() = 0;
 
 #pragma endregion
 };

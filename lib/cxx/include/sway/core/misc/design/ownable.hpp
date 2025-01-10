@@ -13,7 +13,7 @@ namespace sway::core {
 
 /**
  * @class Ownable
- * \~english @brief Helper class with an owner.
+ * @brief \~english Helper class with an owner. \~russian Вспомогательный класс с владельцем.
  */
 template <typename TYPE>
 class Ownable {

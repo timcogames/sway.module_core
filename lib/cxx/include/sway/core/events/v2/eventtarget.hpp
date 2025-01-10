@@ -7,16 +7,19 @@ namespace sway::core::v2 {
 
 /**
  * @brief \~english Base class for all objects that can generate events. \~russian Базовый класс для всех объектов,
- *   которые могут генерировать события.
+ * которые могут генерировать события.
  */
 class EventTarget {
 public:
 #pragma region "Ctors/Dtor"
+  /** \~english @name Constructor & Destructor */ /** \~russian @name Конструктор и Деструктор */
+  /** @{ */
 
-  EventTarget() = default;
+  EventTarget() {}
 
   ~EventTarget() = default;
 
+  /** @} */
 #pragma endregion
 };
 
