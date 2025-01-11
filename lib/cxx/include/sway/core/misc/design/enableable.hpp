@@ -33,6 +33,7 @@ public:
    * @brief Включает объект и возвращает предыдущее состояние.
    * @return true - если объект ранее был выключен, false - если включен.
    *
+   * \~
    * @code
    *   auto wasEnabled = enableable.enable();
    * @endcode
@@ -52,6 +53,7 @@ public:
    * @brief Выключает объект и возвращает предыдущее состояние.
    * @return true - если объект ранее был включен, false - если выключен.
    *
+   * \~
    * @code
    *   auto wasDisabled = enableable.disable();
    * @endcode

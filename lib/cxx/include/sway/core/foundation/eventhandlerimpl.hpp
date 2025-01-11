@@ -57,7 +57,7 @@ public:
 
   virtual auto invoke(const EventTypedefs::UniquePtr_t &evt) -> bool {
     if (function_.typeOf().as<std::string>() == "function") {
-      function_(std::move(evt));
+      function_(static_cast<typename std::remove_reference<EventTypedefs::UniquePtr_t>::type &&>(evt));
     } else {
       EM_ASM(throw "callback is not a function");
     }

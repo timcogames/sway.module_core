@@ -204,7 +204,7 @@ auto getNodeIndex(NodeTypedefs::JsPtr_t node) -> lpcstr_t {
     // TODO
   }
 
-  auto idxStr = obj->getNodeIndex().toStr();
+  auto idxStr = Representation<NodeIndex>::get(obj->getNodeIndex());
   auto result = new s8_t[idxStr.size() + 1];
   strcpy(result, idxStr.c_str());
 
