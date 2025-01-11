@@ -54,8 +54,8 @@ struct TestEventHandler : public EventHandler {
 
 #pragma region "Implementation EventHandler methods"
 
-  virtual auto invoke(const EventTypedefs::UniquePtr_t &event) -> bool final {
-    std::cout << static_cast<TestEventData *>(event->getData())->value.c_str() << std::endl;
+  virtual auto invoke(EventTypedefs::UniquePtr_t &&evt) -> bool final {
+    std::cout << static_cast<TestEventData *>(evt->getData())->value.c_str() << std::endl;
     return true;
   }
 

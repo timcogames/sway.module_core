@@ -25,7 +25,7 @@ public:
 
 #pragma region "Implementation EventHandler methods"
 
-  virtual auto invoke(const EventTypedefs::UniquePtr_t &evt) -> bool {
+  virtual auto invoke(EventTypedefs::UniquePtr_t &&evt) -> bool {
     auto *receiver = static_cast<TYPE *>(receiver_);
     return (receiver->*function_)(std::move(evt));
   }
@@ -55,7 +55,7 @@ public:
 
 #  pragma region "Implementation EventHandler methods"
 
-  virtual auto invoke(const EventTypedefs::UniquePtr_t &evt) -> bool {
+  virtual auto invoke(EventTypedefs::UniquePtr_t &&evt) -> bool {
     if (function_.typeOf().as<std::string>() == "function") {
       function_(static_cast<typename std::remove_reference<EventTypedefs::UniquePtr_t>::type &&>(evt));
     } else {

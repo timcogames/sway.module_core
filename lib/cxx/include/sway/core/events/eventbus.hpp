@@ -21,8 +21,7 @@ public:
 
   void process() {
     while (!events_.empty()) {
-      const auto &event = events_.front();
-
+      auto &event = events_.front();
       this->handle(event);
       events_.pop();
     }

@@ -26,7 +26,7 @@ public:
 
 #pragma region "Pure virtual methods"
 
-  virtual auto invoke(const EventTypedefs::UniquePtr_t &evt) -> bool = 0;
+  virtual auto invoke(EventTypedefs::UniquePtr_t &&evt) -> bool = 0;
 
 #pragma endregion
 
@@ -55,7 +55,7 @@ class EventHandlerWrapper : public emscripten::wrapper<EventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(EventHandlerWrapper);
 
-  virtual auto invoke(const EventTypedefs::UniquePtr_t &event) -> bool override { return call<bool>("invoke", evt); }
+  virtual auto invoke(EventTypedefs::UniquePtr_t &&event) -> bool override { return call<bool>("invoke", evt); }
 };
 
 /// @endcond

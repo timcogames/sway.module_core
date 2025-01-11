@@ -28,10 +28,10 @@ void Eventable::unsubscribe(const std::string &eventname) {
   }), eventHandlers_.end());  // clang-format on
 }
 
-void Eventable::emit(const std::string &eventname, const EventTypedefs::UniquePtr_t &evt, EmitPredicate_t predicate) {
+void Eventable::emit(const std::string &eventname, EventTypedefs::UniquePtr_t &&evt, EmitPredicate_t predicate) {
   for (auto *handler : eventHandlers_) {
     if (handler->getEventName().compare(eventname) == 0 && predicate(handler)) {
-      handler->invoke(evt);
+      handler->invoke(std::forward<EventTypedefs::UniquePtr_t>(evt));
     }
   }
 }
