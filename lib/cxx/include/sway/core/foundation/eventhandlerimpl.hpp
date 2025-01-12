@@ -13,7 +13,9 @@ class TEventHandlerImpl : public EventHandler {
 public:
   using HandlerFunction_t = bool (TYPE::*)(const EventTypedefs::UniquePtr_t &);
 
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   TEventHandlerImpl(TYPE *receiver, HandlerFunction_t func)
       : EventHandler(receiver)
@@ -21,6 +23,7 @@ public:
 
   virtual ~TEventHandlerImpl() = default;
 
+  /** @} */
 #pragma endregion
 
 #pragma region "Implementation EventHandler methods"

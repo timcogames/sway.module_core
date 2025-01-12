@@ -14,7 +14,9 @@ class Object {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   Object()
       : context_(nullptr) {}
@@ -22,6 +24,9 @@ public:
   explicit Object(typedefs::ContextPtr_t ctx)
       : context_(ctx) {}
 
+  virtual ~Object() = default;
+
+  /** @} */
 #pragma endregion
 
   auto getContext() -> typedefs::ContextPtr_t { return context_; }

@@ -11,10 +11,13 @@ namespace sway::core {
 
 class EventBus : public Subscribable {
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   ~EventBus() = default;
 
+  /** @} */
 #pragma endregion
 
   void addToQueue(EventTypedefs::UniquePtr_t event) { events_.emplace(std::move(event)); }

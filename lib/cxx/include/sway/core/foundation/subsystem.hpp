@@ -12,13 +12,18 @@ class Subsystem : public Object {
   DECLARE_CLASS_METADATA(Subsystem, Object)
 
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   Subsystem() = default;
 
   explicit Subsystem(typedefs::ContextPtr_t ctx)
       : Object(ctx) {}
 
+  virtual ~Subsystem() = default;
+
+  /** @} */
 #pragma endregion
 
 #pragma region "Pure virtual methods"

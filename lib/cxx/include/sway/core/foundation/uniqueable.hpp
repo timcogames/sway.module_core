@@ -13,13 +13,16 @@ class Uniqueable {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   Uniqueable(const std::optional<TYPE> &uid)
       : uniqueId_(uid) {}
 
   ~Uniqueable() = default;
 
+  /** @} */
 #pragma endregion
 
   [[nodiscard]] auto getUniqueId() const -> std::optional<TYPE> { return uniqueId_; }

@@ -9,11 +9,14 @@ class MySubsystem : public Subsystem {
   DECLARE_CLASS_METADATA(MySubsystem, Subsystem)
 
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   explicit MySubsystem(typedefs::ContextPtr_t ctx)
       : Subsystem(ctx) {}
 
+  /** @} */
 #pragma endregion
 
 #pragma region "Overridden Subsystem methods"

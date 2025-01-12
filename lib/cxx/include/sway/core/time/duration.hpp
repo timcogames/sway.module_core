@@ -18,7 +18,9 @@ public:
 
 #pragma endregion
 
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   Duration()
       : ticks_(0) {}
@@ -31,6 +33,7 @@ public:
 
   ~Duration() = default;
 
+  /** @} */
 #pragma endregion
 
   [[nodiscard]] auto getRaw() const -> f64_t { return ticks_; }

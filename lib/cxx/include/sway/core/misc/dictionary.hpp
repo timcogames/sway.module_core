@@ -18,12 +18,15 @@ public:
 
 #pragma endregion
 
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   Dictionary() = default;
 
   ~Dictionary() = default;
 
+  /** @} */
 #pragma endregion
 
   void addString(const std::string &name, const std::string &val) {

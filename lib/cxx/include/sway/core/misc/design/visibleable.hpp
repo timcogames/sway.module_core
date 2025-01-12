@@ -15,13 +15,16 @@ namespace sway::core {
  */
 class Visibleable {
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   Visibleable()
       : visible_(true) {}
 
   ~Visibleable() = default;
 
+  /** @} */
 #pragma endregion
 
   void setVisible(bool value) { visible_ = value; }

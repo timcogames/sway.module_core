@@ -7,12 +7,15 @@ namespace sway::core {
 
 class FileSource {
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   FileSource();
 
   virtual ~FileSource() = default;
 
+  /** @} */
 #pragma endregion
 
 #pragma region "Pure virtual methods"

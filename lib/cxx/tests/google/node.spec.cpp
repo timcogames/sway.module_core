@@ -17,12 +17,15 @@ NS_SHORT(core)
 
 class NodeTest : public testing::Test, public Eventable {
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   NodeTest() = default;
 
   ~NodeTest() = default;
 
+  /** @} */
 #pragma endregion
 
 #pragma region "Overridden Subsystem methods"

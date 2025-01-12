@@ -11,13 +11,16 @@ namespace sway::core {
 
 class AtomicIdGenBuffer {
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   AtomicIdGenBuffer()
       : uniqId_(0) {}
 
   ~AtomicIdGenBuffer() = default;
 
+  /** @} */
 #pragma endregion
 
   void increment(u32_t id) { usages_[id].fetch_add(1, std::memory_order_relaxed); }

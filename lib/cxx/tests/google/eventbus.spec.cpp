@@ -18,7 +18,9 @@ class TestEvent : public Event {
   DECLARE_CLASS_METADATA(TestEvent, Event)
 
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   TestEvent(u32_t type, EventDataTypedefs::Ptr_t data)
       : id_(newGuid<constans::UUID_MAGIC_SIZE>(constans::UUID_MAGIC))
@@ -27,6 +29,7 @@ public:
 
   ~TestEvent() override = default;
 
+  /** @} */
 #pragma endregion
 
 #pragma region "Implementation Event methods"

@@ -16,12 +16,15 @@ class EventHandler {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   EventHandler(EventableTypedefs::Ptr_t receiver);
 
   virtual ~EventHandler() = default;
 
+  /** @} */
 #pragma endregion
 
 #pragma region "Pure virtual methods"

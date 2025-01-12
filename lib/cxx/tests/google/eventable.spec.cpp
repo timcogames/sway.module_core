@@ -23,7 +23,9 @@ class BaseEvent : public Event {
   DECLARE_CLASS_METADATA(BaseEvent, Event)
 
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   BaseEvent(u32_t type, MyEventData *data)
       : id_(newGuid<constans::UUID_MAGIC_SIZE>(constans::UUID_MAGIC))
@@ -32,6 +34,7 @@ public:
 
   virtual ~BaseEvent() = default;
 
+  /** @} */
 #pragma endregion
 
 #pragma region "Implementation Event methods"
@@ -63,12 +66,15 @@ public:
 
 class MyModelState : public EventActionMapper<EventAction<MyCreatedEvent>> {
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   MyModelState() = default;
 
   virtual ~MyModelState() = default;
 
+  /** @} */
 #pragma endregion
 
 #pragma region "Overridden EventActionMapper methods"
@@ -85,7 +91,9 @@ private:
 
 class MyModel {
 public:
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   MyModel() {
     applier_ = std::make_shared<EventApplier>();
@@ -95,6 +103,7 @@ public:
 
   ~MyModel() = default;
 
+  /** @} */
 #pragma endregion
 
   void raiseEvent(EventTypedefs::SharedPtr_t evt, bool &applied) { applier_->applyEvent(evt, applied); }

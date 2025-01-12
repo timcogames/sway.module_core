@@ -23,12 +23,15 @@ public:
 
 #pragma endregion
 
-#pragma region "Ctors/Dtor"
+#pragma region "Constructor(s) & Destructor"
+  /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
+  /** @{ */
 
   Hierarchy();
 
   ~Hierarchy() = default;
 
+  /** @} */
 #pragma endregion
 
   auto getRootNode() -> NodeTypedefs::SharedPtr_t;
