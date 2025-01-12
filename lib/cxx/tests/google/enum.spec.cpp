@@ -1,8 +1,8 @@
+#include <sway/common/numeraltypes.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/core/detail/valuedatatypes.hpp>
 #include <sway/defines.hpp>
 #include <sway/enumeratormacros.hpp>
-#include <sway/numeraltypes.hpp>
 
 #include <gtest/gtest.h>
 

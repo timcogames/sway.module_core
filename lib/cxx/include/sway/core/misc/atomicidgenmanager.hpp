@@ -2,11 +2,11 @@
 #define SWAY_CORE_MISC_ATOMICIDGENMANAGER_HPP
 
 #include <sway/_stdafx.hpp>
+#include <sway/common/numeraltypes.hpp>
 #include <sway/core/misc/_typedefs.hpp>
 #include <sway/core/misc/atomicidgenbuffer.hpp>
 #include <sway/defines.hpp>
 #include <sway/keywords.hpp>
-#include <sway/numeraltypes.hpp>
 
 namespace sway::core {
 

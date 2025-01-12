@@ -1,10 +1,10 @@
 #ifndef SWAY_ENUMERATORMACROS_HPP
 #define SWAY_ENUMERATORMACROS_HPP
 
+#include <sway/common/numeraltypes.hpp>
 #include <sway/core/detail/enumutils.hpp>
 #include <sway/defines.hpp>
 #include <sway/inlinemacros.hpp>
-#include <sway/numeraltypes.hpp>
 
 #include <iterator>  // size
 

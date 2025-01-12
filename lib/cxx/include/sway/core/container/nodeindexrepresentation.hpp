@@ -2,17 +2,15 @@
 #define SWAY_CORE_CONTAINER_NODEINDEXREPRESENTATION_HPP
 
 #include <sway/_stdafx.hpp>
+#include <sway/common/representation.hpp>
 #include <sway/core/container/_typedefs.hpp>
 #include <sway/core/container/nodeindex.hpp>
-#include <sway/core/misc/string/representation.hpp>
 
-#include <numeric>
-
-namespace sway::core {
+namespace sway {
 
 template <>
-struct Representation<NodeIndexChainTypedefs::Container_t> {
-  static auto get(const NodeIndexChainTypedefs::Container_t &val) -> std::string {
+struct Representation<core::NodeIndexChainTypedefs::Container_t> {
+  static auto get(const core::NodeIndexChainTypedefs::Container_t &val) -> std::string {
     std::ostringstream oss;
 
     oss << "[";
@@ -24,12 +22,12 @@ struct Representation<NodeIndexChainTypedefs::Container_t> {
 };
 
 template <>
-struct Representation<NodeIndex> {
-  static auto get(const NodeIndex &value) -> std::string {
-    return Representation<NodeIndexChainTypedefs::Container_t>::get(value.getChain());
+struct Representation<core::NodeIndex> {
+  static auto get(const core::NodeIndex &value) -> std::string {
+    return Representation<core::NodeIndexChainTypedefs::Container_t>::get(value.getChain());
   }
 };
 
-}  // namespace sway::core
+}  // namespace sway
 
 #endif  // SWAY_CORE_CONTAINER_NODEINDEXREPRESENTATION_HPP

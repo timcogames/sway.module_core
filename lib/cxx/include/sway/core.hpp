@@ -19,6 +19,8 @@
  * основу фреймворка Sway, такие как управление конфигурацией, утилиты логирования и механизмы обработки событий.
  */
 
+#include <sway/common.hpp>
+#include <sway/common/numeraltypes.hpp>
 #include <sway/core/binding/function.hpp>
 #include <sway/core/binding/procaddress.hpp>
 #include <sway/core/container/hierarchy.hpp>
@@ -88,7 +90,6 @@
 #include <sway/inlinemacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/namespacemacros.hpp>
-#include <sway/numeraltypes.hpp>
 #include <sway/types.hpp>
 #include <sway/visibilitymacros.hpp>
 

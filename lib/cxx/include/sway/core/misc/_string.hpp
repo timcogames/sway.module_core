@@ -6,6 +6,6 @@
  * @brief \~english Various helper classes. \~russian Различные вспомогательные классы.
  */
 
-#include <sway/core/misc/string/representation.hpp>
+#include <sway/core/misc/string/string.hpp>
 
 #endif  // SWAY_CORE_MISC_STRING_HPP

@@ -1,7 +1,7 @@
 #ifndef SWAY_CORE_EVENTS_MODELS_MESSAGEFORMATS_HPP
 #define SWAY_CORE_EVENTS_MODELS_MESSAGEFORMATS_HPP
 
-#include <sway/numeraltypes.hpp>
+#include <sway/common/numeraltypes.hpp>
 
 namespace sway::core {
 

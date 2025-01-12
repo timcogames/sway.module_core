@@ -21,6 +21,7 @@
 #include <iterator>
 #include <map>
 #include <memory>  // weak_ptr, unique_ptr, shared_ptr
+#include <numeric>
 #include <optional>
 #include <queue>
 #include <sstream>  // stringstream

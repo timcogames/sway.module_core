@@ -2,8 +2,8 @@
 #define SWAY_CORE_MISC_ATOMICIDGEN_HPP
 
 #include <sway/_stdafx.hpp>
+#include <sway/common/numeraltypes.hpp>
 #include <sway/defines.hpp>
-#include <sway/numeraltypes.hpp>
 
 namespace sway::core {
 

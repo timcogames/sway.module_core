@@ -2,10 +2,10 @@
 #define SWAY_CORE_MISC_ATOMICIDGENBUFFER_HPP
 
 #include <sway/_stdafx.hpp>
+#include <sway/common/numeraltypes.hpp>
 #include <sway/core/misc/_typedefs.hpp>
 #include <sway/core/misc/atomicidgen.hpp>
 #include <sway/keywords.hpp>
-#include <sway/numeraltypes.hpp>
 
 namespace sway::core {
 

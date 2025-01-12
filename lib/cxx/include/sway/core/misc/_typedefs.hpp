@@ -2,7 +2,7 @@
 #define SWAY_CORE_MISC_TYPEDEFS_HPP
 
 #include <sway/_stdafx.hpp>
-#include <sway/numeraltypes.hpp>
+#include <sway/common/numeraltypes.hpp>
 
 namespace sway::core {
 
