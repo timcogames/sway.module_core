@@ -1,11 +1,10 @@
 #include <sway/core/misc/atomicidgenmanager.hpp>
 #include <sway/defines.hpp>
-#include <sway/namespacemacros.hpp>
 
 #include <gtest/gtest.h>
 
-NS_SHORT_SWAY()
-NS_SHORT(core);
+using namespace sway;
+using namespace sway::core;
 
 class Obj {};
 

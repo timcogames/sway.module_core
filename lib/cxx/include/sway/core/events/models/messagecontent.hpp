@@ -4,7 +4,7 @@
 #include <sway/_stdafx.hpp>
 #include <sway/core/events/models/_typedefs.hpp>
 #include <sway/core/events/models/messagebody.hpp>
-#include <sway/core/events/models/messageformats.hpp>
+#include <sway/core/events/models/messagebodyformats.hpp>
 
 namespace sway::core {
 
@@ -12,12 +12,11 @@ namespace sway::core {
  * @brief \~english Describes the content of a message. \~russian Описывает содержимое сообщения.
  */
 struct MessageContent {
-  MessageFormat format;
-  MessageUserData_t userdata;
-  MessageBodyTypedefs::SharedPtr_t body;
+  MessageBodyFormat format;
+  MessageBodySharedPtr_t body;
 
   MessageContent()
-      : format(MessageFormat::PLAIN_TEXT) {}
+      : format(MessageBodyFormat::PLAIN_TEXT) {}
 };
 
 }  // namespace sway::core

@@ -37,9 +37,9 @@
 #include <sway/core/detail/valuedatatypes.hpp>
 #include <sway/core/events/eventbus.hpp>
 #include <sway/core/events/models/messagebody.hpp>
-#include <sway/core/events/models/messagebodyserializable.hpp>
+#include <sway/core/events/models/messagebodydeserializable.hpp>
+#include <sway/core/events/models/messagebodyformats.hpp>
 #include <sway/core/events/models/messagecontent.hpp>
-#include <sway/core/events/models/messageformats.hpp>
 #include <sway/core/events/subscribable.hpp>
 #include <sway/core/foundation/callbackmacros.hpp>
 #include <sway/core/foundation/context.hpp>
@@ -58,7 +58,7 @@
 #include <sway/core/generic/io/path.hpp>
 #include <sway/core/intrusive/priorities.hpp>
 #include <sway/core/memory/pointercast.hpp>
-#include <sway/core/memory/safedeletemacros.hpp>
+#include <sway/core/memory/safedelete.hpp>
 #include <sway/core/misc/_design.hpp>
 #include <sway/core/misc/atomicidgen.hpp>
 #include <sway/core/misc/atomicidgenbuffer.hpp>

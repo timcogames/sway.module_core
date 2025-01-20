@@ -6,24 +6,14 @@
 
 namespace sway::core {
 
-using MessageUserData_t = Dictionary;
 class MessageBody;
-namespace MessageBodyTypedefs {
-using SharedPtr_t = std::shared_ptr<MessageBody>;
-}  // namespace MessageBodyTypedefs
 
-class EventData;
-namespace EventDataTypedefs {
-using Ref_t = const EventData &;
-using Container_t = std::vector<EventData>;
-using ContainerRef_t = const Container_t &;
-}  // namespace EventDataTypedefs
+using MessageBodySharedPtr_t = std::shared_ptr<MessageBody>;
 
 class Deserializer;
-namespace DeserializerTypedefs {
-using SharedPtr_t = std::shared_ptr<Deserializer>;
-using OutResult_t = void *;
-}  // namespace DeserializerTypedefs
+
+using DeserializerSharedPtr_t = std::shared_ptr<Deserializer>;
+using DeserializerOutResult_t = void *;
 
 }  // namespace sway::core
 

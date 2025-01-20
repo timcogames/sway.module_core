@@ -6,14 +6,14 @@
 
 #include <gtest/gtest.h>
 
+using namespace sway;
+using namespace sway::core;
+
 #define IDX_INTERN_A (0)
 #define IDX_INTERN_B (1)
 #define IDX_INTERN_C (2)
 
 const std::initializer_list<std::string> InternNameList = {"intern_a", "intern_b", "intern_c"};
-
-NS_SHORT_SWAY()
-NS_SHORT(core)
 
 class NodeTest : public testing::Test, public Eventable {
 public:
@@ -62,16 +62,16 @@ public:
     }
   }
 
-  [[nodiscard]] auto addInternToDoctor() const -> NodeTypedefs::SharedPtr_t {
+  [[nodiscard]] auto addInternToDoctor() const -> NodeSharedPtr_t {
     auto intern = std::make_shared<Node>();
     doctor_->addChildNode(intern);
     return intern;
   }
 
-  NodeTypedefs::SharedPtr_t root_;
-  NodeTypedefs::SharedPtr_t supervisor_;
-  NodeTypedefs::SharedPtr_t doctor_;
-  NodeTypedefs::Container_t internCollection_;
+  NodeSharedPtr_t root_;
+  NodeSharedPtr_t supervisor_;
+  NodeSharedPtr_t doctor_;
+  NodeContainer_t internCollection_;
 };
 
 TEST_F(NodeTest, AddChildNode_Twice_ThatAlreadyHasParent) {

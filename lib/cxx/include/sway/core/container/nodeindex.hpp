@@ -19,10 +19,15 @@ class NodeIndex {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
+#pragma region "Define aliases"
+
+  using Optional_t = NodeIndexOptional_t;
+
+#pragma endregion
+
 #pragma region "Static methods"
 
-  static auto getMatchDepth(
-      const NodeIndexChainTypedefs::Container_t &lhs, const NodeIndexChainTypedefs::Container_t &rhs) -> int;
+  static auto getMatchDepth(const NodeIndexChainContainer_t &lhs, const NodeIndexChainContainer_t &rhs) -> int;
 
   /**
    * \~english
@@ -33,9 +38,9 @@ public:
    * @brief Возвращает последний сегмент в индексе целевого узла.
    * @param[in] target Целевой индекс узла.
    *
-   * @return NodeIndexChainTypedefs::Item_t
+   * @return NodeIndexChainItem_t
    */
-  static auto getLastSegment(const NodeIndex &target) -> NodeIndexChainTypedefs::Item_t {
+  static auto getLastSegment(const NodeIndex &target) -> NodeIndexChainItem_t {
     return target.getIndexAt(target.getDepth() - 1);
   }
 
@@ -47,9 +52,9 @@ public:
 
   NodeIndex();
 
-  explicit NodeIndex(const NodeIndexChainTypedefs::Container_t &data);
+  explicit NodeIndex(const NodeIndexChainContainer_t &data);
 
-  NodeIndex(NodeIndex parent, NodeIndexChainTypedefs::Item_t idx);
+  NodeIndex(NodeIndex parent, NodeIndexChainItem_t idx);
 
   ~NodeIndex() = default;
 
@@ -58,22 +63,22 @@ public:
 
   void setAsRoot();
 
-  void setChain(const NodeIndexChainTypedefs::Container_t &chain, NodeIndexChainTypedefs::Item_t idx);
+  void setChain(const NodeIndexChainContainer_t &chain, NodeIndexChainItem_t idx);
 
-  [[nodiscard]] auto getChain() const -> NodeIndexChainTypedefs::Container_t;
+  [[nodiscard]] auto getChain() const -> NodeIndexChainContainer_t;
 
-  [[nodiscard]] auto getParent() const -> NodeIndexChainTypedefs::Container_t;
+  [[nodiscard]] auto getParent() const -> NodeIndexChainContainer_t;
 
   [[nodiscard]] auto getDepth() const -> int;
 
-  [[nodiscard]] auto getIndexAt(int idx) const -> NodeIndexChainTypedefs::Item_t;
+  [[nodiscard]] auto getIndexAt(int idx) const -> NodeIndexChainItem_t;
 
   auto equal(const NodeIndex &other) -> bool;
 
-  auto chainEqual(const NodeIndexChainTypedefs::Container_t &other) -> bool;
+  auto chainEqual(const NodeIndexChainContainer_t &other) -> bool;
 
 private:
-  NodeIndexChainTypedefs::Container_t chainLinks_;
+  NodeIndexChainContainer_t chainLinks_;
 };
 
 }  // namespace sway::core

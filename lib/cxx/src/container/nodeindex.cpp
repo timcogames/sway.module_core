@@ -27,8 +27,7 @@ emscripten::class_<NodeIndex>("NodeIndex")
 #endif
 EMSCRIPTEN_BINDING_END()
 
-auto NodeIndex::getMatchDepth(
-    const NodeIndexChainTypedefs::Container_t &lhs, const NodeIndexChainTypedefs::Container_t &rhs) -> int {
+auto NodeIndex::getMatchDepth(const NodeIndexChainContainer_t &lhs, const NodeIndexChainContainer_t &rhs) -> int {
   auto lhsTemp = lhs;
   auto rhsTemp = rhs;
   auto rhsSize = (int)rhsTemp.size();
@@ -47,16 +46,16 @@ auto NodeIndex::getMatchDepth(
 
 NodeIndex::NodeIndex() { setAsRoot(); }
 
-NodeIndex::NodeIndex(const NodeIndexChainTypedefs::Container_t &data) { setChain(data, NODEIDX_NEGATIVE); }
+NodeIndex::NodeIndex(const NodeIndexChainContainer_t &data) { setChain(data, NODEIDX_NEGATIVE); }
 
-NodeIndex::NodeIndex(NodeIndex parent, NodeIndexChainTypedefs::Item_t idx) { setChain(parent.getChain(), idx); }
+NodeIndex::NodeIndex(NodeIndex parent, NodeIndexChainItem_t idx) { setChain(parent.getChain(), idx); }
 
 void NodeIndex::setAsRoot() {
   chainLinks_.clear();
   chainLinks_ = NODEIDX_CHAIN_INITIALROOT;
 }
 
-void NodeIndex::setChain(const NodeIndexChainTypedefs::Container_t &chain, NodeIndexChainTypedefs::Item_t idx) {
+void NodeIndex::setChain(const NodeIndexChainContainer_t &chain, NodeIndexChainItem_t idx) {
   chainLinks_ = chain;
 
   if (idx != NODEIDX_NEGATIVE) {
@@ -64,10 +63,10 @@ void NodeIndex::setChain(const NodeIndexChainTypedefs::Container_t &chain, NodeI
   }
 }
 
-auto NodeIndex::getChain() const -> NodeIndexChainTypedefs::Container_t { return chainLinks_; }
+auto NodeIndex::getChain() const -> NodeIndexChainContainer_t { return chainLinks_; }
 
-auto NodeIndex::getParent() const -> NodeIndexChainTypedefs::Container_t {
-  NodeIndexChainTypedefs::Container_t parent = getChain();
+auto NodeIndex::getParent() const -> NodeIndexChainContainer_t {
+  NodeIndexChainContainer_t parent = getChain();
   parent.pop_back();
 
   return parent;
@@ -75,11 +74,11 @@ auto NodeIndex::getParent() const -> NodeIndexChainTypedefs::Container_t {
 
 auto NodeIndex::getDepth() const -> int { return (int)chainLinks_.size(); }
 
-auto NodeIndex::getIndexAt(int idx) const -> NodeIndexChainTypedefs::Item_t { return chainLinks_[idx]; }
+auto NodeIndex::getIndexAt(int idx) const -> NodeIndexChainItem_t { return chainLinks_[idx]; }
 
 auto NodeIndex::equal(const NodeIndex &other) -> bool { return chainEqual(other.getChain()); }
 
-auto NodeIndex::chainEqual(const NodeIndexChainTypedefs::Container_t &other) -> bool {
+auto NodeIndex::chainEqual(const NodeIndexChainContainer_t &other) -> bool {
   return chainLinks_.size() == other.size() && std::equal(chainLinks_.begin(), chainLinks_.end(), other.begin());
 }
 

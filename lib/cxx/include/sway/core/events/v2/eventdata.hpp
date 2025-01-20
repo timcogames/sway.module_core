@@ -2,19 +2,33 @@
 #define SWAY_CORE_EVENTS_V2_EVENTDATA_HPP
 
 #include <sway/_stdafx.hpp>
-#include <sway/core/events/models/messagebodyserializable.hpp>
+#include <sway/core/events/models/messagebodydeserializable.hpp>
 #include <sway/core/events/models/messagecontent.hpp>
 
 namespace sway::core::v2 {
 
-class EventData : public MessageContent {
-public:
-  static auto create(MessageFormat format, DeserializerTypedefs::SharedPtr_t deserializer) -> EventData {
+struct Rawable {
+  void *userdata;
+};
+
+template <typename TYPE>
+class EventData {};
+
+template <>
+struct EventData<MessageContent> : public Rawable {
+  static auto create(MessageBodyFormat format, DeserializerSharedPtr_t deserializer) -> EventData {
     EventData data;
-    data.format = format;
-    data.body = std::make_shared<MessageBodySerializable>(deserializer);
+    data.content.format = format;
+    data.content.body = std::make_shared<MessageBodyDeserializable>(deserializer);
     return data;
   }
+
+  MessageContent content;
+};
+
+template <>
+struct EventData<Dictionary> : public Rawable {
+  Dictionary content;
 };
 
 }  // namespace sway::core::v2

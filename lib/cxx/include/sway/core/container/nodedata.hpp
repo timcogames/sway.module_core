@@ -8,7 +8,7 @@
 namespace sway::core {
 
 struct NodeData {
-  NodeIndexChainTypedefs::Container_t nodeidx;
+  NodeIndexChainContainer_t nodeidx;
   std::string name;
 };
 

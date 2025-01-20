@@ -6,8 +6,8 @@
 namespace sway::core::v2 {
 
 /**
- * @brief \~english Represents the context in which the event occurred. \~russian Представляет контекст, в котором
- *   произошло событие.
+ * @brief \~english Represents information about the context in which the main event was called. \~russian Представляет
+ * информацию о контексте, в котором было вызвано основное событие.
  */
 class EventContext {
 public:

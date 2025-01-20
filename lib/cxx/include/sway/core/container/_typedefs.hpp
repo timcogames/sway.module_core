@@ -7,7 +7,6 @@
 namespace sway::core {
 
 class NodeData;
-namespace NodeDataTypedefs {}  // namespace NodeDataTypedefs
 
 #ifdef EMSCRIPTEN_PLATFORM
 using NodeDataList = emscripten::val;
@@ -16,31 +15,26 @@ using NodeDataList = std::vector<NodeData>;
 #endif
 
 class NodeIndex;
-namespace NodeIndexTypedefs {
-using Optional_t = std::optional<NodeIndex>;
-}  // namespace NodeIndexTypedefs
 
-namespace NodeIndexChainTypedefs {
-using Item_t = i32_t;
-using Container_t = std::vector<Item_t>;
-}  // namespace NodeIndexChainTypedefs
+using NodeIndexOptional_t = std::optional<NodeIndex>;
+
+using NodeIndexChainItem_t = i32_t;
+using NodeIndexChainContainer_t = std::vector<NodeIndexChainItem_t>;
 
 class Node;
-namespace NodeTypedefs {
-using Ptr_t = Node *;
-using WeakPtr_t = std::weak_ptr<Node>;
-using SharedPtr_t = std::shared_ptr<Node>;
-using OptionalSharedPtr_t = std::optional<SharedPtr_t>;
-using Container_t = std::vector<SharedPtr_t>;
-using JsPtr_t = intptr_t;
-using JsPtrArray_t = JsPtr_t *;
-}  // namespace NodeTypedefs
+
+using NodePtr_t = Node *;
+using NodeWeakPtr_t = std::weak_ptr<Node>;
+using NodeSharedPtr_t = std::shared_ptr<Node>;
+using NodeOptionalSharedPtr_t = std::optional<NodeSharedPtr_t>;
+using NodeContainer_t = std::vector<NodeSharedPtr_t>;
+using NodeJsPtr_t = intptr_t;
+using NodeJsPtrArray_t = NodeJsPtr_t *;
 
 class Hierarchy;
-namespace HierarchyTypedefs {
-using Ptr_t = Hierarchy *;
-using JsPtr_t = intptr_t;
-}  // namespace HierarchyTypedefs
+
+using HierarchyPtr_t = Hierarchy *;
+using HierarchyJsPtr_t = intptr_t;
 
 }  // namespace sway::core
 

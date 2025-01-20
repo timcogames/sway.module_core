@@ -12,8 +12,8 @@
 
 #define EVT_CREATED (0)
 
-NS_SHORT_SWAY()
-NS_SHORT(core)
+using namespace sway;
+using namespace sway::core;
 
 struct MyEventData : public EventData {
   std::string value;

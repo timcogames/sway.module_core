@@ -6,7 +6,8 @@
 
 #include <gtest/gtest.h>
 
-NS_SHORT(core)
+using namespace sway;
+using namespace sway::core;
 
 TEST(EnumTest, unwrap) {
   ASSERT_TRUE(toBase(ValueDataType::Enum::BYTE) == 1);

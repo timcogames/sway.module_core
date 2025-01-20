@@ -4,11 +4,76 @@
 #include <sway/_stdafx.hpp>
 #include <sway/core/foundation/_typedefs.hpp>
 #include <sway/core/foundation/objectclassname.hpp>
+#include <sway/defines.hpp>
 #include <sway/emscriptenmacros.hpp>
 #include <sway/keywords.hpp>
 #include <sway/types.hpp>
 
 namespace sway::core {
+
+class ClassInfo;
+using ClassInfoSharedPtr_t = std::shared_ptr<ClassInfo>;
+using ClassInfoConstPtr_t = const ClassInfo *;
+
+class ClassInfo {
+public:
+  ClassInfo(lpcstr_t className, ClassInfoConstPtr_t superInfo)
+      : className_(className)
+      , superInfo_(superInfo) {}
+
+  [[nodiscard]] auto getClassName() const -> const std::string & { return className_; }
+
+  [[nodiscard]] auto getSuperInfo() const -> ClassInfoConstPtr_t { return superInfo_; }
+
+private:
+  std::string className_;
+  ClassInfoConstPtr_t superInfo_;
+};
+
+template <typename TYPE>
+class Super {
+public:
+  static auto getClassInfo() -> ClassInfoConstPtr_t { return 0; }
+
+#pragma region "Pure virtual methods"
+
+  virtual auto getClassName() const -> const std::string & = 0;
+
+  virtual auto getSuperInfo() const -> ClassInfoConstPtr_t = 0;
+
+#pragma endregion
+};
+
+template <template <typename...> class BASE, typename DERIVED>
+struct IsBaseOfTemplate {
+  template <typename... TS>
+  static constexpr std::true_type test(const BASE<TS...> *);
+  static constexpr std::false_type test(...);
+
+  using type_t = decltype(test(std::declval<DERIVED *>()));
+};
+
+template <template <typename...> class BASE, typename DERIVED>
+using IsBaseOfTemplate_t = typename IsBaseOfTemplate<BASE, DERIVED>::type_t;
+
+template <template <typename...> class BASE, typename DERIVED>
+inline constexpr bool IsBaseOfTemplate_v = IsBaseOfTemplate_t<BASE, DERIVED>::value;
+
+template <class BASE, class DERIVED>
+class Classable : public BASE {
+public:
+  typedef BASE super_t;
+
+  static auto getClassInfo() -> ClassInfoConstPtr_t {
+    static_assert(IsBaseOfTemplate_v<Super, DERIVED>, "DERIVED must inherit from Super");
+    static const ClassInfo info(ObjectClassName::toStr<DERIVED>().c_str(), super_t::getClassInfo());
+    return &info;
+  }
+
+  virtual auto getClassName() const -> const std::string & { return getClassInfo()->getClassName(); }
+
+  virtual auto getSuperInfo() const -> ClassInfoConstPtr_t { return getClassInfo()->getSuperInfo(); }
+};
 
 class ObjectClassMetadata {
   DECLARE_EMSCRIPTEN_BINDING()

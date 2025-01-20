@@ -1,20 +1,20 @@
-#include <sway/core/events/models/messagebodyserializable.hpp>
-#include <sway/core/events/models/messageformats.hpp>
+#include <sway/core/events/models/messagebodydeserializable.hpp>
+#include <sway/core/events/models/messagebodyformats.hpp>
 #include <sway/core/foundation/eventdata.hpp>
 
 #include <gtest/gtest.h>
 
-NS_SHORT_SWAY()
-NS_SHORT(core)
+using namespace sway;
+using namespace sway::core;
 
 struct CustomEventData {
   std::string value;
 };
 
-struct MessageBodyJsonSerializer final : public Deserializer {
+struct MessageBodyJsonDeserializer final : public Deserializer {
 #pragma region "Overridden Deserializer methods"
 
-  virtual auto deserialize(const std::string &data) -> DeserializerTypedefs::OutResult_t {
+  virtual auto deserialize(const std::string &data) -> DeserializerOutResult_t {
     auto *eventData = (CustomEventData *)malloc(sizeof(CustomEventData));
     eventData->value = "test";
     return eventData;
@@ -24,11 +24,11 @@ struct MessageBodyJsonSerializer final : public Deserializer {
 };
 
 TEST(EventData, deserializer) {
-  auto jsonSerializer = std::make_shared<MessageBodyJsonSerializer>();
-  auto jsonEventData = EventData::create(MessageFormat::JSON, jsonSerializer);
+  auto jsonDeserializer = std::make_shared<MessageBodyJsonDeserializer>();
+  auto jsonEventData = EventData::create(MessageBodyFormat::JSON, jsonDeserializer);
   jsonEventData.body->data = "{\"test\": \"value\"}";
 
-  auto jsonBody = std::static_pointer_cast<MessageBodySerializable>(jsonEventData.body);
+  auto jsonBody = std::static_pointer_cast<MessageBodyDeserializable>(jsonEventData.body);
   auto testEventData = jsonBody->toConcreteObject<CustomEventData>();
 
   EXPECT_EQ(testEventData.value, "test");

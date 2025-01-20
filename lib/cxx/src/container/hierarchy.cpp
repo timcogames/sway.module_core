@@ -26,9 +26,8 @@ EMSCRIPTEN_BINDING_END()
 
 Hierarchy::Hierarchy() { root_ = std::make_shared<Node>(); }
 
-auto Hierarchy::findNode(NodeTypedefs::SharedPtr_t parent, const NodeIndex &nodeIdx)
-    -> NodeTypedefs::OptionalSharedPtr_t {
-  NodeTypedefs::OptionalSharedPtr_t retrieved = parent;
+auto Hierarchy::findNode(NodeSharedPtr_t parent, const NodeIndex &nodeIdx) -> NodeOptionalSharedPtr_t {
+  NodeOptionalSharedPtr_t retrieved = parent;
   for (auto i = NODEIDX_ROOT_DEPTH; i < nodeIdx.getDepth(); ++i) {
     if (nodeIdx.getIndexAt(i) >= retrieved->get()->getNumOfChildNodes()) {
       return std::nullopt;
@@ -40,20 +39,20 @@ auto Hierarchy::findNode(NodeTypedefs::SharedPtr_t parent, const NodeIndex &node
   return retrieved;
 }
 
-auto Hierarchy::getRootNode() -> NodeTypedefs::SharedPtr_t { return root_; }
+auto Hierarchy::getRootNode() -> NodeSharedPtr_t { return root_; }
 
-void Hierarchy::setRootNode(NodeTypedefs::SharedPtr_t root) { root_ = root; }
+void Hierarchy::setRootNode(NodeSharedPtr_t root) { root_ = root; }
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
-auto createHierarchy() -> HierarchyTypedefs::JsPtr_t { return Hierarchy::toJs(new Hierarchy()); }
+auto createHierarchy() -> HierarchyJsPtr_t { return Hierarchy::toJs(new Hierarchy()); }
 
-void deleteHierarchy(HierarchyTypedefs::JsPtr_t hierarchy) {
+void deleteHierarchy(HierarchyJsPtr_t hierarchy) {
   auto obj = Hierarchy::fromJs(hierarchy);
-  SAFE_DELETE_OBJECT(obj);
+  safeDelete(obj);
 }
 
-auto getRootNode(HierarchyTypedefs::JsPtr_t hierarchy) -> NodeTypedefs::JsPtr_t {
+auto getRootNode(HierarchyJsPtr_t hierarchy) -> NodeJsPtr_t {
   auto obj = Hierarchy::fromJs(hierarchy);
   return Node::toJs(obj->getRootNode());
 }

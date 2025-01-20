@@ -23,7 +23,8 @@ public:
     std::string classname = ObjectClassName::demangle(typeid(T).name());
     std::string delimiter = "::";
 
-    return classname.substr(classname.rfind(delimiter) + 2);
+    std::string::size_type position = classname.rfind(delimiter);
+    return (position != std::string::npos) ? classname.substr(position + 2) : classname;
   }
 };
 

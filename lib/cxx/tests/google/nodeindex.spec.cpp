@@ -2,15 +2,14 @@
 #include <sway/core/container/nodeindex.hpp>
 #include <sway/core/container/nodeindexrepresentation.hpp>
 #include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
 
 #include <gtest/gtest.h>
 
+using namespace sway;
+using namespace sway::core;
+
 #define NODE_IDX_SUPERVISOR (0)
 #define NODE_IDX_WORKER (1)
-
-NS_SHORT_SWAY()
-NS_SHORT(core)
 
 class NodeIndexTest : public testing::Test {
 public:

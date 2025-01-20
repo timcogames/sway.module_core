@@ -2,8 +2,8 @@
 
 #include <gtest/gtest.h>
 
-NS_SHORT_SWAY()
-NS_SHORT(core)
+using namespace sway;
+using namespace sway::core;
 
 class MySubsystem : public Subsystem {
   DECLARE_CLASS_METADATA(MySubsystem, Subsystem)

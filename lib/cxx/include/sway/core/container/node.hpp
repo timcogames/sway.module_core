@@ -9,7 +9,7 @@
 #include <sway/core/foundation/declareeventmacros.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventable.hpp>
-#include <sway/core/memory/safedeletemacros.hpp>
+#include <sway/core/memory/safedelete.hpp>
 #include <sway/core/misc/format.hpp>
 #include <sway/core/misc/guid.hpp>
 #include <sway/core/utilities/visitor/traverser.hpp>
@@ -28,14 +28,25 @@ class Node : public std::enable_shared_from_this<Node>, public Visitable, public
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
+#pragma region "Define aliases"
+
+  using Ptr_t = NodePtr_t;
+  using WeakPtr_t = NodeWeakPtr_t;
+  using SharedPtr_t = NodeSharedPtr_t;
+  using OptionalSharedPtr_t = NodeOptionalSharedPtr_t;
+  using Container_t = NodeContainer_t;
+  using JsPtr_t = NodeJsPtr_t;
+  using JsPtrArray_t = NodeJsPtrArray_t;
+
+#pragma endregion
+
 #pragma region "Static methods"
 
   template <typename TYPE>
-  static auto getChild(NodeTypedefs::Ptr_t parent, const NodeIndex &idx) -> std::shared_ptr<TYPE>;
+  static auto getChild(NodePtr_t parent, const NodeIndex &idx) -> std::shared_ptr<TYPE>;
 
   template <typename TYPE>
-  static auto getChild(NodeTypedefs::Ptr_t parent, const NodeIndexTypedefs::Optional_t &idxOpt)
-      -> std::shared_ptr<TYPE>;
+  static auto getChild(NodePtr_t parent, const NodeIndexOptional_t &idxOpt) -> std::shared_ptr<TYPE>;
 
 #pragma endregion
 
@@ -56,31 +67,31 @@ public:
 
 #pragma endregion
 
-  void addChildNode(NodeTypedefs::SharedPtr_t child);
+  void addChildNode(NodeSharedPtr_t child);
 
-  void removeChildNode(NodeTypedefs::SharedPtr_t child);
+  void removeChildNode(NodeSharedPtr_t child);
 
-  auto getChildNodes() -> NodeTypedefs::Container_t;
+  auto getChildNodes() -> NodeContainer_t;
 
-  [[nodiscard]] auto getChildNode(const NodeIndex &idx) const -> NodeTypedefs::SharedPtr_t;
+  [[nodiscard]] auto getChildNode(const NodeIndex &idx) const -> NodeSharedPtr_t;
 
-  [[nodiscard]] auto getChildAt(i32_t targetIdx) const -> NodeTypedefs::OptionalSharedPtr_t;
+  [[nodiscard]] auto getChildAt(i32_t targetIdx) const -> NodeOptionalSharedPtr_t;
 
   [[nodiscard]] auto getNumOfChildNodes() const -> i32_t;
 
-  void setNodeIndex(const NodeIndexChainTypedefs::Container_t &chain, int last);
+  void setNodeIndex(const NodeIndexChainContainer_t &chain, int last);
 
   auto getNodeIndex() -> NodeIndex;
 
-  void setParentNode(NodeTypedefs::WeakPtr_t parent);
+  void setParentNode(NodeWeakPtr_t parent);
 
-  auto getParentNode() -> NodeTypedefs::OptionalSharedPtr_t;
+  auto getParentNode() -> NodeOptionalSharedPtr_t;
 
-  auto getParentNodeByDepth(i32_t depth) -> NodeTypedefs::SharedPtr_t;
+  auto getParentNodeByDepth(i32_t depth) -> NodeSharedPtr_t;
 
-  auto equal(NodeTypedefs::SharedPtr_t other) -> bool;
+  auto equal(NodeSharedPtr_t other) -> bool;
 
-  auto chainEqual(NodeIndexChainTypedefs::Container_t other) -> bool;
+  auto chainEqual(NodeIndexChainContainer_t other) -> bool;
 
   void setAsRoot();
 
@@ -89,29 +100,29 @@ protected:
   auto getSharedFrom(TYPE *ptr) -> std::shared_ptr<TYPE>;
 
 private:
-  void recursiveAddChainLinks(NodeTypedefs::SharedPtr_t child, NodeIndex parentIdx);
+  void recursiveAddChainLinks(NodeSharedPtr_t child, NodeIndex parentIdx);
 
-  void recursiveRemoveChainLinks(NodeTypedefs::SharedPtr_t child, NodeIndex parentIdx);
+  void recursiveRemoveChainLinks(NodeSharedPtr_t child, NodeIndex parentIdx);
 
   NodeIndex index_;
-  NodeTypedefs::WeakPtr_t parent_;
-  NodeTypedefs::Container_t children_;
+  NodeWeakPtr_t parent_;
+  NodeContainer_t children_;
 };
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 EXTERN_C_BEGIN
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto createNode() -> NodeTypedefs::JsPtr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto createNode() -> NodeJsPtr_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API void deleteNode(NodeTypedefs::JsPtr_t node);
+D_MODULE_CORE_INTERFACE_EXPORT_API void deleteNode(NodeJsPtr_t node);
 
-D_MODULE_CORE_INTERFACE_EXPORT_API void addChildNode(NodeTypedefs::JsPtr_t root, NodeTypedefs::JsPtr_t node);
+D_MODULE_CORE_INTERFACE_EXPORT_API void addChildNode(NodeJsPtr_t root, NodeJsPtr_t node);
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getNodeIndex(NodeTypedefs::JsPtr_t node) -> lpcstr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getNodeIndex(NodeJsPtr_t node) -> lpcstr_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getChildNodes(NodeTypedefs::JsPtr_t node) -> NodeTypedefs::JsPtrArray_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getChildNodes(NodeJsPtr_t node) -> NodeJsPtrArray_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getNumOfChildNodes(NodeTypedefs::JsPtr_t node) -> i32_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getNumOfChildNodes(NodeJsPtr_t node) -> i32_t;
 
 EXTERN_C_END
 #endif

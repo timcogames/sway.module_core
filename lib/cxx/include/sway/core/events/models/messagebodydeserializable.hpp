@@ -1,5 +1,5 @@
-#ifndef SWAY_CORE_EVENTS_MODELS_MESSAGEBODYSERIALIZER_HPP
-#define SWAY_CORE_EVENTS_MODELS_MESSAGEBODYSERIALIZER_HPP
+#ifndef SWAY_CORE_EVENTS_MODELS_MESSAGEBODYDESERIALIZER_HPP
+#define SWAY_CORE_EVENTS_MODELS_MESSAGEBODYDESERIALIZER_HPP
 
 #include <sway/_stdafx.hpp>
 #include <sway/core/events/models/_typedefs.hpp>
@@ -16,10 +16,10 @@ struct IsAggregateStruct<TYPE, std::enable_if_t<std::is_class_v<std::remove_refe
                                                 std::is_aggregate_v<std::remove_reference_t<TYPE>>>> : std::true_type {
 };
 
-struct MessageBodySerializable final : public MessageBody {
-  DeserializerTypedefs::SharedPtr_t deserializer;
+struct MessageBodyDeserializable final : public MessageBody {
+  DeserializerSharedPtr_t deserializer;
 
-  MessageBodySerializable(DeserializerTypedefs::SharedPtr_t deserializer)
+  MessageBodyDeserializable(DeserializerSharedPtr_t deserializer)
       : deserializer(deserializer) {}
 
   template <typename TYPE, std::enable_if_t<IsAggregateStruct<TYPE>::value, i32_t> = 0>
@@ -30,4 +30,4 @@ struct MessageBodySerializable final : public MessageBody {
 
 }  // namespace sway::core
 
-#endif  // SWAY_CORE_EVENTS_MODELS_MESSAGEBODYSERIALIZER_HPP
+#endif  // SWAY_CORE_EVENTS_MODELS_MESSAGEBODYDESERIALIZER_HPP

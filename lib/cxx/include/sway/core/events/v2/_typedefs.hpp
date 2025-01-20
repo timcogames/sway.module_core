@@ -10,6 +10,7 @@ namespace sway::core::v2 {
  * @ingroup events_v2
  * @brief \~english Definition of event types. \~russian Определение типов событий.
  */
+template <typename TYPE>
 class Event;
 
 /**
@@ -19,14 +20,13 @@ class Event;
  */
 class EventTarget;
 
-namespace typedefs {
-
 /**
  * @ingroup events_v2 event
  * @brief \~english Class Event in @link events_v2 the events_v2 group@endlink. \~russian Класс Event в @link events_v2
  * the events_v2 group@endlink.
  */
-using EventPtr_t = Event *;
+template <typename TYPE>
+using EventPtr_t = Event<TYPE> *;
 
 /**
  * @ingroup events_v2 event_target
@@ -34,7 +34,11 @@ using EventPtr_t = Event *;
  * @link events_v2 the events_v2 group@endlink.
  */
 using EventTargetPtr_t = EventTarget *;
-}  // namespace typedefs
+
+// class EventData;
+// using EventDataRef_t = const EventData &;
+// using EventDataContainer_t = std::vector<EventData>;
+// using EventDataContainerRef_t = const Container_t &;
 
 }  // namespace sway::core::v2
 

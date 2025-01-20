@@ -17,13 +17,14 @@ namespace sway::core::v2 {
 /**
  * @brief \~english Represents the base class for events. \~russian Представляет собой базовый класс для событий.
  */
+template <typename TYPE>
 class Event {
 public:
 #pragma region "Constructor(s) & Destructor"
   /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
   /** @{ */
 
-  Event(const EventContext &context, const EventData &data, const MessageMetadata &meta = MessageMetadata())
+  Event(const EventContext &context, const EventData<TYPE> &data, const MessageMetadata &meta = MessageMetadata())
       : context_(context)
       , data_(data)
       , meta_(meta) {}
@@ -33,19 +34,22 @@ public:
   /** @} */
 #pragma endregion
 
+  /**
+   * @brief \~english Gets the event context. \~russian Получает контекст события.
+   */
   auto getContext() -> EventContext { return context_; }
 
-  auto getEventData() -> EventData { return data_; }
+  auto getEventData() -> EventData<TYPE> { return data_; }
 
   auto getMetadata() -> MessageMetadata { return meta_; }
 
-  auto getTarget() -> typedefs::EventTargetPtr_t { return target_; }
+  auto getTarget() -> EventTargetPtr_t { return target_; }
 
 private:
   EventContext context_;
-  EventData data_;
+  EventData<TYPE> data_;
   MessageMetadata meta_;
-  typedefs::EventTargetPtr_t target_; /*!< \~english Target object, on which the event has occurred.
+  EventTargetPtr_t target_; /*!< \~english Target object, on which the event has occurred.
     \~russian Целевой объект, на котором произошло событие. */
 };
 

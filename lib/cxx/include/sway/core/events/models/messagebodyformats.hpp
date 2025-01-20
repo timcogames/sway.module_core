@@ -1,13 +1,12 @@
-#ifndef SWAY_CORE_EVENTS_MODELS_MESSAGEFORMATS_HPP
-#define SWAY_CORE_EVENTS_MODELS_MESSAGEFORMATS_HPP
+#ifndef SWAY_CORE_EVENTS_MODELS_MESSAGEBODYFORMATS_HPP
+#define SWAY_CORE_EVENTS_MODELS_MESSAGEBODYFORMATS_HPP
 
 #include <sway/common/numeraltypes.hpp>
 
 namespace sway::core {
 
-enum class MessageFormat : u32_t {
-  NONE = 0,  //!< \~english None. \~russian Ничего.
-  PLAIN_TEXT,  //!< \~english Plain text. \~russian Обычный текст.
+enum class MessageBodyFormat : u32_t {
+  PLAIN_TEXT = 0,  //!< \~english Plain text. \~russian Обычный текст.
   JSON,  //!< \~english JSON format. \~russian Формат JSON.
   XML,  //!< \~english XML format. \~russian Формат XML.
   HTML,  //!< \~english HTML format. \~russian Формат HTML.
@@ -16,4 +15,4 @@ enum class MessageFormat : u32_t {
 
 }  // namespace sway::core
 
-#endif  // SWAY_CORE_EVENTS_MODELS_MESSAGEFORMATS_HPP
+#endif  // SWAY_CORE_EVENTS_MODELS_MESSAGEBODYFORMATS_HPP

@@ -2,13 +2,13 @@
 #include <sway/core/events/eventbus.hpp>
 #include <sway/core/foundation/event.hpp>
 #include <sway/core/foundation/eventdata.hpp>
-#include <sway/core/memory/safedeletemacros.hpp>
+#include <sway/core/memory/safedelete.hpp>
 #include <sway/core/misc/guid.hpp>
 
 #include <gtest/gtest.h>
 
-NS_SHORT_SWAY()
-NS_SHORT(core)
+using namespace sway;
+using namespace sway::core;
 
 struct TestEventData : EventData {
   std::string value;
@@ -34,11 +34,11 @@ public:
 
 #pragma region "Implementation Event methods"
 
-  [[nodiscard]] auto getId() const -> std::string { return id_; }
+  [[nodiscard]] auto getId() const -> std::string override { return id_; }
 
-  [[nodiscard]] auto getType() const -> u32_t { return type_; }
+  [[nodiscard]] auto getType() const -> u32_t override { return type_; }
 
-  [[nodiscard]] auto getData() const -> EventDataTypedefs::Ptr_t { return data_; }
+  [[nodiscard]] auto getData() const -> EventDataTypedefs::Ptr_t override { return data_; }
 
 #pragma endregion
 
@@ -71,7 +71,7 @@ protected:
 
   MTHD_OVERRIDE(void SetUp()) { evtbus_ = new EventBus(); }
 
-  MTHD_OVERRIDE(void TearDown()) { SAFE_DELETE_OBJECT(evtbus_); }
+  MTHD_OVERRIDE(void TearDown()) { safeDelete<EventBus>(evtbus_); }
 
 #pragma endregion
 

@@ -3,10 +3,11 @@
 
 #include <gtest/gtest.h>
 
-NS_SHORT_SWAY()
+using namespace sway;
+using namespace sway::core;
 
 TEST(Dictionary, add_string) {
-  core::Dictionary dict;
+  Dictionary dict;
 
   dict.addString("key", "value");
   EXPECT_EQ(dict.getString("key"), "value");

@@ -9,8 +9,8 @@
 namespace sway {
 
 template <>
-struct Representation<core::NodeIndexChainTypedefs::Container_t> {
-  static auto get(const core::NodeIndexChainTypedefs::Container_t &val) -> std::string {
+struct Representation<core::NodeIndexChainContainer_t> {
+  static auto get(const core::NodeIndexChainContainer_t &val) -> std::string {
     std::ostringstream oss;
 
     oss << "[";
@@ -24,7 +24,7 @@ struct Representation<core::NodeIndexChainTypedefs::Container_t> {
 template <>
 struct Representation<core::NodeIndex> {
   static auto get(const core::NodeIndex &value) -> std::string {
-    return Representation<core::NodeIndexChainTypedefs::Container_t>::get(value.getChain());
+    return Representation<core::NodeIndexChainContainer_t>::get(value.getChain());
   }
 };
 

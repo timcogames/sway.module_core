@@ -7,7 +7,14 @@
 namespace sway::core {
 
 struct Deserializer {
-  virtual auto deserialize(const std::string &data) -> DeserializerTypedefs::OutResult_t = 0;
+#pragma region "Define aliases"
+
+  using SharedPtr_t = DeserializerSharedPtr_t;
+  using OutResult_t = DeserializerOutResult_t;
+
+#pragma endregion
+
+  virtual auto deserialize(const std::string &data) -> DeserializerOutResult_t = 0;
 };
 
 }  // namespace sway::core

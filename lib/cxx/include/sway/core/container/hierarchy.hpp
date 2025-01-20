@@ -17,9 +17,16 @@ class Hierarchy : public Emscripteable<Hierarchy> {
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
+#pragma region "Define aliases"
+
+  using Ptr_t = HierarchyPtr_t;
+  using JsPtr_t = HierarchyJsPtr_t;
+
+#pragma endregion
+
 #pragma region "Static methods"
 
-  static auto findNode(NodeTypedefs::SharedPtr_t parent, const NodeIndex &nodeIdx) -> NodeTypedefs::OptionalSharedPtr_t;
+  static auto findNode(NodeSharedPtr_t parent, const NodeIndex &nodeIdx) -> NodeOptionalSharedPtr_t;
 
 #pragma endregion
 
@@ -34,22 +41,22 @@ public:
   /** @} */
 #pragma endregion
 
-  auto getRootNode() -> NodeTypedefs::SharedPtr_t;
+  auto getRootNode() -> NodeSharedPtr_t;
 
-  void setRootNode(NodeTypedefs::SharedPtr_t root);
+  void setRootNode(NodeSharedPtr_t root);
 
 private:
-  NodeTypedefs::SharedPtr_t root_;
+  NodeSharedPtr_t root_;
 };
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 EXTERN_C_BEGIN
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto createHierarchy() -> HierarchyTypedefs::JsPtr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto createHierarchy() -> HierarchyJsPtr_t;
 
-D_MODULE_CORE_INTERFACE_EXPORT_API void deleteHierarchy(HierarchyTypedefs::JsPtr_t hierarchy);
+D_MODULE_CORE_INTERFACE_EXPORT_API void deleteHierarchy(HierarchyJsPtr_t hierarchy);
 
-D_MODULE_CORE_INTERFACE_EXPORT_API auto getRootNode(HierarchyTypedefs::JsPtr_t hierarchy) -> NodeTypedefs::JsPtr_t;
+D_MODULE_CORE_INTERFACE_EXPORT_API auto getRootNode(HierarchyJsPtr_t hierarchy) -> NodeJsPtr_t;
 
 EXTERN_C_END
 #endif

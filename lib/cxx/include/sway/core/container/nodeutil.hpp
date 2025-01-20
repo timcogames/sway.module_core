@@ -8,12 +8,12 @@ namespace sway::core {
 
 struct NodeUtil {
   template <typename TYPE>
-  static auto cast(NodeTypedefs::SharedPtr_t ptr) -> std::shared_ptr<TYPE> {
+  static auto cast(NodeSharedPtr_t ptr) -> std::shared_ptr<TYPE> {
     return std::static_pointer_cast<TYPE>(ptr);
   }
 
   template <typename TYPE>
-  static auto cast(NodeTypedefs::OptionalSharedPtr_t ptr) -> std::shared_ptr<TYPE> {
+  static auto cast(NodeOptionalSharedPtr_t ptr) -> std::shared_ptr<TYPE> {
     return std::static_pointer_cast<TYPE>(ptr.value());
   }
 };

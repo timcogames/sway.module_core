@@ -7,12 +7,11 @@
 #include <sway/core/utilities/visitor/traverseractions.hpp>
 #include <sway/core/utilities/visitor/visitable.hpp>
 #include <sway/keywords.hpp>
-#include <sway/namespacemacros.hpp>
 
 #include <gtest/gtest.h>
 
-NS_SHORT_SWAY()
-NS_SHORT(core)
+using namespace sway;
+using namespace sway::core;
 
 class HierarchyTest : public testing::Test {
 public:
@@ -24,7 +23,7 @@ public:
 
 #pragma endregion
 
-  HierarchyTypedefs::Ptr_t hierarchy_;
+  HierarchyPtr_t hierarchy_;
 };
 
 class HierarchyChildTraverser : public Traverser {

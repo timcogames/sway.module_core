@@ -3,7 +3,7 @@
 
 #include <sway/_stdafx.hpp>
 #include <sway/core/foundation/eventapplier.hpp>
-#include <sway/core/memory/safedeletemacros.hpp>
+#include <sway/core/memory/safedelete.hpp>
 
 namespace sway::core {
 

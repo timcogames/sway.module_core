@@ -4,7 +4,7 @@
 #include <sway/_stdafx.hpp>
 #include <sway/core/events/models/io/serialization/deserializer.hpp>
 #include <sway/core/events/models/io/serialization/serializer.hpp>
-#include <sway/core/events/models/messagebodyserializable.hpp>
+#include <sway/core/events/models/messagebodydeserializable.hpp>
 #include <sway/core/events/models/messagecontent.hpp>
 #include <sway/emscriptenmacros.hpp>
 
@@ -14,10 +14,10 @@ class EventData : public MessageContent, public Serializer, public Deserializer 
   DECLARE_EMSCRIPTEN_BINDING()
 
 public:
-  static auto create(MessageFormat format, DeserializerTypedefs::SharedPtr_t deserializer) -> EventData {
+  static auto create(MessageBodyFormat format, DeserializerSharedPtr_t deserializer) -> EventData {
     EventData data;
     data.format = format;
-    data.body = std::make_shared<MessageBodySerializable>(deserializer);
+    data.body = std::make_shared<MessageBodyDeserializable>(deserializer);
     return data;
   }
 
@@ -25,7 +25,7 @@ public:
 
   virtual auto serialize() const -> std::string { return ""; }
 
-  virtual auto deserialize(const std::string &data) -> DeserializerTypedefs::OutResult_t { return nullptr; }
+  virtual auto deserialize(const std::string &data) -> DeserializerOutResult_t { return nullptr; }
 
 #pragma endregion
 };
