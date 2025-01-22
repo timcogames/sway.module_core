@@ -81,7 +81,7 @@ public:
 
   void setNodeIndex(const NodeIndexChainContainer_t &chain, int last);
 
-  auto getNodeIndex() -> NodeIndex;
+  auto getNodeIndex() const -> NodeIndex;
 
   void setParentNode(NodeWeakPtr_t parent);
 
@@ -100,10 +100,6 @@ protected:
   auto getSharedFrom(TYPE *ptr) -> std::shared_ptr<TYPE>;
 
 private:
-  void recursiveAddChainLinks(NodeSharedPtr_t child, NodeIndex parentIdx);
-
-  void recursiveRemoveChainLinks(NodeSharedPtr_t child, NodeIndex parentIdx);
-
   NodeIndex index_;
   NodeWeakPtr_t parent_;
   NodeContainer_t children_;

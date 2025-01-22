@@ -60,10 +60,10 @@ void Node::addChildNode(NodeSharedPtr_t child) {
   }
 
   child->setParentNode(weak_from_this());
-
   child->setNodeIndex(index_.getChain(), getNumOfChildNodes());
-  for (const auto &childNode : child->getChildNodes()) {
-    recursiveAddChainLinks(childNode, child->getNodeIndex());
+
+  for (const auto &item : child->getChildNodes()) {
+    NodeUtil::addChainLinks(item, child->getNodeIndex());
   }
 
   children_.push_back(child);
@@ -75,34 +75,12 @@ void Node::addChildNode(NodeSharedPtr_t child) {
   });
 }
 
-void Node::recursiveAddChainLinks(NodeSharedPtr_t child, NodeIndex parentIdx) {
-  auto chain = child->getNodeIndex().getChain();
-  auto parentChain = parentIdx.getChain();
-
-  chain.insert(chain.begin() + 1, parentChain.begin() + 1, parentChain.end());
-  child->setNodeIndex(chain, NODEIDX_NEGATIVE);
-
-  for (const auto &childNode : child->getChildNodes()) {
-    recursiveAddChainLinks(childNode, child->getNodeIndex());
-  }
-}
-
 void Node::removeChildNode(NodeSharedPtr_t child) {
   auto freedNodeIndexStr = Representation<NodeIndex>::get(child->getNodeIndex());
 
   // clang-format off
-  children_.erase(std::remove_if(children_.begin(), children_.end(), [&](NodeSharedPtr_t node) {
-    auto const result = node->equal(child);
-    if (result) {
-      for (auto childNode : child->getChildNodes()) {
-        recursiveRemoveChainLinks(childNode, getNodeIndex());
-      }
-
-      child->setParentNode(NodeWeakPtr_t());
-      child->setAsRoot();
-    }
-
-    return result;
+  children_.erase(std::remove_if(children_.begin(), children_.end(), [&child](const auto &item) { 
+    return item->equal(child);
   }), children_.end());
   // clang-format on
 
@@ -116,19 +94,6 @@ void Node::removeChildNode(NodeSharedPtr_t child) {
   eventdata->nodeidx = child->getNodeIndex();
   emit(
       EVT_REMOVED, std::make_unique<NodeRemovedEvent>(0, eventdata), [&](EventHandlerTypedefs::Ptr_t) { return true; });
-}
-
-void Node::recursiveRemoveChainLinks(NodeSharedPtr_t child, NodeIndex parentIdx) {
-  if (!parentIdx.chainEqual({NODEIDX_NEGATIVE})) {
-    auto chain = child->getNodeIndex().getChain();
-    chain.erase(chain.begin(), chain.begin() + parentIdx.getDepth());
-    chain.at(0) = NODEIDX_ROOT;
-    child->setNodeIndex(chain, NODEIDX_NEGATIVE);
-  }
-
-  for (const auto &childNode : child->getChildNodes()) {
-    recursiveRemoveChainLinks(childNode, parentIdx);
-  }
 }
 
 auto Node::getChildNodes() -> NodeContainer_t { return children_; }
@@ -162,7 +127,7 @@ auto Node::getNumOfChildNodes() const -> int { return static_cast<int>(children_
 
 void Node::setNodeIndex(const NodeIndexChainContainer_t &chain, int last) { index_.setChain(chain, last); }
 
-auto Node::getNodeIndex() -> NodeIndex { return index_; }
+auto Node::getNodeIndex() const -> NodeIndex { return index_; }
 
 void Node::setParentNode(NodeWeakPtr_t parent) { parent_ = parent; }
 

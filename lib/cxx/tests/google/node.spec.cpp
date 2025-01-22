@@ -97,6 +97,7 @@ TEST_F(NodeTest, add_remove) {
   ASSERT_EQ(doctor_->getNumOfChildNodes(), 3);
 
   supervisor_->removeChildNode(doctor_);
+  NodeUtil::breakTies(doctor_);
   EXPECT_TRUE(internCollection_[IDX_INTERN_B]->getNodeIndex().equal(NodeIndex({NODEIDX_ROOT, IDX_INTERN_B})));
 
   root_->addChildNode(doctor_);
