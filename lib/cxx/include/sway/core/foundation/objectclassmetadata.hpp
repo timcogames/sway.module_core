@@ -62,7 +62,11 @@ inline constexpr bool IsBaseOfTemplate_v = IsBaseOfTemplate_t<BASE, DERIVED>::va
 template <class BASE, class DERIVED>
 class Classable : public BASE {
 public:
-  typedef BASE super_t;
+  using super_t = BASE;
+
+  template <typename... ARGS>
+  Classable(ARGS... args)
+      : BASE(args...) {}
 
   static auto getClassInfo() -> ClassInfoConstPtr_t {
     static_assert(IsBaseOfTemplate_v<Super, DERIVED>, "DERIVED must inherit from Super");
@@ -94,28 +98,24 @@ private:
 
 }  // namespace sway::core
 
-// clang-format off
-
-#define DECLARE_SUPERCLASS()                                                                                \
-public:                                                                                                     \
+#define DECLARE_SUPERCLASS()                                                                    \
+public:                                                                                         \
   static auto getObjectClassMetadata() -> const sway::core::ObjectClassMetadata * { return 0; } \
-  PURE_VIRTUAL(auto getSuperclass() const -> const sway::core::ObjectClassMetadata *);          \
-  PURE_VIRTUAL(auto getClassname() const -> const std::string &);
+  PURE_VIRTUAL(auto getSuperclass() const->const sway::core::ObjectClassMetadata *);            \
+  PURE_VIRTUAL(auto getClassname() const->const std::string &);
 
-#define DECLARE_CLASS_METADATA(OBJ_CLASS, OBJ_SUPER)                                                             \
-public:                                                                                                               \
-  typedef OBJ_SUPER super_t;                                                                                     \
+#define DECLARE_CLASS_METADATA(OBJ_CLASS, OBJ_SUPER)                                                      \
+public:                                                                                                   \
+  typedef OBJ_SUPER super_t;                                                                              \
   static auto getObjectClassMetadata() -> const sway::core::ObjectClassMetadata * {                       \
     static const sway::core::ObjectClassMetadata metadata(#OBJ_CLASS, super_t::getObjectClassMetadata()); \
-    return &metadata;                                                                                                 \
-  }                                                                                                                   \
-  MTHD_VIRTUAL_OVERRIDE(auto getSuperclass() const -> const sway::core::ObjectClassMetadata *) {                  \
-    return getObjectClassMetadata()->getSuperclass();                                                                 \
-  }                                                                                                                   \
-  MTHD_VIRTUAL_OVERRIDE(auto getClassname() const -> const std::string &) {                                                   \
-    return getObjectClassMetadata()->getClassname();                                                                  \
+    return &metadata;                                                                                     \
+  }                                                                                                       \
+  MTHD_VIRTUAL_OVERRIDE(auto getSuperclass() const->const sway::core::ObjectClassMetadata *) {            \
+    return getObjectClassMetadata()->getSuperclass();                                                     \
+  }                                                                                                       \
+  MTHD_VIRTUAL_OVERRIDE(auto getClassname() const->const std::string &) {                                 \
+    return getObjectClassMetadata()->getClassname();                                                      \
   }
-
-// clang-format on
 
 #endif  // SWAY_CORE_FOUNDATION_OBJECTCLASSMETADATA_HPP

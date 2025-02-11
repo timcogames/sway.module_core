@@ -58,7 +58,9 @@ class EventHandlerWrapper : public emscripten::wrapper<EventHandler> {
 public:
   EMSCRIPTEN_WRAPPER(EventHandlerWrapper);
 
-  virtual auto invoke(EventTypedefs::UniquePtr_t &&event) -> bool override { return call<bool>("invoke", evt); }
+  virtual auto invoke(EventTypedefs::UniquePtr_t &&event) -> bool override {
+    return call<bool>("invoke", std::move(event));
+  }
 };
 
 /// @endcond

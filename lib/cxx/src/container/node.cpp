@@ -21,7 +21,8 @@ emscripten::class_<Node>("Node")
     .function("getParentNode", &Node::getParentNode, emscripten::allow_raw_pointers())
     .function("getChildAt", &Node::getChildAt, emscripten::allow_raw_pointers())
     .function("getNodeIndex", &Node::getNodeIndex)
-    .property("visible", &Node::isVisible, &Node::setVisible);
+    // .property("visible", &Node::isVisible, &Node::setVisible)
+    ;
 #endif
 EMSCRIPTEN_BINDING_END()
 
@@ -161,7 +162,7 @@ auto createNode() -> NodeJsPtr_t { return Node::toJs(new Node()); }
 
 void deleteNode(NodeJsPtr_t node) {
   auto obj = Node::fromJs(node);
-  safeDelete(obj);
+  safeDelete<NodePtr_t>(obj);
 }
 
 void addChildNode(NodeJsPtr_t root, NodeJsPtr_t node) {

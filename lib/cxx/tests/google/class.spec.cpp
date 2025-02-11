@@ -7,23 +7,31 @@
 using namespace sway;
 using namespace sway::core;
 
-class A {
+class A : public Super<A> {
 public:
+  A(const std::string &name) {}
+
   virtual ~A() = default;
 };
 
-class B : public Classable<Super<A>, B> {
+class B : public Classable<A, B> {
 public:
+  B(const std::string &name)
+      : Classable<A, B>(name) {}
+
   virtual ~B() = default;
 };
 
 class C : public Classable<B, C> {
 public:
+  C(const std::string &name)
+      : Classable<B, C>(name) {}
+
   virtual ~C() = default;
 };
 
 TEST(Class, get_super_info) {
-  auto impl = std::make_shared<C>();
+  auto impl = std::make_shared<C>("test");
   EXPECT_STREQ(impl->getClassName().c_str(), "C");
   EXPECT_STREQ(impl->getSuperInfo()->getClassName().c_str(), "B");
 }

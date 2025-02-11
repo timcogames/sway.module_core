@@ -1,4 +1,5 @@
 #include <sway/core/container/hierarchy.hpp>
+#include <sway/core/memory/safedelete.hpp>
 
 #ifdef EMSCRIPTEN_PLATFORM
 #  include <emscripten/emscripten.h>
@@ -49,7 +50,7 @@ auto createHierarchy() -> HierarchyJsPtr_t { return Hierarchy::toJs(new Hierarch
 
 void deleteHierarchy(HierarchyJsPtr_t hierarchy) {
   auto obj = Hierarchy::fromJs(hierarchy);
-  safeDelete(obj);
+  safeDelete<HierarchyPtr_t>(obj);
 }
 
 auto getRootNode(HierarchyJsPtr_t hierarchy) -> NodeJsPtr_t {
