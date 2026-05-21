@@ -3,6 +3,7 @@
 
 #include <sway/_stdafx.hpp>
 #include <sway/core/utilities/_typedefs.hpp>
+#include <sway/emscriptenmacros.hpp>
 #include <sway/types.hpp>
 
 namespace sway::core {
@@ -14,6 +15,8 @@ class Traverser;
  * см. паттерн Visitor.
  */
 class Visitable {
+  DECLARE_EMSCRIPTEN_BINDING()
+
 public:
 #pragma region "Constructor(s) & Destructor"
   /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
@@ -28,7 +31,7 @@ public:
   /** \~english @name Pure virtual methods */ /** \~russian @name Чисто виртуальные методы */
   /** @{ */
 
-  virtual auto traverse(typedefs::TraverserPtr_t traverser) -> u32_t = 0;
+  virtual auto traverse(typedefs::TraverserSharedPtr_t traverser) -> u32_t = 0;
 
   /** @} */
 #pragma endregion

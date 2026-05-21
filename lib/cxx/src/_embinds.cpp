@@ -6,6 +6,8 @@
 #include <sway/core/foundation/objectclassmetadata.hpp>
 #include <sway/core/foundation/uniqueable.hpp>
 #include <sway/core/misc/optional.hpp>
+#include <sway/core/utilities/visitor/traverser.hpp>
+#include <sway/core/utilities/visitor/visitable.hpp>
 
 using namespace sway;
 using namespace sway::core;
@@ -34,6 +36,8 @@ EMSCRIPTEN_BINDINGS(sway_core_misc) {
 }
 
 EMSCRIPTEN_BINDINGS(sway_core_container) {
+  Traverser::bindEmscriptenClass();
+  Visitable::bindEmscriptenClass();
   ObjectClassMetadata::bindEmscriptenClass();
   Event::bindEmscriptenClass();
   EventData::bindEmscriptenClass();

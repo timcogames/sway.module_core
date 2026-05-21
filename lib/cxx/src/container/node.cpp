@@ -15,6 +15,8 @@ EMSCRIPTEN_BINDING_BEGIN(Node)
 #if (defined EMSCRIPTEN_PLATFORM && defined EMSCRIPTEN_USE_BINDINGS)
 emscripten::class_<Node>("Node")
     .smart_ptr_constructor("Node", &std::make_shared<Node>)
+    .function("traverse", emscripten::select_overload<u32_t(typedefs::TraverserSharedPtr_t)>(&Node::traverse),
+        emscripten::allow_raw_pointer<emscripten::arg<0>>())
     .function("addChildNode", &Node::addChildNode, emscripten::allow_raw_pointers())
     .function("removeChildNode", &Node::removeChildNode, emscripten::allow_raw_pointers())
     .function("getNumOfChildNodes", &Node::getNumOfChildNodes)
@@ -32,7 +34,7 @@ Node::Node()
 
 Node::~Node() { children_.clear(); }
 
-auto Node::traverse(typedefs::TraverserPtr_t traverser) -> u32_t {
+auto Node::traverse(typedefs::TraverserSharedPtr_t traverser) -> u32_t {
   switch (static_cast<TraverserAction::Enum>(traverser->visit(this))) {
     case TraverserAction::Enum::CONTINUE:
       for (const auto &node : getChildNodes()) {
@@ -85,9 +87,9 @@ void Node::removeChildNode(NodeSharedPtr_t child) {
   }), children_.end());
   // clang-format on
 
-  auto eventDataV2 = v2::EventData<Dictionary>();
-  eventDataV2.userdata = reinterpret_cast<void *>(&child);
-  eventDataV2.content.addString("freed_node_index", freedNodeIndexStr);
+  auto eventDataV2 = new v2::EventData<Dictionary>();
+  eventDataV2->raw = reinterpret_cast<void *>(&child);
+  eventDataV2->content.addString("freed_node_index", freedNodeIndexStr);
   // emit(EVT_FREED, std::make_unique<v2::Event>(v2::EventContext(), eventDataV2),
   //     [&](EventHandlerTypedefs::Ptr_t) { return true; });
 

@@ -4,18 +4,19 @@
 #include <sway/_stdafx.hpp>
 #include <sway/core/events/models/messagebodydeserializable.hpp>
 #include <sway/core/events/models/messagecontent.hpp>
+#include <sway/core/events/v2/_typedefs.hpp>
 
 namespace sway::core::v2 {
 
-struct Rawable {
-  void *userdata;
+struct UserData {
+  void *raw;
 };
 
 template <typename TYPE>
-class EventData {};
+class EventData : public UserData {};
 
 template <>
-struct EventData<MessageContent> : public Rawable {
+struct EventData<MessageContent> : public UserData {
   static auto create(MessageBodyFormat format, DeserializerSharedPtr_t deserializer) -> EventData {
     EventData data;
     data.content.format = format;
@@ -27,7 +28,7 @@ struct EventData<MessageContent> : public Rawable {
 };
 
 template <>
-struct EventData<Dictionary> : public Rawable {
+struct EventData<Dictionary> : public UserData {
   Dictionary content;
 };
 

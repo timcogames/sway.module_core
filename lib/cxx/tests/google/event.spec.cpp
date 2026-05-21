@@ -9,7 +9,7 @@ using namespace sway;
 using namespace sway::core;
 
 TEST(Event_v2, ctor_def) {
-  auto event = v2::Event(v2::EventContext(), v2::EventData<MessageContent>());
+  auto event = v2::Event(v2::EventContext(), new v2::EventData<MessageContent>());
 
   auto eventContext = event.getContext();
   auto metadata = event.getMetadata();

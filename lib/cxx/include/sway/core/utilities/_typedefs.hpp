@@ -12,6 +12,7 @@ class Observer;
 namespace typedefs {
 
 using TraverserPtr_t = Traverser *;
+using TraverserSharedPtr_t = std::shared_ptr<Traverser>;
 
 using VisitablePtr_t = Visitable *;
 

@@ -63,7 +63,7 @@ public:
 
 #pragma region "Overridden Visitable methods"
 
-  virtual auto traverse(typedefs::TraverserPtr_t traverser) -> u32_t override;
+  virtual auto traverse(typedefs::TraverserSharedPtr_t traverser) -> u32_t override;
 
 #pragma endregion
 

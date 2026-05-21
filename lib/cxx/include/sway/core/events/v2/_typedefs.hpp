@@ -5,13 +5,21 @@
 
 namespace sway::core::v2 {
 
+template <typename RETURN, typename PARAM>
+class Delegate;
+
+template <typename RETURN, typename PARAM>
+using DelegatePtr_t = Delegate<RETURN, PARAM> *;
+
 /**
  * @defgroup event The Event typedefs
  * @ingroup events_v2
  * @brief \~english Definition of event types. \~russian Определение типов событий.
  */
-template <typename TYPE>
 class Event;
+
+class UserData;
+using UserDataPtr_t = UserData *;
 
 /**
  * @defgroup event_target The EventTaget typedefs
@@ -25,8 +33,8 @@ class EventTarget;
  * @brief \~english Class Event in @link events_v2 the events_v2 group@endlink. \~russian Класс Event в @link events_v2
  * the events_v2 group@endlink.
  */
-template <typename TYPE>
-using EventPtr_t = Event<TYPE> *;
+using EventPtr_t = Event *;
+using EventUniquePtr_t = std::unique_ptr<Event>;
 
 /**
  * @ingroup events_v2 event_target
