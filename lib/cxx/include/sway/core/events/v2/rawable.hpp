@@ -3,27 +3,23 @@
 
 namespace sway::core::v2 {
 
+template <typename TYPE>
 class Rawable {
 public:
 #pragma region "Constructor(s) & Destructor"
   /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
   /** @{ */
 
-  Rawable(void *raw)
+  explicit Rawable(TYPE *raw)
       : raw_(raw) {}
-
-  ~Rawable() = default;
 
   /** @} */
 #pragma endregion
 
-  template <typename TYPE>
-  auto getRawAs() -> void * {
-    return static_cast<TYPE *>(raw_);
-  }
+  auto get() const -> TYPE * { return raw_; }
 
 private:
-  void *raw_;
+  TYPE *raw_;
 };
 
 }  // namespace sway::core::v2

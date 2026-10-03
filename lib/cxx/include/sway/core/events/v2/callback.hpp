@@ -2,49 +2,46 @@
 #define SWAY_CORE_EVENTS_V2_CALLBACK_HPP
 
 #include <sway/_stdafx.hpp>
-#include <sway/core/events/v2/_typedefs.hpp>
-#include <sway/core/events/v2/rawable.hpp>
+
+#include <cassert>  // assert
 
 namespace sway::core::v2 {
 
 template <typename RETURN, typename PARAM>
 class Callback {
 public:
-#pragma region "Static methods"
-
-  static void call(DelegatePtr_t<RETURN, PARAM> delegate, PARAM param) {
-    if (delegate != nullptr) {
-      (*delegate)(param);
-    }
-  }
-
-#pragma endregion
+  virtual ~Callback() = default;
 
 #pragma region "Pure virtual methods"
 
-  virtual RETURN invoke(PARAM param) = 0;
+  virtual auto invoke(PARAM param) -> RETURN = 0;
 
 #pragma endregion
 };
 
-template <typename RETURN, typename PARAM, typename TYPE, typename METHOD>
-class MethodCallback : public Callback<RETURN, PARAM>, public Rawable {
+template <typename RETURN, typename PARAM, typename TYPE>
+class MethodCallback : public Callback<RETURN, PARAM> {
 public:
+  using MethodPtr_t = RETURN (TYPE::*)(PARAM);
+
 #pragma region "Constructor(s) & Destructor"
   /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
   /** @{ */
 
-  MethodCallback(void *object, METHOD method)
-      : Rawable(object)
-      , method_(method) {}
+  MethodCallback(TYPE *object, MethodPtr_t method)
+      : object_(object)
+      , method_(method) {
+    assert(object_ != nullptr);
+  }
 
   /** @} */
 #pragma endregion
 
-  virtual RETURN invoke(PARAM param) { return (getRawAs<TYPE>()->*method_)(param); }
+  auto invoke(PARAM param) override -> RETURN { return (object_->*method_)(param); }
 
 private:
-  METHOD method_;
+  TYPE *object_;
+  MethodPtr_t method_;
 };
 
 template <typename RETURN, typename PARAM>
@@ -54,13 +51,15 @@ public:
   /** \~english @name Constructor(s) & Destructor */ /** \~russian @name Конструктор(ы) и Деструктор */
   /** @{ */
 
-  StaticCallback(RETURN (*func)(PARAM))
-      : func_(func) {}
+  explicit StaticCallback(RETURN (*func)(PARAM))
+      : func_(func) {
+    assert(func_ != nullptr);
+  }
 
   /** @} */
 #pragma endregion
 
-  virtual RETURN invoke(PARAM param) { return (*func_)(param); }
+  auto invoke(PARAM param) -> RETURN override { return func_(param); }
 
 private:
   RETURN (*func_)(PARAM);

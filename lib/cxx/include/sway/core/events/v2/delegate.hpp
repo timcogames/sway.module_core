@@ -14,21 +14,19 @@ public:
   /** @{ */
 
   Delegate(RETURN (*func)(PARAM))
-      : callback_(new StaticCallback<RETURN, PARAM>(func)) {}
+      : callback_(std::make_unique<StaticCallback<RETURN, PARAM>>(func)) {}
 
-  template <typename TYPE, typename METHOD>
-  Delegate(TYPE *object, METHOD method)
-      : callback_(new MethodCallback<RETURN, PARAM, TYPE, METHOD>(object, method)) {}
-
-  ~Delegate() { delete callback_; }
+  template <typename TYPE>
+  Delegate(TYPE *object, RETURN (TYPE::*method)(PARAM))
+      : callback_(std::make_unique<MethodCallback<RETURN, PARAM, TYPE>>(object, method)) {}
 
   /** @} */
 #pragma endregion
 
-  RETURN operator()(PARAM param) { return callback_->invoke(param); }
+  auto operator()(PARAM param) const -> RETURN { return callback_->invoke(param); }
 
 private:
-  Callback<RETURN, PARAM> *callback_;
+  std::unique_ptr<Callback<RETURN, PARAM>> callback_;
 };
 
 }  // namespace sway::core::v2
