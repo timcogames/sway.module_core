@@ -23,7 +23,7 @@ auto Plugin::isLoaded() const -> bool { return handle_ != nullptr; }
 
 auto Plugin::getInfo() const -> PluginInfo { return this->getMethod<PluginGetInfoFunc_t>("pluginGetInfo").call(); }
 
-void Plugin::initialize(PluginFunctionSet *functions) {
+void Plugin::initialize(PluginFunctionSetBase *functions) {
   this->getMethod<PluginInitializeFunc_t>("pluginInitialize").call(functions);
 }
 

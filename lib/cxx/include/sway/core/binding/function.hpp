@@ -8,17 +8,17 @@
 namespace sway::core {
 
 template <typename>
-class TFunction;
+class TFunctionPointer;
 
 template <typename RETURN_TYPE, typename... ARGS>
-class TFunction<RETURN_TYPE(ARGS...)> {
+class TFunctionPointer<RETURN_TYPE(ARGS...)> {
 public:
-  TFunction()
+  TFunctionPointer()
       : invoker_(nullptr) {}
 
-  TFunction(decltype(nullptr)) {}
+  TFunctionPointer(decltype(nullptr)) {}
 
-  TFunction(ProcAddress_t ptr)
+  TFunctionPointer(ProcAddress_t ptr)
       : invoker_(ptr) {}
 
   explicit operator bool() const { return invoker_ != nullptr; }
@@ -27,7 +27,9 @@ public:
 
   auto operator!=(decltype(nullptr)) const -> bool { return (invoker_ != nullptr); }
 
-  auto operator!=(const TFunction<RETURN_TYPE(ARGS...)> &func) const -> bool { return invoker_ != func.invoker_; }
+  auto operator!=(const TFunctionPointer<RETURN_TYPE(ARGS...)> &func) const -> bool {
+    return invoker_ != func.invoker_;
+  }
 
   auto operator()(ARGS... args) -> RETURN_TYPE { return call(args...); }
 

@@ -4,7 +4,7 @@
 
 NS_SHORT_SWAY()
 
-typedef core::TFunction<void()> TestFunc_t;
+typedef core::TFunctionPointer<void()> TestFunc_t;
 
 TEST(FunctionTest, base) {
   TestFunc_t func;

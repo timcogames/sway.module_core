@@ -11,13 +11,13 @@
 
 namespace sway::core {
 
-struct PluginFunctionSet {
-  virtual ~PluginFunctionSet() = default;
+struct PluginFunctionSetBase {
+  virtual ~PluginFunctionSetBase() = default;
 };
 
 using DlibHandle_t = void *;
-using PluginGetInfoFunc_t = TFunction<PluginInfo()>;
-using PluginInitializeFunc_t = TFunction<void(PluginFunctionSet *)>;
+using PluginGetInfoFunc_t = TFunctionPointer<PluginInfo()>;
+using PluginInitializeFunc_t = TFunctionPointer<void(PluginFunctionSetBase *)>;
 
 class Plugin {
 public:
@@ -36,7 +36,7 @@ public:
 
   [[nodiscard]] auto getInfo() const -> PluginInfo;
 
-  void initialize(PluginFunctionSet *functions);
+  void initialize(PluginFunctionSetBase *functions);
 
   template <typename CALLBACK>
   auto getMethod(lpcstr_t name) const -> CALLBACK {

@@ -17,7 +17,7 @@ function(create_emscripten_library_private #[[ARG1]] target
   gen_emscripten_target_name(CURRENT_TARGET_NAME ${target} ${environment} ${compilation})
   set(${target_name} ${CURRENT_TARGET_NAME} PARENT_SCOPE)
 
-  set_emscripten_environment(${environment} CURRENT_ENVIRONMENT)
+  set_emscripten_environment(${environment} CURRENT_ENVIRONMENT ON OFF)
   set_emscripten_compilation(${compilation} CURRENT_COMPILATION)
 
   add_executable(${CURRENT_TARGET_NAME} $<TARGET_OBJECTS:${target}_obj>)
