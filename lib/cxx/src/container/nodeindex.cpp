@@ -76,9 +76,9 @@ auto NodeIndex::getDepth() const -> int { return (int)chainLinks_.size(); }
 
 auto NodeIndex::getIndexAt(int idx) const -> NodeIndexChainItem_t { return chainLinks_[idx]; }
 
-auto NodeIndex::equal(const NodeIndex &other) -> bool { return chainEqual(other.getChain()); }
+auto NodeIndex::equal(const NodeIndex &other) const -> bool { return chainEqual(other.getChain()); }
 
-auto NodeIndex::chainEqual(const NodeIndexChainContainer_t &other) -> bool {
+auto NodeIndex::chainEqual(const NodeIndexChainContainer_t &other) const -> bool {
   return chainLinks_.size() == other.size() && std::equal(chainLinks_.begin(), chainLinks_.end(), other.begin());
 }
 

@@ -19,7 +19,15 @@ void NodeUtil::addChainLinks(NodeSharedPtr_t node, NodeIndex parent) {
 void NodeUtil::remChainLinks(NodeSharedPtr_t node, NodeIndex parent) {
   if (!parent.chainEqual({NODEIDX_NEGATIVE})) {
     auto chain = node->getNodeIndex().getChain();
+    if (parent.getDepth() >= static_cast<int>(chain.size())) {
+      return;
+    }
+
     chain.erase(chain.begin(), chain.begin() + parent.getDepth());
+    if (chain.empty()) {
+      return;
+    }
+
     chain.at(0) = NODEIDX_ROOT;
     node->setNodeIndex(chain, NODEIDX_NEGATIVE);
   }
@@ -30,8 +38,14 @@ void NodeUtil::remChainLinks(NodeSharedPtr_t node, NodeIndex parent) {
 }
 
 void NodeUtil::breakTies(NodeSharedPtr_t node) {
+  auto parentOpt = node->getParentNode();
+  if (!parentOpt.has_value()) {
+    return;
+  }
+
+  auto parentIdx = parentOpt.value()->getNodeIndex();
   for (auto item : node->getChildNodes()) {
-    NodeUtil::remChainLinks(item, node->getParentNode().value()->getNodeIndex());
+    NodeUtil::remChainLinks(item, parentIdx);
   }
 
   node->setParentNode(NodeWeakPtr_t());

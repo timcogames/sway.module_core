@@ -73,9 +73,9 @@ public:
 
   [[nodiscard]] auto getIndexAt(int idx) const -> NodeIndexChainItem_t;
 
-  auto equal(const NodeIndex &other) -> bool;
+  auto equal(const NodeIndex &other) const -> bool;
 
-  auto chainEqual(const NodeIndexChainContainer_t &other) -> bool;
+  auto chainEqual(const NodeIndexChainContainer_t &other) const -> bool;
 
 private:
   NodeIndexChainContainer_t chainLinks_;

@@ -28,13 +28,19 @@ EMSCRIPTEN_BINDING_END()
 Hierarchy::Hierarchy() { root_ = std::make_shared<Node>(); }
 
 auto Hierarchy::findNode(NodeSharedPtr_t parent, const NodeIndex &nodeIdx) -> NodeOptionalSharedPtr_t {
-  NodeOptionalSharedPtr_t retrieved = parent;
+  NodeSharedPtr_t retrieved = parent;
   for (auto i = NODEIDX_ROOT_DEPTH; i < nodeIdx.getDepth(); ++i) {
-    if (nodeIdx.getIndexAt(i) >= retrieved->get()->getNumOfChildNodes()) {
+    const auto idx = nodeIdx.getIndexAt(i);
+    if (idx < 0 || idx >= retrieved->getNumOfChildNodes()) {
       return std::nullopt;
     }
 
-    retrieved = retrieved->get()->getChildAt(nodeIdx.getIndexAt(i)).value();
+    auto child = retrieved->getChildAt(idx);
+    if (!child.has_value()) {
+      return std::nullopt;
+    }
+
+    retrieved = child.value();
   }
 
   return retrieved;

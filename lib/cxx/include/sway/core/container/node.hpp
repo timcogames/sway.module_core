@@ -71,7 +71,7 @@ public:
 
   void removeChildNode(NodeSharedPtr_t child);
 
-  auto getChildNodes() -> NodeContainer_t;
+  [[nodiscard]] auto getChildNodes() const -> NodeContainer_t;
 
   [[nodiscard]] auto getChildNode(const NodeIndex &idx) const -> NodeSharedPtr_t;
 
@@ -85,13 +85,13 @@ public:
 
   void setParentNode(NodeWeakPtr_t parent);
 
-  auto getParentNode() -> NodeOptionalSharedPtr_t;
+  auto getParentNode() const -> NodeOptionalSharedPtr_t;
 
   auto getParentNodeByDepth(i32_t depth) -> NodeSharedPtr_t;
 
-  auto equal(NodeSharedPtr_t other) -> bool;
+  [[nodiscard]] auto equal(const NodeSharedPtr_t &other) const -> bool;
 
-  auto chainEqual(NodeIndexChainContainer_t other) -> bool;
+  [[nodiscard]] auto chainEqual(const NodeIndexChainContainer_t &other) const -> bool;
 
   void setAsRoot();
 

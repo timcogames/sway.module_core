@@ -56,9 +56,9 @@ auto Node::traverse(typedefs::TraverserSharedPtr_t traverser) -> u32_t {
 
 void Node::addChildNode(NodeSharedPtr_t child) {
   auto childParentNode = child->getParentNode();
-  if (childParentNode) {
-    printf("%s %s\n", Representation<NodeIndex>::get(childParentNode->get()->getNodeIndex()).c_str(),
-        "Node alread has parent");
+  if (childParentNode.has_value()) {
+    auto parent = childParentNode.value();
+    printf("%s %s\n", Representation<NodeIndex>::get(parent->getNodeIndex()).c_str(), "Node already has parent");
     return;
   }
 
@@ -99,7 +99,7 @@ void Node::removeChildNode(NodeSharedPtr_t child) {
       EVT_REMOVED, std::make_unique<NodeRemovedEvent>(0, eventdata), [&](EventHandlerTypedefs::Ptr_t) { return true; });
 }
 
-auto Node::getChildNodes() -> NodeContainer_t { return children_; }
+auto Node::getChildNodes() const -> NodeContainer_t { return children_; }
 
 auto Node::getChildNode(const NodeIndex &idx) const -> NodeSharedPtr_t {
   auto iter = children_.begin();
@@ -115,12 +115,13 @@ auto Node::getChildNode(const NodeIndex &idx) const -> NodeSharedPtr_t {
     return *iter;
   }
 
-  return std::make_shared<Node>();
+  return nullptr;
 }
 
-auto Node::getChildAt(int targetIdx) const -> NodeOptionalSharedPtr_t {
-  if (targetIdx >= 0 && targetIdx < getNumOfChildNodes()) {
-    return children_[targetIdx];
+auto Node::getChildAt(i32_t targetIdx) const -> NodeOptionalSharedPtr_t {
+  const auto count = getNumOfChildNodes();
+  if (targetIdx >= 0 && targetIdx < count) {
+    return children_[static_cast<std::size_t>(targetIdx)];
   }
 
   return std::nullopt;
@@ -134,7 +135,7 @@ auto Node::getNodeIndex() const -> NodeIndex { return index_; }
 
 void Node::setParentNode(NodeWeakPtr_t parent) { parent_ = parent; }
 
-auto Node::getParentNode() -> NodeOptionalSharedPtr_t {
+auto Node::getParentNode() const -> NodeOptionalSharedPtr_t {
   auto ptr = parent_.lock();
   if (!ptr) {
     return std::nullopt;
@@ -146,7 +147,12 @@ auto Node::getParentNode() -> NodeOptionalSharedPtr_t {
 auto Node::getParentNodeByDepth(int depth) -> NodeSharedPtr_t {
   auto node = shared_from_this();
   while (depth != 0 && node->getNodeIndex().getDepth() > depth) {
-    node = getParentNode().value();
+    auto parentOpt = getParentNode();
+    if (!parentOpt.has_value()) {
+      break;
+    }
+
+    node = parentOpt.value();
   }
 
   return node;
@@ -154,9 +160,9 @@ auto Node::getParentNodeByDepth(int depth) -> NodeSharedPtr_t {
 
 void Node::setAsRoot() { index_.setAsRoot(); }
 
-auto Node::equal(NodeSharedPtr_t other) -> bool { return other->chainEqual(index_.getChain()); }
+auto Node::equal(const NodeSharedPtr_t &other) const -> bool { return other->chainEqual(index_.getChain()); }
 
-auto Node::chainEqual(NodeIndexChainContainer_t other) -> bool { return index_.chainEqual(other); }
+auto Node::chainEqual(const NodeIndexChainContainer_t &other) const -> bool { return index_.chainEqual(other); }
 
 #if (defined EMSCRIPTEN_PLATFORM && !defined EMSCRIPTEN_USE_BINDINGS)
 
