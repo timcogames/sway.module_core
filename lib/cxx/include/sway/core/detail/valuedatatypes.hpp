@@ -8,20 +8,21 @@
 namespace sway::core {
 
 // clang-format off
-DECLARE_ENUM(ValueDataType, 
-  BYTE, 
-  SHORT, 
-  INT, 
-  LONG, 
-  UBYTE, 
-  USHORT, 
-  UINT, 
-  ULONG, 
-  FLOAT, 
-  DOUBLE, 
-  STRING
-)
+#define VALUE_DATA_TYPE_LIST(ITEM) \
+  ITEM(BYTE, 1) \
+  ITEM(SHORT, 2) \
+  ITEM(INT, 3) \
+  ITEM(LONG, 4) \
+  ITEM(UBYTE, 5) \
+  ITEM(USHORT, 6) \
+  ITEM(UINT, 7) \
+  ITEM(ULONG, 8) \
+  ITEM(FLOAT, 9) \
+  ITEM(DOUBLE, 10) \
+  ITEM(STRING, 11)
 // clang-format on
+
+DECLARE_ENUM_U32(ValueDataType, VALUE_DATA_TYPE_LIST)
 
 template <typename TYPE>
 struct ValueDataTypeToEnum {};

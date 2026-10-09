@@ -8,7 +8,14 @@
 
 namespace sway::core {
 
-DECLARE_ENUM(TimerStatus, STOPPED, RUNNING, PAUSED)
+// clang-format off
+#define TIMER_STATUS_LIST(ITEM) \
+  ITEM(STOPPED, 1) \
+  ITEM(RUNNING, 2) \
+  ITEM(PAUSED, 3)
+// clang-format on
+
+DECLARE_ENUM_U32(TimerStatus, TIMER_STATUS_LIST)
 
 struct TimerStatusUtil {
   template <typename INPUT_DATA_TYPE, typename = EnableIf_t<std::is_same_v<INPUT_DATA_TYPE, u32_t>>>

@@ -25,7 +25,14 @@ namespace sway::core {
  * @brief Прервать обход.
  */
 
-DECLARE_ENUM(TraverserAction, CONTINUE, PRUNE, ABORT)
+// clang-format off
+#define TRAVERSER_ACTION_LIST(ITEM) \
+  ITEM(CONTINUE, 1) \
+  ITEM(PRUNE, 2) \
+  ITEM(ABORT, 3)
+// clang-format on
+
+DECLARE_ENUM_U32(TraverserAction, TRAVERSER_ACTION_LIST)
 
 }  // namespace sway::core
 

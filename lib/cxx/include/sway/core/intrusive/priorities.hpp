@@ -5,7 +5,14 @@
 
 namespace sway::core {
 
-DECLARE_ENUM(Priority, LOW = 10, NORMAL = 20, HIGH = 30)
+// clang-format off
+#define PRIORITY_LIST(ITEM) \
+  ITEM(LOW, 10) \
+  ITEM(NORMAL, 20) \
+  ITEM(HIGH, 30)
+// clang-format on
+
+DECLARE_ENUM_U32(Priority, PRIORITY_LIST)
 
 }  // namespace sway::core
 

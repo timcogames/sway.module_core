@@ -51,7 +51,7 @@ auto Node::traverse(typedefs::TraverserSharedPtr_t traverser) -> u32_t {
       break;
   }
 
-  return toBase(TraverserAction::Enum::NONE);
+  return TraverserAction::detail::kInitial;
 }
 
 void Node::addChildNode(NodeSharedPtr_t child) {
