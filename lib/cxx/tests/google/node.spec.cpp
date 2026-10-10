@@ -47,9 +47,9 @@ public:
     root_->addChildNode(supervisor_);
   }
 
-  auto handleAddNode(const EventTypedefs::UniquePtr_t &evt) -> bool { return true; }
+  auto handleAddNode(const EventTypedefs::SharedPtr_t &evt) -> bool { return true; }
 
-  auto handleRemoveNode(const EventTypedefs::UniquePtr_t &evt) -> bool { return true; }
+  auto handleRemoveNode(const EventTypedefs::SharedPtr_t &evt) -> bool { return true; }
 
   void addDoctorToSupervisor() {
     doctor_ = std::make_shared<Node>();

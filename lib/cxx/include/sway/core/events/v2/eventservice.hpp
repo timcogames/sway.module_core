@@ -21,7 +21,7 @@ public:
   /** @} */
 #pragma endregion
 
-  void addEventListener(EventListener listener);
+  void addEventListener(std::shared_ptr<EventListener> listener);
 
   // on_message = new Delegate<void, lpstr_t>(this, &Manager::handleResponse);
   // ws.addEventListener("on_message", on_message);
@@ -37,7 +37,7 @@ public:
     // }
   }
 
-  void removeEventListener(EventListener listener);
+  void removeEventListener(std::shared_ptr<EventListener> listener);
 
   void fireEvent(EventUniquePtr_t &&event) {}
 

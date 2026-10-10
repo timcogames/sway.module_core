@@ -20,7 +20,7 @@ public:
   /** @} */
 #pragma endregion
 
-  void addToQueue(EventTypedefs::UniquePtr_t event) { events_.emplace(std::move(event)); }
+  void addToQueue(EventTypedefs::SharedPtr_t event) { events_.emplace(std::move(event)); }
 
   void process() {
     while (!events_.empty()) {
@@ -31,7 +31,7 @@ public:
   }
 
 private:
-  EventTypedefs::QueueUniquePtr_t events_{};
+  EventTypedefs::QueueSharedPtr_t events_{};
 };
 
 }  // namespace sway::core

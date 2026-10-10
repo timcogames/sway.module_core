@@ -12,8 +12,8 @@ namespace sway::core {
 template <typename T>
 struct OptionalAccess {
   static auto value(const T &opt) -> emscripten::val { return emscripten::val(opt.value()); }
-  static auto has_value(T &opt) -> bool { return opt.has_value(); }
-  static void reset(T &opt) { opt.reset(); }
+  static auto has_value(const T &opt) -> bool { return opt.has_value(); }
+  // static void reset(T &opt) { opt.reset(); }
 };
 
 template <typename T>
@@ -23,8 +23,8 @@ auto register_optional(lpcstr_t name) -> emscripten::class_<std::optional<T>> {
   return emscripten::class_<OptionalType>(name)
       .template constructor<>()
       .function("has_value", OptionalAccess<OptionalType>::has_value)
-      .function("value", OptionalAccess<OptionalType>::value)
-      .function("reset", OptionalAccess<OptionalType>::reset);
+      .function("value", OptionalAccess<OptionalType>::value);
+  // .function("reset", OptionalAccess<OptionalType>::reset);
 }
 
 #endif  // EMSCRIPTEN_PLATFORM && EMSCRIPTEN_USE_BINDINGS

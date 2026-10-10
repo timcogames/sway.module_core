@@ -2,8 +2,8 @@
 
 namespace sway::core::v2 {
 
-void EventService::addEventListener(EventListener listener) {}
+void EventService::addEventListener(std::shared_ptr<EventListener> listener) {}
 
-void EventService::removeEventListener(EventListener listener) {}
+void EventService::removeEventListener(std::shared_ptr<EventListener> listener) {}
 
 }  // namespace sway::core::v2

@@ -21,7 +21,7 @@ public:
 
   void unsubscribe(Subscriber_t subscriber);
 
-  void handle(EventTypedefs::UniquePtr_t &evt);
+  void handle(EventTypedefs::SharedPtr_t &evt);
 };
 
 }  // namespace sway::core

@@ -7,7 +7,7 @@ public:
   EMSCRIPTEN_WRAPPER(EventWrapper);
 
   MTHD_VIRTUAL_OVERRIDE(ObjectClassMetadataTypedefs::ConstPtr_t getSuperclass() const) {
-    return call<ObjectClassMetadataTypedefs::ConstPtr_t const>("getSuperclass");
+    return call<ObjectClassMetadataTypedefs::ConstPtr_t>("getSuperclass", emscripten::allow_raw_pointers());
   }
 
   MTHD_VIRTUAL_OVERRIDE(const std::string &getClassname() const) { return call<const std::string &>("getClassname"); }
@@ -16,7 +16,9 @@ public:
 
   MTHD_VIRTUAL_OVERRIDE(auto getType() const -> u32_t) { return call<u32_t>("getType"); }
 
-  MTHD_VIRTUAL_OVERRIDE(auto getData() const -> EventDataTypedefs::Ptr_t) { return call<EventDataTypedefs::Ptr_t const>("getData"); }
+  MTHD_VIRTUAL_OVERRIDE(auto getData() const -> EventDataTypedefs::Ptr_t) {
+    return call<EventDataTypedefs::Ptr_t>("getData", emscripten::allow_raw_pointers());
+  }
 };
 
 #endif

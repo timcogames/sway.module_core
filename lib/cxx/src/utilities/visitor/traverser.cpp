@@ -7,7 +7,7 @@ EMSCRIPTEN_BINDING_BEGIN(Traverser)
 emscripten::class_<Traverser>("Traverser")
     .smart_ptr<std::shared_ptr<Traverser>>("TraverserSmartPtr")
     .function("visit", emscripten::select_overload<u32_t(typedefs::VisitablePtr_t)>(&Traverser::visit),
-        emscripten::allow_raw_pointer<emscripten::arg<0>>());
+        emscripten::allow_raw_pointers());
 #endif
 EMSCRIPTEN_BINDING_END()
 

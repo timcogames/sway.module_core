@@ -160,7 +160,7 @@ public:
     });
   }
 
-  auto handleValueChanged(const EventTypedefs::UniquePtr_t &evt) -> bool {
+  auto handleValueChanged(const EventTypedefs::SharedPtr_t &evt) -> bool {
     std::cout << "TestReceiver handleValueChanged:" << std::endl;
     return true;
   }
@@ -170,7 +170,7 @@ class TestReceiver : public Eventable {
   DECLARE_EVENT(VALUE_CHANGED, ValueChanged)
 
 public:
-  auto handleValueChanged(const EventTypedefs::UniquePtr_t &evt) -> bool {
+  auto handleValueChanged(const EventTypedefs::SharedPtr_t &evt) -> bool {
     std::cout << "TestReceiver handleValueChanged:" << std::endl;
     return true;
   }

@@ -9,8 +9,9 @@ class Event;
 namespace EventTypedefs {
 using Ptr_t = Event *;
 using UniquePtr_t = std::unique_ptr<Event>;
-using SharedPtr_t = std::shared_ptr<Event>;
 using QueueUniquePtr_t = std::queue<UniquePtr_t>;
+using SharedPtr_t = std::shared_ptr<Event>;
+using QueueSharedPtr_t = std::queue<SharedPtr_t>;
 }  // namespace EventTypedefs
 
 class EventHandler;

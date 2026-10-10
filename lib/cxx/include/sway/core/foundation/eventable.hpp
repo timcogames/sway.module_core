@@ -30,7 +30,7 @@ public:
 
   void unsubscribe(const std::string &evtname);
 
-  void emit(const std::string &evtname, EventTypedefs::UniquePtr_t &&evt, EmitPredicate_t predicate);
+  void emit(const std::string &evtname, EventTypedefs::SharedPtr_t &&evt, EmitPredicate_t predicate);
 
   auto findEventHandler(const std::string &evtname) -> EventHandlerTypedefs::Ptr_t;
 

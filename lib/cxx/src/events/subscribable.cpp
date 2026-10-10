@@ -8,9 +8,9 @@ auto Subscribable::subscribe(EventHandlerTypedefs::Ptr_t handler) -> Subscriber_
 
 void Subscribable::unsubscribe(Subscriber_t subscriber) { subscriptions_.erase(subscriber); }
 
-void Subscribable::handle(EventTypedefs::UniquePtr_t &evt) {
+void Subscribable::handle(EventTypedefs::SharedPtr_t &evt) {
   for (auto &handler : this->subscriptions_) {
-    handler->invoke(std::forward<EventTypedefs::UniquePtr_t>(evt));
+    handler->invoke(std::forward<EventTypedefs::SharedPtr_t>(evt));
   }
 }
 
