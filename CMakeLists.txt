@@ -46,6 +46,7 @@ option(MODULE_CORE_LIB_TYPE "Build type library" OFF)
 option(MODULE_CORE_ALL_EXPORT "" OFF)
 option(MODULE_CORE_ENVIRONMENT "Environment variable" OFF)
 option(MODULE_CORE_COMPILATION "Compilation variable" OFF)
+option(MODULE_CORE_ENABLE_EMBINDS "Enable embind bindings in core object library" ON)
 option(MODULE_CORE_ENABLE_COVERAGE "Enable coverage builds" OFF)
 option(MODULE_CORE_ENABLE_TESTS "Enable test builds" OFF)
 

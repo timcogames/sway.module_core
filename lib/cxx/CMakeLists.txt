@@ -31,11 +31,36 @@ include_directories("${MODULE_CORE_LIST_DIR}/lib/cxx/include")
 #--------------------------------------------------------------------------------
 
 if(NOT TARGET ${MODULE_CORE_OBJ_TARGET})
-  set(MODULE_CORE_LIB_SOURCES "${MODULE_CORE_ROOT_DIR}/lib/cxx/src/*.*")
-  set(MODULE_CORE_ENABLE_FILE_EXPORT TRUE)
+  set(MODULE_CORE_LIB_SOURCES "${MODULE_CORE_LIB_DIR}/cxx/src")
 
-  create_object_library(${MODULE_CORE_OBJ_TARGET} ${MODULE_CORE_LIB_SOURCES} ${MODULE_CORE_ENABLE_FILE_EXPORT})
+  if(MODULE_CORE_ENABLE_EMBINDS)
+    # bindings включены — _embinds.cpp попадает в module_core_obj
+    create_object_library(${MODULE_CORE_OBJ_TARGET} ${MODULE_CORE_LIB_SOURCES} EXPORT)
+  else()
+    # bindings исключены — _embinds.cpp выносится в отдельную объектную библиотеку
+    create_object_library(${MODULE_CORE_OBJ_TARGET} ${MODULE_CORE_LIB_SOURCES} EXPORT EXCLUDE "${MODULE_CORE_LIB_DIR}/cxx/src/_embinds.cpp")
+  
+    # Отдельная объектная библиотека только для bindings
+    set(MODULE_CORE_BINDINGS_OBJ_TARGET "${MODULE_CORE_OBJ_TARGET}_bindings")
+    if(NOT TARGET ${MODULE_CORE_BINDINGS_OBJ_TARGET})
+      create_object_library(${MODULE_CORE_BINDINGS_OBJ_TARGET} "${MODULE_CORE_LIB_DIR}/cxx/src/_embinds.cpp" EXPORT)
+      enable_cxx17(${MODULE_CORE_BINDINGS_OBJ_TARGET})
+    endif()
+  endif()
+  
   enable_cxx17(${MODULE_CORE_OBJ_TARGET})
+endif()
+
+# ---------------------------------------------------------------------------------
+# Create interfaces
+# ---------------------------------------------------------------------------------
+
+if(NOT MODULE_CORE_ENABLE_EMBINDS)
+  set(MODULE_CORE_BINDINGS_TARGET "module_core_bindings")
+
+  if(NOT TARGET ${MODULE_CORE_BINDINGS_TARGET})
+    create_interface(${MODULE_CORE_BINDINGS_TARGET} $<TARGET_OBJECTS:${MODULE_CORE_BINDINGS_OBJ_TARGET}>)
+  endif()
 endif()
 
 #--------------------------------------------------------------------------------

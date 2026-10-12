@@ -35,6 +35,7 @@ python3 -m http.server <PORT>
 Опция сборки | Тип | Описание | По умолчанию
 :---|:---|:---|:---:
 `MODULE_CORE_LIB_TYPE` | STRING | Тип создаваемой библиотеки (shared, static, object) | `OFF`
+`MODULE_CORE_ENABLE_EMBINDS` | BOOL | Включает Emscripten привязоки в сборку | `ON`
 `MODULE_CORE_ENVIRONMENT` | STRING | Переменная среды (прим.: `web` or `node` or `web,node`) | `OFF`
 `MODULE_CORE_ENABLE_COVERAGE` | BOOL | Включает поддержку сбора данных о покрытии кода тестами | `OFF`
 `MODULE_CORE_ENABLE_TESTS` | BOOL | Включает построение тестов | `OFF`
