@@ -28,39 +28,65 @@ include_directories("${MODULE_CORE_LIST_DIR}/lib/cxx/include")
 
 #--------------------------------------------------------------------------------
 # Build object library
+#
+# Создаём объектную библиотеку в зависимости от MODULE_CORE_ENABLE_EMBINDS:
+#
+#   MODULE_CORE_ENABLE_EMBINDS=ON
+#     - Создаётся одна объектная библиотека module_core_obj,
+#       в которую попадает _embinds.cpp.
+#     - Bindings core компилируются вместе с логикой core.
+#
+#   MODULE_CORE_ENABLE_EMBINDS=OFF
+#     - Создаётся module_core_obj БЕЗ _embinds.cpp (EXCLUDE).
+#     - Создаётся отдельная объектная библиотека module_core_obj_bindings,
+#       содержащая только _embinds.cpp.
+#     - Bindings core компилируются отдельно, чтобы потребитель мог
+#       подключить их ровно один раз в свой финальный Wasm-модуль.
 #--------------------------------------------------------------------------------
 
 if(NOT TARGET ${MODULE_CORE_OBJ_TARGET})
   set(MODULE_CORE_LIB_SOURCES "${MODULE_CORE_LIB_DIR}/cxx/src")
 
   if(MODULE_CORE_ENABLE_EMBINDS)
-    # bindings включены — _embinds.cpp попадает в module_core_obj
     create_object_library(${MODULE_CORE_OBJ_TARGET} ${MODULE_CORE_LIB_SOURCES} EXPORT)
   else()
-    # bindings исключены — _embinds.cpp выносится в отдельную объектную библиотеку
-    create_object_library(${MODULE_CORE_OBJ_TARGET} ${MODULE_CORE_LIB_SOURCES} EXPORT EXCLUDE "${MODULE_CORE_LIB_DIR}/cxx/src/_embinds.cpp")
-  
-    # Отдельная объектная библиотека только для bindings
+    # Логика core без _embinds.cpp
+    create_object_library(${MODULE_CORE_OBJ_TARGET} ${MODULE_CORE_LIB_SOURCES} EXPORT EXCLUDE "_embinds.cpp")
+
+    # Только bindings core
     set(MODULE_CORE_BINDINGS_OBJ_TARGET "${MODULE_CORE_OBJ_TARGET}_bindings")
     if(NOT TARGET ${MODULE_CORE_BINDINGS_OBJ_TARGET})
       create_object_library(${MODULE_CORE_BINDINGS_OBJ_TARGET} "${MODULE_CORE_LIB_DIR}/cxx/src/_embinds.cpp" EXPORT)
       enable_cxx17(${MODULE_CORE_BINDINGS_OBJ_TARGET})
     endif()
   endif()
-  
+
   enable_cxx17(${MODULE_CORE_OBJ_TARGET})
 endif()
 
-# ---------------------------------------------------------------------------------
-# Create interfaces
-# ---------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------
+# Unified interface
+#
+# module_core_iface — единственная точка входа для потребителей.
+#
+# Интерфейс уже содержит:
+#   - объекты логики core (module_core_obj)
+#   - объекты bindings core (module_core_obj_bindings), если они вынесены
+#--------------------------------------------------------------------------------
 
-if(NOT MODULE_CORE_ENABLE_EMBINDS)
-  set(MODULE_CORE_BINDINGS_TARGET "module_core_bindings")
+set(MODULE_CORE_IFACE_TARGET "module_core_iface")
 
-  if(NOT TARGET ${MODULE_CORE_BINDINGS_TARGET})
-    create_interface(${MODULE_CORE_BINDINGS_TARGET} $<TARGET_OBJECTS:${MODULE_CORE_BINDINGS_OBJ_TARGET}>)
+if(NOT TARGET ${MODULE_CORE_IFACE_TARGET})
+  set(MODULE_CORE_IFACE_OBJECTS $<TARGET_OBJECTS:${MODULE_CORE_OBJ_TARGET}>)
+
+  if(NOT MODULE_CORE_ENABLE_EMBINDS)
+    if(NOT TARGET ${MODULE_CORE_BINDINGS_OBJ_TARGET})
+      message(FATAL_ERROR "[module_core]: ${MODULE_CORE_BINDINGS_OBJ_TARGET} not found")
+    endif()
+    list(APPEND MODULE_CORE_IFACE_OBJECTS $<TARGET_OBJECTS:${MODULE_CORE_BINDINGS_OBJ_TARGET}>)
   endif()
+
+  create_interface(${MODULE_CORE_IFACE_TARGET} ${MODULE_CORE_IFACE_OBJECTS})
 endif()
 
 #--------------------------------------------------------------------------------
